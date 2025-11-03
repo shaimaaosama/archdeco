@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_custom_gs_sale,gs_quotation.gs_report,model_product_name,base.group_user,1,1,1,1
+access_gs_custom_gs_sale_quotation,gs_sale_quotation.gs_report_custom,model_product_info,base.group_user,1,1,1,1

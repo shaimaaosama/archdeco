@@ -1,0 +1,33 @@
+<odoo>
+    <data>
+        <record id="key_account_res_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="key_account_id" required="1" options="{'no_create_edit':True, 'no_open': True, 'no_create': True}"/>
+                    <field name="option_id" options="{'no_create_edit':True, 'no_open': True, 'no_create': True}"/>
+                </xpath>
+
+            </field>
+        </record>
+        
+<!--        <record id="gs_key_view_move_line_order_filter_inherit" model="ir.ui.view">-->
+<!--            <field name="name">move.line.filter.inherit</field>-->
+<!--            <field name="model">account.move.line</field>-->
+<!--            <field name="inherit_id" ref="account.view_account_move_line_filter_with_root_selection"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//search" position="inside">-->
+<!--                    <field name="key_account_id"/>-->
+<!--                    <field name="option_id"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//group" position="inside">-->
+<!--                        <filter string="Key Account" name="key_account_id" domain="[]" context="{'group_by':'key_account_id'}"/>-->
+<!--                        <filter string="Option" name="option_id" domain="[]" context="{'group_by':'option_id'}"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

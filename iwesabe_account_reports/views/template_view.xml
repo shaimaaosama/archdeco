@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="search_template_sales_person">
+            <button t-if="options.get('salesperson')" type="button" class="o-no-caret btn btn-secondary dropdown-toggle account_sales_person_filter" data-bs-toggle="dropdown">
+                <span class="fa fa-folder-open"/> Sales Person
+            </button>
+            <ul class="dropdown-menu o_filter_menu" role="menu">
+                <li class="o_account_report_search js_sales_person_m2m"/>
+            </ul>
+        </template>
+
+    
+        <template id="iwesabe_search_template" inherit_id="account_reports.search_template">
+            <xpath expr="//div[hasclass('o_account_reports_filter_partner')]" position="after">
+                <div class="btn-group dropdown o_account_reports_filter_sales_person" t-if="options.get('salesperson')">
+                    <t t-call="iwesabe_account_reports.search_template_sales_person"/>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>

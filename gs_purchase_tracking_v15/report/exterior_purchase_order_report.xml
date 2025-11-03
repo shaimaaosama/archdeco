@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="report.paperformat" id="exterior_purchase_paperformat_report">
+            <field name="name">paperformat.report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_width">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_right">2</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">2</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="exterior_purchase_order_report_action" model="ir.actions.report">
+            <field name="name">Exterior Purchase Order Report</field>
+            <field name="model">gs.purchase.tracking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">gs_purchase_tracking_v15.exterior_purchase_order_report</field>
+            <field name="binding_model_id" ref="model_gs_purchase_tracking"/>
+            <field name="paperformat_id" ref="exterior_purchase_paperformat_report"/>
+        </record>
+        <template id="exterior_purchase_order_report">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div style="border-bottom: 0px solid black;height: 250px;">
+                             <div style="position: absolute; top:0; right:0; margin-right:100px">
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                 <br></br>
+                                <h4 class="text-right" >Purchase Order</h4>
+                                <h5 class="text-right" ><b t-esc="date"/></h5>
+                             </div>
+                        </div>
+                        <div>
+                            <div>
+                                <div>
+                                    <table style="width:25%;">
+                                        <tr>
+                                            <td><b>Procurement - </b><b t-esc="name"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br/>
+                            <div>
+                                <div>
+                                    <table style="width:80%;">
+                                        <tr>
+                                            <td><strong t-esc="partner_id"/></td>
+                                            <td class="text-right"><t t-esc="city"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br/>
+                            <div>
+                                <div>
+                                    <table style="width:80%;">
+                                        <tr>
+                                            <td><b t-esc="email"/> <b> </b> <b t-esc="phone"/> <b> </b> <b t-esc="address"/> </td>
+                                            <td class="text-right"><t t-esc="port"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br/>
+                            <div>
+                                <div>
+                                    <table style="width:100%;">
+                                        <tr class="text-center">
+                                            <td> PAYMENTS TERMS : <t t-esc="payment_term_id"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br/>
+                            <div>
+                                <div>
+                                    <table style="width:80%;">
+                                        <tr>
+                                            <td  class="text-left"> REF : <t t-esc="ref"/></td>
+                                            <td class="text-center"> Required Documents : <t t-esc="incoterm_id"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <t t-set="seq" t-value="1"/>
+                            <table style="border-collapse: collapse;border: 0px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 0px solid #ddd;">
+                                    <th class="text-center" style="color:black;"></th>
+                                    <th class="text-center" style="color:black;">Description</th>
+                                    <th class="text-center" style="color:black;">Décor</th>
+                                    <th class="text-center" style="color:black;">Qty.Pal</th>
+                                    <th class="text-center" style="color:black;">Qty.Box</th>
+                                    <th class="text-center" style="color:black;">Qty.Sqm</th>
+                                    <th class="text-center" style="color:black;">U.Price</th>
+                                    <th class="text-center" style="color:black;">T.Price</th>
+                                </tr>
+                                <tr t-foreach="docs" t-as="doc1">
+                                    <td>
+                                        <span t-esc="seq"/>
+                                        <t t-set="seq" t-value="seq+1"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc1['name']"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span></span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc1['sh_sec_qty']" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc1['product_qty']" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc1['price_unit']" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc1['price_subtotal']" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <br></br>
+                            <div>
+                                <div>
+                                    <table style="width:70%;">
+                                        <tr>
+                                            <td><strong>Total :</strong></td>
+                                            <td style="text-align: left;"><span t-esc="num_word"/><span> </span><span t-esc="currency_id"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-4">
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td style="text-align: center;"><strong>Total</strong></td>
+                                            <td style="text-align: center;"><span t-esc="amount_total" widget="account-tax-totals-field"/><span> </span><span t-esc="currency_id"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

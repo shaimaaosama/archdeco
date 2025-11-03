@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="wizard_stock_internal_transfer_view" model="ir.ui.view">
+        <field name="name">Enter Transfer Details</field>
+        <field name="model">wizard.stock.internal.transfer</field>
+        <field name="arch" type="xml">
+            <form string="Transfer Details">
+                <group string="Products To Move">
+                    <div class="oe_grey" groups="stock.group_tracking_lot">
+                        Setting a product and a source package means that the product will be taken out of the package.
+                    </div>
+                </group>
+                <group>
+                    <field name="item_ids" nolabel="1" readonly="1">
+                        <list editable="bottom" string="Inventory Details">
+                            <field name="product_id" required="1"/>
+                            <field name="product_qty"/>
+                            <field groups="uom.group_uom" name="product_uom_id" options='{"no_open": True}'/>
+                            <field invisible="1" name="sh_is_secondary_unit"/>
+                            <field force_save="1" name="sh_sec_qty" readonly="sh_is_secondary_unit == False" required="sh_is_secondary_unit == True"/>
+                            <field force_save="1" groups="uom.group_uom" name="sh_sec_uom" required="1"/>
+                            <field name="source_location_id" required="1"/>
+                            <field name="dest_location_id" required="1"/>
+                        </list></field>
+                </group>
+                <group groups="stock.group_tracking_lot" string="Packages To Move">
+                    <div class="oe_grey">
+                        The source package will be moved entirely. If you specify a destination package, the source package will be put in the destination package.
+                    </div>
+                </group>
+                <footer>
+                    <button class="oe_highlight" name="button_confirm" string="Apply" type="object"/>
+                    <button class="oe_link" special="cancel" string="Cancel"/>
+                </footer>
+            </form></field>
+    </record>
+</odoo>

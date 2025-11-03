@@ -1,0 +1,42 @@
+<odoo>
+
+    <record id="gs_clearance_documents_view_tree" model="ir.ui.view">
+        <field name="name">gs.clearance.documents.view.tree</field>
+        <field name="model">gs.clearance.documents</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="product_id" />
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_clearance_documents_view_form" model="ir.ui.view">
+        <field name="name">gs.clearance.documents.view.form</field>
+        <field name="model">gs.clearance.documents</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                        </group>
+                        <group>
+                            <field name="product_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_clearance_documents_action" model="ir.actions.act_window">
+        <field name="name">Clearance Documents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.clearance.documents</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="sub_gs_clearance_documents" name="Clearance Documents"  parent="menu_gs_purchase_tracking_configuration" action="gs_clearance_documents_action" sequence="2" groups="base.group_system"/>
+
+</odoo>

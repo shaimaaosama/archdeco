@@ -1,0 +1,44 @@
+<odoo>
+    <template id="custom_sale_order_header">
+        <t t-foreach="docs" t-as="doc">
+            <t t-set="o" t-value="doc.with_context(lang=lang)"/>
+            <div class="o_force_rtl header font-weight-bold" style="font-size: 11px;font-family:sans-serif;direction: ltr;">
+
+                <style>
+                    @font-face {
+                    font-family: 'Microsoft-Uighur';
+                    src: local('Microsoft-Uighur'), local('Microsoft-Uighur'),
+                    url(/gs_stock_picking_report/static/src/fonts/cairo/Microsoft-Uighur.ttf) format('opentype');
+                    }
+
+                    .font_cairo{
+                    font-family: Microsoft-Uighur;
+                    }
+                </style>
+
+                <div class="row font_face">
+                    <div class="col-6 text_left" style="align:left;border-radius: 25px;background: #eee; padding: 3px 0 3px 0;
+                                                    width:45%;border:3px solid green;">
+                        <span>
+                            <h6>
+                                <strong>
+                                    عقد خدمات أمنية -
+                                    <span t-field="doc.name"/>
+                                    <br/>
+                                    شركة-
+                                    <span t-field="doc.partner_id.name"/>
+                                    <br/>
+                                    مدينة
+                                    <span t-field="doc.city"/>
+                                </strong>
+                            </h6>
+
+                        </span>
+                    </div>
+                    <div class="col-6">
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

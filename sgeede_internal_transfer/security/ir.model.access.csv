@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_internal_transfer,sgeede.stock.internal.transfer,model_stock_internal_transfer,,1,1,1,1
+access_stock_internal_transfer_line,sgeede.stock.internal.transfer.line,model_stock_internal_transfer_line,,1,1,1,1
+access_wizard_stock_internal_transfer,wizard.stock.internal.transfer,model_wizard_stock_internal_transfer,,1,1,1,1
+access_stock_internal_transfer_items,stock.internal.transfer.items,model_stock_internal_transfer_items,,1,1,1,1
+access_receive_wizard,receive_wizard,model_receive_wizard,,1,1,1,1
+access_receive_wizard_items,receive_wizard_items,model_receive_wizard_items,,1,1,1,1
+access_transfer_return_line,transfer_return_line,model_transfer_return_line,,1,1,1,1
+access_transfer_return_picking,transfer_return_picking,model_transfer_return_picking,,1,1,1,1
+

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_customer_limit_wizard,customer.limit.wizard,model_customer_limit_wizard,,1,1,1,1
+access_ir_config_parameter_gs_user,ir_config_parameter_system,base.model_ir_config_parameter,base.group_user,1,0,0,0
+access_mail_mail_gs_user,mail.mail.user,mail.model_mail_mail,base.group_user,1,1,1,0
+

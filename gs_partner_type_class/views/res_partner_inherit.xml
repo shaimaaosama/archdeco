@@ -1,0 +1,61 @@
+<odoo>
+    <data>
+        <record id="res_partner_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='vat']" position="after">
+                    <field name="partner_type" required="1" domain="[('user_id', '=', uid)]" options="{'no_create_edit':True, 'no_open': True, 'no_create': True}"/>
+                    <field name="run_compute_boolean" invisible="1"/>
+                    <field name="run_compute" invisible="1"/>
+                    <field name="partner_class" options="{'no_create_edit':True, 'no_open': True, 'no_create': True}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="res_users_form_inherit" model="ir.ui.view">
+            <field name="name">res.users.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//notebook" position="inside">
+                    <page string="Partner Type" name="partner_type">
+                        <group>
+                            <field name="partner_type_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
+                 </xpath>
+            </field>
+        </record>
+
+        <record id="account_move_line_form_inherit" model="ir.ui.view">
+            <field name="name">account.move.line.inherit</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='partner_id']" position="after">
+                     <field name="partner_type_id" invisible="0"/>
+                     <field name="partner_class_id" invisible="0"/>
+                 </xpath>
+            </field>
+        </record>
+
+<!--        <record id="gs_view_move_line_order_filter_inherit" model="ir.ui.view">-->
+<!--            <field name="name">move.line.filter.inherit</field>-->
+<!--            <field name="model">account.move.line</field>-->
+<!--            <field name="inherit_id" ref="account.view_account_move_line_filter_with_root_selection"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//search" position="inside">-->
+<!--                    <field name="partner_type_id"/>-->
+<!--                    <field name="partner_class_id"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//group" position="inside">-->
+<!--                        <filter string="Partner Type" name="partner_type_id" domain="[]" context="{'group_by':'partner_type_id'}"/>-->
+<!--                        <filter string="Partner Class" name="partner_class_id" domain="[]" context="{'group_by':'partner_class_id'}"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

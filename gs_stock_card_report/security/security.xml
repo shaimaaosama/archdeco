@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_gs_stock_card_report" model="res.groups">
+        <field name="name">View Stock Card Report</field>
+    </record>
+</odoo>

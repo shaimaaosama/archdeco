@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_crm_lead_line,gs_crm_lead_line,model_crm_lead_line,,1,1,1,1
+access_gs_crm_attachment_line,gs_crm_attachment_line,model_crm_attachment_line,,1,1,1,1
+access_crm_more_inf_line,crm_more_inf_line,model_crm_more_inf_line,,1,1,1,1
+access_crm_project_inf_line,crm_project_inf_line,model_crm_project_inf_line,,1,1,1,1

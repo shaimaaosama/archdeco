@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="report.paperformat" id="paperformat_report">
+            <field name="name">paperformat.report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">25</field>
+            <field name="margin_right">2</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">2</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="shipment_tracking_report_action" model="ir.actions.report">
+            <field name="name">Shipment Tracking Report</field>
+            <field name="model">gs.shipment.tracking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">gs_purchase_tracking_v15.shipment_tracking_report</field>
+            <field name="binding_model_id" ref="model_gs_shipment_tracking"/>
+            <field name="paperformat_id" ref="paperformat_report"/>
+        </record>
+        <template id="shipment_tracking_report">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div style="border-bottom: 3px solid black">
+                            <div>
+                                <h2 class="text-center">Shipment Tracking</h2>
+                            </div>
+                            <br></br>
+                            <br/>
+                            <style>
+                                table {
+                                font-family: arial, sans-serif;
+                                border-collapse: collapse;
+                                width: 100%;
+                                }
+                                tr:nth-child(even) {
+                                background-color: #eee;
+                                }
+                                tr:nth-child(odd) {
+                                background-color: #fff;
+                                }
+                                th {
+                                background-color: #0000FF;
+                                color: black;
+                                }
+                            </style>
+                            <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                        ID
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 14%"
+                                        t-esc="name"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Receipt
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="picking_id"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Vendor
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="partner_id"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                        Currency
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 14%"
+                                        t-esc="currency_id"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Order Deadline
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="date_order"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Receipt Date
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="date_planned"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                        Purchase Representative
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 14%"
+                                        t-esc="user_id"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Company
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="company_name"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Deliver To
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="picking_type_id"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                        Source Document
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 14%"
+                                        t-esc="origin"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Payment Terms
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="payment_term_id"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Incoterm
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="incoterm_id"/>
+                                </tr>
+                            </table>
+                            <br></br>
+                            <br></br>
+                            <table>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                        Booking Reference
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 14%"
+                                        t-esc="booking_reference"/>
+
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Shipping Line
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="shipping_line"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        PL Reference
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="pl_reference"/>
+
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Forwarder Name
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 25%"
+                                        t-esc="forwarder_name"/>
+                                </tr>
+                            </table>
+                            <br></br>
+                            <br></br>
+                            <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                        ETD
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="etd"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                         ETA
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="eta"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Trans Time
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="e_trans_time"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                        ATD
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="atd"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                        ATA
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="ata"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Trans Time
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="a_trans_time"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 10%">
+                                        ATR
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%" colspan="3"
+                                        t-esc="atr"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 13%">
+                                        Roll Over
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="roll_over"/>
+                                </tr>
+                            </table>
+                            <br></br>
+                            <br></br>
+                            <h3 class="text-center" style="background-color:#D3D3D3; color:black;">Products</h3>
+                            <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Name</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Delivery Date</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Quantity</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Secondary Qty</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Secondary UOM</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">UOM</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Unit Price</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Taxes</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Subtotal</th>
+                                </tr>
+                                <tr t-foreach="docs" t-as="doc1">
+                                    <td>
+                                        <span t-esc="doc1['name']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc1['date_planned']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc1['product_qty']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc1['sh_sec_qty']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc1['sh_sec_uom']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc1['product_uom']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc1['price_unit']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc1['taxes_id']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc1['price_subtotal']" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br></br>
+                            <br></br>
+                            <h3 class="text-center" style="background-color:#D3D3D3; color:black;">Shipment Documents</h3>
+                            <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Name</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Link</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Currency</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Date</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Amount</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Is Required?</th>
+                                </tr>
+                                <tr t-foreach="docs2" t-as="doc2">
+                                    <td>
+                                        <span t-esc="doc2['name']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc2['link']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc2['currency_id']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc2['amount']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc2['date']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc2['is_required']" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br></br>
+                            <br></br>
+                            <h3 class="text-center" style="background-color:#D3D3D3; color:black;">Clearance Documents</h3>
+                            <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Name</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Link</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Currency</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Date</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Amount</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Is Required?</th>
+                                </tr>
+                                <tr t-foreach="docs3" t-as="doc3">
+                                    <td class="text-center">
+                                        <span t-esc="doc3['name']"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc3['link']"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc3['currency_id']"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc3['date']" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc3['amount']" />
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-esc="doc3['is_required']" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br></br>
+                            <br></br>
+                            <h3 class="text-center" style="background-color:#D3D3D3; color:black;">Comparison Sheet</h3>
+                            <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Name</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Amount</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Pol</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">POD</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Free Time</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Shipping Line</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Transit Time</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">ETD</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">approved?</th>
+                                </tr>
+
+                                <tr t-foreach="docs4" t-as="doc4">
+                                    <td>
+                                        <span t-esc="doc4['name']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc4['pol']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc4['port']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc4['free_time']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc4['shipping_line']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc4['date']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc4['etd']" />
+                                    </td>
+                                    <td>
+                                        <span t-esc="doc4['is_approved']" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

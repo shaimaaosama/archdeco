@@ -1,0 +1,453 @@
+<odoo>
+    <template id="price_study_request_order_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="o" t-value="doc.with_context(lang=lang)"/>
+                <div class="article o_report_layout_standard" t-att-data-oe-model="doc and doc._name"
+                     t-att-data-oe-id="doc and doc.id">
+                    <style>
+                        @font-face {
+                        font-family: 'AL-Mohanad Bold';
+                        src: local('AL-Mohanad Bold'), local('AL-Mohanad Bold'),
+                        url(/gs_crm_custom/static/src/fonts/AL-Mohanad Bold.ttf) format('opentype');
+                        }
+
+                        .font_cairo{
+                        font-family: AL-Mohanad Bold;
+                        }
+
+                        .gs_table {
+                        border-collapse: collapse;
+                        border: 0px solid #000000;
+                        float:right !important;
+                        width:100%;
+                        margin:auto;
+                        }
+                        .gs_table td {
+                        height: 25px;
+                        border-bottom: 1px solid #000000;
+                        vertical-align: middle;
+                        font-size:16px;
+                        padding:5;
+                        }
+                        .gs_table th {
+                        height: 25px;
+                        border-bottom: 1px solid #000000;
+                        vertical-align: middle;
+                        font-size:16px;
+                        padding:5;
+                        }
+                        gs_customer_info {
+                        table-layout: fixed
+                        }
+                        .gs_customer_info td {
+                        height: 10px;
+                        vertical-align: middle;
+                        padding:5;
+                        }
+                        .gs_customer_infor {
+                        border-collapse: collapse;
+                        }
+                        .gs_customer_infor td {
+                        vertical-align: middle;
+                        }
+                        .gs_customer_infor_td_vals{
+                        float:left !important;text-align:left !important
+                        }
+                        gs_customer_info2{
+                        border-collapse: collapse;
+                        }
+                    </style>
+                    <div class="page font-face">
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1px solid black;direction: rtl;">
+                            <tr style="background-color:#B8860B;color:#000000;padding:15px;border:1px;">
+                                <th style="width:100%; font-size:12px;border:1px solid #000000;" colspan="6">
+                                    <span>طلب دراسة اسعار</span>
+                                </th>
+                            </tr>
+                            <tr style="background-color:#000000;color:#fff;padding:15px;border:1px solid black;">
+                                <th style="width:100%; font-size:12px;border:1px solid #000000;" colspan="6">
+                                    <span>خاص بقسم المبيعات</span>
+                                </th>
+                            </tr>
+                            <tr style="color:#00000;padding:15px;border:1px solid black;">
+                                <th style="width:5%; font-size:12px;border:1px solid #000000;">
+                                    <span>رقم</span>
+                                </th>
+                                <th style="width:12%; font-size:12px;border:1px solid #000000;">
+                                    <span>تاريخ</span>
+                                </th>
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    <span>مقدم الطلب</span>
+                                </th>
+                                <th style="width:30%; font-size:12px;border:1px solid #000000;" colspan="2">
+                                    <span>تاريخ تقديم عرض السعر المتوقع</span>
+                                </th>
+                                <th style="width:30%; font-size:12px;border:1px solid #000000;">
+                                    <span>متطلبات اضافية</span>
+                                </th>
+                            </tr>
+                            <tr style="color:#000000;padding:15px;border:1px solid black;">
+                                <th style="width:5%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.sequence"/>
+                                </th>
+                                <th style="width:12%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.create_date"  t-options='{"widget": "date"}'/>
+                                </th>
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.create_uid.name"/>
+                                </th>
+                                <th style="width:30%; font-size:12px;border:1px solid #000000;" colspan="2">
+                                    <span t-esc="doc.date_deadline"/>
+                                </th>
+                                <th style="width:30%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.description"/>
+                                </th>
+                            </tr>
+                        </table>
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1px solid black;direction: rtl;">
+                            <tr style="background-color:#D3D3D3;color:#000000;padding:15px;border:1px;">
+                                <th style="width:100%; font-size:12px;border:1px solid #000000;" colspan="6">
+                                    <span>معلومات المشروع</span>
+                                </th>
+                            </tr>
+                            <tr style="color:#000000;padding:15px;border:1px solid black;">
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    اسم المشروع
+                                </th>
+                                <td style="width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.project_id.name"/>
+                                </td>
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    حالة المشروع
+                                </th>
+                                <td style="width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.project_state"/>
+                                </td>
+                                <th style="width:10%; font-size:12px;border:1px solid #000000;">
+                                    المدينة
+                                </th>
+                                <td style="width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.pr_city"/>
+                                </td>
+                            </tr>
+                            <tr style="color:#000000;padding:15px;border:1px solid black;">
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    المالك
+                                </th>
+                                <td style="width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.owner"/>
+                                </td>
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    المقاول الرئيسي
+                                </th>
+                                <td style="width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.main_contractor"/>
+                                </td>
+                                <th style="width:10%; font-size:12px;border:1px solid #000000;">
+                                    الاستشاري
+                                </th>
+                                <td style="width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.consultant"/>
+                                </td>
+                            </tr>
+                            <tr style="color:#000000;padding:15px;border:1px solid black;">
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    الجهة طالبة التسعير
+                                </th>
+                                <td style="width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.ent_req_pricing"/>
+                                </td>
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    جهة التواصل
+                                </th>
+                                <td style="width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.contact"/>
+                                </td>
+                                <th style="width:10%; font-size:12px;border:1px solid #000000;">
+                                    رقم للتواصل
+                                </th>
+                                <td style="width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span t-esc="doc.contact_number"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <t t-set="seq" t-value="1"/>
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1;direction: rtl;">
+                            <thead style="background-color:#D3D3D3;color:#000000;padding:15px;">
+                                <tr style="border:1px;">
+                                    <th style="width:5%; font-size:12px;border:1px solid #000000;">
+                                        <span>SN</span>
+                                    </th>
+                                    <th style="width:40%; font-size:12px;border:1px solid #000000;">
+                                        <span>البنود المطلوبه للتسعير</span>
+                                    </th>
+                                    <th style="width:55%;border:1px solid #000000;" name="th_quantity">
+                                        <span style="font-size:12px;">ملاحظات (متطلبات خاصة)</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <t t-set="lines" t-value="doc.crm_line_ids"/>
+                                <t t-foreach="lines" t-as="line">
+                                    <tr>
+                                        <td name="seq" style="width:5%;font-size:12px;border:1px solid #000000;">
+                                                <span t-esc="seq"/>
+                                                <t t-set="seq" t-value="seq+1"/>
+
+                                            </td>
+
+                                        <td style="width:40%;font-size:12px;;border:1px solid #000000;">
+                                            <span t-field="line.item_required_for_pricing"/>
+                                        </td>
+                                        <td style="width:55%;font-size:12px;;border:1px solid #000000;">
+                                            <span t-field="line.notes"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border:1px;">
+                                </tr>
+                                </t>
+
+                            </tbody>
+                        </table>
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1;direction: rtl;">
+                            <thead style="background-color:#D3D3D3;color:#000000;padding:15px;">
+                                <tr style="border:1px;">
+                                    <th style="width:40%; font-size:12px;border:1px solid #000000;">
+                                        <span>المرفقات</span>
+                                    </th>
+                                    <th style="width:55%;border:1px solid #000000;" name="th_quantity">
+                                        <span style="font-size:12px;">ملاحظات </span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <t t-set="lines" t-value="doc.crm_attachment_ids"/>
+                                <t t-foreach="lines" t-as="line">
+                                    <tr>
+                                        <td style="width:45%;font-size:12px;;border:1px solid #000000;">
+                                            <span t-field="line.attachment"/>
+                                        </td>
+                                        <td style="width:55%;font-size:12px;;border:1px solid #000000;">
+                                            <span t-field="line.notes"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border:1px;">
+                                </tr>
+                                </t>
+                            </tbody>
+                        </table>
+<!--
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1;direction: rtl;">
+                            <tr style="border:1px;background-color:#D3D3D3;color:#000000;padding:15px;">
+                                <th style="width:45%; font-size:12px;border:1px solid #000000;">
+                                    <span>المرفقات</span>
+                                </th>
+                                <th style="width:55%;border:1px solid #000000;" name="th_quantity" colspan="2">
+                                    <span style="font-size:12px;">ملاحظات </span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width:45%; font-size:12px;border:1px solid #000000;">
+                                    <span>جدول الكميات</span>
+                                </th>
+                                <th style="color:#fff;width:55%;border:1px solid #000000;" name="th_quantity" colspan="2">
+                                    <span style="font-size:12px;">.</span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width:45%; font-size:12px;border:1px solid #000000;">
+                                    <span>جدول المواصفات</span>
+                                </th>
+                                <th style="color:#fff;width:55%;border:1px solid #000000;" name="th_quantity" colspan="2">
+                                    <span style="font-size:12px;">.</span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width:45%; font-size:12px;border:1px solid #000000;">
+                                    <span>المخططات التنفيذيه</span>
+                                </th>
+                                <th style="color:#fff;width:55%;border:1px solid #000000;" name="th_quantity" colspan="2">
+                                    <span style="font-size:12px;">.</span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="width:45%; font-size:12px;border:1px solid #000000;">
+                                    <span>مرفقات إضافية</span>
+                                </th>
+                                <th style="color:#fff;width:55%;border:1px solid #000000;" name="th_quantity" colspan="2">
+                                    <span style="font-size:12px;">.</span>
+                                </th>
+                            </tr>
+                        </table>
+-->
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1px solid black;direction: rtl;">
+                            <tr style="color:#000000;padding:15px;border:1px solid black;">
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    مدير مبيعات المشاريع
+                                </th>
+                                <td style="color:#fff;width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span style="font-size:12px;">.</span>
+                                </td>
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    التاريخ
+                                </th>
+                                <td style="color:#fff;width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span style="font-size:12px;">.</span>
+                                </td>
+                                <th style="width:10%; font-size:12px;border:1px solid #000000;">
+                                    التوقيع
+                                </th>
+                                <td style="color:#fff;width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span style="font-size:12px;">.</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1;direction: rtl;">
+                            <tbody class="invoice_tbody">
+                                <t t-set="lines" t-value="doc.crm_more_inf_ids"/>
+                                <t t-foreach="lines" t-as="line">
+                                    <tr>
+                                        <th t-if="line.bol" style="color:#fff;width:5%;border:1px solid #000000;">
+                                            <span style="background-color: #0ac41e;font-size:2px;padding: 7px;border: 3px solid #000000;margin: 0;">.</span>
+                                        </th>
+                                        <th t-else="" style="color:#fff;width:5%;border:1px solid #000000;">
+                                            <span style="background-color: #c40a0a;font-size:2px;padding: 7px;border: 3px solid #000000;margin: 0;">.</span>
+                                        </th>
+                                        <td style="width:30%;font-size:12px;;border:1px solid #000000;">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td style="width:65%;font-size:12px;;border:1px solid #000000;">
+                                            <span t-field="line.notes"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border:1px;">
+                                </tr>
+                                </t>
+                            </tbody>
+                        </table>
+<!--
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1;direction: rtl;">
+                            <tr>
+                                <th style="color:#fff;width:5%;border:1px solid #000000;">
+                                    <span style="font-size:2px;padding: 7px;border: 3px solid #000000;margin: 0;">.</span>
+                                </th>
+                                <th style="width:30%; font-size:12px;border:1px solid #000000;">
+                                    <span>طلب معلومات اضافية</span>
+                                </th>
+                                <th style="color:#fff;width:65%;border:1px solid #000000;" name="th_quantity" colspan="2">
+                                    <span style="font-size:12px;">.</span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="color:#fff;width:5%;border:1px solid #000000;">
+                                    <span style="font-size:2px;padding: 7px;border: 3px solid #000000;margin: 0;">.</span>
+                                </th>
+                                <th style="width:30%; font-size:12px;border:1px solid #000000;">
+                                    <span>قبول التسعير</span>
+                                </th>
+                                <th style="color:#fff;width:65%;border:1px solid #000000;" name="th_quantity" colspan="2">
+                                    <span style="font-size:12px;">.</span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="color:#fff;width:5%;border:1px solid #000000;">
+                                    <span style="font-size:2px;padding: 7px;border: 3px solid #000000;margin: 0;">.</span>
+                                </th>
+                                <th style="width:30%; font-size:12px;border:1px solid #000000;">
+                                    <span>الاعتذار عن التسعير</span>
+                                </th>
+                                <th style="color:#fff;width:65%;border:1px solid #000000;" name="th_quantity" colspan="2">
+                                    <span style="font-size:12px;">.</span>
+                                </th>
+                            </tr>
+                        </table>
+-->
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1;direction: rtl;">
+                            <thead style="background-color:#D3D3D3;color:#000000;padding:15px;">
+                                <tr style="background-color:#000000;color:#fff;padding:15px;border:1px;">
+                                    <th style="width:100%; font-size:12px;border:1px solid #000000;" colspan="3">
+                                        <span>معلومات المشروع</span>
+                                    </th>
+                                </tr>
+                                <tr style="background-color:#D3D3D3;color:#000000;padding:15px;border:1px;">
+                                    <th style="width:35%; font-size:12px;border:1px solid #000000;" colspan="2">
+                                        <span>الرد</span>
+                                    </th>
+                                    <th style="width:65%; font-size:12px;border:1px solid #000000;">
+                                        <span>الشرح</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <t t-set="lines" t-value="doc.crm_project_inf_ids"/>
+                                <t t-foreach="lines" t-as="line">
+                                    <tr>
+                                        <th t-if="line.bol" style="color:#fff;width:5%;border:1px solid #000000;">
+                                            <span style="background-color: #0ac41e;font-size:2px;padding: 7px;border: 3px solid #000000;margin: 0;">.</span>
+                                        </th>
+                                        <th t-else="" style="color:#fff;width:5%;border:1px solid #000000;">
+                                            <span style="background-color: #c40a0a;font-size:2px;padding: 7px;border: 3px solid #000000;margin: 0;">.</span>
+                                        </th>
+                                        <td style="width:30%;font-size:12px;;border:1px solid #000000;">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <td style="width:65%;font-size:12px;;border:1px solid #000000;">
+                                            <span t-field="line.notes"/>
+                                        </td>
+                                    </tr>
+                                    <tr style="border:1px;">
+                                </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <table class="text-center gs_table mt-2" style="width:100%;border:1px solid black;direction: rtl;">
+                            <tr style="color:#000000;padding:15px;border:1px solid black;">
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    مسؤول التسعير
+                                </th>
+                                <td style="color:#fff;width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span style="font-size:12px;">.</span>
+                                </td>
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    التاريخ
+                                </th>
+                                <td style="color:#fff;width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span style="font-size:12px;">.</span>
+                                </td>
+                                <th style="width:10%; font-size:12px;border:1px solid #000000;">
+                                    التوقيع
+                                </th>
+                                <td style="color:#fff;width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span style="font-size:12px;">.</span>
+                                </td>
+                            </tr>
+                            <tr style="color:#000000;padding:15px;border:1px solid black;">
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    مدير قسم التسعير
+                                </th>
+                                <td style="color:#fff;width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span style="font-size:12px;">.</span>
+                                </td>
+                                <th style="width:15%; font-size:12px;border:1px solid #000000;">
+                                    التاريخ
+                                </th>
+                                <td style="color:#fff;width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span style="font-size:12px;">.</span>
+                                </td>
+                                <th style="width:10%; font-size:12px;border:1px solid #000000;">
+                                    التوقيع
+                                </th>
+                                <td style="color:#fff;width:20%; font-size:12px;border:1px solid #000000;">
+                                    <span style="font-size:12px;">.</span>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,85 @@
+<odoo>
+    <data>
+        <record id="stock_move_line_form_inherit" model="ir.ui.view">
+            <field name="name">stock.move.line.form.inherit</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='lot_id']" position="after">
+                    <field name="in_qty"/>
+                    <field name="out_qty"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_line_view_move_inherit_tree_view" model="ir.ui.view">
+            <field name="name">stock.move.inherit.tree.view</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="stock.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//list//field[@name='quantity']" position="after">
+                    <field name="in_qty" optional="show"/>
+                    <field name="out_qty" optional="show"/>
+                </xpath>
+
+                <xpath expr="//field[@name='date']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='reference']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='lot_id']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='location_id']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='location_dest_id']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//list//field[@name='quantity']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_uom_id']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="sh_stock_move_line_inherit_tree_view" model="ir.ui.view">
+            <field name="name">stock.move.inherit.tree.view2</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="sh_secondary_unit.sh_stock_move_line_custom_tree_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='sh_sec_qty']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+                <xpath expr="//field[@name='sh_sec_uom']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="sgeede_stock_move_line_inherit_tree_view" model="ir.ui.view">
+            <field name="name">stock.move.inherit.tree.view3</field>
+            <field name="model">stock.move.line</field>
+            <field name="inherit_id" ref="sgeede_internal_transfer.sgeede_view_move_line_inherit_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_partner_id']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,71 @@
+<odoo>
+    <data>
+        <record id="gs_crm_lead_form_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.form.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('oe_title')]//h1" position="before">
+                    <h1>
+                        <field class="text-break" name="sequence" readonly="1"/>
+                    </h1>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Project Information" name="pro_inf">
+                        <group>
+                            <group>
+                                <field name="project_id"/>
+                                <field name="project_state"/>
+                                <field name="pr_city"/>
+                                <field name="owner"/>
+                                <field name="main_contractor"/>
+                            </group>
+                            <group>
+                                <field name="consultant"/>
+                                <field name="ent_req_pricing"/>
+                                <field name="contact"/>
+                                <field name="contact_number"/>
+                            </group>
+                        </group>
+                        <field name="crm_project_inf_ids">
+                            <list editable="bottom">
+                                <field name="link_id" invisible="1"/>
+                                <field name="bol"/>
+                                <field name="name"/>
+                                <field name="notes"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Attachment" name="attachment">
+                        <field name="crm_attachment_ids">
+                            <list editable="bottom">
+                                <field name="link_id" invisible="1"/>
+                                <field name="attachment"/>
+                                <field name="notes"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Notes" name="notes">
+                        <field name="crm_line_ids">
+                            <list editable="bottom">
+                                <field name="link_id" invisible="1"/>
+                                <field name="item_required_for_pricing"/>
+                                <field name="notes"/>
+                            </list>
+                        </field>
+                    </page>
+                    <page string="More Information" name="more_inf">
+                        <field name="crm_more_inf_ids">
+                            <list editable="bottom">
+                                <field name="link_id" invisible="1"/>
+                                <field name="bol"/>
+                                <field name="name"/>
+                                <field name="notes"/>
+                            </list>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

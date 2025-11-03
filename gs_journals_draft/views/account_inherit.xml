@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="gs_account_journal_form_inherit" model="ir.ui.view">
+            <field name="name">account.journal.form.inherit</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="is_draft"/>
+                    <field name="users_post_ids" widget="many2many_tags"/>
+                    <field name="users_reset_draft_ids" widget="many2many_tags"/>
+                    <field name="users_cancel_ids" widget="many2many_tags"/>
+                </xpath></field>
+        </record>
+        <record id="gs_account_payment_form_inherit" model="ir.ui.view">
+            <field name="name">account.payment.form.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field invisible="1" name="is_draft"/>
+                </xpath>
+                <xpath expr="//button[@name='action_post']" position="after">
+                    <button class="oe_highlight" data-hotkey="v" invisible="state != 'draft' or is_draft != True" name="action_confirm_post" string="Confirm" type="object"/>
+                    <button class="oe_highlight" data-hotkey="v" invisible="state != 'gs_posted'" name="action_gs_post" string="Post" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='action_post']" position="attributes">
+                    <attribute name="invisible">state != 'draft' or is_draft == True</attribute>
+                </xpath></field>
+        </record>
+        <record id="gs_account_move_form_inherit" model="ir.ui.view">
+            <field name="name">account.move.form.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_post']" position="replace">
+                    <button class="oe_highlight" data-hotkey="v" groups="account.group_account_invoice" invisible="state not in ['draft', 'gs_posted'] or auto_post == True or move_type != 'entry'" name="action_post" string="Post" type="object"/>
+                </xpath></field>
+        </record>
+    </data>
+</odoo>

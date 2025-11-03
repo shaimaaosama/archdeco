@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <templates id="template" xml:space="preserve">
+    <t t-extend="ListView.buttons">
+      <t t-jquery="button.o_list_export_xlsx" t-operation="after">
+        <t t-if="widget.modelName == 'stock.move'">
+          <button id="custom_print_btn" class="btn btn-primary get_stock_moves_data" type="button" accesskey="f">Dynamic Report</button>
+        </t>
+        <t t-if="widget.modelName == 'stock.move.line'">
+          <button id="custom_print_btn" class="btn btn-primary get_product_moves_data" type="button" accesskey="f">Dynamic Report</button>
+        </t>
+      </t>
+      <t t-jquery="button.o_button_import" t-operation="attributes">
+          <attribute name="class" value="testme"/>
+      </t>
+    </t>
+  </templates>

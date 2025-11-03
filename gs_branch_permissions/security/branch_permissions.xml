@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--    <record id="partner_type_res_partner_user" model="ir.rule">
+        <field name="name">Res Partner User</field>
+        <field ref="base.model_res_partner" name="model_id"/>
+        <field name="domain_force">['|',('branch_id', '=', False),('branch_id', 'in', user.branch_ids.ids)]</field>
+
+        <field name="global" eval="True"/>
+    </record>-->
+    <delete model="ir.rule" id="branch.purchase_branch_rule"/>
+    <delete model="ir.rule" id="branch.purchase_branch_manager_rule"/>
+
+    <record id="gs_purchase_branch_rule" model="ir.rule">
+        <field name="name">Purchase Branch</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('branch_id','=',False),('branch_id','in',user.branch_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+    </record>
+
+    <record id="gs_purchase_branch_manager_rule" model="ir.rule">
+        <field name="name">Purchase Branch Manager</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('purchase.group_purchase_manager'))]"/>
+    </record>
+
+    <record id="partner_type_class_account_move_user" model="ir.rule">
+        <field name="name">Account Move User</field>
+        <field ref="account.model_account_move" name="model_id"/>
+        <field name="domain_force">['|',('branch_id', '=', False),('branch_id', 'in', user.branch_ids.ids)]</field>
+    </record>
+
+    <record id="partner_type_class_account_move_line_user" model="ir.rule">
+        <field name="name">Account Move Line User</field>
+        <field ref="account.model_account_move_line" name="model_id"/>
+        <field name="domain_force">['|',('branch_id', '=', False),('branch_id', 'in', user.branch_ids.ids)]</field>
+    </record>
+
+    <record id="partner_type_class_sale_order_user" model="ir.rule">
+        <field name="name">Sale Order User</field>
+        <field ref="sale.model_sale_order" name="model_id"/>
+        <field name="domain_force">['|',('branch_id', '=', False),('branch_id', 'in', user.branch_ids.ids)]</field>
+    </record>
+
+    <record id="partner_type_class_payment_user" model="ir.rule">
+        <field name="name">Payment User</field>
+        <field ref="account.model_account_payment" name="model_id"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('account.group_account_invoice'))]"/>
+    </record>
+
+    <record id="partner_type_class_payment_branch" model="ir.rule">
+        <field name="name">Payment Branch</field>
+        <field ref="account.model_account_payment" name="model_id"/>
+        <field name="domain_force">['|',('branch_id', '=', False),('branch_id', 'in', user.branch_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('account.group_account_user'))]"/>
+    </record>
+
+    <record id="partner_type_class_payment_full_payment" model="ir.rule">
+        <field name="name">Full Payment</field>
+        <field ref="account.model_account_payment" name="model_id"/>
+        <field name="domain_force">[( 1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('account.group_account_manager'))]"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,292 @@
+<odoo>
+    <record id="product_template_form_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='purchase']/group[@name='purchase']//group[@name='bill']" position="inside">
+                <field name="order_limit"/>
+                <field name="lead_time"/>
+                <field name="Product_entry_date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="report.paperformat" id="paperformat_gs_stock_card_report">
+        <field name="name">paperformat.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">390</field>
+        <field name="page_width">210</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">15</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="stock_card_report"
+            model="gs.stock.card.report.wizard"
+            string="Stock Card Report"
+            report_type="qweb-pdf"
+            name="gs_stock_card_report.stock_card_report_view"
+            paperformat="paperformat_gs_stock_card_report"
+            menu="False"/>
+
+
+    <report id="stock_card_report_html"
+            model="gs.stock.card.report.wizard"
+            string="Stock Card Report"
+            report_type="qweb-html"
+            name="gs_stock_card_report.stock_card_report_view"
+            paperformat="paperformat_gs_stock_card_report"
+            menu="False"/>
+
+    <template id="stock_card_report_view">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div>
+                    <h3 class="text-center">Forcast Stock Card Report</h3>
+                </div>
+
+                <div class="page">
+                    <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:16px; width:100%;padding-top:0;margin-top:0">
+                        <tr class="thead-light"
+                            style="padding:0px; margin:0px;border-top: 2px solid #ddd;background-color: #f2f2f2;">
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width:12%">
+                                From
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                To
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: center;width:25%">
+                                <span t-esc="start_from"/>
+                            </td>
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: center;width:25%">
+                                <span t-esc="start_to" />
+                            </td>
+                        </tr>
+                    </table>
+                    <br/><br/><br/>
+                    <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:16px; width:100%;padding-top:0;margin-top:0">
+                        <tr class="thead-light"
+                            style="padding:0px; margin:0px;border-top: 2px solid #ddd;background-color: #f2f2f2;">
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 10%;">
+                                Product
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Entry Date
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Lead Time
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Order Limit
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Opening Balance
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 9%;" colspan="2">
+                                Sales
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 9%" colspan="2">
+                                Purchase
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 9%" colspan="2">
+                                Adjustment
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%">
+                                Scrap
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Balance
+                            </th>
+
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 9%;" colspan="2">
+                                Sales Forcast
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 9%" colspan="2">
+                                Purchase Forcast
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 10%" colspan="2">
+                                Adjustment Forcast
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%">
+                                Scrap Forcast
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Balance Forcast
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Total Balance
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Reorder Stock
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Turn Over
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 5%;">
+                                Stock Days
+                            </th>
+                        </tr>
+                        <tr class="thead-light"
+                            style="padding:0px; margin:0px;border-top: 2px solid #ddd;background-color: #f2f2f2;">
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                In
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                Out
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                In
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                Out
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                In
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                Out
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+
+
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                In
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                Out
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                In
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                Out
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                In
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                                Out
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                            <th class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align: center;">
+                            </th>
+                        </tr>
+                        <tr t-foreach="docs" t-as="doc1">
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: left;width: 8%;">
+                                <span t-esc="doc1['product_id']"/>
+                            </td>
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: left;width: 5%;">
+                                <span t-esc="doc1['Product_entry_date']"/>
+                            </td>
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: left;width: 3%;">
+                                <span t-esc="doc1['lead_time']"/>
+                            </td>
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: left;width: 3%;">
+                                <span t-esc="doc1['order_limit']"/>
+                            </td>
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: left;width: 4%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['opening_balance']))"/>
+                            </td>
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: left;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['sales_in']))"/>
+                            </td>
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['sales_out']))"/>
+                            </td>
+
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['purchase_in']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['purchase_out']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['adjustment_in']))"/>
+
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['adjustment_out']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['scrap_out']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['balance']))"/>
+                            </td>
+
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: left;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['sales_in_new']))"/>
+                            </td>
+                            <td style="padding: 2px;border: 2px solid #ddd;text-align: center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['sales_out_new']))"/>
+                            </td>
+
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['purchase_in_new']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['purchase_out_new']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['adjustment_in_new']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['adjustment_out_new']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['scrap_out_new']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 3%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['balance_new']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 5%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['total_balance']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 5%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['reorder_stock']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 5%;">
+                                <span t-esc="'{:,.3f}'.format(float(doc1['turn_over']))"/>
+                            </td>
+                            <td class="text-center" style="padding: 2px;border: 2px solid #ddd;text-align:center;width: 5%;">
+                                <span t-esc="'{:,.2f}'.format(float(doc1['stock_days']))"/>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

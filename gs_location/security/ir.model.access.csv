@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_get_stock_moves_data_wizard,get_stock_moves_data_wizard,model_get_stock_moves_data_wizard,,1,1,1,1
+access_get_product_moves_data_wizard,get_product_moves_data_wizard,model_get_product_moves_data_wizard,,1,1,1,1

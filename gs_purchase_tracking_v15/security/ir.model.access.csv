@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_purchase_tracking,gs_purchase_tracking,model_gs_purchase_tracking,,1,1,1,1
+access_purchase_order_line_tracking,purchase_order_line_tracking,model_purchase_order_line_tracking,,1,1,1,1
+access_gs_purchase_tracking_permission,gs_purchase_tracking_permission,model_gs_purchase_tracking_permission,,1,1,1,1
+access_gs_shipment_tracking,gs_gs_shipment_tracking,model_gs_shipment_tracking,,1,1,1,1
+access_gs_shipment_line_tracking,gs_shipment_line_tracking,model_gs_shipment_line_tracking,,1,1,1,1
+access_gs_shipment_documents,gs_shipment_documents,model_gs_shipment_documents,,1,1,1,1
+access_gs_clearance_documents,gs_clearance_documents,model_gs_clearance_documents,,1,1,1,1
+access_gs_shipment_documents_lines,gs_shipment_documents_lines,model_gs_shipment_documents_lines,,1,1,1,1
+access_gs_clearance_documents_lines,gs_clearance_documents_lines,model_gs_clearance_documents_lines,,1,1,1,1
+access_gs_comparison_sheet_lines,gs_comparison_sheet_lines,model_gs_comparison_sheet_lines,,1,1,1,1
+access_gs_receipt_button_wizard,gs_receipt_button_wizard,model_gs_receipt_button_wizard,,1,1,1,1

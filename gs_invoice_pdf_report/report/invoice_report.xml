@@ -1,0 +1,591 @@
+<odoo>
+    <template id="report_sale_invoice_document1">
+        <t t-call="web.html_container">
+
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="o" t-value="doc.with_context(lang=lang)"/>
+                <div class="article o_report_layout_standard" t-att-data-oe-model="doc and doc._name"
+                     t-att-data-oe-id="doc and doc.id">
+                    <!-- <t t-call="gs_invoice_pdf_report.custom_invoice_payment_header"/> -->
+                    <style>
+
+                        @font-face {
+                        font-family: 'Cairo-Regular';
+                        src: local('Cairo-Regular'), local('Cairo-Regular'),
+                        url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('opentype');
+                        }
+
+                        .font_cairo{
+                        font-family: Cairo-Regular;
+                        }
+
+                        .gs_table {
+                        border-collapse: collapse;
+                        border: 0px solid #ddd;
+                        float:right !important;
+                        width:100%;
+                        margin:auto;
+                        }
+                        .gs_table td {
+                        height: 10px;
+                        border-bottom: 1px solid #ddd;
+                        vertical-align: middle;
+                        font-size:16px;
+                        padding:5;
+                        }
+                        gs_customer_info {
+                        table-layout: fixed
+                        }
+                        .gs_customer_info td {
+                        height: 10px;
+                        vertical-align: middle;
+                        padding:5;
+                        }
+                        .gs_customer_infor {
+                        border-collapse: collapse;
+                        }
+                        .gs_customer_infor td {
+                        vertical-align: middle;
+                        }
+                        .gs_customer_infor_td_vals{
+                        float:left !important;text-align:left !important
+                        }
+                        gs_customer_info2{
+                        border-collapse: collapse;
+                        }
+                        gs_customer_info2 tr td strong{font-color:#000000;}
+                    </style>
+                    <div class="page font_cairo">
+                    <!-- <br/><br/> -->
+                        <h5 class="text-center" style="margin-bottom:30px">
+                            <div class="o_force_ltr" style="border-radius: 25px;background: #eef2f3; padding: 3px 0 3px 0;
+                                        width:55%;border:3px solid;display:inline-block;">
+                                <t t-if="doc.move_type=='out_invoice'">
+									<t t-if="doc.state != 'draft'">
+										<t t-if="doc.partner_id.vat">
+											<span>VAT Invoice - فاتورة ضريبية</span>
+										</t>
+										<t t-if="not doc.partner_id.vat">
+											<span>Simplified VAT Invoice - فاتورة ضريبية مبسطة</span>
+										</t>
+									</t>
+									
+									<t t-if="doc.state == 'draft'">
+										<t t-if="doc.partner_id.vat">
+											<span>Draft Invoice - فاتورة أولية</span>
+										</t>
+										<t t-if="not doc.partner_id.vat">
+											<span>Simplified Draft Invoice - فاتورة أولية مبسطة</span>
+										</t>
+									</t>
+                                </t>
+                                <t t-if="doc.move_type =='out_refund'">
+                                    <span>Credite Note - اشعار دائن</span>
+                                </t>
+                                <t t-if="doc.move_type =='in_invoice'">
+                                    <span>Vendor Bill- فاتورة مشتريات</span>
+                                </t>
+                                <t t-if="doc.move_type == 'in_refund'">
+                                    <span>Debit Note - اشعار مدين</span>
+                                </t>
+                            </div>
+                        </h5>
+                        <div class="row p-3" style="direction:ltr;">
+                            <div class="col-auto col-2">
+                                <t t-if="doc.company_id.print_qr">
+                                    <p>
+                                        <img t-if="o.l10n_sa_qr_code_str" style="display:block;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 150, 150)"/>
+                                    </p>
+                                </t>
+                            </div>
+                            <div class="col-5" style="font-size:14px;">
+                                <table class="mt-2 gs_customer_infor" style="width:100%;border:0;direction: ltr;">
+                                    <tr>
+                                        <td>
+                                            <strong style="color:#000000;float:left">Customer</strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.name"/>
+                                        </td>
+                                        <td>
+                                            <strong style="color:#000000;float:right">العميل</strong>
+                                        </td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td>
+                                        <strong style="color:#000000;float:left"> Client ID </strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.id"/>
+                                        </td>
+                                        <td>
+                                            <strong style="color:#000000;float:right"> رقم العميل </strong>
+                                        </td>
+                                    </tr> -->
+                                    <tr>
+                                        <td>
+                                            <strong style="color:#000000;float:left">Address</strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.street"/>
+                                        </td>
+                                        <td>
+                                            <strong style="color:#000000;float:right">العنوان</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="color:#000000;float:left">Phone/Fax</strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.phone"/>
+                                        </td>
+                                        <td>
+                                            <strong style="color:#000000;float:right">الهاتف/الفاكس</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="color:#000000;float:left">Comm.Reg.NO</strong>
+                                        </td>
+                                        <td style="text-align:center">
+<!--                                            todo remove comm.-->
+                                            <!--                                            <span t-field="doc.partner_id.cr_id" style="display:inline-block;"/>-->
+                                        </td>
+                                        <td>
+                                            <strong style="color:#000000;float:right">السجل التجاري</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="color:#000000;float:left">VAT.Reg.NO</strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.vat"/>
+                                        </td>
+                                        <td>
+                                            <strong style="color:#000000;float:right">الرقم الضريبي</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong style="color:#000000;float:left">Customer Ref</strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.ref"/>
+                                        </td>
+                                        <td>
+                                            <strong style="color:#000000;float:right">مرجع العميل</strong>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <div class="col-5" style="font-size:14px;">
+                                <!--                                <span>-->
+                                <!--                                    <strong style="color:#000000;float:left"> Date </strong>-->
+                                <!--                                    <span class="gs_customer_infor_td_vals" t-field="doc.invoice_date"-->
+                                <!--                                          t-options='{"format": "dd/MM/yyyy"}'/>-->
+                                <!--                                </span>-->
+                                <!--                                <strong style="float:right;color:#000000;position:relative;left:15px;"> التاريخ-->
+                                <!--                                </strong>-->
+                                <!--                                <br/>-->
+                                <!--                                <strong style="color:#000000;float:left"> Invoice </strong>-->
+                                <!--                                <strong t-field="doc.name" class="gs_customer_infor_td_vals" style="font-size:13px"/>-->
+                                <!--                                <strong style="float:right;color:#000000;position:relative;left:15px;"> الفاتورة-->
+                                <!--                                </strong>-->
+                                <!--                                <br/>-->
+                                <!--                                <strong style="color:#000000;float:left"> Due Date </strong>-->
+                                <!--                                <span class="gs_customer_infor_td_vals" t-field="doc.invoice_date_due"-->
+                                <!--                                      t-options='{"format": "dd/MM/yyyy"}'/>-->
+                                <!--                                <strong style="float:right;color:#000000;position:relative;left:15px"> تاريخ الاستحقاق-->
+                                <!--                                </strong>-->
+                                <!--                                <br/>-->
+                                <!--                                <strong style="color:#000000;float:left"> Terms </strong>-->
+                                <!--                                <span t-field="doc.invoice_payment_term_id"-->
+                                <!--                                      style="font-size:12px;"/>-->
+                                <!--                                <strong style="float:right;color:#000000;position:relative;left:15px"> شروط الدفع-->
+                                <!--                                </strong>-->
+                                <!--                                <br/>-->
+                                <!--                                <strong style="color:#000000;float:left"> Sale Person </strong>-->
+                                <!--                                <span t-field="doc.user_id.name" class="gs_customer_infor_td_vals" style="font-size:12px;"/>-->
+                                <!--                                <strong style="float:right;color:#000000;position:relative;left:15px"> المندوب </strong>-->
+
+                                <table calss="table gs_customer_info2" style="width:100%;border:0">
+                                    <tr>
+                                        <td style="text-align:left">
+                                            <strong class="dir_ltr" style="color:#000000;">Date</strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span t-field="doc.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <strong class="dir_rtl" style="color:#000000;">التاريخ</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">
+                                            <strong class="dir_ltr" style="color:#000000;">Invoice</strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <strong t-field="doc.name"/>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <strong class="dir_rtl" style="color:#000000;">الفاتورة</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">
+                                            <strong class="dir_ltr" style="color:#000000;">Due Date</strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span t-field="doc.invoice_date_due" t-options='{"format": "dd/MM/yyyy"}'/>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <strong class="dir_rtl" style="color:#000000;">تاريخ الاستحقاق</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left">
+                                            <strong style="display:inline-block;color:#000000;">Terms</strong>
+                                        </td>
+                                        <td style="text-align:center;font-size:13px">
+                                            <span t-field="doc.invoice_payment_term_id"/>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <strong class="dir_rtl" style="color:#000000;">شروط الدفع</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;width:25%">
+                                            <strong style="display:inline-block;color:#000000;" class="dir_ltr">Sale
+                                                Person
+                                            </strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span t-field="doc.user_id.name"/>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <strong class="dir_rtl" style="color:#000000;">مندوب المبيعات</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:left;width:25%">
+                                            <strong style="display:inline-block;color:#000000;" class="dir_ltr">Sale
+                                                Branch
+                                            </strong>
+                                        </td>
+                                        <td style="text-align:center">
+                                            <span t-field="doc.branch_id"/>
+                                        </td>
+                                        <td style="text-align:right">
+                                            <strong class="dir_rtl" style="color:#000000;">الفرع</strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br/>
+                        </div>
+                        <!--                        -->
+                        <t t-set="total_before_amount1" t-value="0"/>
+                        <!--  create the invoice table -->
+                        <t t-set="seq" t-value="1"/>
+                        <table class="text-center gs_table mt-2" style="width:100%;border:0;direction: ltr;">
+                            <thead style="background-color:#e1c793;color:#1a1919;padding:15px;">
+                                <tr>
+                                    <th style="width:5%; font-size:12px">
+                                        <span>SN</span>
+                                        <br/>
+                                        <span style="padding-left:5px;">م</span>
+                                    </th>
+                                    <th name="th_description" style="width:45%; font-size:12px">
+                                        <span>Product/Service</span>
+                                        <br/>
+                                        <span>منتج/خدمة</span>
+                                    </th>
+                                    <th style="width:8%;" name="th_quantity">
+                                        <span style="font-size:12px;">Quantity</span>
+                                        <br/>
+                                        <span style="font-size:12px;">الكمية</span>
+                                    </th>
+                                    <th style="width:8%;" name="th_quantity">
+                                        <span style="font-size:12px;">Count</span>
+                                        <br/>
+                                        <span style="font-size:12px;">العدد</span>
+                                    </th>
+									<!-- <th style="width:8%;" name="th_units">
+                                        <span style="font-size:12px;">Unit</span>
+                                        <br/>
+                                        <span style="font-size:12px;">الوحدة</span>
+                                    </th> -->
+                                    <th name="th_priceunit">
+                                        <strong style="font-size:12px;">Unit Price</strong>
+                                        <br/>
+                                        <strong style="font-size:12px;">سعر الوحدة</strong>
+                                    </th>
+                                    <th style="font-size:12px" name="th_price_unit2">
+                                        <span style="">Disc</span>
+                                        <br/>
+                                        <span style="">الخصم</span>
+                                    </th>
+                                    <th style="font-size:12px;" class="text-center" name="th_taxes">
+                                        <span>VAT</span>
+                                        <br/>
+                                        <span style="font-size:11px;">الضريبة</span>
+                                    </th>
+                                    <th style="font-size:12px" class="text-center" name="th_subtotal">
+                                        <span groups="account.group_show_line_subtotals_tax_excluded">Subtotal</span>
+                                        <br/>
+                                        <span>الاجمالي</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody">
+                                <t t-set="current_subtotal" t-value="0"/>
+                                <t t-set="lines"
+                                   t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
+                                <t t-foreach="lines" t-as="line">
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                                       groups="account.group_show_line_subtotals_tax_excluded"/>
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                                       groups="account.group_show_line_subtotals_tax_included"/>
+
+                                    <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section'
+                                     else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                        <!--                                        <t t-set="seq" t-value="seq+1"/>-->
+                                        <!--                                        <td name="seq" style="width:4%;">-->
+                                        <!--                                            <span t-esc="seq"/>-->
+                                        <!--                                        </td>-->
+
+                                        <t t-if="not line.display_type" name="account_invoice_line_accountable">
+                                            <td name="seq" style="width:4%;">
+                                                <span t-esc="seq"/>
+                                                <t t-set="seq" t-value="seq+1"/>
+
+                                            </td>
+                                            <td name="account_invoice_line_name">
+                                                <span style='font-size:12px;float:left;text-align:left'
+                                                      t-field="line.name" t-options="{'widget': 'text'}"/>
+                                            </td>
+                                            <td style="font-size:12px;width:8%;">
+                                                <span t-field="line.quantity"/>
+                                                <!--                                                qty-->
+                                                <!--                                                <t t-set="total_qty1" t-value="total_qty1+line.quantity"/>-->
+                                                <br/>
+                                                 <span t-field="line.product_uom_id" groups="uom.group_uom"/>
+                                            </td>
+                                            <td style="font-size:12px;width:8%;">
+                                                <span t-esc="'%.0f'% line.sh_sec_qty" groups="uom.group_uom"/>
+                                                <br/>
+                                                <span t-esc="line.sh_sec_uom.name" groups="uom.group_uom"/>
+                                            </td>
+											<!-- <td style="font-size:12px;width:8%;">
+                                                <span t-field="line.product_uom_id" groups="uom.group_uom"/>
+                                            </td> -->
+                                            <td style="width:10%;">
+                                                <span class="text-nowrap" t-field="line.price_unit"/>
+                                                <!--                                                price-->
+                                                <!--                                                <t t-set="total_price1" t-value="total_price1+line.price_unit"/>-->
+                                            </td>
+                                            <td style="width:10%;">
+                                                <span class="text-nowrap" t-field="line.discount"/>%
+                                            </td>
+                                            <td>
+                                                <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_ids))"
+                                                      id="line_tax_ids"/>
+                                            </td>
+                                            <td class="o_price_total">
+                                                <span class="text-nowrap" t-field="line.price_subtotal"
+                                                      groups="account.group_show_line_subtotals_tax_excluded"/>
+                                                <span class="text-nowrap" t-field="line.price_total"
+                                                      groups="account.group_show_line_subtotals_tax_included"/>
+                                            </td>
+                                        </t>
+                                        <!--                                        <t t-set="seq" t-value="seq+1"/>-->
+                                        <t t-if="line.display_type == 'line_section'">
+                                            <td colspan="99">
+                                                <span style="float:left" t-field="line.name"
+                                                      t-options="{'widget': 'text'}"/>
+                                            </td>
+                                            <t t-set="current_section" t-value="line"/>
+                                            <t t-set="current_subtotal" t-value="0"/>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_note'">
+                                            <td colspan="99">
+                                                <span style="float:left" t-field="line.name"
+                                                      t-options="{'widget': 'text'}"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <t t-if="current_section and (line_last or lines[line_index+1].display_type == 'line_section')">
+                                        <tr class="is-subtotal">
+                                            <td colspan="99">
+                                                <strong style="float:left" class="mr16">Subtotal</strong>
+                                                <span style="float:left"
+                                                      t-esc="current_subtotal"
+                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                                />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <!--                                    be total -->
+                                    <t t-set="total_before_amount1"
+                                       t-value="total_before_amount1+(line.price_unit*line.quantity)"/>
+                                    <!--                                    <t t-set="seq" t-value="seq+1"/>-->
+                                </t>
+                            </tbody>
+                        </table>
+                        <div id="total" style="float: right; width:60%; text-align:left">
+                            <table class="gs_table" style="direction:ltr;border:0px;page-break-inside: avoid;">
+                                <t t-set="disc1" t-value="total_before_amount1-o.amount_untaxed"/>
+                                <tr style="">
+                                    <td>
+                                        <span style="color:#000000;">Total Be.Disc الاجمالي قبل الخصم
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="gs_customer_infor_td_vals" t-esc="total_before_amount1"
+                                              t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                        <!--                                                 <strong style="margin: 0 8px 0 8px" class="gs_customer_infor_td_vals" t-esc="o.compute_amount_in_word(total_before_amount1)"/>-->
+                                        <!-- <span class="gs_customer_infor_td_vals" t-field="o.currency_id.symbol"/> -->
+                                    </td>
+                                </tr>
+                                <tr class="border-black o_subtotal" style="">
+                                    <td style="">
+                                        <span style="color:#000000;">Disc الخصم
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="gs_customer_infor_td_vals" t-esc="disc1"
+                                              t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                        <!--                                                 <strong style="margin: 0 8px 0 8px" class="gs_customer_infor_td_vals" t-esc="o.compute_amount_in_word(disc1)"/>-->
+                                        <!-- <span class="gs_customer_infor_td_vals" t-field="o.currency_id.symbol"/> -->
+                                    </td>
+                                </tr>
+                                <tr class="border-black o_subtotal" style="">
+                                    <td>
+                                        <span style="color:#000000;">Total Af.Disc الاجمالي بعد الخصم
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="gs_customer_infor_td_vals" t-field="o.amount_untaxed"/>
+                                        <!--                                                <strong style="margin: 0 8px 0 8px" class="gs_customer_infor_td_vals" t-esc="o.compute_amount_in_word(o.amount_untaxed)"/>-->
+                                    </td>
+                                </tr>
+                                <tr style="">
+                                        <td>
+                                            <span style="color:#000000;">VAT ضريبة القيمة المضافة
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="gs_customer_infor_td_vals" t-field="o.amount_tax"/>
+                                        </td>
+                                </tr>
+
+                                <tr class="border-black o_total">
+                                    <td style="width:60%">
+                                        <span style="color:#000000;">Total Inc VAT الاجمالي شامل الضريبة
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong class="text-nowrap gs_customer_infor_td_vals" t-field="o.amount_total"/>
+                                        <!--                                                <strong style="margin: 0 8px 0 8px" class="gs_customer_infor_td_vals" t-esc="o.compute_amount_in_word(o.amount_total)"/>-->
+                                    </td>
+                                </tr>
+                                <tr class="border-black o_total">
+                                    <td class="text-center" colspan="2">
+                                        <div style="text-align:center;border-radius: 25px;background: #eef2f3; padding: 3px 0 3px 0;
+                                                            width:100%;border:2px solid #38383d;display:inline-block;">
+                                            <strong style="margin: 0 8px 0 8px; text-align:center"
+                                                    t-esc="o.amount_text_arabic(o.amount_total)"/>
+                                        </div>
+										<div style="text-align:center;border-radius: 25px;background: #eef2f3; padding: 3px 0 3px 0;
+                                                            width:100%;border:2px solid #38383d;display:inline-block;">
+                                            <!-- <strong style="margin: 0 8px 0 8px; text-align:center"
+                                                    t-esc="o.compute_amount_in_word(o.amount_total)"/> -->
+                                            <strong style="margin: 0 8px 0 8px; text-align:center"
+                                                    t-esc="o.currency_id.amount_to_text(o.amount_total)"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <t t-if="print_with_payments">
+                                    <t t-if="o.payment_state != 'invoicing_legacy'">
+                                        <t t-set="payments_vals"
+                                           t-value="o.sudo()._get_reconciled_info_JSON_values()"/>
+                                        <t t-foreach="payments_vals" t-as="payment_vals">
+                                            <tr>
+                                                <td>
+                                                    <i class="oe_form_field text-left oe_payment_label">Paid on
+                                                        <t t-esc="payment_vals['date']"
+                                                           t-options='{"widget": "date"}'/>
+                                                    </i>
+                                                </td>
+                                                <td class="text-left">
+                                                    <span t-esc="payment_vals['amount']"
+                                                          t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-if="len(payments_vals) > 0">
+                                            <tr class="border-black">
+                                                <td>
+                                                    <strong>Amount Due</strong>
+                                                </td>
+                                                <td class="text-left">
+                                                    <span t-field="o.amount_residual"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                </t>
+                            </table>
+                        </div>
+                        <div t-if="o.invoice_payment_term_id.note" style="float: left; width:60%; text-align:left">
+                            <strong><u>Payment Terms</u></strong><br/>
+                            <span t-field="o.invoice_payment_term_id.note"/>
+                        </div>
+						<div t-if="o.narration">
+                        <div style="float: left; width:60%; text-align:left">
+							<strong><u>Terms And Conditions</u></strong><br/>
+                            <span t-esc="o.narration"/>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+    <!-- QWeb Reports -->
+   <!--<record id="account_sale_invoices" model="ir.actions.report">
+        <field name="name">VAT Invoice فاتورة ضريبية</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gs_invoice_pdf_report.report_sale_invoice_document1</field>
+        <field name="report_file">gs_invoice_pdf_report.report_sale_invoice_document1</field>
+        <field name="paperformat_id" ref="gs_invoice_pdf_report.paperformat_sale_invoice_report"/>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="print_report_name">'Sale Invoices - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+	
+	<template id="gs_report_invoice_document" inherit_id="account.report_invoice_document">
+      <xpath expr="//t" position="replace">
+        <t t-call="gs_invoice_pdf_report.report_sale_invoice_document1"/>
+      </xpath>
+    </template>
+
+    <record id="account_sale_invoice_uae" model="ir.actions.report">
+        <field name="name">VAT Invoice فاتورة ضريبية</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gs_invoice_pdf_report.gs_report_invoice_document</field>
+        <field name="report_file">gs_invoice_pdf_report.gs_report_invoice_document</field>
+        <field name="paperformat_id" ref="gs_invoice_pdf_report.paperformat_sale_invoice_report"/>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="print_report_name">'Invoice - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>-->
+</odoo>

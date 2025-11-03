@@ -1,0 +1,132 @@
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="sale_order" model="ir.ui.view">
+        <field name="name">Sale Order Inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='client_order_ref']" position="replace"></xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="approval_rs_user_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='customer_signature']" position="after">
+                <page string="Project Information">
+                    <group>
+                        <group>
+                            <table>
+                                <tr>
+                                    <td>Commercial Terms:</td>
+                                </tr>
+                                <tr>
+                                    <td>Price Basis:</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="price_basis"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Offer Validity:</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="offer_validity"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Work Period:</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="work_period"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </group>
+                        <group>
+                            <table>
+                                <tr>
+                                    <td>Bank Details:</td>
+                                    <td style="color:white">.......</td>
+                                    <td>
+                                        <field name="bank_detials"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </group>
+                        <group>
+                            <table>
+                                <tr>
+                                    <td>Payment terms</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="payment_terms"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td> Special Conditions:</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="special_conditions"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </group>
+                        <group>
+                            <table>
+                                <tr>
+                                    <td>Warranty</td>
+                                </tr>
+                                <tr>
+                                    <td>Material</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="matrial"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>install</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="install"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </group>
+                        <group>
+                            <table>
+                                <tr>
+                                    <td>Project Location</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="project_location"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Project Name</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="project"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Customer Ref</td>
+                                    <td style="color:white">........</td>
+                                    <td>
+                                        <field name="client_order_ref"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </group>
+                    </group>
+
+                </page>
+                <page string="Product Details">
+                    <field name="product_detials">
+                            <list editable="bottom">
+                                <field name="prodcut_id"/>
+                                <field name="brand"/>
+                            </list>
+                        </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+    <template id="sh_report_stock_picking_operation_document" inherit_id="stock.report_picking">
+        <xpath expr="//t/t/t/t/div/div[1]/div/div" position="replace">
+            <div t-field="o.name" t-options="{'width': 600, 'height': 100, 'img_style': 'width:300px;height:50px;'}"/>
+        </xpath>
+<!--        <xpath expr="//table[hasclass('table','table-sm')]//tbody//td[last()]//t//span//div" position="replace">-->
+<!--            <div t-field="ml.product_id.barcode" t-options="{'symbology': 'auto', 'width': 400, 'height': 100, 'quiet': 0, 'img_style': 'height:35px;'}"/>-->
+<!--        </xpath>-->
+    </template>
+    </data>
+</odoo>

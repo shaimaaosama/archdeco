@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+
+        <record id="account.action_account_payments_transfer" model="ir.actions.act_window">
+            <field name="context">{'default_journal_id': False,'default_payment_type': 'outbound', 'search_default_transfers_filter': 1}</field>
+        </record>
+        <record id="account.action_account_payments" model="ir.actions.act_window">
+            <field name="context">{
+                'default_journal_id': False,
+                'default_payment_type': 'inbound',
+                'default_partner_type': 'customer',
+                'search_default_inbound_filter': 1,
+                'default_move_journal_types': ('bank', 'cash'),
+            }</field>
+        </record>
+        <record id="account.action_account_payments_payable" model="ir.actions.act_window">
+            <field name="context">{
+                'default_journal_id': False,
+                'default_payment_type': 'outbound',
+                'default_partner_type': 'supplier',
+                'search_default_outbound_filter': 1,
+                'default_move_journal_types': ('bank', 'cash'),
+            }</field>
+        </record>
+
+
+    </data>
+</odoo>

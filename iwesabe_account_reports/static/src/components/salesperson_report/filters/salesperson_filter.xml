@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="iwesabe_account_reports.SalespersonFilters" t-inherit="account_reports.AccountReportFiltersCustomizable">
+        <xpath expr="//div[@id='filter_extra_options']" position="before">
+            <t t-if="'salesperson' in controller.options">
+                <div id="filter_salesperson" class="filter_salesperson">
+                    <t t-call="iwesabe_account_reports.AccountReportFilterSalesPerson"/>
+                </div>
+            </t>
+        </xpath>
+    </t>
+</templates>
+
+
+
+
+
+
+

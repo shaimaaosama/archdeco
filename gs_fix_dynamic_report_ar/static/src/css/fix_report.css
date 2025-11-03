@@ -1,0 +1,4 @@
+.o_rtl .dropdown-menu[x-placement^="top"],
+.o_rtl .dropdown-menu[x-placement^="right"],
+.o_rtl .dropdown-menu[x-placement^="bottom"],
+.o_rtl .dropdown-menu[x-placement^="left"] {left: auto !important;}

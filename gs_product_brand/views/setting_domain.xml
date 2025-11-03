@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_users_form_inherit" model="ir.ui.view">
+            <field name="name">view.users.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//notebook" position="inside">
+                    <page string="Brand Access" name="brand_access">
+                        <group>
+                            <field name="custom_brand_id" widget="many2many_tags"/>
+                        </group>
+                    </page>
+                 </xpath>
+            </field>
+        </record>
+
+        <record id="see_only_your_brands" model="ir.rule">
+            <field name="name">Your brands</field>
+            <field ref="stock.model_product_template" name="model_id"/>
+            <field name="domain_force">[('brand_id', 'in', user.custom_brand_id.ids)]</field>
+            <field name="groups" eval="[(4, ref('gs_product_brand.group_gs_product_brand_user'))]"/>
+        </record>
+
+        <record id="see_only_your_brands_admin" model="ir.rule">
+            <field name="name">Your brands admin</field>
+            <field ref="stock.model_product_template" name="model_id"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('gs_product_brand.group_gs_product_brand_admin'))]"/>
+        </record>
+
+        <record id="see_only_your_brands_product_product" model="ir.rule">
+            <field name="name">Your brandss</field>
+            <field ref="stock.model_product_product" name="model_id"/>
+            <field name="domain_force">[('brand_id', 'in', user.custom_brand_id.ids)]</field>
+            <field name="groups" eval="[(4, ref('gs_product_brand.group_gs_product_brand_user'))]"/>
+        </record>
+
+        <record id="see_only_your_brands_product_product_admin" model="ir.rule">
+            <field name="name">Your brandss admin</field>
+            <field ref="stock.model_product_product" name="model_id"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('gs_product_brand.group_gs_product_brand_admin'))]"/>
+        </record>
+
+<!--        <record id="see_only_your_brands_id" model="ir.rule">
+            <field name="name">Your Product Brand User</field>
+            <field ref="model_product_brand" name="model_id"/>
+            <field name="domain_force">[('id', '=', user.custom_brand_id.ids)]</field>
+            <field name="groups" eval="[(4, ref('gs_product_brand.group_gs_product_brand_user'))]"/>
+        </record>-->
+
+<!--        <record id="see_all_brands_id" model="ir.rule">
+            <field name="name">All Product Brand</field>
+            <field ref="model_product_brand" name="model_id"/>
+            <field name="domain_force">[( 1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('gs_product_brand.group_gs_product_brand_admin'))]"/>
+        </record>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   <report
+            id="action_stock_card_xlsx_report"
+            model="gs.stock.card.report.wizard"
+            string="Stock Card Excel Report"
+            report_type="xlsx"
+            name="gs_stock_card_report.stock_card_xlsx_report"
+            file="stock_card_xlsx_report"
+            attachment_use="False"
+    />
+</odoo>

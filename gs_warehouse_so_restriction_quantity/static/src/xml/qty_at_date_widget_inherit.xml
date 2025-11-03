@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="QtyInherit" t-inherit="sale_stock.QtyDetailPopOver" t-inherit-mode="extension" owl="1">
+        <xpath expr="//table" position="replace">
+        </xpath>
+        <xpath expr="//button" position="replace">
+        </xpath>
+    </t>
+</templates>

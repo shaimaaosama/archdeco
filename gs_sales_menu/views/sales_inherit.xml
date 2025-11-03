@@ -1,0 +1,8 @@
+<odoo>
+    <data>
+         <menuitem id="menu_gs_account_payments" name="Payments"  parent="sale.product_menu_catalog" sequence="50" action="account.action_account_payments"/>
+         <menuitem id="menu_gs_partner_ledger" name="Partner Ledger"  parent="sale.menu_sale_report" sequence="50" action="account_reports.action_account_report_partner_ledger"/>
+         <menuitem id="menu_gs_general_ledger" name="General Ledger"  parent="sale.menu_sale_report" sequence="51" action="account_reports.action_account_report_general_ledger"/>
+
+    </data>
+</odoo>

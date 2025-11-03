@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="gs_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field invisible="1" name="shipment_tracking_id"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field force_save="1" groups="analytic.group_analytic_accounting" name="analytic_account_id"/>
+                <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Project Information">
+                    <group string="Commercial Terms:">
+                        <group>
+                            <field name="price_basis"/>
+                            <field name="offer_validity"/>
+                            <field name="work_period"/>
+                            <field name="bank_detials"/>
+                            <field name="payment_terms"/>
+                            <field name="special_conditions"/>
+                            <field name="project_location"/>
+                        </group>
+                        <group string="Warranty">
+                            <field name="matrial"/>
+                            <field name="install"/>
+                        </group>
+                        <group>
+                            <field name="project_location"/>
+                            <field name="project"/>
+                            <field name="client_order_ref"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath></field>
+    </record>
+    <record id="gs_shipment_tracking_view_search" model="ir.ui.view">
+        <field name="name">gs.shipment.tracking.search</field>
+        <field name="model">gs.shipment.tracking</field>
+        <field name="arch" type="xml">
+            <search string="Search report">
+                <group expand="0" string="Group By...">
+                    <filter context="{'group_by':'state'}" domain="[]" name="group_by_state" string="Status"/>
+                </group>
+            </search></field>
+    </record>
+    <record id="gs_shipment_tracking_view_tree" model="ir.ui.view">
+        <field name="name">gs.shipment.tracking.view.tree</field>
+        <field name="model">gs.shipment.tracking</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="picking_id" widget="many2many_tags"/>
+                <field name="partner_id" widget="many2many_tags"/>
+                <field name="partner_ref" optional="hide"/>
+                <field name="currency_id" optional="hide"/>
+                <field name="booking_reference" optional="hide"/>
+                <field name="shipping_line" optional="hide"/>
+                <field name="pl_reference" optional="hide"/>
+                <field name="forwarder_name" optional="hide"/>
+                <field name="date_order" optional="hide"/>
+                <field name="date_planned" optional="hide"/>
+                <field name="picking_type_id" optional="hide"/>
+                <field name="etd" optional="hide"/>
+                <field name="eta" optional="hide"/>
+                <field name="e_trans_time" optional="hide"/>
+                <field name="atd" optional="hide"/>
+                <field name="ata" optional="hide"/>
+                <field name="a_trans_time" optional="hide"/>
+                <field name="atr" optional="hide"/>
+                <field name="roll_over" optional="hide"/>
+                <field name="customs_statement" optional="hide"/>
+                <field name="state"/>
+            </list></field>
+    </record>
+    <record id="gs_shipment_tracking_view_form" model="ir.ui.view">
+        <field name="name">gs.shipment.tracking.view.form</field>
+        <field name="model">gs.shipment.tracking</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button class="oe_highlight" invisible="is_submit != True or state != 'draft'" name="action_submit" string="Submit" type="object"/>
+                    <button class="oe_highlight" invisible="is_confirmed != True or state != 'submit'" name="action_confirmed" string="Confirm" type="object"/>
+                    <button class="oe_highlight" invisible="is_booking != True or state != 'confirmed'" name="action_booking" string="Booking" type="object"/>
+                    <button class="oe_highlight" invisible="is_booked != True or state != 'booking'" name="action_booked" string="Booked" type="object"/>
+                    <button class="oe_highlight" invisible="is_loading != True or state != 'booked'" name="action_loading" string="Loading" type="object"/>
+                    <button class="oe_highlight" invisible="is_loaded != True or state != 'loading'" name="action_loaded" string="Loaded" type="object"/>
+                    <button class="oe_highlight" invisible="is_on_board != True or state != 'loaded'" name="action_on_board" string="On Board" type="object"/>
+                    <button class="oe_highlight" invisible="is_departed != True or state != 'on_board'" name="action_departed" string="Departed" type="object"/>
+                    <button class="oe_highlight" invisible="is_doc_collect != True or state != 'departed'" name="action_doc_collect" string="Doc Collect" type="object"/>
+                    <button class="oe_highlight" invisible="is_issue_insurance != True or state != 'doc_collect'" name="action_issue_insurance" string="Issue Insurance" type="object"/>
+                    <button class="oe_highlight" invisible="is_arrived != True or state != 'issue_insurance'" name="action_arrived" string="Arrived" type="object"/>
+                    <button class="oe_highlight" invisible="is_under_clearance != True or state != 'arrived'" name="action_under_clearance" string="Under Clearance" type="object"/>
+                    <button class="oe_highlight" invisible="is_cleared != True or state != 'under_clearance'" name="action_cleared" string="Cleared" type="object"/>
+                    <button class="oe_highlight" invisible="is_paneling_delivery != True or state != 'cleared'" name="action_paneling_delivery" string="Pending Delivery" type="object"/>
+                    <button class="oe_highlight" invisible="is_received != True or state != 'paneling_delivery'" name="action_received" string="Received" type="object"/>
+                    <button invisible="is_cancel != True or state not in ['draft', 'submit']" name="action_cancel" string="Cancel" type="object"/>
+                    <button invisible="is_draft != True or state != 'cancel'" name="action_draft" string="Set to Draft" type="object"/>
+                    <button class="oe_highlight" invisible="is_finish == True" name="action_crate_one2many" string="Create Lines" type="object"/>
+                    <field name="state" statusbar_visible="draft,submit,received" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-credit-card" invisible="purchase_order_count == 0" name="action_view_purchase_order" type="object">
+                            <field help="Purchase Order" name="purchase_order_count" string="Purchase Order" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="picking_id" readonly="state != 'draft'" widget="many2many_tags"/>
+                            <field name="partner_id" readonly="state != 'draft'" widget="many2many_tags"/>
+                            <field name="partner_ref"/>
+                            <field name="currency_id"/>
+                            <field name="booking_reference"/>
+                            <field name="shipping_line"/>
+                            <field name="pl_reference"/>
+                            <field name="forwarder_name"/>
+                            <field invisible="1" name="is_cancel"/>
+                            <field invisible="1" name="is_draft"/>
+                            <field invisible="1" name="is_submit"/>
+                            <field invisible="1" name="is_confirmed"/>
+                            <field invisible="1" name="is_booking"/>
+                            <field invisible="1" name="is_booked"/>
+                            <field invisible="1" name="is_loading"/>
+                            <field invisible="1" name="is_loaded"/>
+                            <field invisible="1" name="is_on_board"/>
+                            <field invisible="1" name="is_departed"/>
+                            <field invisible="1" name="is_doc_collect"/>
+                            <field invisible="1" name="is_issue_insurance"/>
+                            <field invisible="1" name="is_arrived"/>
+                            <field invisible="1" name="is_under_clearance"/>
+                            <field invisible="1" name="is_cleared"/>
+                            <field invisible="1" name="is_paneling_delivery"/>
+                            <field invisible="1" name="is_received"/>
+                            <field invisible="1" name="is_finish"/>
+                            <field invisible="1" name="is_bol_cleared"/>
+                        </group>
+                        <group>
+                            <field name="date_order"/>
+                            <field name="date_planned"/>
+                            <field name="picking_type_id"/>
+                            <label for="etd" string="ETD"/>
+                            <div class="o_row">
+                                <field force_save="1" name="etd" readonly="state != 'draft'"/>
+                                <strong>
+                                    ETA
+                                </strong>
+                                <field force_save="1" name="eta" readonly="state != 'draft'"/>
+                                <strong>
+                                    Trans Time :
+                                </strong>
+                                <b>
+                                    <field force_save="1" name="e_trans_time" readonly="1"/>
+                                </b>
+                            </div>
+                            <label for="atd" string="ATD"/>
+                            <div class="o_row">
+                                <field force_save="1" name="atd"/>
+                                <strong>
+                                    ATA
+                                </strong>
+                                <field force_save="1" name="ata"/>
+                                <strong>
+                                    Trans Time :
+                                </strong>
+                                <b>
+                                    <field force_save="1" name="a_trans_time" readonly="1"/>
+                                </b>
+                            </div>
+                            <label for="atr" string="ATR"/>
+                            <div class="o_row">
+                                <field force_save="1" name="atr"/>
+                                <strong>
+                                    Roll Over :
+                                </strong>
+                                <b>
+                                    <field force_save="1" name="roll_over" readonly="1"/>
+                                </b>
+                            </div>
+                            <field name="customs_statement"/>
+                            <field invisible="1" name="amount_untaxed"/>
+                            <field invisible="1" name="amount_tax"/>
+                            <field invisible="1" name="amount_total"/>
+                            <field invisible="1" name="tax_country_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Products">
+                            <field name="shipment_line_tracking" widget="section_and_note_one2many">
+                                <list editable="bottom">
+                                    <control>
+                                        <create name="add_product_control" string="Add a product"/>
+                                        <create context="{'default_display_type': 'line_section'}" name="add_section_control" string="Add a section"/>
+                                        <create context="{'default_display_type': 'line_note'}" name="add_note_control" string="Add a note"/>
+                                    </control>
+                                    <field invisible="1" name="id_field"/>
+                                    <field name="sequence" widget="handle"/>
+                                    <field invisible="1" name="shipment_id"/>
+                                    <field invisible="1" name="product_type"/>
+                                    <field invisible="1" name="display_type"/>
+                                    <field name="product_id"/>
+                                    <field name="name" readonly="0"/>
+                                    <field name="date_planned" optional="hide" required="0"/>
+                                    <field name="product_qty" optional="show"/>
+                                    <field invisible="1" name="sh_is_secondary_unit"/>
+                                    <field name="sh_sec_qty" optional="hide"/>
+                                    <field name="sh_sec_uom" optional="hide"/>
+                                    <field invisible="1" name="category_id"/>
+                                    <field invisible="1" name="currency_id"/>
+                                    <field invisible="1" name="product_uom_category_id"/>
+                                    <field force_save="1" name="product_uom" optional="hide" readonly="0" required="0" string="UoM"/>
+                                    <field name="price_unit" optional="show"/>
+                                    <field context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]" name="taxes_id" optional="show" options="{'no_create': True}" widget="many2many_tags"/>
+                                    <field name="price_subtotal" optional="show" widget="monetary"/>
+                                </list></field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field colspan="2" name="tax_totals_json" nolabel="1" widget="account-tax-totals-field"/>
+                            </group>
+                        </page>
+                        <page string="Shipment Documents">
+                            <field name="shipment_documents_ids" widget="section_and_note_one2many">
+                                <list editable="bottom">
+                                    <field invisible="1" name="link_id"/>
+                                    <field name="name"/>
+                                    <field name="link" required="is_required == True" widget="url"/>
+                                    <field name="partner_id" required="is_required == True"/>
+                                    <field name="product_id" readonly="0"/>
+                                    <field name="currency_id" required="is_required == True"/>
+                                    <field name="date" required="is_required == True"/>
+                                    <field name="amount" required="is_required == True"/>
+                                    <field name="is_required" readonly="1"/>
+                                    <field invisible="1" name="hide"/>
+                                    <button class="btn-primary" invisible="hide == True" name="create_purchase_order" string="Create PO" type="object"/>
+                                </list></field>
+                        </page>
+                        <page string="Clearance Documents">
+                            <field name="clearance_documents_ids" widget="section_and_note_one2many">
+                                <list editable="bottom">
+                                    <field invisible="1" name="link_id"/>
+                                    <field name="name"/>
+                                    <field name="link" required="is_required == True" widget="url"/>
+                                    <field name="partner_id" required="is_required == True"/>
+                                    <field name="product_id" readonly="0"/>
+                                    <field name="currency_id" required="is_required == True"/>
+                                    <field name="date" required="is_required == True"/>
+                                    <field name="amount" required="is_required == True"/>
+                                    <field name="is_required" readonly="1"/>
+                                    <field invisible="1" name="hide"/>
+                                    <button class="btn-primary" invisible="hide == True" name="create_purchase_order" string="Create PO" type="object"/>
+                                </list></field>
+                        </page>
+                        <page string="Comparison Sheet">
+                            <field invisible="1" name="is_approved_line"/>
+                            <field name="comparison_sheet_ids" readonly="is_approved_line == True" widget="section_and_note_one2many">
+                                <list editable="bottom">
+                                    <field invisible="1" name="link_id"/>
+                                    <field name="name"/>
+                                    <field name="amount"/>
+                                    <field name="pol"/>
+                                    <field name="port"/>
+                                    <field name="free_time"/>
+                                    <field name="shipping_line"/>
+                                    <field name="date"/>
+                                    <field name="etd"/>
+                                    <field name="is_approved" readonly="1"/>
+                                    <field invisible="1" name="readonly_approved"/>
+                                    <button class="oe_highlight" invisible="readonly_approved != True" name="action_approved" string="Approved" type="object"/>
+                                </list></field>
+                        </page>
+                        <page string="Other Information">
+                            <group>
+                                <group>
+                                    <field name="user_id"/>
+                                    <field name="company_id"/>
+                                    <field name="origin"/>
+                                </group>
+                                <group>
+                                    <field name="payment_term_id"/>
+                                    <field name="incoterm_id"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form></field>
+    </record>
+    <record id="gs_shipment_tracking_view_kanban" model="ir.ui.view">
+        <field name="name">gs.shipment.tracking.kanban</field>
+        <field name="model">gs.shipment.tracking</field>
+        <field name="arch" type="xml">
+            <kanban class="o_broker_profile_kanban">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="picking_id"/>
+                <field name="partner_id"/>
+                <field name="partner_ref"/>
+                <field name="currency_id"/>
+                <field name="date_order"/>
+                <field name="date_planned"/>
+                <field name="picking_type_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_res_partner_kanban">
+                            <div class="oe_kanban_details">
+                                <h3>
+                                    <field name="name"/>
+                                </h3>
+                                <ul>
+                                    <li>
+                                        <b>
+                                            Partner:
+                                        </b>
+                                        <field name="partner_id"/>
+                                    </li>
+                                    <li>
+                                        <b>
+                                            Order Deadline:
+                                        </b>
+                                        <field name="date_order"/>
+                                    </li>
+                                    <li>
+                                        <b>
+                                            Deliver To:
+                                        </b>
+                                        <field name="picking_type_id"/>
+                                    </li>
+                                </ul>
+                                <div class="o_kanban_record_bottom h5 mt-2 mb-0">
+                                    <div class="d-flex flex-grow-1 text-600 mt-1" id="utm_statistics"/>
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge badge-pill float-right mt4 mr16" style="border-color:#5e75c8;background: #5e75c8;color: whitesmoke;">
+                                            <field name="state"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span class="badge badge-pill float-right mt4 mr16" style="background: #00A09D;color: whitesmoke;">
+                                            <field name="user_id"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span class="badge badge-pill float-right mt4 mr16" style="background: #00A09D;color: whitesmoke;">
+                                            Amount:
+                                            <field name="amount_total"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban></field>
+    </record>
+    <record id="gs_shipment_tracking_report_graph" model="ir.ui.view">
+        <field name="name">gs.shipment.tracking.report.graph</field>
+        <field name="model">gs.shipment.tracking</field>
+        <field name="arch" type="xml">
+            <graph string="Shipment Tracking">
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="picking_type_id"/>
+            </graph></field>
+    </record>
+    <record id="view_gs_shipment_tracking_pivot" model="ir.ui.view">
+        <field name="name">gs.shipment.tracking.pivot</field>
+        <field name="model">gs.shipment.tracking</field>
+        <field name="arch" type="xml">
+            <pivot disable_linking="True" display_quantity="true" string="Shipment Tracking Analysis">
+                <field name="name" type="row"/>
+            </pivot></field>
+    </record>
+    <record id="gs_shipment_tracking_action" model="ir.actions.act_window">
+        <field name="name">Shipment Tracking</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.shipment.tracking</field>
+        <field name="context">{'search_default_group_by_state':1}</field>
+        <field name="view_mode">kanban,list,form,graph,pivot</field>
+    </record>
+    <menuitem action="gs_shipment_tracking_action" id="sub_gs_shipment_tracking" name="Shipment Tracking" parent="gs_purchase_tracking_v15.menu_gs_purchase_tracking" sequence="2"/>
+</odoo>

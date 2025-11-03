@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="serial_for_tracking" model="ir.sequence">
+        <field name="name">gs.purchase.tracking.sequence</field>
+        <field name="code">gs.purchase.tracking.sequence</field>
+        <field name="prefix">EPO</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="serial_for_shipment_tracking" model="ir.sequence">
+        <field name="name">gs.shipment.tracking.sequence</field>
+        <field name="code">gs.shipment.tracking.sequence</field>
+        <field name="prefix">SP</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    
+</odoo>

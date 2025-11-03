@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sh_contact_form_view" model="ir.ui.view">
+        <field name="name">sh.contact.form.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//sheet[1]" position="before">
+                <header>
+                    <button class="oe_highlight" data-hotkey="v" groups="sh_contact_approval.sh_contact_approve_manager" invisible="state != 'under_approval'" name="button_approve_contact" string="Approve" type="object"/>
+                    <button class="oe_highlight" data-hotkey="v" groups="sh_contact_approval.sh_contact_approve_manager" invisible="state != 'under_approval'" name="button_not_approve_contact" string="Not Approve" type="object"/>
+                    <button data-hotkey="v" groups="sh_contact_approval.sh_contact_approve_manager" invisible="state not in ['approved', 'not_approved']" name="button_resat_to_under_approval" string="Reset to Under Approval" type="object"/>
+                    <field name="state" statusbar_visible="draft,under_approval,approved,not_approved" widget="statusbar"/>
+                </header>
+            </xpath></field>
+    </record>
+    <record id="sh_contact_approve_action" model="ir.actions.server">
+        <field name="name">Mass Approve</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="code">records.approve_contact()</field>
+    </record>
+    <record id="sh_product_not_approve_action" model="ir.actions.server">
+        <field name="name">Mass Not Approve</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="code">records.not_approve_contact()</field>
+    </record>
+    <record id="sh_under_approval_contact" model="ir.actions.act_window">
+        <field name="name">Under Approval Contacts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="domain">[('state','in',['under_approval','not_approved']),('active','=',False)]</field>
+        <field name="context">{}</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new Contacts
+            </p></field>
+    </record>
+    <menuitem action="sh_under_approval_contact" id="under_approval_contact_menu" name="Under Approval Contacts" parent="contacts.menu_contacts"/>
+</odoo>

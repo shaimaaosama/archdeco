@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="print_gs_stock_card_report_view_form" model="ir.ui.view">
+        <field name="name">gs.stock.card.report.wizard.form</field>
+        <field name="model">gs.stock.card.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Stock Card">
+                <field name="leave_report_printed" invisible="1"/>
+                    <group class="oe_title">
+                        <group>
+                            <field name="start_from"/>
+                        </group>
+                        <group>
+                            <field name="start_to"/>
+                        </group>
+                    </group>
+                    <group class="oe_title">
+                        <field name="product_ids" widget="many2many_tags"/>
+                        <field name="product_categ_ids" widget="many2many_tags"/>
+                        <field name="brand_ids" widget="many2many_tags"/>
+                    </group>
+                <footer>
+                    <button name="action_html_wizard" string="View" type="object" class="btn-primary"/>
+                    <button name="action_pdf_wizard" string="Print PDF" type="object" class="btn-primary"/>
+                    <button name="action_excel_wizard" string="Print Excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="print_gs_stock_card_report_product_action" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Forcast Stock Card</field>
+        <field name="res_model">gs.stock.card.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="print_gs_stock_card_report_view_form"/>
+        <field name="binding_type">action</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem
+        id="gs_menu_gs_stock_card_report"
+        name="Forcast Stock Card wiz"
+        action="print_gs_stock_card_report_product_action"
+        parent="stock.menu_warehouse_report"
+        sequence="34"
+    />
+
+</odoo>

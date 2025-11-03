@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="act_transfer_return_picking" model="ir.actions.act_window">
+        <field name="name">Reverse Transfer</field>
+        <field name="res_model">transfer.return.picking</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <record id="view_transfer_return_picking_form" model="ir.ui.view">
+        <field name="name">Return lines</field>
+        <field name="model">transfer.return.picking</field>
+        <field name="arch" type="xml">
+            <form>
+                <field invisible="1" name="move_dest_exists"/>
+                <field force_save="1" invisible="1" name="transfer_id"/>
+                <field force_save="1" invisible="1" name="picking_id"/>
+                <group invisible="move_dest_exists == False">
+                    <div class="oe_grey">
+                        <p>
+                            This picking appears to be chained with another operation. Later, if you receive the goods you are returning now, make sure to
+                            <b>
+                                reverse
+                            </b>
+                            the returned picking in order to avoid logistic rules to be applied again (which would create duplicated operations)
+                        </p>
+                    </div>
+                </group>
+                <group>
+                    <field name="product_return_moves" nolabel="1">
+                        <list create="0" editable="top" readonly="1">
+                            <field force_save="1" name="product_id" options="{'no_create': True, 'no_open': True}" readonly="1"/>
+                            <field force_save="1" name="quantity" readonly="1"/>
+                            <field groups="uom.group_uom" name="uom_id" readonly="1"/>
+                            <field invisible="1" name="move_id"/>
+                            <field invisible="1" name="sh_is_secondary_unit"/>
+                            <field force_save="1" name="sh_sec_qty" readonly="sh_is_secondary_unit == False" required="sh_is_secondary_unit == True"/>
+                            <field force_save="1" groups="uom.group_uom" name="sh_sec_uom" required="1"/>
+                        </list></field>
+                </group>
+                <group>
+                    <field invisible="1" name="parent_location_id"/>
+                    <field invisible="1" name="original_location_id"/>
+                    <field groups="stock.group_stock_multi_locations" name="location_id" options="{'no_create': True, 'no_open': True}" required="1"/>
+                    <field invisible="1" name="company_id"/>
+                </group>
+                <footer>
+                    <button class="btn-primary" data-hotkey="q" name="create_returns" string="Return" type="object"/>
+                    <button class="btn-secondary" data-hotkey="z" special="cancel" string="Cancel"/>
+                </footer>
+            </form></field>
+    </record>
+</odoo>

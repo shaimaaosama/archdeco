@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <template id="gs_location_assets_backend" name="gs_location assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/gs_location/static/src/core.css"/>
+                <script type="text/javascript" src="/gs_location/static/src/js/stock_moves.js"/>
+            </xpath>
+        </template>-->
+
+        <record id="gs_location.gs_location_assets_backend_inherit" model="ir.asset">
+            <field name="name">gs_location_assets_backend_inherit</field>
+            <field name="bundle">web.assets_backend</field>
+            <field name="path">/gs_location/static/src/js/stock_moves.js</field>
+        </record>
+
+
+        <record id="gs_location.gs_location_assets_backend_inherit2" model="ir.asset">
+            <field name="name">gs_location_assets_backend_inherit2</field>
+            <field name="bundle">web.assets_backend</field>
+            <field name="path">/gs_location/static/src/core.css</field>
+        </record>
+
+        <record id="gs_location.product_moves_assets_backend_inherit" model="ir.asset">
+            <field name="name">product_moves_assets_backend_inherit</field>
+            <field name="bundle">web.assets_backend</field>
+            <field name="path">/gs_location/static/src/js/product_moves.js</field>
+        </record>
+    </data>
+</odoo>

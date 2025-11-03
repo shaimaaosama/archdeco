@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="get_product_moves_data_wizard_from_view" model="ir.ui.view">
+        <field name="name">get.product.moves.data.wizard.from.view</field>
+        <field name="model">get.product.moves.data.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Get Product Moves Data">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="location_ids" widget="many2many_tags"/>
+                            <field name="partner_ids" widget="many2many_tags"/>
+                            <field name="product_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="company_id" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                 <footer>
+                      <button name="action_get_data" string="GET" type="object" class="btn-primary"/>
+                      <button string="Cancel" class="btn-default" special="cancel" />
+                  </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_get_product_moves_data_wizard" model="ir.actions.act_window">
+        <field name="name">Get Product Moves Data</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">get.product.moves.data.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="get_product_moves_data_wizard_from_view"/>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

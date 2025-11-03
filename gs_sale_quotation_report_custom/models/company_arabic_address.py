@@ -1,0 +1,16 @@
+from odoo import fields, models, api
+
+
+class ResCompanyInherit(models.Model):
+    _inherit = 'res.company'
+    _description = 'Arabic Address Description'
+
+    stamp_image = fields.Binary(string="Signature")
+    street1 = fields.Char()
+    street21 = fields.Char()
+    zip1 = fields.Char()
+    city1 = fields.Char()
+    country_id1 = fields.Char(string="Country")
+    name1 = fields.Char(string='Company Name', required=True, store=True, readonly=False)
+    bank_account_ids = fields.One2many('account.journal','company_id',string='Bank Accounts')
+    whatsapp_no = fields.Char(string='Whatsapp NO')
