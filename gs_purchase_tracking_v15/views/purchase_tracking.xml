@@ -138,9 +138,10 @@
                                     <field name="price_unit" optional="show"/>
                                     <field context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]" name="taxes_id" optional="show" options="{'no_create': True}" widget="many2many_tags"/>
                                     <field name="price_subtotal" optional="show" widget="monetary"/>
-                                </list></field>
+                                </list>
+                            </field>
                             <group class="oe_subtotal_footer oe_right">
-                                <field colspan="2" name="tax_totals_json" nolabel="1" widget="account-tax-totals-field"/>
+                                <field colspan="2" name="tax_totals_json" nolabel="1" widget="account-tax-totals-field" />
                             </group>
                         </page>
                         <page string="Other Information">
@@ -156,7 +157,7 @@
                                     <field name="payment_term_id"/>
                                     <field name="incoterm_id"/>
                                     <field force_save="1" groups="analytic.group_analytic_accounting" name="analytic_account_id"/>
-                                    <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>
+<!--                                    <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>-->
                                 </group>
                             </group>
                         </page>
@@ -184,11 +185,11 @@
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
-                </div>
+<!--                <div class="oe_chatter">-->
+<!--                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="activity_ids" widget="mail_activity"/>-->
+<!--                    <field name="message_ids" widget="mail_thread"/>-->
+<!--                </div>-->
             </form></field>
     </record>
     <record id="gs_purchase_tracking_view_kanban" model="ir.ui.view">

@@ -255,7 +255,7 @@ class GsPurchaseTracking(models.Model):
                         'sh_sec_uom': pro.sh_sec_uom.id if pro.sh_sec_uom.id else False,
                         'product_uom_id': pro.product_uom.id if pro.product_uom.id else False,
                         'analytic_account_id': pro.tracking_id.analytic_account_id.id if pro.tracking_id.analytic_account_id.id else False,
-                        'analytic_tag_ids': [(6, 0, pro.tracking_id.analytic_tag_id.ids)],
+                        # 'analytic_tag_ids': [(6, 0, pro.tracking_id.analytic_tag_id.ids)],
                         'tax_ids': [(6, 0, pro.taxes_id.ids)],
                         'price_subtotal': pro.price_subtotal if pro.price_subtotal else False,
 
@@ -333,7 +333,7 @@ class GsPurchaseTracking(models.Model):
     date_planned = fields.Datetime(string='Receipt Date',)
     order_line_tracking = fields.One2many('purchase.order.line.tracking', 'tracking_id', store=True)
     company_id = fields.Many2one('res.company', 'Company', required=True, index=True, default=lambda self: self.env.company.id)
-    tax_totals_json = fields.Char(compute='_compute_tax_totals_json')
+    tax_totals_json = fields.Binary(compute='_compute_tax_totals_json')
     user_id = fields.Many2one(
         'res.users', string='Purchase Representative', index=True, tracking=True,
         default=lambda self: self.env.user, check_company=True)
@@ -370,7 +370,7 @@ class GsPurchaseTracking(models.Model):
     is_finish = fields.Boolean(copmpute='_compute_action_crate_receipt')
     invoice_id = fields.Many2many('account.move', string="Invoice", domain="[('move_type', '=', 'out_invoice')]")
     analytic_account_id = fields.Many2one('account.analytic.account', 'Analytic Account')
-    analytic_tag_id = fields.Many2one('account.analytic.tag', string='Analytic Tag')
+    # analytic_tag_id = fields.Many2one('account.analytic.tag', string='Analytic Tag')
 
     invoice_count = fields.Integer(compute='get_gs_invoice_count')
 
@@ -425,14 +425,29 @@ class GsPurchaseTracking(models.Model):
 
     @api.depends('order_line_tracking.taxes_id', 'order_line_tracking.price_subtotal', 'amount_total', 'amount_untaxed')
     def _compute_tax_totals_json(self):
-        def compute_taxes(order_line_tracking):
-            return order_line_tracking.taxes_id._origin.compute_all(**order_line_tracking._prepare_compute_all_values())
-
-        account_move = self.env['account.move']
+        # def compute_taxes(order_line_tracking):
+        #     return order_line_tracking.taxes_id._origin.compute_all(**order_line_tracking._prepare_compute_all_values())
+        #
+        # account_move = self.env['account.move']
+        # for order in self:
+        #     tax_lines_data = account_move._prepare_tax_lines_data_for_totals_from_object(order.order_line_tracking, compute_taxes)
+        #     tax_totals = account_move._get_tax_totals(order.partner_id, tax_lines_data, order.amount_total, order.amount_untaxed, order.currency_id)
+        #     order.tax_totals_json = json.dumps(tax_totals)
+        AccountTax = self.env['account.tax']
         for order in self:
-            tax_lines_data = account_move._prepare_tax_lines_data_for_totals_from_object(order.order_line_tracking, compute_taxes)
-            tax_totals = account_move._get_tax_totals(order.partner_id, tax_lines_data, order.amount_total, order.amount_untaxed, order.currency_id)
-            order.tax_totals_json = json.dumps(tax_totals)
+            if not order.company_id:
+                order.tax_totals_json = False
+                continue
+            order_lines = order.order_line_tracking.filtered(lambda x: not x.display_type)
+            base_lines = [line._prepare_base_line_for_taxes_computation() for line in order_lines]
+            AccountTax._add_tax_details_in_base_lines(base_lines, order.company_id)
+            AccountTax._round_base_lines_tax_details(base_lines, order.company_id)
+            order.tax_totals_json = AccountTax._get_tax_totals_summary(
+                base_lines=base_lines,
+                currency=order.currency_id or order.company_id.currency_id,
+                company=order.company_id,
+            )
+
 
     is_cancel = fields.Boolean(compute="_get_default_cancel")
     is_draft = fields.Boolean(compute="_get_default_draft")
