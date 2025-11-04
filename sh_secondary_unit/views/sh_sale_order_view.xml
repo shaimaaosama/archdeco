@@ -6,14 +6,14 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet/notebook/page[@name='order_lines']/field[@name='order_line']/form//field[@name='price_unit']" position="after">
-                <field invisible="1" name="sh_is_secondary_unit"/>
-                <field groups="sh_secondary_unit.group_secondary_unit_sale" invisible="1" name="category_id"/>
+                <field invisible="1" name="sh_is_secondary_unit" column_invisible="1"/>
+                <field groups="sh_secondary_unit.group_secondary_unit_sale" invisible="1" name="category_id" column_invisible="1"/>
                 <field force_save="1" groups="sh_secondary_unit.group_secondary_unit_sale" name="sh_sec_qty" readonly="sh_is_secondary_unit == False" required="sh_is_secondary_unit == True"/>
                 <field domain="[('category_id','=',category_id)]" force_save="1" groups="sh_secondary_unit.group_secondary_unit_sale" name="sh_sec_uom" readonly="sh_is_secondary_unit == False" required="sh_is_secondary_unit == True"/>
             </xpath>
-            <xpath expr="//sheet/notebook/page[@name='order_lines']/field[@name='order_line']/list/field[@name='product_uom']" position="after">
-                <field invisible="1" name="sh_is_secondary_unit"/>
-                <field groups="sh_secondary_unit.group_secondary_unit_sale" invisible="1" name="category_id"/>
+            <xpath expr="//sheet/notebook/page[@name='order_lines']/field[@name='order_line']/list/field[@name='product_uom'][2]" position="after">
+                <field invisible="1" name="sh_is_secondary_unit" column_invisible="1"/>
+                <field groups="sh_secondary_unit.group_secondary_unit_sale" invisible="1" name="category_id" column_invisible="1"/>
                 <field force_save="1" groups="sh_secondary_unit.group_secondary_unit_sale" name="sh_sec_qty" readonly="sh_is_secondary_unit == False" required="sh_is_secondary_unit == True"/>
                 <field domain="[('category_id','=',category_id)]" force_save="1" groups="sh_secondary_unit.group_secondary_unit_sale" name="sh_sec_uom" readonly="sh_is_secondary_unit == False" required="sh_is_secondary_unit == True"/>
             </xpath></field>
