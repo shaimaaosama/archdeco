@@ -54,7 +54,6 @@ class sale_order(models.Model):
 
     @api.onchange('partner_id')
     def onchange_partner_id(self):
-        super(sale_order, self).onchange_partner_id()
         partner_id = self.partner_id
         today_date = fields.Date.today()
         t_overdue = 0
