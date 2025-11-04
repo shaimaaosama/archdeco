@@ -5,7 +5,7 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='uom_id']" position="after">
+            <xpath expr="//field[@name='invoice_policy']" position="after">
                 <field name="category_id" invisible="1"/>
                 <field name="sh_is_secondary_unit"/>
                 <field name="sh_secondary_uom" invisible="sh_is_secondary_unit  ==  False "
