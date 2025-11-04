@@ -6,9 +6,9 @@ from odoo.exceptions import RedirectWarning, UserError, ValidationError, AccessE
 class GsResUsersInherit(models.Model):
     _inherit = 'res.users'
 
-    account_analytic_group_ids = fields.Many2many("account.analytic.group", "account_aa01", "account_aa001", "account_aa0001", string="Analytic Account Groups")
+    # account_analytic_group_ids = fields.Many2many("account.analytic.group", "account_aa01", "account_aa001", "account_aa0001", string="Analytic Account Groups")
     account_analytic_account_ids = fields.Many2many("account.analytic.account", "account_ana01", "account_ana001", "account_ana0001", string="Analytic Accounts")
-    account_analytic_tag_ids = fields.Many2many("account.analytic.tag", "account_tag01", "account_tag001", "account_tag0001", string="Analytic Tags")
+    # account_analytic_tag_ids = fields.Many2many("account.analytic.tag", "account_tag01", "account_tag001", "account_tag0001", string="Analytic Tags")
     # web_phone_sip_user = fields.Char()
     # web_phone_sip_secret = fields.Char()
 

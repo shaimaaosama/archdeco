@@ -9,8 +9,8 @@
                     <page string="Analytic Account" name="account_analytic_group">
                         <group>
                             <field name="account_analytic_account_ids" widget="many2many_tags"  force_save="1"/>
-                            <field name="account_analytic_tag_ids" widget="many2many_tags"/>
-                            <field name="account_analytic_group_ids" widget="many2many_tags"/>
+<!--                            <field name="account_analytic_tag_ids" widget="many2many_tags"/>-->
+<!--                            <field name="account_analytic_group_ids" widget="many2many_tags"/>-->
                         </group>
                     </page>
                  </xpath>
