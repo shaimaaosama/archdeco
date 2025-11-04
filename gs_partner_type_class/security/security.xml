@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="partner_type_class_res_partner" model="ir.rule">
-        <field name="name">Res Partner</field>
-        <field ref="base.model_res_partner" name="model_id"/>
-        <field name="domain_force">[('partner_type', 'in', user.partner_type_ids.ids)]</field>
-    </record>
+<!--    <record id="partner_type_class_res_partner" model="ir.rule">-->
+<!--        <field name="name">Res Partner</field>-->
+<!--        <field ref="base.model_res_partner" name="model_id"/>-->
+<!--        <field name="domain_force">[('partner_type', 'in', user.partner_type_ids.ids)]</field>-->
+<!--    </record>-->
 </odoo>
