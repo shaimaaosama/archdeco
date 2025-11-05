@@ -100,11 +100,11 @@
                             <field name="line_ids" nolabel="1" readonly="state != 'draft'">
                                 <list editable="bottom">
                                     <field domain="[('type', '!=', 'service')]" name="product_id" required="1"/>
-                                    <field invisible="1" name="qty_available"/>
+                                    <field invisible="1" name="qty_available" column_invisible="1"/>
                                     <field groups="uom.group_uom" name="product_uom_id" required="1"/>
                                     <field force_save="1" invisible="0" name="qty_warehouse" readonly="1"/>
                                     <field force_save="1" name="product_qty" required="1"/>
-                                    <field invisible="1" name="sh_is_secondary_unit"/>
+                                    <field invisible="1" name="sh_is_secondary_unit" column_invisi ble="1"/>
                                     <field force_save="1" name="sh_sec_qty" readonly="sh_is_secondary_unit == False" required="sh_is_secondary_unit == True"/>
                                     <field force_save="1" groups="uom.group_uom" name="sh_sec_uom" required="1"/>
                                 </list></field>
@@ -114,11 +114,11 @@
                         </page>
                     </notebook>
                 </sheet>
-                <div class="oe_chatter">
-                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>
-                    <field name="activity_ids" widget="mail_activity"/>
-                    <field name="message_ids" widget="mail_thread"/>
-                </div>
+<!--                <div class="oe_chatter">-->
+<!--                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>-->
+<!--                    <field name="activity_ids" widget="mail_activity"/>-->
+<!--                    <field name="message_ids" widget="mail_thread"/>-->
+<!--                </div>-->
             </form></field>
     </record>
     <record id="action_stock_internal_transfer" model="ir.actions.act_window">
