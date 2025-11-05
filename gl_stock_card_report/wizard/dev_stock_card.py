@@ -606,7 +606,7 @@ class dev_stock_card(models.TransientModel):
         fp = BytesIO()
         workbook.save(fp)
         fp.seek(0)
-        excel_file = base64.encodestring(fp.read())
+        excel_file = base64.encodebytes(fp.getvalue())
         fp.close()
         self.write({'excel_file': excel_file})
         if self.excel_file:
