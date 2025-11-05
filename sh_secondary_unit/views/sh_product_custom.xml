@@ -5,11 +5,15 @@
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='invoice_policy']" position="after">
+            <xpath expr="//field[@name='product_tooltip']" position="after">
                 <field invisible="1" name="category_id"/>
                 <field name="sh_is_secondary_unit"/>
                 <field domain="[('category_id','=',category_id)]" invisible="sh_is_secondary_unit == False" name="sh_secondary_uom" required="sh_is_secondary_unit == True"/>
-            </xpath></field>
+            </xpath>
+            <xpath position="after" expr="//field[@name='type']">
+                <xpath expr="//field[@name='invoice_policy']" position="move"/>
+            </xpath>
+        </field>
     </record>
     <!--
     <record id="sh_stock_product_inherit_view" model="ir.ui.view">
