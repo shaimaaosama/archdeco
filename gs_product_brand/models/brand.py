@@ -51,7 +51,7 @@ class BrandPivotInvoicing(models.Model):
     @api.model
     def _select(self) -> SQL:
         return SQL(
-            "%s, template.product_brand_id as brand_id", super()._select()
+            "%s, template.brand_id as brand_id", super()._select()
         )
 
     @api.model
