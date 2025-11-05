@@ -104,7 +104,7 @@
                                     <field groups="uom.group_uom" name="product_uom_id" required="1"/>
                                     <field force_save="1" invisible="0" name="qty_warehouse" readonly="1"/>
                                     <field force_save="1" name="product_qty" required="1"/>
-                                    <field invisible="1" name="sh_is_secondary_unit" column_invisi ble="1"/>
+                                    <field invisible="1" name="sh_is_secondary_unit" column_invisible="1"/>
                                     <field force_save="1" name="sh_sec_qty" readonly="sh_is_secondary_unit == False" required="sh_is_secondary_unit == True"/>
                                     <field force_save="1" groups="uom.group_uom" name="sh_sec_uom" required="1"/>
                                 </list></field>
