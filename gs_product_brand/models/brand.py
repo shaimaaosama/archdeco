@@ -47,17 +47,31 @@ class BrandPivotInvoicing(models.Model):
 
     brand_id = fields.Many2one('product.brand', string='Brand')
 
+    @api.model
     def _select(self):
-        res = super(BrandPivotInvoicing, self)._select()
-        query = res.split('template.categ_id                                           AS product_categ_id,', 1)
-        res = query[0] + 'template.categ_id as product_categ_id,template.brand_id as brand_id,' + query[1]
-        return res
+        select_str = super(BrandPivotInvoicing, self)._select()
+        # find the marker
+        marker = 'template.categ_id'
+        idx = select_str.find(marker)
+        if idx == -1:
+            # fallback: log warning
 
+            return select_str
+        # find the comma after the marker alias
+        # we assume something like: "template.categ_id                                           AS product_categ_id,"
+        # So find the comma after the alias
+        comma_pos = select_str.find(',', idx)
+        if comma_pos == -1:
+            # fallback
+            return select_str
+        # insert our field after the comma
+        insertion = " template.brand_id as brand_id,"
+        return select_str[:comma_pos + 1] + insertion + select_str[comma_pos + 1:]
+
+    @api.model
     def _group_by(self):
-        res = super(BrandPivotInvoicing, self)._group_by()
-        query = res.split('template.categ_id,', 1)
-        res = query[0] + 'template.categ_id,template.brand_id,' + query[1]
-        return res
+        group_by_str = super(BrandPivotInvoicing, self)._group_by()
+        return group_by_str + ", template.brand_id"
 
 
 class PurchaseBrandPivot(models.Model):
