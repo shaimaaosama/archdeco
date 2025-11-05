@@ -49,24 +49,16 @@ class BrandPivotInvoicing(models.Model):
 
     @api.model
     def _select(self):
-        select_str = super(BrandPivotInvoicing, self)._select()
-        # find the marker
-        marker = 'template.categ_id'
-        idx = select_str.find(marker)
+        select_obj = super(BrandPivotInvoicing, self)._select()
+        raw = str(select_obj)
+        marker = 'template.categ_id                                           AS product_categ_id,'
+        idx = raw.find(marker)
         if idx == -1:
-            # fallback: log warning
-
-            return select_str
-        # find the comma after the marker alias
-        # we assume something like: "template.categ_id                                           AS product_categ_id,"
-        # So find the comma after the alias
-        comma_pos = select_str.find(',', idx)
-        if comma_pos == -1:
-            # fallback
-            return select_str
-        # insert our field after the comma
-        insertion = " template.brand_id as brand_id,"
-        return select_str[:comma_pos + 1] + insertion + select_str[comma_pos + 1:]
+            return select_obj  # or return raw
+        insertion = ' template.brand_id AS brand_id,'
+        # place after the marker
+        new_sql = raw[:idx + len(marker)] + insertion + raw[idx + len(marker):]
+        return new_sql
 
     @api.model
     def _group_by(self):
