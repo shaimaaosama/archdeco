@@ -39,7 +39,7 @@ class AccountInherit(models.Model):
                     journal_type=journal.type,
                 ))
         else:
-            journal = self._search_default_journal(journal_types)
+            journal = self._search_default_journal()
 
         return journal.currency_id or journal.company_id.currency_id
 
