@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
+from odoo.tools import SQL
 
 
 class ProductBrand(models.Model):
@@ -48,22 +49,14 @@ class BrandPivotInvoicing(models.Model):
     brand_id = fields.Many2one('product.brand', string='Brand')
 
     @api.model
-    def _select(self):
-        select_obj = super(BrandPivotInvoicing, self)._select()
-        raw = str(select_obj)
-        marker = 'template.categ_id                                           AS product_categ_id,'
-        idx = raw.find(marker)
-        if idx == -1:
-            return select_obj  # or return raw
-        insertion = ' template.brand_id AS brand_id,'
-        # place after the marker
-        new_sql = raw[:idx + len(marker)] + insertion + raw[idx + len(marker):]
-        return new_sql
+    def _select(self) -> SQL:
+        return SQL(
+            "%s, template.product_brand_id as product_brand_id", super()._select()
+        )
 
     @api.model
-    def _group_by(self):
-        group_by_str = super(BrandPivotInvoicing, self)._group_by()
-        return group_by_str + ", template.brand_id"
+    def _group_by(self) -> SQL:
+        return SQL("%s, template.product_brand_id", super()._group_by())
 
 
 class PurchaseBrandPivot(models.Model):
