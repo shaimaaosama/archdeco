@@ -51,12 +51,12 @@ class BrandPivotInvoicing(models.Model):
     @api.model
     def _select(self) -> SQL:
         return SQL(
-            "%s, template.product_brand_id as product_brand_id", super()._select()
+            "%s, template.product_brand_id as brand_id", super()._select()
         )
 
     @api.model
     def _group_by(self) -> SQL:
-        return SQL("%s, template.product_brand_id", super()._group_by())
+        return SQL("%s, template.brand_id", super()._group_by())
 
 
 class PurchaseBrandPivot(models.Model):
