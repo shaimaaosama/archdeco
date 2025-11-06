@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_ref']" position="after">
+                    <field invisible="1" name="is_create_bill" readonly="0"/>
+                    <field invisible="1" name="is_send_by_email" readonly="0"/>
+                    <field invisible="1" name="is_print_quotation" readonly="0"/>
+                    <field invisible="1" name="is_confirm" readonly="0"/>
+                    <field invisible="1" name="is_cancel" readonly="0"/>
+                    <field invisible="1" name="is_draft" readonly="0"/>
+                    <field invisible="1" name="is_approve" readonly="0"/>
+                    <field invisible="1" name="is_confirm_rem_mail" readonly="0"/>
+                    <field invisible="1" name="is_lock" readonly="0"/>
+                    <field invisible="1" name="is_unlock" readonly="0"/>
+                    <field invisible="1" name="is_view_picking" readonly="0"/>
+                    <field invisible="1" name="is_create_tracking" readonly="0"/>
+                </xpath>
+                <xpath expr="//button[@name='action_create_invoice']" position="attributes">
+                    <attribute name="invisible">state not in ('purchase', 'done') or invoice_status in ('no', 'invoiced') or is_create_bill != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_draft']" position="attributes">
+                    <attribute name="invisible">is_draft != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_unlock']" position="attributes">
+                    <attribute name="invisible">is_unlock != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='confirm_reminder_mail']" position="attributes">
+                    <attribute name="invisible">state not in ('purchase', 'done') or mail_reminder_confirmed == True or date_planned == False or is_confirm_rem_mail != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_create_invoice'][last()]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_rfq_send'][last()]" position="replace">
+                    <button context="{'send_rfq':False}" data-hotkey="g" invisible="is_send_by_email != True or state != 'purchase'" name="action_rfq_send" string="Send PO by Email" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="replace">
+                    <button data-hotkey="x" invisible="is_cancel != True or state not in ['draft', 'to approve', 'sent', 'purchase']" name="button_cancel" string="Cancel" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='action_rfq_send']" position="replace">
+                    <button class="oe_highlight" context="{'send_rfq':True}" data-hotkey="g" invisible="is_send_by_email != True or state != 'draft'" name="action_rfq_send" string="Send by Email" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='print_quotation']" position="replace">
+                    <button class="oe_highlight" data-hotkey="k" groups="base.group_user" invisible="is_print_quotation != True or state != 'draft'" name="print_quotation" string="Print RFQ" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='button_done']" position="replace">
+                    <button data-hotkey="l" invisible="is_lock != True or state != 'purchase'" name="button_done" string="Lock" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='button_confirm']" position="replace">
+                    <button class="oe_highlight" data-hotkey="v" id="bid_confirm" invisible="is_confirm != True or state != 'draft'" name="button_confirm" string="Confirm Order" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='button_confirm'][last()]" position="replace">
+                    <button class="oe_highlight" data-hotkey="v" id="bid_confirm" invisible="is_confirm != True or state != 'sent'" name="button_confirm" string="Confirm Order" type="object"/>
+                </xpath></field>
+        </record>
+        <record id="purchase_order_form_inherit00" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherit</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_stock.purchase_order_view_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_picking']" position="attributes">
+                    <attribute name="invisible">is_shipped == True or state not in ('purchase', 'done') or incoming_picking_count == 0 or is_view_picking != True</attribute>
+                </xpath></field>
+        </record>
+    </data>
+</odoo>

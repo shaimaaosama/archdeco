@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="gs_payment_helpdesk_ticket_view_form_inherit" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.view.form.inherit</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button class="oe_highlight"  invisible="is_create_payment_new == True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
+                    <field name="payment_count" string="Payment Order" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field invisible="1" name="is_create_payment_new"/>
+            </xpath></field>
+    </record>
+    <record id="gs_payment_sale_order_view_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field invisible="1" name="is_create_payment_new"/>
+                <field invisible="1" name="is_create_payment_order"/>
+                <button class="oe_highlight" invisible="is_create_payment_new == True or is_create_payment_order != True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
+                    <field name="payment_count" string="Payment Order" widget="statinfo"/>
+                </button>
+            </xpath></field>
+    </record>
+    <record id="gs_payment_purchase_order_view_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.view.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field invisible="1" name="is_create_payment_new"/>
+                <field invisible="1" name="is_create_payment_order"/>
+                <button class="oe_highlight"  invisible="is_create_payment_new == True or is_create_payment_order != True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
+                    <field name="payment_count" string="Payment Order" widget="statinfo"/>
+                </button>
+            </xpath></field>
+    </record>
+    <record id="gs_payment_purchase_tracking_view_form_inherit" model="ir.ui.view">
+        <field name="name">gs.purchase.tracking.view.form.inherit</field>
+        <field name="model">gs.purchase.tracking</field>
+        <field name="inherit_id" ref="gs_purchase_tracking_v15.gs_purchase_tracking_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field invisible="1" name="is_create_payment_new"/>
+                <field invisible="1" name="is_create_payment_order"/>
+                <button class="oe_highlight"  invisible="is_create_payment_new == True or is_create_payment_order != True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
+                    <field name="payment_count" string="Payment Order" widget="statinfo"/>
+                </button>
+            </xpath></field>
+    </record>
+</odoo>

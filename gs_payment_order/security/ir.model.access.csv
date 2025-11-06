@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_payment_order,gs_payment_order,model_gs_payment_order,,1,1,1,1
+access_gs_payment_type,gs_payment_type,model_gs_payment_type,,1,1,1,1
+access_gs_create_payment_wizard,gs_create_payment_wizard,model_gs_create_payment_wizard,,1,1,1,1
+access_gs_payment_order_permission,gs_payment_order_permission,model_gs_payment_order_permission,,1,1,1,1
+access_gs_special_approval_button_wizard,gs_special_approval_button_wizard,model_gs_special_approval_button_wizard,,1,1,1,1
+access_gs_payment_order_history,gs_payment_order_history,model_gs_payment_order_history,,1,1,1,1
+access_gs_return_wizard,gs_return_wizard,model_gs_return_wizard,,1,1,1,1
+
+access_gs_hr_employee,gs_hr_employee,hr.model_hr_employee,gs_payment_order.group_gs_payment_type_po_user,1,0,0,0
+access_gs_res_users,gs_res_users,base.model_res_users,,1,1,1,0

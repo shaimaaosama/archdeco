@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="gs_special_approval_button_wizard_view_form" model="ir.ui.view">
+        <field name="name">gs.special.approval.button.wizard.form</field>
+        <field name="model">gs.special.approval.button.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="user_ids" widget="many2many_tags" />
+                    </group>
+                </group>
+                <footer>
+                    <button name="create_special_approval" string='Create' type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="oe_link" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_special_approval_button_wizard_action" model="ir.actions.act_window">
+        <field name="name">Special Approval</field>
+        <field name="res_model">gs.special.approval.button.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="gs_special_approval_button_wizard_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

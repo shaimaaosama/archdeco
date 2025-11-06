@@ -1,0 +1,18 @@
+<odoo>
+
+    <menuitem id="menu_gs_payment_order" name="Payment Order"  web_icon="gs_payment_order,static/description/icon2.png" sequence="-10"/>
+
+    <menuitem id="sub_gs_payment_order" name="Payment Order"  parent="menu_gs_payment_order"  sequence="1"/>
+
+    <menuitem id="sub_sub_gs_payment_order" name="Payment Order"  parent="sub_gs_payment_order" action="gs_payment_order.gs_payment_order_action" sequence="1"/>
+
+
+
+
+    <menuitem id="sub_gs_configurations" name="Configurations"  parent="menu_gs_payment_order"  sequence="100"/>
+
+    <menuitem id="sub_sub_gs_payment_type" name="Payment Type"  parent="sub_gs_configurations" action="gs_payment_order.gs_payment_type_action" sequence="1"/>
+
+    <menuitem id="sub_gs_payment_order_permission" name="Permission"  parent="sub_gs_configurations" action="gs_payment_order_permission_action" sequence="5" />
+
+</odoo>

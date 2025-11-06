@@ -1,0 +1,57 @@
+<odoo>
+    <record id="gs_sales_permission_view_tree" model="ir.ui.view">
+        <field name="name">gs.sales.permission.view.tree</field>
+        <field name="model">gs.sales.permission</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="permission_type"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_sales_permission_view_form" model="ir.ui.view">
+        <field name="name">gs.sales.permission.view.form</field>
+        <field name="model">gs.sales.permission</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                         <label for="permission_type"/>
+                         <field name="permission_type"/>
+                        <separator/>
+                        <group>
+                                <field name="create_invoice_id"  widget="many2many_tags" required="1"/>
+                                <field name="send_by_email_id"  widget="many2many_tags" required="1"/>
+                                <field name="confirm_id" widget="many2many_tags" required="1"/>
+                                <field name="confirm_limit_id" widget="many2many_tags" required="1"/>
+                                <field name="confirm_sale_id" widget="many2many_tags" required="1"/>
+                                <field name="set_so_id" widget="many2many_tags" required="1"/>
+                        </group>
+                        <group>
+
+                                <field name="draft_id" widget="many2many_tags" required="1"/>
+                                <field name="send_pro_id" widget="many2many_tags" required="1"/>
+                                <field name="lock_id" widget="many2many_tags" required="1" />
+                                <field name="unlock_id" widget="many2many_tags" required="1"/>
+                                <field name="create_delivery_id" widget="many2many_tags" required="1"/>
+                                <field name="cancel_id" widget="many2many_tags" required="1"/>
+                                <field name="revise_id" widget="many2many_tags" required="1"/>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_sales_permission_action" model="ir.actions.act_window">
+        <field name="name">Sales Permission</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.sales.permission</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_gs_permission" name="Permission"  parent="sale.menu_sale_config" sequence="112" groups="base.group_system"/>
+    <menuitem id="sub_gs_sales_permission" name="Sales Permission"  parent="menu_gs_permission" action="gs_sales_permission_action" sequence="1" groups="base.group_system"/>
+
+</odoo>

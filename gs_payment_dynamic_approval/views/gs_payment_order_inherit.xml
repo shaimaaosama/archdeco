@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="gs_payment_order_inherit_view_form" model="ir.ui.view">
+        <field name="name">gs.payment.order.inherit.view.form</field>
+        <field name="model">gs.payment.order</field>
+        <field name="inherit_id" ref="gs_payment_order.gs_payment_order_view_form"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="approval_level_id"/>
+                <field invisible="1" name="is_boolean"/></field>
+            <xpath expr="//button[@name='action_approve']" position="attributes">
+                <attribute name="invisible">state not in ['checked'] or is_boolean == False</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_refused']" position="attributes">
+                <attribute name="invisible">state not in ['checked'] or is_boolean == False</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_approve']" position="before">
+                <button class="oe_highlight" invisible="state not in ['checked'] or approval_level_id != False" name="action_approve_new" string="Approve" type="object"/>
+            </xpath>
+            <xpath expr="//button[@name='action_approve_new']" position="after">
+                <button invisible="state not in ['submit'] or approval_level_id != False" name="%(gs_payment_dynamic_approval.gs_rejection_reason_action)d" string="Reject" type="action"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page groups="account.group_account_user" name="approval_info" string="Approval Info">
+                    <group>
+                        <group string="Next Approval">
+                            <field name="level"/>
+                            <field name="user_ids" widget="many2many_tags"/>
+                            <field name="group_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Reject Payment Order Info">
+                            <field name="rejection_date"/>
+                            <field name="reject_by"/>
+                            <field name="reject_reason"/>
+                        </group>
+                        <field context="{'form_view_ref': 'gs_payment_dynamic_approval.gs_approval_info_view_form'}" name="approval_info_line" nolabel="1">
+                            <list>
+                                <field name="level"/>
+                                <field name="user_ids"/>
+                                <field name="group_ids"/>
+                                <field name="status" readonly="1" widget="boolean_toggle"/>
+                                <field name="approval_date"/>
+                                <field name="approved_by"/>
+                                <field invisible="1" name="payment_order_id"/>
+                            </list></field>
+                    </group>
+                </page>
+            </xpath></field>
+    </record>
+    <record id="gs_payment_order_my_approval_action" model="ir.actions.act_window">
+        <field name="name">My Approval</field>
+        <field name="res_model">gs.payment.order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="gs_payment_order.gs_payment_order_view_tree"/>
+        <field name="domain">[('is_boolean','=',True)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face"/></field>
+    </record>
+    <menuitem action="gs_payment_order_my_approval_action" id="gs_payment_order_my_approval_action_menu" name="My Approval" parent="gs_payment_order.sub_gs_payment_order" sequence="3"/>
+</odoo>

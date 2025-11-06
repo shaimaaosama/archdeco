@@ -1,0 +1,56 @@
+<odoo>
+
+    <record id="gs_purchase_permission_view_tree" model="ir.ui.view">
+        <field name="name">gs.purchase.permission.view.tree</field>
+        <field name="model">gs.purchase.permission</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="permission_type"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_purchase_permission_view_form" model="ir.ui.view">
+        <field name="name">gs.purchase.permission.view.form</field>
+        <field name="model">gs.purchase.permission</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                         <label for="permission_type"/>
+                         <field name="permission_type"/>
+                        <separator/>
+                        <group>
+                                <field name="create_bill_id"  widget="many2many_tags" required="1"/>
+                                <field name="send_by_email_id"  widget="many2many_tags" required="1"/>
+                                <field name="print_quotation_id" widget="many2many_tags" required="1"/>
+                                <field name="confirm_id" widget="many2many_tags" required="1"/>
+                                <field name="cancel_id" widget="many2many_tags" required="1"/>
+                                <field name="create_tracking_id" widget="many2many_tags" required="1"/>
+                        </group>
+                        <group>
+
+                                <field name="approve_id" widget="many2many_tags" required="1"/>
+                                <field name="confirm_rem_mail_id" widget="many2many_tags" required="1"/>
+                                <field name="draft_id" widget="many2many_tags" required="1"/>
+                                <field name="lock_id" widget="many2many_tags" required="1" />
+                                <field name="unlock_id" widget="many2many_tags" required="1"/>
+                                <field name="view_picking_id" widget="many2many_tags" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_purchase_permission_action" model="ir.actions.act_window">
+        <field name="name">Purchase Permission</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.purchase.permission</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_gs_purchase_permission" name="Permission"  parent="purchase.menu_purchase_config" sequence="112" groups="base.group_system"/>
+    <menuitem id="sub_gs_purchase_permission" name="Purchase Permission"  parent="menu_gs_purchase_permission" action="gs_purchase_permission_action" sequence="1" groups="base.group_system"/>
+
+</odoo>

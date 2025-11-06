@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_payment_approval_config_admin,access_gs_payment_approval_config_admin,model_gs_payment_approval_config,,1,1,1,1
+access_gs_payment_approval_line,access_gs_payment_approval_line,model_gs_payment_approval_line,,1,1,1,1
+access_gs_approval_info,access_gs_approval_info,model_gs_approval_info,,1,1,1,1
+access_gs_payment_reason_wizard,access_gs_payment_reason_wizard,model_gs_payment_reason_wizard,base.group_user,1,1,1,1

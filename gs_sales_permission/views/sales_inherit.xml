@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field invisible="1" name="is_create_invoice"/>
+                    <field invisible="1" name="is_send_by_email"/>
+                    <field invisible="1" name="is_confirm"/>
+                    <field invisible="1" name="is_cancel"/>
+                    <field invisible="1" name="is_draft"/>
+                    <field invisible="1" name="is_send_pro"/>
+                    <field invisible="1" name="t_or_f" readonly="0"/>
+                </xpath>
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d']" position="attributes">
+                    <attribute name="invisible">invoice_status != 'to invoice' or is_create_invoice != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+                    <attribute name="invisible">state not in ['draft', 'sent', 'sale'] or is_cancel != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_draft']" position="attributes">
+                    <attribute name="invisible">is_draft != True or state != 'cancel'</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send']" position="attributes">
+                    <attribute name="invisible">is_send_by_email != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send']" position="replace">
+                    <button class="btn-primary" data-hotkey="g" invisible="is_send_by_email != True or state != 'draft'" name="action_quotation_send" string="Send by Email" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send'][last()]" position="replace">
+                    <button data-hotkey="g" invisible="is_send_by_email != True or state not in ['sent', 'sale']" name="action_quotation_send" string="Send by Email" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][last()]" position="replace">
+                    <button data-hotkey="v" invisible="t_or_f == True or is_confirm != True or state != 'draft'" name="action_confirm" string="Confirm" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='%(sale.action_view_sale_advance_payment_inv)d'][last()]" position="replace">
+                    <button context="{'default_advance_payment_method': 'percentage'}" data-hotkey="q" invisible="invoice_status != 'no' or state != 'sale' or is_create_invoice != True" name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice" type="action"/>
+                </xpath></field>
+        </record>
+<!--        <record id="sale_order_form_inherit01" model="ir.ui.view">-->
+<!--            <field name="name">sale.order.form.inherit</field>-->
+<!--            <field name="model">sale.order</field>-->
+<!--            <field name="inherit_id" ref="sale.view_sales_order_auto_done_setting"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//button[@name='action_done']" position="before">-->
+<!--                    <field invisible="1" name="is_lock"/>-->
+<!--                    <field invisible="1" name="is_unlock"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//button[@name='action_done']" position="attributes">-->
+<!--                    <attribute name="invisible">is_lock != True</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//button[@name='action_unlock']" position="attributes">-->
+<!--                    <attribute name="invisible">is_unlock != True</attribute>-->
+<!--                </xpath></field>-->
+<!--        </record>-->
+        <record id="sale_order_form_inherit02" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="gs_stock_from_sr.gs_sr_sale_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field invisible="1" name="create_delivery" readonly="0"/>
+                    <field invisible="1" name="is_create_del"/>
+                    <field invisible="1" name="delivered"/>
+                </xpath>
+                <xpath expr="//button[@name='action_create_delivery']" position="attributes">
+                    <attribute name="invisible">create_delivery != True or is_delivery == True or delivered == True</attribute>
+                </xpath></field>
+        </record>
+        <record id="sale_order_form_inherit03" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit03</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="quotation_revision.sale_order_inherited_view_quotation_revision"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_saleorder_id']" position="after">
+                    <field invisible="1" name="is_revise"/>
+                    <field invisible="1" name="is_set_so"/>
+                </xpath>
+                <xpath expr="//button[@name='so_revision_quote']" position="attributes">
+                    <attribute name="invisible">is_revise != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='set_so']" position="attributes">
+                    <attribute name="invisible">is_set_so != True</attribute>
+                </xpath></field>
+        </record>
+        <record id="sale_order_form_inherit04" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit04</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="gs_customer_credit_limit.view_sale_order_confirm_inherit_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='t_or_f']" position="after">
+                    <field invisible="1" name="is_confirm" readonly="0"/>
+                    <field invisible="1" name="is_confirm_limit" readonly="0"/>
+                    <field invisible="1" name="is_confirm_sale" readonly="0"/>
+                </xpath>
+                <xpath expr="//button[@name='action_sale_ok']" position="attributes">
+                    <attribute name="invisible">t_or_f == True or is_confirm != True or state != 'draft'</attribute>
+                </xpath>
+                <xpath expr="//button[@name='set_credit_limit_state_also_if_has_due']" position="attributes">
+                    <attribute name="invisible">t_or_f == False or is_confirm_limit != True or state != 'draft'</attribute>
+                </xpath>
+                <xpath expr="//button[@id='action_confirm_sale']" position="attributes">
+                    <attribute name="invisible">is_confirm_sale != True or state != 'credit_limit'</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_sale_ok'][last()]" position="replace">
+                </xpath></field>
+        </record>
+        <record id="customer_limit_wizard_form_inherit" model="ir.ui.view">
+            <field name="name">customer.limit.wizard.form.inherit05</field>
+            <field name="model">customer.limit.wizard</field>
+            <field name="inherit_id" ref="gs_customer_credit_limit.view_customer_limit_wizard_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_id']" position="after">
+                    <field invisible="1" name="is_confirm_wiz_limit" readonly="0"/>
+                </xpath>
+                <xpath expr="//button[@name='set_credit_limit_state_also_if_has_due']" position="attributes">
+                    <attribute name="invisible">t_or_f != True or is_confirm_wiz_limit != True</attribute>
+                </xpath></field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="gs_payment_order_view_tree" model="ir.ui.view">
+        <field name="name">gs.payment.order.view.tree</field>
+        <field name="model">gs.payment.order</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="create_date"/>
+                <field name="payment_due_date"/>
+                <field name="user_id"/>
+                <field name="amount"/>
+                <field name="currency_id"/>
+                <field digits="[12,6]" name="exchange_rate"/>
+                <field name="payment_type_id"/>
+                <field name="journal_id"/>
+                <field name="branch_id"/>
+                <field name="company_id"/>
+                <field name="state"/>
+            </list></field>
+    </record>
+    <record id="gs_payment_order_view_form" model="ir.ui.view">
+        <field name="name">gs.payment.order.view.form</field>
+        <field name="model">gs.payment.order</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button class="oe_highlight" invisible="is_submit != True or state != 'draft'" name="action_submit" string="Submit" type="object"/>
+                    <button class="oe_highlight" invisible="is_checked != True or state != 'submit'" name="action_checked" string="Checked" type="object"/>
+                    <button class="oe_highlight" invisible="state != 'checked'" name="action_approve" string="Approve" type="object"/>
+                    <button class="oe_highlight" context="{'default_amount': amount,'default_currency_id': currency_id}" data-hotkey="q" invisible="state not in ['approve', 'issue_payment', 'special_approved'] or inv_create_payment != False or is_create_payment != True" name="%(gs_create_payment_wizard_action)d" string="Create Payment" type="action"/>
+                    <button class="oe_highlight" invisible="state != 'approve' or hide_special_approval != False or is_special_approval != True" name="%(gs_special_approval_button_wizard_action)d" string="Special ِApproval" type="action"/>
+                    <button class="oe_highlight" invisible="state != 'issue_payment' or is_finalize_payment != True" name="action_finalize_payment" string="Finalize Payment" type="object"/>
+                    <button class="oe_highlight" groups="gs_payment_order.group_special_approval" invisible="state != 'special_approval' or is_finalize_payment != True" name="action_special_approved" string="Special ِApproved" type="object"/>
+                    <button class="oe_highlight" invisible="state != 'finalize_payment' or is_final_check != True" name="action_final_check" string="Final Check" type="object"/>
+                    <button class="oe_highlight" invisible="state != 'final_check' or is_closed != True" name="action_close" string="Closed" type="object"/>
+                    <button invisible="state in ['close', 'cancel', 'draft'] or is_cancel != True" name="action_cancel" string="Cancel" type="object"/>
+                    <button class="oe_highlight" invisible="state != 'cancel' or is_draft != True" name="action_draft" string="Reset To Draft" type="object"/>
+                    <button class="oe_highlight" invisible="state == 'draft' or is_return != True" name="%(gs_return_wizard_action)d" string="Return" type="action"/>
+                    <button invisible="is_reject != True" name="action_refused" string="Reject" type="object"/>
+                    <field name="state" statusbar_visible="draft,submit,checked,approve,finalize_payment,final_check,close" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
+                            <field name="payment_count" string="Payment" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="name"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="partner_id" readonly="state not in ['draft', 'submit', 'checked']" required="state in ['draft', 'submit', 'checked']"/>
+                            <field name="create_date" readonly="1"/>
+                            <field name="payment_due_date" readonly="state not in ['draft', 'submit', 'checked']" required="state in ['draft', 'submit', 'checked']"/>
+                            <field name="user_id" readonly="1"/>
+                            <field name="payment_type_id" options="{'no_create': True, 'no_edit': True}" readonly="state not in ['draft', 'submit', 'checked']" required="state in ['draft', 'submit', 'checked']"/>
+                            <field force_save="1" name="amount" readonly="state not in ['draft', 'submit', 'checked']" required="state in ['draft', 'submit', 'checked']"/>
+                            <field force_save="1" name="amount_payment" readonly="1"/>
+                            <field force_save="1" invisible="1" name="amount_payment_available" readonly="1"/>
+                            <field invisible="1" name="inv_create_payment" readonly="0"/>
+                            <field invisible="1" name="hide_special_approval" readonly="0"/>
+                            <field name="currency_id" readonly="state not in ['draft', 'submit', 'checked']"/>
+                            <field digits="[12,6]" name="exchange_rate" readonly="state not in ['draft', 'submit', 'checked']"/>
+                        </group>
+                        <group>
+                            <field invisible="1" name="recipient_users"/>
+                            <field invisible="0" name="sale_order_id" readonly="state not in ['draft', 'submit', 'checked']"/>
+                            <field invisible="0" name="purchase_order_id" readonly="state not in ['draft', 'submit', 'checked']"/>
+                            <field name="helpdesk_ticket_id" readonly="state not in ['draft', 'submit', 'checked']"/>
+                            <field invisible="0" name="purchase_tracking_id" readonly="state not in ['draft', 'submit', 'checked']"/>
+                            <field name="branch_id" readonly="state not in ['draft', 'submit', 'checked']"/>
+                            <field name="company_id" readonly="state not in ['draft', 'submit', 'checked']"/>
+                            <field name="attached_file" readonly="state not in ['draft', 'submit', 'checked']"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" readonly="state not in ['draft', 'submit', 'checked']"/>
+                        <field invisible="1" name="is_cancel"/>
+                        <field invisible="1" name="is_draft"/>
+                        <field invisible="1" name="is_approve"/>
+                        <field invisible="1" name="is_submit"/>
+                        <field invisible="1" name="is_special_approval"/>
+                        <field invisible="1" name="is_create_payment"/>
+                        <field invisible="1" name="is_reject"/>
+                        <field invisible="1" name="is_checked"/>
+                        <field invisible="1" name="is_finalize_payment"/>
+                        <field invisible="1" name="is_final_check"/>
+                        <field invisible="1" name="is_closed"/>
+                        <field invisible="1" name="is_return"/>
+                    </group>
+                    <notebook>
+                        <page groups="account.group_account_user" name="journal_items_ids" string="Journal Items">
+                            <field name="journal_items_ids" readonly="state not in ['draft', 'submit', 'checked']">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="account_id"/>
+                                    <field name="name"/>
+                                    <field name="debit"/>
+                                    <field name="credit"/>
+                                </list></field>
+                        </page>
+                        <page groups="account.group_account_user" name="payment_order_history_ids" string="History">
+                            <field name="payment_order_history_ids" readonly="1">
+                                <list>
+                                    <field invisible="1" name="payment_order_id"/>
+                                    <field name="date" readonly="1"/>
+                                    <field name="note" readonly="1"/>
+                                    <field name="user_id" readonly="1"/>
+                                </list></field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form></field>
+    </record>
+    <record id="gs_payment_order_view_kanban" model="ir.ui.view">
+        <field name="name">gs.payment.order.kanban</field>
+        <field name="model">gs.payment.order</field>
+        <field name="arch" type="xml">
+            <kanban class="o_broker_profile_kanban" records_draggable="false">
+                <field name="id"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="create_date"/>
+                <field name="payment_due_date"/>
+                <field name="user_id"/>
+                <field name="amount"/>
+                <field name="currency_id"/>
+                <field name="payment_type_id"/>
+                <field name="journal_id"/>
+                <field name="branch_id"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_res_partner_kanban">
+                            <div class="oe_kanban_details">
+                                <h3>
+                                    <field name="name"/>
+                                </h3>
+                                <ul>
+                                    <li>
+                                        <b>
+                                            Partner:
+                                        </b>
+                                        <field name="partner_id"/>
+                                    </li>
+                                    <li>
+                                        <b>
+                                            Create Date:
+                                        </b>
+                                        <field name="create_date"/>
+                                    </li>
+                                    <li>
+                                        <b>
+                                            Payment Due Date:
+                                        </b>
+                                        <field name="payment_due_date"/>
+                                    </li>
+                                </ul>
+                                <div class="o_kanban_record_bottom h5 mt-2 mb-0">
+                                    <div class="d-flex flex-grow-1 text-600 mt-1" id="utm_statistics"/>
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge badge-pill float-right mt4 mr16" style="border-color:#5e75c8;background: #5e75c8;color: whitesmoke;">
+                                            <field name="state"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span class="badge badge-pill float-right mt4 mr16" style="background: #00A09D;color: whitesmoke;">
+                                            <field name="user_id"/>
+                                        </span>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <span class="badge badge-pill float-right mt4 mr16" style="background: #00A09D;color: whitesmoke;">
+                                            Amount:
+                                            <field name="amount"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban></field>
+    </record>
+    <record id="gs_payment_order_report_graph" model="ir.ui.view">
+        <field name="name">gs.payment.order.report.graph</field>
+        <field name="model">gs.payment.order</field>
+        <field name="arch" type="xml">
+            <graph sample="1" string="Exterior Purchase">
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <field name="payment_type_id"/>
+                <field name="amount" type="measure"/>
+            </graph></field>
+    </record>
+    <record id="view_gs_payment_order_pivot" model="ir.ui.view">
+        <field name="name">gs.payment.order.pivot</field>
+        <field name="model">gs.payment.order</field>
+        <field name="arch" type="xml">
+            <pivot disable_linking="True" display_quantity="true" string="Payment Order Analysis">
+                <field name="name" type="row"/>
+            </pivot></field>
+    </record>
+    <record id="gs_payment_order_action" model="ir.actions.act_window">
+        <field name="name">Payment Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.payment.order</field>
+        <field name="view_mode">kanban,list,form,graph,pivot</field>
+    </record>
+    <record id="gs_payment_order_action2" model="ir.actions.act_window">
+        <field name="name">Payment Order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.payment.order</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_id" ref="gs_payment_order_view_form"/>
+    </record>
+</odoo>

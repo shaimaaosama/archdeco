@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="gs_payment_approval_config_view_form" model="ir.ui.view">
+        <field name="name">gs.payment.approval.config.view.form</field>
+        <field name="model">gs.payment.approval.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" required="1" default_focus="1" placeholder="Name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="min_amount" />
+                            <field name="company_ids" widget="many2many_tags" options="{'no_open':True,'no_create':1,'no_create_edit':1}" groups="base.group_multi_company" />
+                        </group>
+                        <group>
+                            <field name="is_boolean" widget="boolean_toggle" />
+                            <field name="payment_type_ids" widget="many2many_tags" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Approval Details" name="approvals_details">
+                            <group>
+                                <field name="payment_approval_line" nolabel="1" context="{'form_view_ref': 'gs_payment_dynamic_approval.gs_payment_approval_line_form'}">
+                                    <list>
+                                        <field name="level" />
+                                        <field name="from_amount" invisible="1" />
+                                        <field name="to_amount" invisible="1" />
+                                        <field name="approve_by" />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_payment_approval_config_view_tree" model="ir.ui.view">
+        <field name="name">gs.payment.approval.config.view.tree</field>
+        <field name="model">gs.payment.approval.config</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" string="Approval Configuration" />
+                <field name="min_amount" />
+                <field name="is_boolean" widget="boolean_toggle" />
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_payment_approval_config_action" model="ir.actions.act_window">
+        <field name="name">Approval Configuration</field>
+        <field name="res_model">gs.payment.approval.config</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create A New Approval Configuration</p>
+        </field>
+    </record>
+
+    <menuitem   id="gs_payment_approval_config_action_menu"
+                name="Approval Configuration" 
+                action="gs_payment_approval_config_action"  
+                parent="gs_payment_order.sub_gs_configurations" 
+                sequence="99" />
+</odoo>

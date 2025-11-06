@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="gs_purchase_tracking_permission_view_form_inherit" model="ir.ui.view">
+        <field name="name">gs.purchase.tracking.permission.view.form.inherit</field>
+        <field name="model">gs.purchase.tracking.permission</field>
+        <field name="inherit_id" ref="gs_purchase_tracking_v15.gs_purchase_tracking_permission_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='approve_t_id']" position="after">
+                <field invisible="permission_type != 'p_purchase_tracking'" name="create_payment_order_ids" required="permission_type == 'p_purchase_tracking'" widget="many2many_tags"/>
+            </xpath></field>
+    </record>
+    <record id="gs_sales_permission_view_form_inherit" model="ir.ui.view">
+        <field name="name">gs.sales.permission.view.form.inherit</field>
+        <field name="model">gs.sales.permission</field>
+        <field name="inherit_id" ref="gs_sales_permission.gs_sales_permission_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='set_so_id']" position="after">
+                <field name="create_payment_order_ids" required="1" widget="many2many_tags"/>
+            </xpath></field>
+    </record>
+    <record id="gs_purchase_permission_view_form_inherit" model="ir.ui.view">
+        <field name="name">gs.purchase.permission.view.form.inherit</field>
+        <field name="model">gs.purchase.permission</field>
+        <field name="inherit_id" ref="gs_purchase_permission.gs_purchase_permission_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='view_picking_id']" position="after">
+                <field name="create_payment_order_ids" required="1" widget="many2many_tags"/>
+            </xpath></field>
+    </record>
+</odoo>

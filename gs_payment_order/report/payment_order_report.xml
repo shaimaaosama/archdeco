@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="report.paperformat" id="exterior_purchase_paperformat_report">
+            <field name="name">paperformat.report</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="page_width">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">25</field>
+            <field name="margin_right">2</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">2</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="gs_payment_order_report_action" model="ir.actions.report">
+            <field name="name">Payment Order Report</field>
+            <field name="model">gs.payment.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">gs_payment_order.gs_payment_order_report</field>
+            <field name="binding_model_id" ref="model_gs_payment_order"/>
+            <field name="paperformat_id" ref="exterior_purchase_paperformat_report"/>
+        </record>
+        <template id="gs_payment_order_report">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <div>
+                            <div>
+                                <h2 class="text-center">Payment Order</h2>
+                            </div>
+                            <br></br>
+                            <br/>
+                            <style>
+                                table {
+                                font-family: arial, sans-serif;
+                                border-collapse: collapse;
+                                width: 100%;
+                                }
+                                tr:nth-child(even) {
+                                background-color: #eee;
+                                }
+                                tr:nth-child(odd) {
+                                background-color: #fff;
+                                }
+                                th {
+                                background-color: #0000FF;
+                                color: black;
+                                }
+                            </style>
+                            <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Po No.
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%"
+                                        t-esc="name"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Partner
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="partner_id"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Create Date
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="create_date"/>
+
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Payment Due Date
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="payment_due_date"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Payment Type
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="payment_type_id"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Journal
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="journal_id"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Amount
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="amount"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Company
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="company_name"/>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Amount in Word
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%" colspan="3"
+                                    > <t t-esc="num_word"/> </td>
+                                </tr>
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        description
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%" colspan="3"
+                                    > <t t-esc="description"/> </td>
+                                </tr>
+
+                            </table>
+                            <br></br>
+                            <h3 class="text-center" style="background-color:#D3D3D3; color:black;">Vendor info</h3>
+                            <p style="border-bottom: 3px solid black;"></p>
+                            <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Phone
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 20%"
+                                        t-esc="phone"/>
+                                    <th class="text-center" style="background-color:#D3D3D3;padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%">
+                                        Email
+                                    </th>
+                                    <td class="text-center" style="padding: 8px;border: 2px solid #ddd;text-align: center;width: 15%"
+                                        t-esc="email"/>
+                                </tr>
+                            </table>
+                            <br></br>
+                            <h3 class="text-center" style="background-color:#D3D3D3; color:black;">Approval Info</h3>
+                            <p style="border-bottom: 3px solid black;"></p>
+                            <table style="border-collapse: collapse;border: 2px solid #ddd;font-size:14px; width:100%;padding-top:0;margin-top:0">
+                                <tr class="thead-light" style="padding:0px; margin:0px;border-top: 2px solid #ddd;">
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Level</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Status</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Approval Date</th>
+                                    <th class="text-center" style="background-color:#D3D3D3; color:black;">Approved By</th>
+                                </tr>
+                                <tr t-foreach="docs2" t-as="doc1">
+                                    <td class="text-center" >
+                                        <span t-esc="doc1['level']"/>
+                                    </td>
+                                    <td class="text-center" >
+                                        <span t-esc="doc1['status']"/>
+                                    </td>
+                                    <td class="text-center" >
+                                        <span t-esc="doc1['approval_date']"/>
+                                    </td>
+                                    <td class="text-center" >
+                                        <span t-esc="doc1['approved_by']" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br></br>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
