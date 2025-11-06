@@ -50,7 +50,7 @@ class SaleOrder(models.Model):
             'view_type': 'form',
             'res_model': 'sale.order',
             'view_id': False,
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'type': 'ir.actions.act_window',
         }
 
@@ -68,7 +68,7 @@ class SaleOrder(models.Model):
             'view_type': 'form',
             'res_model': 'sale.order',
             'view_id': False,
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'type': 'ir.actions.act_window',
         }
 

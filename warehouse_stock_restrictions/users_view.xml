@@ -24,7 +24,7 @@
                     </group>
                 </group>
                 <notebook>
-                    <page invisible="restrict_locations != True" string="Allowed Stock Locations">
+                    <page  string="Allowed Stock Locations">
                         <field colspan="2" name="stock_location_ids" nolabel="1"/>
                     </page>
                 </notebook></field>
