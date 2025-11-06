@@ -543,7 +543,7 @@ class PurchaseOrderLineTracking(models.Model):
             list = []
             for product in products:
                 for seller in product.seller_ids:
-                    if rec.partner_id == seller.name:
+                    if rec.partner_id == seller.partner_id:
                         list.append(product.id)
             return {'domain': {'product_id': [('id', 'in', list)]}}
 
@@ -583,6 +583,21 @@ class PurchaseOrderLineTracking(models.Model):
     qty_received = fields.Float("Received", compute='_compute_qty_received', digits='Product Unit of Measure')
     qty_invoiced = fields.Float(compute='_compute_qty_invoiced', string="Billed", digits='Product Unit of Measure')
 
+    def _prepare_base_line_for_taxes_computation(self):
+        """ Convert the current record to a dictionary in order to use the generic taxes computation method
+        defined on account.tax.
+
+        :return: A python dictionary.
+        """
+        self.ensure_one()
+        return self.env['account.tax']._prepare_base_line_for_taxes_computation(
+            self,
+            tax_ids=self.taxes_id,
+            quantity=self.product_qty,
+            partner_id=self.tracking_id.partner_id,
+            currency_id=self.tracking_id.currency_id or self.tracking_id.company_id.currency_id,
+            rate=self.tracking_id.currency_id.rate,
+        )
 
     def _compute_qty_received(self):
         receipts = self.env['stock.picking'].search([('tracking_id', '=', self.tracking_id.id)])
