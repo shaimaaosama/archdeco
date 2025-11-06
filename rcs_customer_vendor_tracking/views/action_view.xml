@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_res_partner_filter_inherit" model="ir.ui.view">
+        <field name="name">res.partner.filter.inherit.customer</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='customer']" position="after">
+                <filter string="Customer" name="group_by_customer" context="{'group_by': 'customer'}"/>
+                <filter string="Vendor" name="group_by_customer" context="{'group_by': 'vendor'}"/>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

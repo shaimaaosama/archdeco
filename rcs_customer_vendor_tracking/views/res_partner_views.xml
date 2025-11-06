@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_customer_vendor_from_partner_form" model="ir.ui.view">
+            <field name="name">view.customer.vendor.from.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="customer"/>
+               </xpath>
+               <xpath expr="//field[@name='property_supplier_payment_term_id']" position="after">
+                    <field name="vendor"/>
+               </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
