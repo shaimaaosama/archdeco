@@ -13,7 +13,7 @@
         </record>
 
         <record id="account.res_partner_action_customer" model="ir.actions.act_window">
-            <field name="context">{'default_customer': True}</field>
+            <field name="domain">[('customer','=', True)]</field>
         </record>
     </data>
 </odoo>
