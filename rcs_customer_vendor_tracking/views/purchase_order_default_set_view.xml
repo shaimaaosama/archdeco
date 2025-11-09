@@ -12,8 +12,8 @@
             </field>
         </record>
 
-<!--        <record id="account.res_partner_action_supplier" model="ir.actions.act_window">-->
-<!--            <field name="context">{'default_vendor': True}</field>-->
-<!--        </record>-->
+        <record id="account.res_partner_action_supplier" model="ir.actions.act_window">
+            <field name="domain">[('vendor','=', True)]</field>
+        </record>
     </data>
 </odoo>
