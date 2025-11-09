@@ -1,0 +1,42 @@
+<odoo>
+
+    <record id="gs_payments_view_tree" model="ir.ui.view">
+        <field name="name">gs.payments.view.tree</field>
+        <field name="model">gs.payments</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="percentage"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_payments_view_form" model="ir.ui.view">
+        <field name="name">gs.payments.view.form</field>
+        <field name="model">gs.payments</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="percentage"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_payments_action" model="ir.actions.act_window">
+        <field name="name">Payments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.payments</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="sub_gs_payments" name="Payments"  parent="gs_hr_contracts_management.menu_hr_sett_gs_contract_payment" action="gs_payments_action" sequence="4"/>
+
+</odoo>

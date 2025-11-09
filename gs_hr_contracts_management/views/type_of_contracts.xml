@@ -1,0 +1,49 @@
+<odoo>
+
+    <record id="gs_type_of_contracts_view_tree" model="ir.ui.view">
+        <field name="name">gs.type.of.contracts.view.tree</field>
+        <field name="model">gs.type.of.contracts</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name_contract_classification"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_type_of_contracts_view_form" model="ir.ui.view">
+        <field name="name">gs.type.of.contracts.view.form</field>
+        <field name="model">gs.type.of.contracts</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_gs_classification" type="object" class="oe_stat_button" icon="fa-bars">
+                            <field name="classification_count" string="Contract Classification" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name_contract_classification" invisible="1"/>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="contract_classification_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_type_of_contracts_action" model="ir.actions.act_window">
+        <field name="name">Contract Classification</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.type.of.contracts</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hr_sett_gs_contract_payment" name="Contact Payment Schedule" parent="gs_hr_contracts_management.gs_hr_settings_main_menu" sequence="25" />
+
+    <menuitem id="sub_gs_type_of_contracts" name="Contract Classification"  parent="gs_hr_contracts_management.menu_hr_sett_gs_contract_payment" action="gs_type_of_contracts_action" sequence="2"/>
+
+</odoo>

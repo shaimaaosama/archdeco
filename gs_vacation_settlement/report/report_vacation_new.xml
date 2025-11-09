@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_vacation_template_new">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="o" t-value="doc.with_context(lang=lang)"/>
+                <div class="article o_report_layout_standard" t-att-data-oe-model="doc and doc._name"
+                     t-att-data-oe-id="doc and doc.id">
+                         <!--<t t-call="gs_vacation_settlement.custom_vacation_order_header"/>-->
+                        <style>
+                            @font-face {
+                                font-family: 'Cairo-Regular';
+                                src: local('Cairo-Regular'), local('Cairo-Regular'),
+                                url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('truetype');
+                            }
+
+                            .font_cairo {
+                                font-family: Cairo-Regular;
+                            }
+
+                            .gs_table {
+                                border-collapse: collapse;
+                                border: 1px solid #000;
+                                width: 100%;
+                                margin: auto;
+                            }
+
+                            .gs_table th, .gs_table td {
+                                border: 1px solid #000;
+                                padding: 8px;
+                                text-align: center;
+                                font-size: 12px;
+                            }
+
+                            .text-left {
+                                text-align: left;
+                                direction: ltr;
+                            }
+
+                            .text-right {
+                                text-align: right;
+                                direction: rtl;
+                            }
+
+                            .text-center {
+                                text-align: center;
+                            }
+
+                            .page {
+                                font-family: 'Cairo-Regular', sans-serif;
+                                margin: 20px;
+                            }
+
+                            h2, h3 {
+                                color: #3B124C;
+                                text-align: center;
+                                margin-bottom: 20px;
+                            }
+                        </style>
+
+                        <div class="page font_cairo" style="position:relative;top:60px">
+                            <h5 class="text-center" style="margin-bottom:30px;position:relative;top:60px;margin-bottom:20px">
+                                <div class="o_force_ltr" style="border-radius: 25px;background:#f0f0f5; padding: 3px 0 3px 0;
+                                            width:30%;border:3px solid;display:inline-block;">
+                                    <span>تسوية مالية الاجازة</span>
+                                    <br/>
+                                    <span>Vacation Settlement</span>
+                                </div>
+                                <br/>
+                            </h5>
+                            <br/><br/>
+                            <br/>
+                            <div class="row" style="display: flex; justify-content: space-between; align-items: center;" dir="rtl">
+                                <!-- right Section -->
+                                <div class="col-8 text-right" style="text-align:right; flex: 1;">
+                                    <h3>بيانات الموظف</h3>
+                                </div>
+
+                                <!-- left Section -->
+                                <div class="col-6" style="text-align:right; flex: 1;">
+                                    <div class="row" dir="rtl">
+                                        <div class="col-5 text-right">
+                                            <b>اسم المستخدم :</b>
+                                        </div>
+                                        <div class="col-7 text-left">
+                                            <span><t t-esc="user.name"/></span>.
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4 text-right">
+                                            <b>التاريخ :</b>
+                                        </div>
+                                        <div class="col-8 text-left" dir="rtl">
+                                            <span t-esc="time.strftime('%Y-%m-%d')"/>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                            <br/>
+                            <div class="row">
+                                <table class="table table-bordered" style="border-collapse: collapse;width:100%" dir="rtl">
+                                    <tr>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>رقم الهويه</strong>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>الموظف</strong>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>الشركه</strong>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>الفرع</strong>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>القسم</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.employee_id.identification_id"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.employee_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.employee_id.company_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.employee_id.branch_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.employee_id.department_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>الرقم الوظيفي</strong>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>الجنسية</strong>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>الوظيفة</strong>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>الراتب</strong>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>الحساب التحليلي</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.employee_id.registration_number2"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.employee_id.country_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.employee_id.job_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.current_contract_id.wage"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.current_contract_id.analytic_account_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>العقد الحالي</strong>
+                                        </th>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>تاريخ بداية العقد الحالي</strong>
+                                        </th>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>تاريخ نهاية العقد الحالي</strong>
+                                        </th>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>تاريخ تسوية الاجازة السابقة</strong>
+                                        </th>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>تاريخ التعين</strong>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.current_contract_id.name"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.current_contract_id.date_start"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.current_contract_id.date_end"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.date_of_settlement"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.current_contract_id.date_hired"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <strong>رقم الحساب البنكي</strong>
+                                        </td>
+                                        <td colspan="4" class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.employee_id.bank_account_id.acc_number"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="row" style="display: flex; justify-content: space-between; align-items: center;" dir="rtl">
+                                <div class="col-12" style="text-align:right; flex: 1;">
+                                    <h3>تفاصيل الاجازة</h3>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <table class="table table-bordered" style="border-collapse: collapse;width:100%" dir="rtl">
+                                    <tr>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>تاريخ بدء الاجازة</strong>
+                                        </th>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>تاريخ نهاية الاجازة</strong>
+                                        </th>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>تاريخ اخر يوم عمل</strong>
+                                        </th>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>عدد أيام الاجازة</strong>
+                                        </th>
+                                        <th class="text-center" style="border:1px solid #ddd">
+                                            <strong>عدد أيام الاجازة المالية</strong>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.leave_start_date"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.leave_end_date"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.last_work_date"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.num_of_vacation"/>
+                                        </td>
+                                        <td class="text-center" style="border:1px solid #ddd">
+                                            <span t-field="doc.financially_accrued_leave"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br/>
+                            <div class="row" style="display: flex; justify-content: space-between; align-items: center;" dir="rtl">
+                                <div class="col-12" style="text-align:right; flex: 1;">
+                                    <h3>تفاصيل التسوية</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <!-- الجدول الأول: الاستقطاعات -->
+                                <div class="col-6" style="border: 1px solid #000; margin-right: 20px;">
+                                    <table class="table gs_table" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2" class="text-center">الاستقطاعات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"><span>Data</span></td>
+                                                <td class="text-right" style="width:50%;">سلف وقروض</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"><span>Data</span></td>
+                                                <td class="text-right" style="width:50%;">مخالفات وغرامات</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"></td>
+                                                <td class="text-right" style="width:50%;">غياب وتأخير</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"></td>
+                                                <td class="text-right" style="width:50%;">إستقطاعات أخري</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"></td>
+                                                <td class="text-right" style="width:50%;">إجمالي المستقطع</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- الجدول الثاني: الاستحقاقات -->
+                                <div class="col-6" style="border: 1px solid #000;">
+                                    <table class="table gs_table" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2" class="text-center">الاستحقاقات</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"><span t-field="doc.total_total"/></td>
+                                                <td class="text-right" style="width:50%;">قيمة راتب الاجازة المدفوع</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"><span t-field="doc.tickets_val_company"/></td>
+                                                <td class="text-right" style="width:50%;">بدل تذاكر الطيران السنوية</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"><span t-field="doc.salary_current_month"/></td>
+                                                <td class="text-right" style="width:50%;">راتب ايام العمل الشهر الجاري</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"></td>
+                                                <td class="text-right" style="width:50%;">حوافز / عمولات مستحقة</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:50%;border:1px solid #ddd;"></td>
+                                                <td class="text-right" style="width:50%;">اجمالي المستحق</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <table style="width:100%" dir="rtl">
+                                <tr>
+                                    <td class="text-center" style="border:0px solid #ddd">
+                                        <span t-field="doc.employee_gro_id.name"/>
+                                    </td>
+                                    <td class="text-center" style="border:0px solid #ddd">
+                                        <span t-field="doc.employee_hos_id.name"/>
+                                    </td>
+                                    <td class="text-center" style="border:0px solid #ddd">
+                                        <span t-field="doc.employee_pcc_id.name"/>
+                                    </td>
+                                    <td class="text-center" style="border:0px solid #ddd">
+                                        <span t-field="doc.employee_am_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" style="font-size: 14px;border:0px solid #ddd">
+                                        <b>مسئول العلاقات الحكومية</b>
+                                        <br/>
+                                        <b>Government Relation Officer</b>
+                                    </td>
+                                    <td class="text-center" style="font-size: 14px;border:0px solid #ddd">
+                                        <b>مشرف عمليات الموارد البشرية</b>
+                                        <br/>
+                                        <b>HR Operations Supervisor</b>
+                                    </td>
+                                    <td class="text-center" style="font-size: 14px;border:0px solid #ddd">
+                                        <b>مسئول الصندوق - السداد</b>
+                                        <br/>
+                                        <b>Payment Clerk - Cashier</b>
+                                    </td>
+                                    <td class="text-center" style="font-size: 14px;border:0px solid #ddd">
+                                        <b>مدير الحسابات</b>
+                                        <br/>
+                                        <b>Account Manager</b>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table style="width:100%" dir="rtl">
+                                <tr>
+                                    <td class="text-center" style="border:0px solid #ddd">
+                                        <span t-field="doc.employee_hrm_id.name"/>
+                                    </td>
+                                    <td class="text-center" style="border:0px solid #ddd">
+                                        <span t-field="doc.employee_fm_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" style="font-size: 14px;border:0px solid #ddd">
+                                        <strong>مدير إدارة الموارد البشرية</strong>
+                                        <br/>
+                                        <strong>Human Resources Manager</strong>
+                                    </td>
+                                    <td class="text-center" style="font-size: 14px;border:0px solid #ddd">
+                                        <strong>المدير المالي</strong>
+                                        <br/>
+                                        <strong>Finance Manager</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <table style="width:100%" dir="rtl">
+                                <tr>
+                                    <td class="text-center" style="border:0px solid #ddd">
+                                        <span t-field="doc.employee_ceo_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center" style="font-size: 14px;border:0px solid #ddd">
+                                        <strong>المدير التنفيذي</strong>
+                                        <br/>
+                                        <strong>CEO</strong>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+    </template>
+</odoo>

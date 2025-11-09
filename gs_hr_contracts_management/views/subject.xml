@@ -1,0 +1,57 @@
+<odoo>
+
+    <record id="gs_subject_view_tree" model="ir.ui.view">
+        <field name="name">gs.subject.view.tree</field>
+        <field name="model">gs.subject</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="bol_active" widget="boolean_toggle"/>
+                <field name="num_page"/>
+                <field name="attachment_ids"  widget="many2many_binary" class="oe_inline"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_subject_view_form" model="ir.ui.view">
+        <field name="name">gs.subject.view.form</field>
+        <field name="model">gs.subject</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="open_gs_payment" type="object" class="oe_stat_button" icon="fa-bars">
+                            <field name="payment_count" string="Contract Payment Schedule" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="bol_active" widget="boolean_toggle"/>
+                        </group>
+                        <group>
+                            <field name="num_page"/>
+                            <field name="attachment_ids"  widget="many2many_binary" class="oe_inline"/>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_subject_action" model="ir.actions.act_window">
+        <field name="name">subject</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.subject</field>
+        <field name="view_mode">list,form</field>
+    </record>
+<!--
+
+    <menuitem id="sub_gs_subject" name="Subject"  parent="gs_hr_contracts_management.menu_hr_sett_gs_contract_payment" action="gs_subject_action" sequence="3"/>
+-->
+
+</odoo>

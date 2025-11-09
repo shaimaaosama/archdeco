@@ -1,0 +1,49 @@
+<odoo>
+
+    <record id="gs_directly_work_view_tree" model="ir.ui.view">
+        <field name="name">gs.directly.work.view.tree</field>
+        <field name="model">gs.directly.work</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="employee_id"/>
+                <field name="type"/>
+                <field name="date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_directly_work_view_form" model="ir.ui.view">
+        <field name="name">gs.directly.work.view.form</field>
+        <field name="model">gs.directly.work</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" invisible="state != 'draft'" type="object" string="Confirm"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="type"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="leave_id" invisible="type != 're_lev'" required="type == 're_lev'"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_directly_work_action" model="ir.actions.act_window">
+        <field name="name">Directly To Work</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.directly.work</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="sub_gs_directly_work" name="Directly To Work"  parent="gs_hr_insurance.gs_hr_settings_main_menu" action="gs_directly_work_action" sequence="25"/>
+
+</odoo>

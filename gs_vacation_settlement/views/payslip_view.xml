@@ -1,0 +1,48 @@
+<odoo>
+    <record id="inherit_hr_payslip_form_view" model="ir.ui.view">
+        <field name="name">hr.payslip.form2</field>
+        <field name="model">hr.payslip</field>
+        <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='worked_days_input']//field[@name='worked_days_line_ids']//list//field[@name='name']" position="after">
+                <field name="paid_bool" readonly="1"/>
+                <field name="advanced_amount" readonly="1" column_invisible="1"/>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_payslip_done']" position="before">
+                <button name="action_payslip_sent"
+                        string="Send To Sent"
+                        class="oe_highlight"
+                        type="object"
+                        invisible="state != 'draft'"/>
+
+                <button name="action_payslip_submit"
+                        string="Submit"
+                        class="oe_highlight"
+                        type="object"
+                        invisible="state != 'send'"/>
+            </xpath>
+
+            <xpath expr="//header/field[@name='state']" position="replace">
+                <field name="state" widget="statusbar" statusbar_visible="draft,send,submit,done,paid"/>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_payslip_cancel']" position="replace">
+                <button string="Cancel"
+                        name="action_payslip_cancel"
+                        type="object"
+                        invisible="not state in ('draft', 'send', 'submit', 'done', 'verify')"/>
+            </xpath>
+
+            <xpath expr="//header/button[@name='action_payslip_done']" position="replace">
+                <button string="Create Draft Entry"
+                        name="action_payslip_done"
+                        type="object"
+                        class="oe_highlight"
+                        context="{'payslip_generate_pdf': True}"
+                        invisible="state != 'submit'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

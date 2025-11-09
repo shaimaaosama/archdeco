@@ -1,0 +1,44 @@
+<odoo>
+
+    <record id="gs_signatures_settlement_view_tree" model="ir.ui.view">
+        <field name="name">gs.signatures.settlement.view.tree</field>
+        <field name="model">gs.signatures.settlement</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="type"/>
+                <field name="employee_id"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="gs_signatures_settlement_view_form" model="ir.ui.view">
+        <field name="name">gs.signatures.settlement.view.form</field>
+        <field name="model">gs.signatures.settlement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="type"/>
+                        </group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="company_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_signatures_settlement_action" model="ir.actions.act_window">
+        <field name="name">Signatures</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.signatures.settlement</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="sub_gs_signatures_settlement" name="Signatures"  parent="gs_hr_insurance.gs_hr_settings_main_menu" action="gs_signatures_settlement_action" sequence="6"/>
+
+</odoo>

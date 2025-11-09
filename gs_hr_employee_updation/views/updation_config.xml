@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="hr_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="90"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='hr']//block[@name='employees_setting_container']" position="inside">
+                <setting id="notice_period_setting">
+                    <field name="notice_period"/>
+                    <div class="d-flex mt-1" invisible="not notice_period">
+                        <field name="no_of_days" class="ml16"/>
+                        <span class="flex-shrink-0 ml8 me-2">days</span>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

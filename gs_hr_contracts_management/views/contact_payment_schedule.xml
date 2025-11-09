@@ -1,0 +1,100 @@
+<odoo>
+        <record id="gs_contact_payment_schedule_view_search" model="ir.ui.view">
+        <field name="name">gs.contact.payment.schedule.search</field>
+        <field name="model">gs.contact.payment.schedule</field>
+        <field name="arch" type="xml">
+            <search string="Follower">
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <group string="Group By">
+                    <filter string="Partner" name="group_partner" domain="[]" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Contract" name="group_contract_barcode" domain="[]" context="{'group_by': 'contract_barcode_id'}"/>
+                    <filter string="Payment" name="group_payment" domain="[]" context="{'group_by': 'payment_id'}"/>
+                    <filter string="Status" name="group_state" domain="[]" context="{'group_by': 'state'}"/>
+                    <filter string="Payment State" name="group_status" domain="[]" context="{'group_by': 'status'}"/>
+                    <filter string="Contract Classification" name="group_contract_classification" domain="[]" context="{'group_by': 'contract_classification_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="gs_contact_payment_schedule_view_tree" model="ir.ui.view">
+        <field name="name">gs.contact.payment.schedule.view.tree</field>
+        <field name="model">gs.contact.payment.schedule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="partner_id"/>
+                <field name="contract_barcode_id"/>
+                <field name="contract_classification_id"/>
+                <field name="payment_schedule"/>
+                <!--<field name="book_id"/>-->
+                <field name="payment_id"/>
+                <field name="percentage"/>
+                <field name="amount"/>
+                <field name="due_date"/>
+                <field name="status"/>
+                <field name="state"/>
+                <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_contact_payment_schedule_view_form" model="ir.ui.view">
+        <field name="name">gs.contact.payment.schedule.view.form</field>
+        <field name="model">gs.contact.payment.schedule</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
+                           invisible="'active' == True"/>
+                    <group>
+                        <group>
+                            <field name="partner_id" options="{'no_create_edit':True, 'no_create': True}"/>
+                            <field name="contract_barcode_id" options="{'no_create_edit':True, 'no_create': True}"/>
+                            <field name="contract_classification_id"/>
+                            <field name="payment_schedule"/>
+<!--
+                            <field name="book_id" options="{'no_create_edit':True, 'no_create': True}"/>
+-->
+                            <field name="payment_id" options="{'no_create_edit':True, 'no_create': True}"/>
+                            <label for="percentage"/>
+                            <div class="o_row" name="percentage">
+                                <field name="percentage" readonly="0"/>
+                                <span>%</span>
+                            </div>
+                            <field name="amount"/>
+                        </group>
+                        <group>
+                            <field name="active" invisible="1"/>
+                            <field name="status"/>
+                            <field name="due_date"/>
+                            <field name="attachment_ids" widget="many2many_binary" class="oe_inline"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_contact_payment_schedule_action" model="ir.actions.act_window">
+        <field name="name">Contact Payment Schedule</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.contact.payment.schedule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="gs_hr_main_menu" web_icon='gs_hr_contracts_management,static/description/index.png' groups="gs_hr_contracts_management.group_contract_management_user"
+              name="Contract Management" sequence="16"/>
+
+    <menuitem id="gs_hr_settings_main_menu"
+              parent="gs_hr_main_menu" groups="gs_hr_contracts_management.group_contract_management_admin"
+              name="Configuration" sequence="100"/>
+
+    <menuitem id="menu_gs_contract_payment" name="Contract Management" parent="gs_hr_contracts_management.gs_hr_main_menu" sequence="3" groups="gs_hr_contracts_management.group_contract_management_user"/>
+    <menuitem id="sub_gs_contact_payment_schedule" name="Contract Payment Schedule"  parent="menu_gs_contract_payment" action="gs_contact_payment_schedule_action" sequence="2"/>
+
+</odoo>

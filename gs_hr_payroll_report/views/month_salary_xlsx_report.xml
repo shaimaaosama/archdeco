@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_month_salary_xlsx_report" model="ir.actions.report">
+        <field name="name">Month Salary Excel Report</field>
+        <field name="model">month.salary.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">gs_hr_payroll_report.month_salary_xlsx_report</field>
+        <field name="report_file">gs_hr_payroll_report.month_salary_xlsx_report</field>
+    </record>
+    <record id="action_month_bank_salary_xlsx_report" model="ir.actions.report">
+        <field name="name">Month Salary Bank Excel Report</field>
+        <field name="model">month.salary.bank.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">gs_hr_payroll_report.month_salary_bank_xlsx_report</field>
+        <field name="report_file">gs_hr_payroll_report.month_salary_bank_xlsx_report</field>
+    </record>
+    <record id="action_gosi_bank_salary_xlsx_report" model="ir.actions.report">
+        <field name="name">gosi Bank Excel Report</field>
+        <field name="model">gosi.bank.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">gs_hr_payroll_report.gosi_bank_xlsx_report</field>
+        <field name="report_file">gs_hr_payroll_report.gosi_bank_xlsx_report</field>
+    </record>
+    <record id="employee_company_inherit" model="ir.ui.view">
+        <field name="name">employee.company.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+                <field name="employee_company"/>
+
+            </field>
+        </field>
+    </record>
+
+
+</odoo>

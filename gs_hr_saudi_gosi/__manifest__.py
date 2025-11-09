@@ -1,0 +1,22 @@
+{
+    'name': "GS HR GOSI",
+    'version': '18.0.1.0',
+    'summary': """GOSI Contribution for Saudi Government""",
+    'description': """GOSI Contribution for Saudu Government From Employee and Company""",
+    'category': 'Human Resources/Employees',
+    "author": "Global Solutions",
+    "website": "https://globalsolutions.dev",
+    'depends': ['base', 'hr', 'hr_payroll', 'gs_hr_insurance'],
+    'data': [
+             'security/ir.model.access.csv',
+             'views/gosi_view.xml',
+             'views/gosi_configuration.xml',
+             'views/sequence.xml',
+             # 'data/rule.xml',
+            ],
+    'demo': [],
+    'images': ['static/description/banner.png'],
+    'license': "AGPL-3",
+    'installable': True,
+    'application': True,
+}

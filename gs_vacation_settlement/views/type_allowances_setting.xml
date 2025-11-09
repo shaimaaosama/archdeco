@@ -1,0 +1,63 @@
+<odoo>
+
+    <record id="gs_type_allowances_setting_view_list" model="ir.ui.view">
+        <field name="name">type.allowances.view.list</field>
+        <field name="model">type.allowances</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+   <record id="gs_type_allowances_setting_view_form" model="ir.ui.view">
+    <field name="name">type.allowances.view.form</field>
+    <field name="model">type.allowances</field>
+    <field name="arch" type="xml">
+        <form>
+            <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="type"/>
+                        <field name="account"
+                               invisible="type not in ['ticket', 'loan']"
+                               required="type in ['ticket', 'loan']"/>
+                        <field name="is_type_collected"/>
+                        <field name="is_loan"/>
+                    </group>
+                </group>
+                <field name="line_ids" invisible="type in ['ticket', 'loan']">
+                    <list editable="bottom">
+                        <field name="structure_id"/>
+                        <field name="account_type_allowances_id"
+                               required="parent.type not in ['ticket', 'loan']"/>
+                    </list>
+                </field>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+
+
+
+    <record id="gs_type_allowances_setting_action" model="ir.actions.act_window">
+        <field name="name">type.allowances.action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">type.allowances</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+     <menuitem id="menu_eos_vs_setting_root"
+             name="VS &amp; EOS Setting"
+              parent="hr.menu_human_resources_configuration"
+              sequence="100"/>
+
+    <menuitem id="sub_gs_type_allowances_setting"
+              name="Type allowances &amp;Deduction Setting"
+              parent="menu_eos_vs_setting_root"
+              action="gs_type_allowances_setting_action"
+              sequence="3"/>
+
+</odoo>

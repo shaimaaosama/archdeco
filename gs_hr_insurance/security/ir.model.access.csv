@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_follower,gs_follower,model_gs_follower,,1,1,1,1
+access_gs_insurance_class,gs_insurance_class,model_gs_insurance_class,,1,1,1,1
+access_gs_insurance_network,gs_insurance_network,model_gs_insurance_network,,1,1,1,1
+access_gs_insurance,gs_insurance,model_gs_insurance,,1,1,1,1
+access_gs_insurance_contract,gs_insurance_contract,model_gs_insurance_contract,,1,1,1,1

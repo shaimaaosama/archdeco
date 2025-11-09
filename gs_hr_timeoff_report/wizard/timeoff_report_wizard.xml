@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="timeoff_report_wizard_from_view" model="ir.ui.view">
+        <field name="name">timeoff.report.wizard.from.view</field>
+        <field name="model">timeoff.report.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                  <!--  <group attrs="{'invisible':[('leave_report_printed','=',True)]}"> -->
+
+                        <group>
+                          <label for="date_from" string="From" />
+                            <div class="o_row">
+                                <field name="date_from" readonly="0" force_save="1" required="1"/>
+                                <strong class="mr8"> To </strong>
+                                <field name="date_to" readonly="0" required="1"/>
+                            </div>
+                        </group>
+
+                        <group>
+                            <field name="employee_ids" widget="many2many_tags"/>
+                            <field name="timeoff_ids" widget="many2many_tags"/>
+                        </group>
+
+
+                <!--    <group attrs="{'invisible':[('leave_report_printed','=',False)]}">
+                        <field name="leave_report_printed" invisible="1"/>
+                        <field name="file_name" invisible="1"/>
+                        <field name="leave_summary_file" readonly="1"  filename="file_name"/>
+                    </group>
+                    -->
+                </sheet>
+                 <footer>
+                      <button name="action_excel_wizard" string="Print XLSX" type="object" class="btn-primary"/>
+                      <button string="Cancel" class="btn-default" special="cancel" />
+                  </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_timeoff_report_wizard" model="ir.actions.act_window">
+        <field name="name">Timeoff Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">timeoff.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="timeoff_report_wizard_from_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem action="action_timeoff_report_wizard" id="menu_timeoff_report_wizard" name="Timeoff Report" parent="hr_holidays.menu_hr_holidays_report" />
+
+
+</odoo>

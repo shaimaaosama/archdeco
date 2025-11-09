@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="custom_vacation_order_header">
+        <t t-set="company" t-value="user.company_id"/>
+        <div class="o_force_rtl header font-weight-bold" style="font-size: 22px;font-family:sans-serif;direction: rtl; margin-bottom:20px;">
+            <style>
+                @font-face {
+                    font-family: 'Cairo-Regular';
+                    src: local('Cairo-Regular'), local('Cairo-Regular'), url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('opentype');
+                }
+
+                .font_cairo{
+                    font-family: Cairo-Regular;
+                }
+            </style>
+            <div style="float:left;">
+                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 150px;"
+                     alt="Logo"/>
+            </div>
+            <div class="font_cairo" style="width:70%;float:right;position:relative;left:18px;direction:rtl;">
+                <ul class="list-inline mb4" style="position:absolute">
+                    <strong  class='text-right' t-if="company.name" style="float:right;" t-esc="company.name"/>
+                    <br/>
+                    <div class='text-right' style="float:right;" t-field="company.partner_id"
+                         t-options='{"widget": "contact", "fields": ["name"], "no_marker": true}'
+                    />
+                    <br/><br/>
+                </ul>
+               
+            </div>
+        </div>
+        <div class="footer" style="width:100%;font-family: Arial, Helvetica, sans-serif;direction: rtl;">
+            <div class="mt-2 text-center" style="background-color:#4cc9f0;color:#fff;">
+                <ul class="list-inline mb4 text-nowrap">
+                    <li t-if="company.street" class="list-inline-item d-inline">
+                        <span t-field="company.country_id.name"/>
+                    </li>
+
+                    <li class='list-inline-item d-inline' t-if="company.city">
+                        <span t-field="company.city"/>
+                    </li>
+                    <li t-if="company.street" class="list-inline-item d-inline">
+                        <span t-field="company.street"/>
+                    </li>
+                    <li t-if="company.street2" class="list-inline-item d-inline">
+                        <span t-field="company.street2"/>
+                    </li>
+                    <li t-if="company.phone" class="fa fa-phone fa-fw list-inline-item d-inline">
+                        <span class="o_force_ltr" t-field="company.phone"/>
+                    </li>
+<!--                     <li t-if="company.whatsapp_no" class="fa fa-whatsapp fa-fw list-inline-item d-inline">
+                        <span class="o_force_ltr" t-field="company.whatsapp_no"/>
+                    </li> -->
+                    <br/>
+                    <li t-if="company.email" class="fa fa-envelope-o fa-fw list-inline-item d-inline">
+                        <span t-field="company.email"/>
+                    </li>
+                    <li t-if="company.website" class="fa fa-globe fa-fw list-inline-item d-inline">
+                        <span t-field="company.website"/>
+                    </li>
+                </ul>
+            </div>
+            <div t-if="report_type == 'pdf'" class="text-muted">
+                Page:
+                <li class="list-inline-item">
+                    <strong>
+                        <span class="page"/>
+                        /
+                        <span class="topage"/>
+                    </strong>
+                </li>
+            </div>
+        </div>
+    </template>
+     <template id="custom_header_footer_employee_vacation">
+        <div class="header">
+            <div class="row">
+                <table class="mb-3" style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <!-- Logo Section -->
+                        <td style="width: 15%;">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                 style="width: 130px; height: auto;"/>
+
+                        </td>
+
+
+                        <!-- Title Section -->
+                        <td style="width: 85%; background-color: #cfe2f3; text-align: center; padding: 10px;
+                   font-weight: bold; font-size: 16px; position: relative; border-bottom: 3px solid black;">
+                            <span style="font-size: 18px;">تسوية اجازة</span>
+                            <br/>
+                            <span style="font-size: 16px;">Annual Vacation Settlement</span>
+                            <div style="position: absolute; bottom: -3px; right: 0; width: 20px; height: 20px;
+                        border-right: 3px solid black; border-bottom: 3px solid black;"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <div class="article o_report_layout_standard">
+            <t t-out="0"/>
+        </div>
+        <div t-attf-class="footer">
+            <div class="text-center" style="height:40px;width:100%;">
+
+            </div>
+        </div>
+    </template>
+     <template id="custom_header_footer_employee_end_service">
+        <div class="header">
+            <div class="row">
+                <table  style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <!-- Logo Section -->
+                        <td style="width: 15%;">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                 style="width: 130px; height: auto;"/>
+
+                        </td>
+
+
+                        <!-- Title Section -->
+                        <td style="width: 85%; background-color: #cfe2f3; text-align: center; padding: 10px;
+                   font-weight: bold; font-size: 16px; position: relative; border-bottom: 3px solid black;">
+                            <span style="font-size: 18px;"> تسوية نهاية الخدمة</span>
+                            <br/>
+                            <span style="font-size: 16px;">End Of Service  Settlement</span>
+                            <div style="position: absolute; bottom: -3px; right: 0; width: 20px; height: 20px;
+                        border-right: 3px solid black; border-bottom: 3px solid black;"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <div class="article o_report_layout_standard">
+            <t t-out="0"/>
+        </div>
+        <div t-attf-class="footer">
+            <div class="text-center" style="height:40px;width:100%;">
+
+            </div>
+        </div>
+    </template>
+</odoo>

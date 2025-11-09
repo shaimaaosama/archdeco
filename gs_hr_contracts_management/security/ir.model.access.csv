@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_contact_payment_schedule,gs_contact_payment_schedule,model_gs_contact_payment_schedule,,1,1,1,1
+access_gs_contract_management,gs_contract_management,model_gs_contract_management,,1,1,1,1
+
+access_gs_type_of_contracts,gs_type_of_contracts,model_gs_type_of_contracts,,1,1,1,1
+access_gs_remind,gs_remind,model_gs_remind,,1,1,1,1
+access_gs_subject,gs_subject,model_gs_subject,,1,1,1,1
+access_gs_payments,gs_payments,model_gs_payments,,1,1,1,1

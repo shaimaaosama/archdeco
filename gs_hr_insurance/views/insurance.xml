@@ -1,0 +1,164 @@
+<odoo>
+
+    <record id="gs_insurance_view_tree" model="ir.ui.view">
+        <field name="name">gs.insurance.view.tree</field>
+        <field name="model">gs.insurance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="beneficiary_insurance_id"/>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="employee_id" />
+                <field name="follower_id"/>
+                <field name="policy_number_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_insurance_view_form" model="ir.ui.view">
+        <field name="name">gs.insurance.view.form</field>
+        <field name="model">gs.insurance</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group style="width:30%">
+                            <div>
+                                <label for="beneficiary_insurance_id"/>
+                                <br/>
+                                <field nolabel="1" name="beneficiary_insurance_id" required="1"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <group style="width:50%">
+                            <div>
+                                <label for="name"/>
+                                <br/>
+                                <field nolabel="1" name="name" required="1"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <group style="width:20%">
+                            <div>
+                                <label for="type"/>
+                                <br/>
+                                <field nolabel="1" name="type" required="1"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group  invisible="type == 'follower'" string="Employee Info">
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="country_employee_id" readonly="1"/>
+                            <field name="identity_employee_number" readonly="1"/>
+                            <field name="id_expiry_employee_date" readonly="1"/>
+                            <field name="id_attachment_employee_id" widget="many2many_binary" class="oe_inline"/>
+                        </group>
+                        <group>
+                            <field name="birth_date_employee" force_save="1" readonly="1"/>
+                            <field name="member_age_employee" readonly="1"/>
+                            <field name="gender_employee" readonly="1"/>
+                            <field name="marital_employee" readonly="1"/>
+                        </group>
+                    </group>
+                    <group invisible="type == 'original'" string="Follower Info">
+                        <group>
+                            <field name="follower_id"/>
+                            <field name="country_id" readonly="1"/>
+                            <field name="identity_number" readonly="1"/>
+                            <field name="id_expiry_date" readonly="1"/>
+                            <field name="id_attachment_id" widget="many2many_binary" class="oe_inline"/>
+                        </group>
+                        <group>
+                            <field name="birth_date" readonly="1"/>
+                            <field name="member_age" readonly="1" force_save="1"/>
+                            <field name="gender" readonly="1"/>
+                            <field name="employee_id" readonly="1" invisible="type == 'follower'"/>
+                            <field name="main_membership"  readonly="1" force_save="1"/>
+                            <field name="relation_id" readonly="1"/>
+                            <field name="marital_follower" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="policy_number_id"  domain="[('active_bol', '=', True)]"/>
+                            <field name="sponsor" readonly="1"  force_save="1"/>
+                            <field name="annual_amount" force_save="1"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="sub_date"/>
+                            <field name="addition_date" required="1"/>
+                            <field name="duration" force_save="1" readonly="1"/>
+                            <field name="actual_amount" force_save="1" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="insurance_class_id"/>
+                            <field name="insurance_network_id"/>
+                            <field name="policy_amount" force_save="1"/>
+                            <field name="active_member"/>
+                            <field name="clearance"/>
+                            <field name="cl_attachment_id" widget="many2many_binary" class="oe_inline" invisible="clearance != True"/>
+                        </group>
+                        <group string="Declining">
+                            <field name="declining_date"/>
+                            <field name="decline_period" readonly="1"/>
+                            <field name="refund_amount" force_save="1" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_insurance_action" model="ir.actions.act_window">
+        <field name="name">Insurance</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.insurance</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <menuitem id="gs_hr_settings_main_menu"
+              parent="hr.menu_hr_root"
+              groups="hr.group_hr_manager"
+              name="HR Settings" sequence="17"/>
+
+    <menuitem id="gs_hr_main_menu"
+              parent="hr.menu_hr_root"
+              name="HR" sequence="16"/>
+
+<!--    <menuitem id="gs_insurance_hr_menu" name="Insurance"-->
+<!--              parent="gs_hr_main_menu" sequence="1"/>-->
+
+<!--    <menuitem id="gs_insurance_hr_sub_menu" name="Insurance Record"-->
+<!--              parent="gs_insurance_hr_menu"-->
+<!--              action="gs_insurance_action" sequence="1"/>-->
+
+
+    <menuitem id="gs_follower_hr_menu" name="Follower"
+              parent="gs_hr_main_menu" sequence="2"/>
+
+    <menuitem id="gs_follower_hr_sub_menu" name="Follower"
+              parent="gs_follower_hr_menu"
+              action="gs_follower_action" sequence="1"/>
+
+<!--    <menuitem id="gs_insurance_conf_menu" name="Insurance"-->
+<!--         parent="gs_hr_insurance.gs_hr_settings_main_menu" sequence="2"/>-->
+
+<!--    <menuitem id="gs_insurance_class_conf_sub_menu" name="Insurance Class"-->
+<!--         parent="gs_hr_insurance.gs_insurance_conf_menu" action="gs_insurance_class_action" sequence="2"/>-->
+
+
+<!--    <menuitem id="gs_insurance_contract_conf_menu" name="Insurance Contract"-->
+<!--              parent="gs_hr_insurance.gs_insurance_conf_menu" action="gs_insurance_contract_action" sequence="3"/>-->
+
+<!--    <menuitem id="gs_insurance_network_conf_sub_menu" name="Insurance Network"-->
+<!--         parent="gs_hr_insurance.gs_insurance_conf_menu" action="gs_insurance_network_action" sequence="4"/>-->
+
+
+<!--    <menuitem id="hr_employee_relation_conf_menu" name="Relationship"-->
+<!--         parent="gs_hr_insurance.gs_hr_settings_main_menu" action="gs_hr_employee_updation.hr_employee_relation_action" sequence="40"/>-->
+
+</odoo>
