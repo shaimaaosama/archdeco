@@ -1,7 +1,7 @@
 {
     'name': 'Sales Menu Item',
     'Author': 'Ahmed Abd El Baky',
-    'depends': ['sale', 'stock'],
+    'depends': ['sale', 'stock', 'purchase'],
     'data': [
         'views/sales.xml',
     ],

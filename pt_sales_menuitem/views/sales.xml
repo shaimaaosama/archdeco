@@ -60,6 +60,11 @@
                   parent="pt_sales_menuitem.sale_accounting"
                   action="stock.dashboard_open_quants"
                   sequence="90"/>
+        <menuitem id="purchase_landed_cost_action"
+                  name="Landed Cost"
+                  parent="purchase.menu_purchase_root"
+                  action="stock_landed_costs.action_stock_landed_cost"
+                  sequence="120"/>
     </data>
 
 </odoo>
