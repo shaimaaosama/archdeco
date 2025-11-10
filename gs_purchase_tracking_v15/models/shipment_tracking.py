@@ -53,8 +53,7 @@ class GsPurchaseLineOrder(models.Model):
                 'quantity': self.qty_to_invoice,
                 'price_unit': self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date, round=False),
                 'tax_ids': [(6, 0, self.taxes_id.ids)],
-                'analytic_account_id': self.order_id.analytic_account_id.id,
-                'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
+                'analytic_distribution': self.analytic_distribution,
                 'purchase_line_id': self.id,
             }
         elif not self.order_id.analytic_account_id and self.order_id.analytic_tag_id:
@@ -67,8 +66,7 @@ class GsPurchaseLineOrder(models.Model):
                 'quantity': self.qty_to_invoice,
                 'price_unit': self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date, round=False),
                 'tax_ids': [(6, 0, self.taxes_id.ids)],
-                'analytic_account_id': self.account_analytic_id.id,
-                'analytic_tag_ids': [(6, 0, self.order_id.analytic_tag_id.ids)],
+                'analytic_distribution': self.analytic_distribution,
                 'purchase_line_id': self.id,
             }
         else:
@@ -81,8 +79,7 @@ class GsPurchaseLineOrder(models.Model):
                 'quantity': self.qty_to_invoice,
                 'price_unit': self.currency_id._convert(self.price_unit, aml_currency, self.company_id, date, round=False),
                 'tax_ids': [(6, 0, self.taxes_id.ids)],
-                'analytic_account_id': self.account_analytic_id.id,
-                'analytic_tag_ids': [(6, 0, self.analytic_tag_ids.ids)],
+                'analytic_distribution': self.analytic_distribution,
                 'purchase_line_id': self.id,
             }
         if not move:
