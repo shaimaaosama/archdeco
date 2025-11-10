@@ -123,7 +123,7 @@ class GsPaymentOrder(models.Model):
             'company_id': self.company_id.id,
             'branch_id': self.branch_id.id,
             'date': self.payment_due_date,
-            'ref': self.description,
+            'memo': self.description,
         }
         payment = self.env['account.payment'].create(vals)
         self.amount_payment += amount
