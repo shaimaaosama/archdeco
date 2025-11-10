@@ -1,0 +1,60 @@
+<odoo>
+    <data>
+
+        <menuitem id="sale_accounting"
+                  name="Accounting"
+                  parent="sale.sale_menu_root"
+                  sequence="90"/>
+        <record id="all_invoice_sale_action" model="ir.actions.act_window">
+            <field name="name">CustomerALLInvoices</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move</field>
+            <field name="domain">[('move_type', 'in', ['out_invoice', 'out_refund'])]</field>
+            <field name="context">{'default_move_type': 'out_invoice'}</field>
+            <field name="view_mode">list,kanban,form</field>
+        </record>
+        <record id="all_invoice_sale_post_action" model="ir.actions.act_window">
+            <field name="name">CustomerInvoices</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.move</field>
+            <field name="domain">[('state', '=', 'posted'), ('move_type', 'in', ['out_invoice', 'out_refund']),('invoice_user_id','=',uid)]</field>
+            <field name="context">{'default_move_type': 'out_invoice'}</field>
+            <field name="view_mode">list,kanban,form</field>
+        </record>
+        <record id="all_invoice_analysis_action" model="ir.actions.act_window">
+            <field name="name">Invoices Analysis</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.invoice.report</field>
+            <field name="context">{'search_default_current':1, 'search_default_customer': 1, 'group_by':['invoice_date'], 'group_by_no_leaf':1}</field>
+            <field name="view_mode">pivot,graph</field>
+        </record>
+        <record id="all_sale_payment_action" model="ir.actions.act_window">
+            <field name="name">Payments</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.payment</field>
+            <field name="context">{'default_journal_id': False,'default_payment_type': 'inbound','default_partner_type': 'customer','search_default_inbound_filter': 1,'default_move_journal_types': ('bank', 'cash'),}</field>
+            <field name="view_mode">list,kanban,form,graph</field>
+        </record>
+        <menuitem id="sale_invoicing"
+                  name="All Invoices BM"
+                  parent="pt_sales_menuitem.sale_accounting"
+                  action="all_invoice_sale_action"
+                  sequence="90"/>
+        <menuitem id="sale_invoicing_post"
+                  name="Invoices"
+                  parent="pt_sales_menuitem.sale_accounting"
+                  action="all_invoice_sale_post_action"
+                  sequence="90"/>
+        <menuitem id="sale_invoicing_analysis"
+                  name="Invoice Analysis"
+                  parent="pt_sales_menuitem.sale_accounting"
+                  action="all_invoice_analysis_action"
+                  sequence="90"/>
+        <menuitem id="sale_payment_menu"
+                  name="Payments"
+                  parent="pt_sales_menuitem.sale_accounting"
+                  action="all_sale_payment_action"
+                  sequence="90"/>
+    </data>
+
+</odoo>
