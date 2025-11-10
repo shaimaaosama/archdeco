@@ -14,8 +14,8 @@ class AccountPaymentRegisterInherit(models.TransientModel):
     sale_persone_payment_id = fields.Many2one(comodel_name='res.users', required=True,
                                               string='collection representative')
 
-    def _create_payment_vals_from_wizard(self):
-        payment_vals = super(AccountPaymentRegisterInherit, self)._create_payment_vals_from_wizard()
+    def _create_payment_vals_from_wizard(self,batch_result):
+        payment_vals = super(AccountPaymentRegisterInherit, self)._create_payment_vals_from_wizard(batch_result)
 
         payment_vals['sale_persone_id'] = self.sale_persone_payment_id.id
 
