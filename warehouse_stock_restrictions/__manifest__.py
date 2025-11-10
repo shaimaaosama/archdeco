@@ -41,7 +41,7 @@
         'users_view.xml',
         'security/security.xml',
         # 'security/ir.model.access.csv',
-        # 'sale_order_view.xml'
+        'sale_order_view.xml'
     ],
     
     
