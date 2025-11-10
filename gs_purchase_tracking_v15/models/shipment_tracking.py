@@ -32,7 +32,7 @@ class GsPurchaseLineOrder(models.Model):
         date = move and move.date or fields.Date.today()
         if self.order_id.analytic_account_id and self.order_id.analytic_tag_id:
             res = {
-                'display_type': self.display_type,
+                'display_type': self.display_type or 'product',
                 'sequence': self.sequence,
                 'name': '%s: %s' % (self.order_id.name, self.name),
                 'product_id': self.product_id.id,
@@ -45,7 +45,7 @@ class GsPurchaseLineOrder(models.Model):
             }
         elif self.order_id.analytic_account_id and not self.order_id.analytic_tag_id:
             res = {
-                'display_type': self.display_type,
+                'display_type': self.display_type or 'product',
                 'sequence': self.sequence,
                 'name': '%s: %s' % (self.order_id.name, self.name),
                 'product_id': self.product_id.id,
@@ -58,7 +58,7 @@ class GsPurchaseLineOrder(models.Model):
             }
         elif not self.order_id.analytic_account_id and self.order_id.analytic_tag_id:
             res = {
-                'display_type': self.display_type,
+                'display_type': self.display_type or 'product',
                 'sequence': self.sequence,
                 'name': '%s: %s' % (self.order_id.name, self.name),
                 'product_id': self.product_id.id,
@@ -71,7 +71,7 @@ class GsPurchaseLineOrder(models.Model):
             }
         else:
             res = {
-                'display_type': self.display_type,
+                'display_type': self.display_type or 'product',
                 'sequence': self.sequence,
                 'name': '%s: %s' % (self.order_id.name, self.name),
                 'product_id': self.product_id.id,
