@@ -55,6 +55,11 @@
                   parent="pt_sales_menuitem.sale_accounting"
                   action="all_sale_payment_action"
                   sequence="90"/>
+        <menuitem id="inventory_report_action"
+                  name="Inventory Reports"
+                  parent="pt_sales_menuitem.sale_accounting"
+                  action="stock.dashboard_open_quants"
+                  sequence="90"/>
     </data>
 
 </odoo>
