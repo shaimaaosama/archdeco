@@ -33,9 +33,9 @@ class AccountPaymentsInherit(models.Model):
     def _compute_amount_in_word(self):
         for rec in self:
             if self.env.user.lang == 'en_US':
-                rec.num_word = str(rec.currency_id.amount_to_text(rec.amount_total)) + ' only'
+                rec.num_word = str(rec.currency_id.amount_to_text(rec.amount)) + ' only'
             elif self.env.user.lang == 'ar_001':
-                rec.num_word = num2words(rec.amount_total, to='currency', lang=self.env.user.lang)
+                rec.num_word = num2words(rec.amount, to='currency', lang=self.env.user.lang)
                 rec.num_word = str(rec.num_word) + ' فقط'
 
     num_word = fields.Char(string="Amount In Words:", compute='_compute_amount_in_word')

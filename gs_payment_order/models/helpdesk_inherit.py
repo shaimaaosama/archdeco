@@ -16,7 +16,7 @@ class GSAccountPayment(models.Model):
             'view_type': 'form',
             'res_model': 'gs.payment.order',
             'view_id': False,
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'type': 'ir.actions.act_window',
         }
 
@@ -48,7 +48,7 @@ class GSSaleOrder(models.Model):
             'view_type': 'form',
             'res_model': 'gs.payment.order',
             'view_id': False,
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'type': 'ir.actions.act_window',
         }
 
@@ -80,7 +80,7 @@ class GSPurchaseOrder(models.Model):
             'view_type': 'form',
             'res_model': 'gs.payment.order',
             'view_id': False,
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'type': 'ir.actions.act_window',
         }
 
@@ -112,7 +112,7 @@ class GSPurchaseTracking(models.Model):
             'view_type': 'form',
             'res_model': 'gs.payment.order',
             'view_id': False,
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'type': 'ir.actions.act_window',
         }
 
