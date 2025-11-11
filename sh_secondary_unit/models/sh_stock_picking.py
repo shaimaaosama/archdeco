@@ -79,25 +79,25 @@ class ShStockMove(models.Model):
         copy=False
     )
 
-    @api.onchange('quantity_done')
+    @api.onchange('quantity')
     def onchange_product_uom_done_qty_sh(self):
         if self and self.sh_is_secondary_unit and self.sh_sec_uom:
             self.sh_sec_done_qty = self.product_uom._compute_quantity(
-                self.quantity_done,
+                self.quantity,
                 self.sh_sec_uom
             )
-        float_num = self.sh_sec_done_qty - int(self.sh_sec_done_qty)
-        int_num = int(self.sh_sec_done_qty)
-        if float_num > 0.25:
-            int_num += 1
-            self.sh_sec_done_qty = int_num
-        else:
-            self.sh_sec_done_qty = int(self.sh_sec_done_qty)
+        # float_num = self.sh_sec_done_qty - int(self.sh_sec_done_qty)
+        # int_num = int(self.sh_sec_done_qty)
+        # if float_num > 0.25:
+        #     int_num += 1
+        #     self.sh_sec_done_qty = int_num
+        # else:
+        #     self.sh_sec_done_qty = int(self.sh_sec_done_qty)
 
     @api.onchange('sh_sec_done_qty')
     def onchange_sh_sec_done_qty_sh(self):
         if self and self.sh_is_secondary_unit and self.product_uom:
-            self.quantity_done = self.sh_sec_uom._compute_quantity(
+            self.quantity = self.sh_sec_uom._compute_quantity(
                 self.sh_sec_done_qty,
                 self.product_uom
             )
