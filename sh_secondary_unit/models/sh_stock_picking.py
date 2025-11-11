@@ -124,12 +124,12 @@ class ShStockMove(models.Model):
         if res.sale_line_id and res.sale_line_id.sh_is_secondary_unit and res.sale_line_id.sh_sec_uom:
             res.update({
                 'sh_sec_uom': res.sale_line_id.sh_sec_uom.id,
-                'sh_sec_qty': res.sale_line_id.sh_sec_qty
+                'sh_sec_qty': res.sale_line_id.sh_sec_qty,
             })
         elif res.purchase_line_id and res.purchase_line_id.sh_is_secondary_unit and res.purchase_line_id.sh_sec_uom:
             res.update({
                 'sh_sec_uom': res.purchase_line_id.sh_sec_uom.id,
-                'sh_sec_qty': res.purchase_line_id.sh_sec_qty
+                'sh_sec_qty': res.purchase_line_id.sh_sec_qty,
             })
         return res
 
@@ -159,7 +159,7 @@ class ShStockMoveLine(models.Model):
         copy=False
     )
 
-    @api.depends('qty_done')
+    @api.depends('quantity')
     def onchange_product_uom_done_qty_sh_move_line0(self):
         for rec in self:
             if rec and rec.sh_is_secondary_unit and rec.sh_sec_uom:
@@ -168,7 +168,7 @@ class ShStockMoveLine(models.Model):
                     rec.sh_sec_uom
                 )
                 rec.move_id.sh_sec_done_qty = rec.product_uom_id._compute_quantity(
-                    rec.qty_done,
+                    rec.quantity,
                     rec.move_id.sh_sec_uom
                 )
 
@@ -184,7 +184,7 @@ class ShStockMoveLine(models.Model):
     def onchange_product_sec_done_qty_sh_move_line(self):
         for rec in self:
             if rec and rec.sh_is_secondary_unit and rec.sh_sec_uom:
-                rec.qty_done = rec.sh_sec_uom._compute_quantity(
+                rec.quantity = rec.sh_sec_uom._compute_quantity(
                     rec.sh_sec_qty,
                     rec.product_uom_id
                 )
