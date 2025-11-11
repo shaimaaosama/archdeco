@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="stock.view_stock_return_picking_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='product_return_moves']/list/field[@name='quantity']" position="after">
-                <field invisible="1" name="sh_is_secondary_unit"/>
+                <field invisible="1" name="sh_is_secondary_unit" column_invisible="1"/>
                 <field name="sh_sec_qty"/>
                 <field name="sh_sec_uom"/>
             </xpath></field>
@@ -17,7 +17,7 @@
         <field name="inherit_id" ref="stock.view_picking_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='move_ids_without_package']/list/field[@name='product_uom']" position="after">
-                <field invisible="1" name="sh_is_secondary_unit"/>
+                <field invisible="1" name="sh_is_secondary_unit" column_invisible="1"/>
                 <field force_save="1" groups="sh_secondary_unit.group_secondary_unit_inventory" name="sh_sec_qty" readonly="1"/>
                 <field force_save="1" groups="sh_secondary_unit.group_secondary_unit_inventory" name="sh_sec_uom" readonly="1"/>
             </xpath>
