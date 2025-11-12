@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_residence_profession,gs_residence_profession,model_gs_residence_profession,,1,1,1,1
+access_gs_type_of_license,gs_type_of_license,model_gs_type_of_license,,1,1,1,1
+access_gs_type_of_membership,gs_type_of_membership,model_gs_type_of_membership,,1,1,1,1
+access_gs_driving_license_restriction,gs_driving_license_restriction,model_gs_driving_license_restriction,,1,1,1,1
+access_gs_task,gs_task,model_gs_task,,1,1,1,1
+access_gs_evaluated_by,gs_evaluated_by,model_gs_evaluated_by,,1,1,1,1
+access_gs_kpi_table,gs_kpi_table,model_gs_kpi_table,,1,1,1,1
+access_gs_bail_type,gs_bail_type,model_gs_bail_type,,1,1,1,1

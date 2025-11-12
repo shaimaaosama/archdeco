@@ -1,0 +1,263 @@
+<odoo>
+    <data>
+<!--        <record id="gs_hr_employee_form_view_inherit" model="ir.ui.view">
+            <field name="name">gs.hr.employee.view.form.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='address_id']" position="after">
+                    <field name="is_readonly" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='address_id']" position="attributes">
+                    <attribute name="readonly">is_readonly != True</attribute>
+                </xpath>
+            </field>
+        </record>-->
+        <record id="gs_hr_contract_form_view_inherit" model="ir.ui.view">
+            <field name="name">gs.hr.contract.view.form.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='job_id']" position="after">
+                    <field name="is_get_data_notification" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="res_partner_address_inherit" model="ir.ui.view">
+            <field name="name">res_partner_address</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="/group/group[1]/div[hasclass('o_address_format')]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>-->
+                <xpath expr="//div[hasclass('o_address_format')]" position="replace">
+                    <div class="o_address_format">
+                        <field name="street" placeholder="Street..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                        <field name="street2" placeholder="District Name..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                        <field name="building_no" placeholder="Building No..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                        <field name="city" placeholder="City" class="o_address_city" readonly="type == 'contact' and parent_id"/>
+                        <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" readonly="type == 'contact' and parent_id" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                        <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="type == 'contact' and parent_id"/>
+                        <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" readonly="type == 'contact' and parent_id"/>
+                        <field name="addition_no" placeholder="Addition No..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                        <field name="unit_no" placeholder="Unit No..." class="o_address_street" readonly="type == 'contact' and parent_id"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='function']" position="before">
+                    <field name="invisible"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="HR_employee_address" model="ir.ui.view">
+            <field name="name">HR_employee_address</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='private_car_plate']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='ssnid']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//h1" position="after">
+                    <h1 class="d-flex">
+                        <field name="arabic_name" placeholder="Employee's Arabic Name" />
+                    </h1>
+                </xpath>
+                <xpath expr="//field[@name='work_phone']" position="after">
+                    <field name="work_ext"/>
+                </xpath>
+                <xpath expr="//field[@name='emergency_phone']" position="after">
+<!--
+                    <field name="emergency_contact_2"/>
+-->
+                    <field name="emergency_phone_2"/>
+                </xpath>
+                <xpath expr="//field[@name='country_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='identification_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='birthday']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='spouse_complete_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='spouse_birthdate']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='country_of_birth']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='study_field']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='study_school']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='job_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='coach_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+  <!--              <xpath expr="//notebook" position="inside">
+                    <page string="Employee Owner">
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="employee_owner_number"/>
+                                <field name="lease_contract_number"
+                                       attrs="{'invisible': [('type', '!=', 'hire_system')]}"/>
+                            </group>
+                            <group>
+
+                            </group>
+
+                        </group>
+                    </page>
+                </xpath>-->
+<!--                <xpath expr="//page[@name='personal_information']/group" position="inside">
+                    <group string="National address">
+                        <field name="building_number"/>
+                        <field name="mail_box"/>
+                        <field name="area"/>
+                        <field name="city_sr"/>
+                        <field name="additional_zip_code"/>
+                    </group>
+                </xpath>-->
+                <xpath expr="//page[@name='personal_information']/group/group[7]" position="attributes">
+                    <attribute name="name">education</attribute>
+                </xpath>
+                <xpath expr="//page[@name='personal_information']/group/group[@name='education']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='certificate']" position="after">
+                    <field name="graduation_year"/>
+                </xpath>
+
+                <xpath expr="//page[@name='personal_information']/group/group//div[hasclass('o_address_format')]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='personal_information']/group/group//label[@for='private_street']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='personal_information']/group/group//label[@for='private_street']" position="before">
+                    <field name="address_home_id" context="{'show_address': 1,'default_type': 'private','form_view_ref': 'base.res_partner_view_form_private'}" options="{&quot;always_reload&quot;: True, &quot;highlight_first_line&quot;: True}"/>
+                </xpath>
+                <xpath expr="//page[@name='personal_information']/group" position="after">
+                    <group>
+                        <field name="is_driving_license" invisible="0" widget="boolean_toggle"/>
+                    </group>
+                    <group string=" Driving License" invisible="is_driving_license == False">
+                        <group>
+<!--
+                            <field name="issuer_driving_license"/>
+-->
+                            <field name="expiry_driving_license_date_new"/>
+                            <field name="type_of_license_id"/>
+                        </group>
+                        <group>
+<!--
+                            <field name="driving_license_restriction_id"/>
+-->
+                            <field name="d_l_attachment_id"  widget="many2many_binary" class="oe_inline"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="is_authority_membership" invisible="0" widget="boolean_toggle"/>
+                    </group>
+                    <group string=" Authority Membership" invisible="is_authority_membership == False">
+                        <group>
+                            <field name="authority_membership_no"/>
+                            <field name="expiry_date_authority_membership"/>
+
+                        </group>
+                        <group>
+                            <field name="type_of_authority"/>
+                            <field name="a_m_attachment_id"  widget="many2many_binary" class="oe_inline"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="is_medical_card" invisible="0" widget="boolean_toggle"/>
+                    </group>
+                    <group string="كارت البلدية" invisible="is_medical_card == False">
+                        <group>
+                            <field name="is_get_data_notification" invisible="1"/>
+                            <field name="is_get_id_expiry_date" invisible="1"/>
+                            <field name="is_get_expiry_driving_license" invisible="1"/>
+                            <field name="is_get_passport_expiry" invisible="1"/>
+                            <field name="is_get_expiry_medical_card" invisible="1"/>
+                            <field name="balady_card_num"/>
+                            <field name="training_end_date_hijri"/>
+                            <field name="baladyl_card_end_date_hijri"/>
+<!--
+                            <field name="m_c_attachment_id"  widget="many2many_binary" class="oe_inline"/>
+-->
+                        </group>
+                    </group>
+                    <group>
+                        <field name="is_sizes" invisible="0" widget="boolean_toggle"/>
+                    </group>
+                    <group string="Sizes" invisible="is_sizes == False">
+                        <group string="coat">
+                            <field name="coat_chest"/>
+                            <field name="coat_length"/>
+                            <field name="coat_shoulders"/>
+                            <field name="coat_sleeves"/>
+                        </group>
+                        <group string="T-shirt">
+                            <field name="t_shirt_chest"/>
+                            <field name="t_shirt_length"/>
+                            <field name="t_shirt_shoulders"/>
+                            <field name="t_shirt_sleeves"/>
+                        </group>
+                        <group string="pants">
+                            <field name="pants_Length"/>
+                            <field name="pants_width"/>
+
+                        </group>
+                        <group string="shoes">
+                            <field name="shoes_size"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+
+        </record>
+
+        <record id="gs_hr_employee_inherit_form_view" model="ir.ui.view">
+            <field name="name">hr.employee.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="gs_hr_employee_updation.hr_employee_inherit_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@name='personal_information']/group/group[@name='identification_id']//field[@name='identification_id']" position="after">
+                    <field name="residence_profession"/>
+                    <field name="expiry_date_identification_new" invisible="1"/>
+<!--
+                    <field name="issuer_identification"/>
+-->
+                </xpath>
+                <xpath expr="//page[@name='personal_information']/group/group[@name='identification_id']//field[@name='id_expiry_date_new']" position="after">
+                    <field name="type"/>
+                    <field name="sponsor_name"/>
+                    <field name="old_sponsor_name"/>
+<!--
+                    <field name="bail_type_id"/>
+-->
+                    <field name="sponsor_number"/>
+                    <field name="lease_contract_number"
+                           invisible="type != 'hire_system'"
+                    />
+                </xpath>
+            </field>
+
+        </record>
+    </data>
+</odoo>
