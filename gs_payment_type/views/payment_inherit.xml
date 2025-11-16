@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <record id="account_payment_form_inherit" model="ir.ui.view">
+            <field name="name">account.payment.form.inherit</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_type']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state', '!=', 'draft')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_type']" position="after">
+                    <field name="journal_id" domain="[('type', 'in', ('bank', 'cash'))]" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_method_line_id']" position="after">
+                    <field name="partner_type" widget="selection" readonly="1"/>
+                    <field name="destination_account_id" options="{'no_create': True}" readonly="1" attrs="{'readonly': ['|', ('state', '!=', 'draft'), ('is_internal_transfer', '=', True)]}"/>
+                </xpath>
+                <xpath expr="//label[@for='amount']" position="before">
+                    <field name="company_id" invisible="1"/>
+                    <field name="payment_type_id" options="{'no_create': True, 'no_edit': True , 'horizontal': True}" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="res_users_form_inherit001" model="ir.ui.view">
+            <field name="name">res.users.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//notebook" position="inside">
+                    <page string="Payment Type" name="payment_type">
+                        <group>
+                            <field name="payment_type_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
+                 </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
