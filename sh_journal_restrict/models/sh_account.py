@@ -35,7 +35,7 @@ class ShAccountJournalRestrict(models.Model):
 
     # To apply domain to load menu_________ 1
     @api.model
-    def search(self, args, offset=0, limit=None, order=None, count=False):
+    def search(self, args, offset=0, limit=None, order=None):
         _ = self._context or {}
         if(
             self.env.user.has_group("sh_journal_restrict.group_journal_restrict_feature") and not
@@ -49,5 +49,5 @@ class ShAccountJournalRestrict(models.Model):
             offset=offset,
             limit=limit,
             order=order,
-            count=count,
+
         )
