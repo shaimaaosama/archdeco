@@ -1,0 +1,43 @@
+<odoo>
+
+    <record id="gs_account_payment_type_view_tree" model="ir.ui.view">
+        <field name="name">gs.account.payment.type.view.tree</field>
+        <field name="model">gs.account.payment.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_type"/>
+                <field name="destination_account_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_account_payment_type_view_form" model="ir.ui.view">
+        <field name="name">gs.account.payment.type.view.form</field>
+        <field name="model">gs.account.payment.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_type"/>
+                            <field name="company_id" invisible="1"/>
+                            <field name="destination_account_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_account_payment_type_action" model="ir.actions.act_window">
+        <field name="name">Payment Type</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.account.payment.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="sub_gs_account_payment_type" name="Payment Type" parent="account.root_payment_menu" action="gs_account_payment_type_action" sequence="100"/>
+
+</odoo>
