@@ -41,7 +41,7 @@ class EmployeeVacationSettlement(models.Model):
     employee_id = fields.Many2one('hr.employee', string="Employee", required=True)
     department_id = fields.Many2one(related='employee_id.department_id', string='Department', store=True)
     job_id = fields.Many2one(related='employee_id.job_id', string='Position', store=True)
-    # partner_emp = fields.Many2one(related='employee_id.address_home_id', string='Partner Related', store=True)
+    partner_emp = fields.Many2one(related='employee_id.address_home_id', string='Partner Related', store=True)
     job_title = fields.Char(related='employee_id.job_title', string='Position Number', store=True)
     register_num = fields.Char(related='employee_id.registration_number2', string='Registration Number of the Employee',
                                store=True)
