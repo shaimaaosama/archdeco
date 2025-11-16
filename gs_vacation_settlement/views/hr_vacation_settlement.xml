@@ -83,7 +83,7 @@
                                 <field name="department_id" readonly="True"/>
                                 <field name="job_id" readonly="True"/>
                                 <field name="register_num" readonly="True"/>
-                                <field name="partner_emp" readonly="True"/>
+<!--                                <field name="partner_emp" readonly="True"/>-->
                                 <field name="journal_id" readonly="True"/>
                                 <field name="analytic" readonly="True"/>
                             </group>
