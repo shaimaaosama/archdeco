@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+         <t t-name="branch_accounting_report.search_template_branch">
+             <Dropdown>
+                    <!-- This is the default slot: the toggle element -->
+                                <t t-set-slot="default">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-folder-open me-1"/>Branch
+                        </button>
+                    </t>
+
+                                <!-- This is the content slot: the dropdown menu items -->
+                                <t t-set-slot="content">
+                        <div class="dropdown-item">
+                            <label>Branch</label>
+                            <MultiRecordSelector t-props="getMultiRecordSelectorProps('res.branch', 'branch_ids')"/>
+                        </div>
+                    </t>
+                </Dropdown>
+         </t>
+
+    <t t-name="branch_accounting_report.AccountBranchFilters"
+       t-inherit="account_reports.AccountReportFiltersCustomizable" t-inherit-mode="extension" owl="1">
+            <xpath expr="//t[@t-if='hasFiscalPositionFilter']" position="after">
+                <div id="filter_branch" class="filter_branch">
+                    <t t-call="branch_accounting_report.search_template_branch"/>
+                </div>
+            </xpath>
+        </t>
+</templates>
+
+
+
