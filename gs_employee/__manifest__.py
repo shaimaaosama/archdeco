@@ -5,7 +5,7 @@
     "website": "https://globalsolutions.dev",
     'category': 'Uncategorized',
     'version': '18.0.1.0',
-    'depends': ['base', 'hr', 'gs_hr_employee_updation', 'gs_hr_insurance'],
+    'depends': ['base', 'hr', 'gs_hr_employee_updation', 'gs_hr_insurance', 'branch'],
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
