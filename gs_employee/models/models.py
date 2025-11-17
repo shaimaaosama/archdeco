@@ -30,6 +30,9 @@ class hr_contract(models.Model):
                 employee.is_get_data_notification = False
 
 
+    branch_id = fields.Many2one('res.branch', default=lambda self: self.env.user.branch_id)
+
+
 class hr_employee(models.Model):
     _inherit = 'hr.employee'
 
