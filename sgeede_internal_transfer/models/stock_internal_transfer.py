@@ -80,7 +80,7 @@ class stock_internal_transfer(models.Model):
 
     def action_approved(self):
         for rec in self:
-            users = self.env['gs.inventory.permission'].search([('permission_type', '=', 'inv_stock_internal_trans')])
+            # users = self.env['gs.inventory.permission'].search([('permission_type', '=', 'inv_stock_internal_trans')])
             for user in rec.source_warehouse_id.user_ids:
                 rec.make_activity_user(user)
             rec.write({'state': 'approved'})
