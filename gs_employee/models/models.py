@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
+from email.policy import default
 
 from odoo import models, fields, api, _
 # from ummalqura.hijri_date import HijriDate
 from odoo.exceptions import AccessError, UserError, ValidationError
+from odoo.fields import first
 
 
 class ResPartnerInherit(models.Model):
@@ -120,6 +122,7 @@ class hr_employee(models.Model):
 
     training_end_date_hijri = fields.Char(string='تاريخ انتهاء التدريب للبلدية الهجري')
     baladyl_card_end_date_hijri = fields.Char(string='تاريخ الانتهاء بطاقة البلدية الهجري')
+    branch_id = fields.Many2one('res.branch',default=lambda self:self.env.user.branch_id)
 
     # @api.onchange('training_end_date','baladyl_card_end_date')
     # def date_in_arabic(self):

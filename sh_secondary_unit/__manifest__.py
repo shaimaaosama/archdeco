@@ -18,7 +18,6 @@ so you don't need to waste your time to calculate that value.
 you can also show that value in pdf reports
 so your customer/vendor also easily understand that.
 """,
-    "version": "15.0.1",
     "depends": [
         "sale_management",
         "account",
