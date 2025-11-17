@@ -10,7 +10,7 @@
             </xpath>
             <xpath expr="//field[@name='payment_term_id']" position="after">
                 <field force_save="1" groups="analytic.group_analytic_accounting" name="analytic_account_id"/>
-                <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>
+<!--                <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>-->
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Project Information">

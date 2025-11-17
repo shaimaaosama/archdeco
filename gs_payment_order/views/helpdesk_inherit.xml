@@ -24,8 +24,7 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <field invisible="1" name="is_create_payment_new"/>
-                <field invisible="1" name="is_create_payment_order"/>
-                <button class="oe_highlight" invisible="is_create_payment_new == True or is_create_payment_order != True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+                <button class="oe_highlight" invisible="is_create_payment_new == True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
@@ -40,8 +39,7 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <field invisible="1" name="is_create_payment_new"/>
-                <field invisible="1" name="is_create_payment_order"/>
-                <button class="oe_highlight"  invisible="is_create_payment_new == True or is_create_payment_order != True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+                <button class="oe_highlight"  invisible="is_create_payment_new == True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
@@ -56,8 +54,7 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <field invisible="1" name="is_create_payment_new"/>
-                <field invisible="1" name="is_create_payment_order"/>
-                <button class="oe_highlight"  invisible="is_create_payment_new == True or is_create_payment_order != True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+                <button class="oe_highlight"  invisible="is_create_payment_new == True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
                 <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">

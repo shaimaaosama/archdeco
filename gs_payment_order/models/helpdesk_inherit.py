@@ -30,16 +30,16 @@ class GSSaleOrder(models.Model):
 
     is_create_payment_new = fields.Boolean()
     payment_count = fields.Integer("Payment count", compute='_compute_payment_count')
-    is_create_payment_order = fields.Boolean(compute="_get_default_create_payment_order")
+    # is_create_payment_order = fields.Boolean(compute="_get_default_create_payment_order")
 
-    def _get_default_create_payment_order(self):
-        for rec in self:
-            user = rec.env.user.id
-            permission = self.env['gs.sales.permission'].search([], limit=1)
-            rec.is_create_payment_order = False
-            if permission:
-                if user in permission.create_payment_order_ids.ids:
-                    rec.is_create_payment_order = True
+    # def _get_default_create_payment_order(self):
+    #     for rec in self:
+    #         user = rec.env.user.id
+    #         permission = self.env['gs.sales.permission'].search([], limit=1)
+    #         rec.is_create_payment_order = False
+    #         if permission:
+    #             if user in permission.create_payment_order_ids.ids:
+    #                 rec.is_create_payment_order = True
 
     def action_view_payment(self):
         return {
@@ -62,16 +62,16 @@ class GSPurchaseOrder(models.Model):
 
     is_create_payment_new = fields.Boolean()
     payment_count = fields.Integer("Payment count", compute='_compute_payment_count')
-    is_create_payment_order = fields.Boolean(compute="_get_default_create_payment_order")
+    # is_create_payment_order = fields.Boolean(compute="_get_default_create_payment_order")
 
-    def _get_default_create_payment_order(self):
-        for rec in self:
-            user = rec.env.user.id
-            permission = self.env['gs.purchase.permission'].search([], limit=1)
-            rec.is_create_payment_order = False
-            if permission:
-                if user in permission.create_payment_order_ids.ids:
-                    rec.is_create_payment_order = True
+    # def _get_default_create_payment_order(self):
+    #     for rec in self:
+    #         user = rec.env.user.id
+    #         permission = self.env['gs.purchase.permission'].search([], limit=1)
+    #         rec.is_create_payment_order = False
+    #         if permission:
+    #             if user in permission.create_payment_order_ids.ids:
+    #                 rec.is_create_payment_order = True
 
     def action_view_payment(self):
         return {
@@ -94,16 +94,16 @@ class GSPurchaseTracking(models.Model):
 
     is_create_payment_new = fields.Boolean()
     payment_count = fields.Integer("Payment count", compute='_compute_payment_count')
-    is_create_payment_order = fields.Boolean(compute="_get_default_create_payment_order")
+    # is_create_payment_order = fields.Boolean(compute="_get_default_create_payment_order")
 
-    def _get_default_create_payment_order(self):
-        for rec in self:
-            user = rec.env.user.id
-            permission = self.env['gs.purchase.tracking.permission'].search([('permission_type', '=', 'p_purchase_tracking')], limit=1)
-            rec.is_create_payment_order = False
-            if permission:
-                if user in permission.create_payment_order_ids.ids:
-                    rec.is_create_payment_order = True
+    # def _get_default_create_payment_order(self):
+    #     for rec in self:
+    #         user = rec.env.user.id
+    #         permission = self.env['gs.purchase.tracking.permission'].search([('permission_type', '=', 'p_purchase_tracking')], limit=1)
+    #         rec.is_create_payment_order = False
+    #         if permission:
+    #             if user in permission.create_payment_order_ids.ids:
+    #                 rec.is_create_payment_order = True
 
     def action_view_payment(self):
         return {

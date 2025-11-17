@@ -51,7 +51,7 @@
             <form>
                 <header>
                     <button class="oe_highlight" invisible="is_submit != True or state != 'draft'" name="action_submit" string="Submit" type="object"/>
-                    <button class="oe_highlight" invisible="is_approve != True or state != 'submit'" name="action_approved" string="Approve" type="object"/>
+                    <button class="oe_highlight" invisible="state != 'submit'" name="action_approved" string="Approve" type="object"/>
                     <button invisible="is_cancel != True or state not in ['draft', 'submit']" name="action_cancel" string="Cancel" type="object"/>
                     <button invisible="is_draft != True or state not in ['cancel', 'locked']" name="action_draft" string="Set to Draft" type="object"/>
                     <button invisible="state in ['draft', 'locked'] or is_lock_bol != True" name="action_lock" string="Lock" type="object"/>

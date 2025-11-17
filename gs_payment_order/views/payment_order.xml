@@ -26,18 +26,18 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button class="oe_highlight" invisible="is_submit != True or state != 'draft'" name="action_submit" string="Submit" type="object"/>
-                    <button class="oe_highlight" invisible="is_checked != True or state != 'submit'" name="action_checked" string="Checked" type="object"/>
+                    <button class="oe_highlight" invisible=" state != 'draft'" name="action_submit" string="Submit" type="object"/>
+                    <button class="oe_highlight" invisible=" state != 'submit'" name="action_checked" string="Checked" type="object"/>
                     <button class="oe_highlight" invisible="state != 'checked'" name="action_approve" string="Approve" type="object"/>
-                    <button class="oe_highlight" context="{'default_amount': amount,'default_currency_id': currency_id}" data-hotkey="q" invisible="state not in ['approve', 'issue_payment', 'special_approved'] or inv_create_payment != False or is_create_payment != True" name="%(gs_create_payment_wizard_action)d" string="Create Payment" type="action"/>
-                    <button class="oe_highlight" invisible="state != 'approve' or hide_special_approval != False or is_special_approval != True" name="%(gs_special_approval_button_wizard_action)d" string="Special ِApproval" type="action"/>
-                    <button class="oe_highlight" invisible="state != 'issue_payment' or is_finalize_payment != True" name="action_finalize_payment" string="Finalize Payment" type="object"/>
-                    <button class="oe_highlight" groups="gs_payment_order.group_special_approval" invisible="state != 'special_approval' or is_finalize_payment != True" name="action_special_approved" string="Special ِApproved" type="object"/>
-                    <button class="oe_highlight" invisible="state != 'finalize_payment' or is_final_check != True" name="action_final_check" string="Final Check" type="object"/>
-                    <button class="oe_highlight" invisible="state != 'final_check' or is_closed != True" name="action_close" string="Closed" type="object"/>
-                    <button invisible="state in ['close', 'cancel', 'draft'] or is_cancel != True" name="action_cancel" string="Cancel" type="object"/>
-                    <button class="oe_highlight" invisible="state != 'cancel' or is_draft != True" name="action_draft" string="Reset To Draft" type="object"/>
-                    <button class="oe_highlight" invisible="state == 'draft' or is_return != True" name="%(gs_return_wizard_action)d" string="Return" type="action"/>
+                    <button class="oe_highlight" context="{'default_amount': amount,'default_currency_id': currency_id}" data-hotkey="q" invisible="state not in ['approve', 'issue_payment', 'special_approved'] " name="%(gs_create_payment_wizard_action)d" string="Create Payment" type="action"/>
+                    <button class="oe_highlight" invisible="state != 'approve' or hide_special_approval != False " name="%(gs_special_approval_button_wizard_action)d" string="Special ِApproval" type="action"/>
+                    <button class="oe_highlight" invisible="state != 'issue_payment'" name="action_finalize_payment" string="Finalize Payment" type="object"/>
+                    <button class="oe_highlight" groups="gs_payment_order.group_special_approval" invisible="state != 'special_approval'" name="action_special_approved" string="Special ِApproved" type="object"/>
+                    <button class="oe_highlight" invisible="state != 'finalize_payment' " name="action_final_check" string="Final Check" type="object"/>
+                    <button class="oe_highlight" invisible="state != 'final_check'" name="action_close" string="Closed" type="object"/>
+                    <button invisible="state in ['close', 'cancel', 'draft'] " name="action_cancel" string="Cancel" type="object"/>
+                    <button class="oe_highlight" invisible="state != 'cancel'" name="action_draft" string="Reset To Draft" type="object"/>
+                    <button class="oe_highlight" invisible="state == 'draft'" name="%(gs_return_wizard_action)d" string="Return" type="action"/>
                     <button invisible="is_reject != True" name="action_refused" string="Reject" type="object"/>
                     <field name="state" statusbar_visible="draft,submit,checked,approve,finalize_payment,final_check,close" widget="statusbar"/>
                 </header>
