@@ -22,14 +22,13 @@ class AccountPaymentInherit(models.Model):
                 rec.partner_id = None
                 # rec._prepare_move_line_default_vals
 
-    @api.depends('journal_id', 'partner_id', 'partner_type', 'is_internal_transfer', 'payment_type_id')
+    @api.depends('journal_id', 'partner_id', 'partner_type', 'payment_type_id')
     def _compute_destination_account_id(self):
         self.destination_account_id = False
         if not self.payment_type_id:
             for pay in self:
-                if pay.is_internal_transfer:
-                    pay.destination_account_id = pay.journal_id.company_id.transfer_account_id
-                elif pay.partner_type == 'customer':
+
+                if pay.partner_type == 'customer':
                     # Receive money from invoice or send money to refund it.
                     if pay.partner_id:
                         pay.destination_account_id = pay.partner_id.with_company(pay.company_id).property_account_receivable_id

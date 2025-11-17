@@ -1,7 +1,9 @@
 # -*- coding: UTF-8 -*-
 # Part of Softhealer Technologies.
 
-from odoo import fields, models
+from odoo import fields, models, api
+from odoo.tools import SQL
+
 
 
 class SaleReport(models.Model):
@@ -35,8 +37,19 @@ class PurchaseReport(models.Model):
     sh_sec_qty = fields.Float('Secondary Qty', readonly=True)
     sh_sec_uom = fields.Many2one("uom.uom", "Secondary UOM", readonly=True)
 
-    def _select(self):
-        return super(PurchaseReport, self)._select() + ", l.sh_sec_uom as sh_sec_uom" + ", sum(l.sh_sec_qty/line_uom.factor*product_uom.factor) as sh_sec_qty"
+    # def _select(self):
+    #     return super(PurchaseReport, self)._select() + ", l.sh_sec_uom as sh_sec_uom" + ", sum(l.sh_sec_qty/line_uom.factor*product_uom.factor) as sh_sec_qty"
+    #
+    # def _group_by(self):
+    #     return super(PurchaseReport, self)._group_by() + ", l.sh_sec_uom"
 
-    def _group_by(self):
-        return super(PurchaseReport, self)._group_by() + ", l.sh_sec_uom"
+    @api.model
+    def _select(self) -> SQL:
+        return SQL(
+            "%s,  l.sh_sec_uom as sh_sec_uom" + ", sum(l.sh_sec_qty/line_uom.factor*product_uom.factor) as sh_sec_qty", super()._select()
+        )
+
+    @api.model
+    def _group_by(self) -> SQL:
+        return SQL("%s,l.sh_sec_uom", super()._group_by())
+
