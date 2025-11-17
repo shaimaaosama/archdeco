@@ -195,7 +195,7 @@ class GsShipmentTracking(models.Model):
             'view_type': 'form',
             'res_model': 'purchase.order',
             'view_id': False,
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'type': 'ir.actions.act_window',
         }
     purchase_order_count = fields.Integer(compute='get_purchase_order_count')

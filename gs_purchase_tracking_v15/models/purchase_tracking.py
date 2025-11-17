@@ -93,7 +93,7 @@ class GsPurchaseTracking(models.Model):
             'view_type': 'form',
             'res_model': 'gs.shipment.tracking',
             'view_id': False,
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'type': 'ir.actions.act_window',
         }
 
@@ -138,7 +138,7 @@ class GsPurchaseTracking(models.Model):
                 'view_type': 'form',
                 'res_model': 'stock.picking',
                 'view_id': False,
-                'view_mode': 'tree,form',
+                'view_mode': 'list,form',
                 'type': 'ir.actions.act_window',
             }
 
@@ -395,7 +395,7 @@ class GsPurchaseTracking(models.Model):
             'view_type': 'form',
             'res_model': 'account.move',
             'view_id': False,
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'type': 'ir.actions.act_window',
         }
 

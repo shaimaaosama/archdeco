@@ -69,7 +69,7 @@
 											<span>Simplified VAT Invoice - فاتورة ضريبية مبسطة</span>
 										</t>
 									</t>
-									
+
 									<t t-if="doc.state == 'draft'">
 										<t t-if="doc.partner_id.vat">
 											<span>Draft Invoice - فاتورة أولية</span>
@@ -569,7 +569,7 @@
         <field name="binding_model_id" ref="account.model_account_move"/>
         <field name="binding_type">report</field>
     </record>
-	
+
 	<template id="gs_report_invoice_document" inherit_id="account.report_invoice_document">
       <xpath expr="//t" position="replace">
         <t t-call="gs_invoice_pdf_report.report_sale_invoice_document1"/>
