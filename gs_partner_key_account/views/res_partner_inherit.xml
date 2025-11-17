@@ -5,14 +5,14 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='vat']" position="after">
+                <xpath expr="//group//group[1]" position="inside">
                     <field name="key_account_id" required="1" options="{'no_create_edit':True, 'no_open': True, 'no_create': True}"/>
                     <field name="option_id" options="{'no_create_edit':True, 'no_open': True, 'no_create': True}"/>
                 </xpath>
 
             </field>
         </record>
-        
+
 <!--        <record id="gs_key_view_move_line_order_filter_inherit" model="ir.ui.view">-->
 <!--            <field name="name">move.line.filter.inherit</field>-->
 <!--            <field name="model">account.move.line</field>-->

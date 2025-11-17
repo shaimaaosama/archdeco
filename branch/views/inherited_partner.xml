@@ -5,9 +5,9 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <field name="vat" position="after">
+            <xpath expr="//group//group[1]" position="inside">
                 <field name="branch_id"/>
-            </field>
+            </xpath>
         </field>
     </record>
 </odoo>
