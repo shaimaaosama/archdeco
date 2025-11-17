@@ -4,7 +4,7 @@
     'author': "Global Solutions",
     'website': "http://www.globalsolutions.dev",
     'category': 'Uncategorized',
-    'depends': ['base', 'account', 'mail', 'branch', 'helpdesk', 'purchase', 'sale', 'gs_sales_permission', 'gs_purchase_permission', 'gs_purchase_tracking_v15'],
+    'depends': ['base', 'account', 'mail', 'branch', 'helpdesk', 'purchase', 'sale', 'gs_purchase_tracking_v15'],
     "images": [
         'static/description/icon.png'
     ],

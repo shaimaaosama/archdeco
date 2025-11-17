@@ -61,5 +61,5 @@
         <field name="view_mode">list,form</field>
     </record>
     <menuitem groups="base.group_system" id="menu_gs_purchase_tracking_configuration" name="Configuration" parent="gs_purchase_tracking_v15.menu_gs_tracking" sequence="112"/>
-    <menuitem action="gs_purchase_tracking_permission_action" groups="base.group_system" id="sub_gs_purchase_tracking_permission" name="Permission" parent="menu_gs_purchase_tracking_configuration" sequence="1"/>
+<!--    <menuitem action="gs_purchase_tracking_permission_action" groups="base.group_system" id="sub_gs_purchase_tracking_permission" name="Permission" parent="menu_gs_purchase_tracking_configuration" sequence="1"/>-->
 </odoo>
