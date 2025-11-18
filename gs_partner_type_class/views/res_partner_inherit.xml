@@ -5,7 +5,7 @@
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='vat']" position="after">
+                <xpath expr="//group//group[1]" position="inside">
                     <field name="partner_type" required="1" domain="[('user_id', '=', uid)]" options="{'no_create_edit':True, 'no_open': True, 'no_create': True}"/>
                     <field name="run_compute_boolean" invisible="1"/>
                     <field name="run_compute" invisible="1"/>

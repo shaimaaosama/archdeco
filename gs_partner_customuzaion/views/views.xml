@@ -8,7 +8,7 @@
             <xpath expr="//field[@name='function']" position="after">
                 <field name="contact_name"/>
             </xpath>
-            <xpath expr="//field[@name='vat']" position="after">
+            <xpath expr="//group//group[1]" position="inside">
                 <field name="cr_id"/>
             </xpath>
         </field>
