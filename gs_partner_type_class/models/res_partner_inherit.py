@@ -84,10 +84,10 @@ class AccountMoveInherit(models.Model):
             self.partner_bank_id = bank_ids and bank_ids[0]
 
             # Find the new fiscal position.
-            delivery_partner_id = self._get_invoice_delivery_partner_id()
-            self.fiscal_position_id = self.env['account.fiscal.position'].get_fiscal_position(
-                self.partner_id.id, delivery_id=delivery_partner_id)
-            self._recompute_dynamic_lines()
+            # delivery_partner_id = self._compute_partner_shipping_id()
+            # self.fiscal_position_id = self.env['account.fiscal.position'].get_fiscal_position(
+            #     self.partner_id.id, delivery_id=delivery_partner_id)
+            # self._recompute_dynamic_lines()
             if warning:
                 return {'warning': warning}
 
