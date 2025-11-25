@@ -88,7 +88,7 @@ class StockCardReport(models.AbstractModel):
 
         rd = relativedelta(start_to, start_from)
         available_days = abs((start_to - start_from).days)
-        products_domains = [('type', '=', 'product')]
+        products_domains = [('type', '=', 'consu'),('is_storable', '=', True)]
         if data['form']['product_ids']:
             product_ids = data['form']['product_ids']
             products_domains.append(('id', 'in', product_ids))
@@ -408,7 +408,7 @@ class SaleOrderXlsxReport(models.AbstractModel):
         sheet.write(7, 22, '', header_row_style)
         sheet.write(7, 23, '', header_row_style)
 
-        products_domains = [('type', '=', 'product')]
+        products_domains = [('type', '=', 'consu'),('is_storable', '=', True)]
         if data.get('product_ids'):
             product_ids = data.get('product_ids')
             products_domains.append(('id', 'in', product_ids))
