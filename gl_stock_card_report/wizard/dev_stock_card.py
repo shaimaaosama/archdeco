@@ -145,9 +145,10 @@ class dev_stock_card(models.TransientModel):
             # code to sort list on date
             lst.sort(key=lambda x: x['date'])
             # printing final list
-            # print("result", str(lst))
+            resultlst = itemgetter('product')
+            print("resultlst", lst)
 
-            new_lst = sorted(lst, key=itemgetter('product'))
+            new_lst = sorted(lst, key=lambda x: x.get('product', {}).get('en_US', ''))
             # print('new_lst==', new_lst)
             groups = itertools.groupby(new_lst, key=operator.itemgetter('product'))
             # print('groups==', groups)
@@ -298,7 +299,7 @@ class dev_stock_card(models.TransientModel):
             lst.sort(key=lambda x: x['date'])
             # printing final list
             # print("result", str(lst))
-            new_lst = sorted(lst, key=itemgetter('product'))
+            new_lst = sorted(lst, key=lambda x: x.get('product', {}).get('en_US', ''))
             # print('new_lst==', new_lst)
             groups = itertools.groupby(new_lst, key=operator.itemgetter('product'))
             # print('groups==', groups)
@@ -393,7 +394,7 @@ class dev_stock_card(models.TransientModel):
         all_lines_ids = []
         if lines:
             for line in lines:
-                worksheet.write_merge(row,row, 0,4, line.get('product'), p_group_style)
+                worksheet.write_merge(row,row, 0,4, line.get('product', {}).get('en_US', ''), p_group_style)
                 row += 1
                 count = 0
                 balance = 0
@@ -405,7 +406,7 @@ class dev_stock_card(models.TransientModel):
                     count += 1
                     if count == 1:
                         # worksheet.write_merge(row,row,0,2, 'Opening Quantity', group_style)
-                        op_qty = self.get_opening_quantity(val.get('product_id'))
+                        op_qty = self.get_opening_quantity(val.get('product', {}).get('en_US', ''))
                         balance = op_qty
                         # empty cell in excel
                         # worksheet.write(row,3, '', group_style_right)
