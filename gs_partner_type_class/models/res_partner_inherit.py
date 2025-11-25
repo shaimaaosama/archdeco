@@ -36,60 +36,60 @@ class AccountMoveInherit(models.Model):
         res_user = self.env['res.users'].search([('id', '=', self.env.user.id)])
         return {'domain': {'partner_id': [('partner_type', 'in', res_user.partner_type_ids.ids)]}}
 
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        if self.partner_id:
-            self = self.with_company(self.journal_id.company_id)
-
-            warning = {}
-            if self.partner_id:
-                rec_account = self.partner_id.property_account_receivable_id
-                pay_account = self.partner_id.property_account_payable_id
-                if not rec_account and not pay_account:
-                    action = self.env.ref('account.action_account_config')
-                    msg = _('Cannot find a chart of accounts for this company, You should configure it. \nPlease go to Account Configuration.')
-                    raise RedirectWarning(msg, action.id, _('Go to the configuration panel'))
-                p = self.partner_id
-                if p.invoice_warn == 'no-message' and p.parent_id:
-                    p = p.parent_id
-                if p.invoice_warn and p.invoice_warn != 'no-message':
-                    # Block if partner only has warning but parent company is blocked
-                    if p.invoice_warn != 'block' and p.parent_id and p.parent_id.invoice_warn == 'block':
-                        p = p.parent_id
-                    warning = {
-                        'title': _("Warning for %s", p.name),
-                        'message': p.invoice_warn_msg
-                    }
-                    if p.invoice_warn == 'block':
-                        self.partner_id = False
-                        return {'warning': warning}
-
-            if self.is_sale_document(include_receipts=True) and self.partner_id:
-                self.invoice_payment_term_id = self.partner_id.property_payment_term_id or self.invoice_payment_term_id
-                new_term_account = self.partner_id.commercial_partner_id.property_account_receivable_id
-            elif self.is_purchase_document(include_receipts=True) and self.partner_id:
-                self.invoice_payment_term_id = self.partner_id.property_supplier_payment_term_id or self.invoice_payment_term_id
-                new_term_account = self.partner_id.commercial_partner_id.property_account_payable_id
-            else:
-                new_term_account = None
-
-            for line in self.line_ids:
-                line.partner_id = self.partner_id.commercial_partner_id
-
-                if new_term_account and line.account_id.user_type_id.type in ('receivable', 'payable'):
-                    line.account_id = new_term_account
-
-            self._compute_bank_partner_id()
-            bank_ids = self.bank_partner_id.bank_ids.filtered(lambda bank: bank.company_id is False or bank.company_id == self.company_id)
-            self.partner_bank_id = bank_ids and bank_ids[0]
-
-            # Find the new fiscal position.
-            # delivery_partner_id = self._compute_partner_shipping_id()
-            # self.fiscal_position_id = self.env['account.fiscal.position'].get_fiscal_position(
-            #     self.partner_id.id, delivery_id=delivery_partner_id)
-            # self._recompute_dynamic_lines()
-            if warning:
-                return {'warning': warning}
+    # @api.onchange('partner_id')
+    # def _onchange_partner_id(self):
+    #     if self.partner_id:
+    #         self = self.with_company(self.journal_id.company_id)
+    #
+    #         warning = {}
+    #         if self.partner_id:
+    #             rec_account = self.partner_id.property_account_receivable_id
+    #             pay_account = self.partner_id.property_account_payable_id
+    #             if not rec_account and not pay_account:
+    #                 action = self.env.ref('account.action_account_config')
+    #                 msg = _('Cannot find a chart of accounts for this company, You should configure it. \nPlease go to Account Configuration.')
+    #                 raise RedirectWarning(msg, action.id, _('Go to the configuration panel'))
+    #             p = self.partner_id
+    #             if p.invoice_warn == 'no-message' and p.parent_id:
+    #                 p = p.parent_id
+    #             if p.invoice_warn and p.invoice_warn != 'no-message':
+    #                 # Block if partner only has warning but parent company is blocked
+    #                 if p.invoice_warn != 'block' and p.parent_id and p.parent_id.invoice_warn == 'block':
+    #                     p = p.parent_id
+    #                 warning = {
+    #                     'title': _("Warning for %s", p.name),
+    #                     'message': p.invoice_warn_msg
+    #                 }
+    #                 if p.invoice_warn == 'block':
+    #                     self.partner_id = False
+    #                     return {'warning': warning}
+    #
+    #         if self.is_sale_document(include_receipts=True) and self.partner_id:
+    #             self.invoice_payment_term_id = self.partner_id.property_payment_term_id or self.invoice_payment_term_id
+    #             new_term_account = self.partner_id.commercial_partner_id.property_account_receivable_id
+    #         elif self.is_purchase_document(include_receipts=True) and self.partner_id:
+    #             self.invoice_payment_term_id = self.partner_id.property_supplier_payment_term_id or self.invoice_payment_term_id
+    #             new_term_account = self.partner_id.commercial_partner_id.property_account_payable_id
+    #         else:
+    #             new_term_account = None
+    #
+    #         for line in self.line_ids:
+    #             line.partner_id = self.partner_id.commercial_partner_id
+    #
+    #             # if new_term_account and line.account_id.user_type_id.type in ('receivable', 'payable'):
+    #             #     line.account_id = new_term_account
+    #
+    #         self._compute_bank_partner_id()
+    #         bank_ids = self.bank_partner_id.bank_ids.filtered(lambda bank: bank.company_id is False or bank.company_id == self.company_id)
+    #         self.partner_bank_id = bank_ids and bank_ids[0]
+    #
+    #         # Find the new fiscal position.
+    #         # delivery_partner_id = self._compute_partner_shipping_id()
+    #         # self.fiscal_position_id = self.env['account.fiscal.position'].get_fiscal_position(
+    #         #     self.partner_id.id, delivery_id=delivery_partner_id)
+    #         # self._recompute_dynamic_lines()
+    #         if warning:
+    #             return {'warning': warning}
 
 
 class ResPartnerInherit(models.Model):
