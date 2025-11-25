@@ -1,0 +1,29 @@
+<odoo>
+    <data>
+        <record id="res_branch_form_inherit2" model="ir.ui.view">
+            <field name="name">res.branch.form.inherit2</field>
+            <field name="model">res.branch</field>
+            <field name="inherit_id" ref="branch.branch_res_branch_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='address']" position="after">
+                    <field name="latitude"/>
+                    <field name="longitude"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="product_template_form_inherit" model="ir.ui.view">
+            <field name="name">product.template.form.inherit2</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']" position="inside">
+                    <span class="d-inline-block">
+                        <field name="available_soon"/>
+                        <label for="available_soon"/>
+                    </span>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
