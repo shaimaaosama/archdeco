@@ -43,10 +43,10 @@ class dev_stock_card(models.TransientModel):
         if self.filter_by and self.filter_by == 'product':
             return self.product_ids.ids
         elif self.filter_by and self.filter_by == 'category':
-            product_ids = product_pool.search([('type', '=', 'product'), ('categ_id', 'child_of', self.category_id.id)])
+            product_ids = product_pool.search([('type', '=', 'consu'),('is_storable', '=', True), ('categ_id', 'child_of', self.category_id.id)])
             return product_ids.ids
         else:
-            product_ids = product_pool.search([('type', '=', 'product')])
+            product_ids = product_pool.search([('type', '=', 'consu'),('is_storable', '=', True)])
             return product_ids.ids
 
     def in_lines(self,product_ids):
