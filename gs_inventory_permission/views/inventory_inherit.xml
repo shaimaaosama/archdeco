@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_internal_transfer_form_inherit" model="ir.ui.view">
+            <field name="name">stock.internal.transfer.form.inherit</field>
+            <field name="model">stock.internal.transfer</field>
+            <field name="inherit_id" ref="sgeede_internal_transfer.stock_internal_transfer_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='backorder_id']" position="after">
+                    <field invisible="1" name="is_inv_cancel" readonly="0"/>
+                    <field invisible="1" name="is_inv_draft" readonly="0"/>
+                    <field invisible="1" name="is_inv_do_enter" readonly="0"/>
+                    <field invisible="1" name="is_inv_approved" readonly="0"/>
+                    <field invisible="1" name="is_inv_submit" readonly="0"/>
+                    <field invisible="1" name="is_inv_print" readonly="0"/>
+                    <field invisible="1" name="is_inv_return" readonly="0"/>
+                </xpath>
+                <xpath expr="//button[@name='action_submit']" position="replace">
+                    <button class="oe_highlight" invisible="is_inv_submit != True or state != 'draft'" name="action_submit" string="Submit" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='action_approved']" position="replace">
+                    <button class="oe_highlight" invisible="is_inv_approved != True or state != 'submit'" name="action_approved" string="Approve" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="replace">
+                    <button class="oe_highlight" invisible="is_inv_cancel != True or state in ['send', 'done', 'return']" name="action_cancel" string="Cancel" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='print_stock_internal_transfer_report']" position="replace">
+                    <button class="oe_highlight" invisible="is_inv_print != True" name="print_stock_internal_transfer_report" string="Print" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='action_draft']" position="replace">
+                    <button class="oe_highlight" invisible="is_inv_draft != True or state in ['draft', 'cancel', 'send', 'done', 'return']" name="action_draft" string="Set to Draft" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='do_enter_wizard']" position="replace">
+                    <button class="oe_highlight" invisible="is_inv_do_enter != True or state != 'approved'" name="do_enter_wizard" string="Send" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='receive_wizard']" position="replace">
+                    <button class="oe_highlight" invisible="is_inv_do_enter != True or state != 'send'" name="receive_wizard" string="Receive" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='%(sgeede_internal_transfer.act_transfer_return_picking)d']" position="replace">
+                    <button invisible="is_inv_return != True or state != 'send'" name="%(sgeede_internal_transfer.act_transfer_return_picking)d" string="Return" type="action"/>
+                </xpath>
+                <!--                <xpath expr="//button[@name='do_enter_wizard'][last()]" position="replace">
+                        <button name="do_enter_wizard" type="object" class="oe_highlight" string="Receive"
+                            attrs="{'invisible': ['|',('is_inv_do_enter', '!=', True),('state', '!=', 'send')]}"
+                    />
+                </xpath>--></field>
+        </record>
+        <record id="stock_picking_form_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field invisible="1" name="is_tr_confirm" readonly="0"/>
+                    <field invisible="1" name="is_tr_assign" readonly="0"/>
+                    <field invisible="1" name="is_tr_cancel" readonly="0"/>
+                    <field invisible="1" name="is_tr_validate" readonly="0"/>
+                    <field invisible="1" name="is_tr_set_quantities" readonly="0"/>
+                    <field invisible="1" name="is_tr_print" readonly="0"/>
+                    <field invisible="1" name="is_tr_label_layout" readonly="0"/>
+                    <field invisible="1" name="is_tr_do_unreserve" readonly="0"/>
+                    <field invisible="1" name="is_tr_scrap" readonly="0"/>
+                    <field invisible="1" name="is_tr_toggle_is_locked" readonly="0"/>
+                    <field invisible="1" name="is_tr_signature" readonly="0"/>
+                    <field invisible="1" name="is_tr_return_picking" readonly="0"/>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="attributes">
+                    <attribute name="invisible">is_tr_confirm != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_assign']" position="attributes">
+                    <attribute name="invisible">show_check_availability == False and is_tr_assign != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+                    <attribute name="invisible">state not in ('assigned', 'confirmed', 'draft', 'waiting') or is_tr_cancel != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_validate']" position="attributes">
+                    <attribute name="invisible">state in ('waiting', 'confirmed')  or is_tr_validate != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='button_validate'][last()]" position="attributes">
+                    <attribute name="invisible">state not in ('waiting', 'confirmed')  and is_tr_validate != True</attribute>
+                </xpath>
+<!--                <xpath expr="//button[@name='action_set_quantities_to_reservation']" position="attributes">-->
+<!--                    <attribute name="invisible">show_validate == False or immediate_transfer == True or is_tr_set_quantities != True</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//widget[@name='signature']" position="attributes">
+                    <attribute name="invisible">id == False or picking_type_code != 'outgoing' or state != 'done' or is_tr_signature != True</attribute>
+                </xpath>
+                <xpath expr="//widget[@name='signature'][last()]" position="attributes">
+                    <attribute name="invisible">id == False or picking_type_code != 'outgoing' or state == 'done' or is_tr_signature != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='do_print_picking']" position="attributes">
+                    <attribute name="invisible">state != 'assigned' or is_tr_print != True</attribute>
+                </xpath>
+<!--                <xpath expr="//button[@name='action_open_label_layout']" position="attributes">-->
+<!--                    <attribute name="invisible">is_tr_label_layout != True</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//button[@name='%(stock.action_report_delivery)d']" position="attributes">
+                    <attribute name="invisible">state != 'done' or is_tr_print != True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">
+                    <attribute name="invisible">state != 'done' or is_tr_return_picking != True</attribute>
+                </xpath>
+<!--                <xpath expr="//button[@name='do_unreserve']" position="attributes">-->
+<!--                    <attribute name="invisible">picking_type_code == 'incoming' or immediate_transfer == True or (state != 'assigned' and move_type != 'one') or (state not in ('assigned', 'confirmed') and move_type == 'one') or is_tr_do_unreserve != True</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//button[@name='button_scrap']" position="attributes">-->
+<!--                    <attribute name="invisible">(picking_type_code == 'incoming' and state != 'done') or (picking_type_code == 'outgoing' and state == 'done') or is_tr_scrap != True</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//button[@name='action_toggle_is_locked']" position="attributes">-->
+<!--                    <attribute name="invisible">state in ('draft', 'cancel') or is_locked == False or is_tr_toggle_is_locked != True</attribute>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//button[@name='action_toggle_is_locked'][last()]" position="attributes">-->
+<!--                    <attribute name="invisible">is_locked == True or is_tr_toggle_is_locked != True</attribute>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+        <record id="stock_scrap_form_inherit" model="ir.ui.view">
+            <field name="name">stock.scrap.form.inherit</field>
+            <field name="model">stock.scrap</field>
+            <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='scrap_qty']" position="after">
+                    <field invisible="1" name="is_so_confirm" readonly="0"/>
+                </xpath>
+                <xpath expr="//button[@name='action_validate']" position="replace">
+                    <button class="oe_highlight" context="{'not_unlink_on_discard': True}" data-hotkey="v" invisible="is_so_confirm != True or state != 'draft'" name="action_validate" string="Validate" type="object"/>
+                </xpath></field>
+        </record>
+    </data>
+</odoo>

@@ -17,7 +17,7 @@ class dev_stock_card(models.TransientModel):
     _name ='dev.stock.card'
 
     warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse', required="1")
-    location_id = fields.Many2one('stock.location', string='Location', domain="[('usage','=','internal')]", required="1")
+    location_id = fields.Many2one('stock.location', string='Location', domain="[('usage','=','internal'),('warehouse_id', '=', warehouse_id)]", required="1")
     start_date = fields.Date('Start Date')
     end_date = fields.Date('End Date')
     filter_by = fields.Selection([('product','Product'),('category', 'Product Category')],string='Filter By', default='product')
@@ -27,16 +27,16 @@ class dev_stock_card(models.TransientModel):
     excel_file = fields.Binary('Excel File')
 
     # domain on Many2one location_id
-    @api.onchange('warehouse_id')
-    def _compute_location_id_domain(self):
-        print('_compute_location_id_domain')
-        loc = []
-        domain = []
-        for rec in self:
-            if rec.warehouse_id:
-                    loc.append(rec.warehouse_id.lot_stock_id.id)
-            # print('loc', loc)
-        return {'domain': {'location_id': [('id', 'in', loc)]}}
+    # @api.onchange('warehouse_id')
+    # def _compute_location_id_domain(self):
+    #     print('_compute_location_id_domain')
+    #     loc = []
+    #     domain = []
+    #     for rec in self:
+    #         if rec.warehouse_id:
+    #                 loc.append(rec.warehouse_id.lot_stock_id.id)
+    #         # print('loc', loc)
+    #     return {'domain': {'location_id': [('id', 'in', loc)]}}
 
     def get_product_ids(self):
         product_pool = self.env['product.product']
