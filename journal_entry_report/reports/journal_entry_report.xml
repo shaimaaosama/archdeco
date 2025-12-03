@@ -154,7 +154,11 @@
                                                 <span t-field="line.partner_id.display_name"/>
                                             </td>
                                             <td>
-                                                <span t-field="line.analytic_account_id.display_name"/>
+                                                <div t-foreach="line.analytic_distribution" t-as="distribution">
+                                                    <t t-esc="line.env['account.analytic.account'].browse(int(distribution))[0].name"/>
+
+                                                </div>
+<!--                                                <span t-field="line.analytic_distribution"/>-->
                                             </td>
                                             <td>
                                                 <span t-field="line.branch_id.name"/>
