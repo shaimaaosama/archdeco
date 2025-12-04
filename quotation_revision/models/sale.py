@@ -106,7 +106,7 @@ class SaleOrder(models.Model):
                 origin_name = cur_rec.name
                 cur_rec.origin = cur_rec.name
             else:
-                origin_name = cur_rec.origin
+                origin_name = cur_rec.name
 
             cur_rec.char_name = origin_name
             vals = {
