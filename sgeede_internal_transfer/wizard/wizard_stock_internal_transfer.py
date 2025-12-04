@@ -131,7 +131,7 @@ class wizard_stock_internal_transfer(models.TransientModel):
                             'product_id': line.product_id.id,
                             'product_uom': line.product_uom_id.id,
                             'product_uom_qty': line.product_qty,
-                            'quantity_done': line.product_qty,
+                            'quantity': line.product_qty,
                             'location_id': line.source_location_id.id,
                             'location_dest_id': line.dest_location_id.id,
                             'picking_id': picking_id.id,
@@ -145,8 +145,8 @@ class wizard_stock_internal_transfer(models.TransientModel):
 
                     transfer._get_warehouse_qty()
 
-                    immediate_transfer_obj = self.env['stock.immediate.transfer'].search([('pick_ids', '=', picking_obj.id)])
-                    immediate_transfer_obj.process()
+                    # immediate_transfer_obj = self.env['stock.immediate.transfer'].search([('pick_ids', '=', picking_obj.id)])
+                    # immediate_transfer_obj.process()
                     picking_obj._action_done()
 
                     for user in transfer.dest_warehouse_id.user_ids:
