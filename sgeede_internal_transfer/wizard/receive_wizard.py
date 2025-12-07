@@ -127,7 +127,7 @@ class ReceiveWizard(models.TransientModel):
                             'product_id': line.product_id.id,
                             'product_uom': line.product_uom_id.id,
                             'product_uom_qty': line.product_qty,
-                            'quantity_done': line.product_qty,
+                            'quantity': line.product_qty,
                             'location_id': line.source_location_id.id,
                             'location_dest_id': line.dest_location_id.id,
                             'picking_id': picking_id.id,
@@ -138,8 +138,8 @@ class ReceiveWizard(models.TransientModel):
                     picking_obj.action_confirm()
                     picking_obj.action_assign()
                     picking_obj.button_validate()
-                    immediate_transfer_obj = self.env['stock.immediate.transfer'].search([('pick_ids', '=', picking_obj.id)])
-                    immediate_transfer_obj.process()
+                    # immediate_transfer_obj = self.env['stock.immediate.transfer'].search([('pick_ids', '=', picking_obj.id)])
+                    # immediate_transfer_obj.process()
                     picking_obj._action_done()
                     transfer.state = 'done'
 
