@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_users_inherit_form_view" model="ir.ui.view">
+        <field name="name">res.users.inherit.form.view</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Price List" name="price_list">
+                    <group>
+                        <field name="sh_pricelist_ids" widget="many2many_tags" />
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
