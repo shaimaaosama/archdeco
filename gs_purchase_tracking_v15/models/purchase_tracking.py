@@ -606,7 +606,7 @@ class PurchaseOrderLineTracking(models.Model):
         for receipt in receipts:
             if receipt.state == 'done':
                 for line in receipt.move_ids_without_package:
-                    qty_received += line.quantity_done
+                    qty_received += line.quantity
                 self.qty_received = qty_received
 
     def _compute_qty_invoiced(self):
