@@ -30,7 +30,14 @@
                 <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
                     <field name="payment_count" string="Payment Order" widget="statinfo"/>
                 </button>
-            </xpath></field>
+            </xpath>
+            <xpath expr="//group//group[2]" position="inside">
+                <xpath expr="//field[@name='project_id']" position="move"/>
+            </xpath>
+            <xpath expr="//field[@name='project_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
     </record>
     <record id="gs_payment_purchase_order_view_form_inherit" model="ir.ui.view">
         <field name="name">purchase.order.view.form.inherit</field>
