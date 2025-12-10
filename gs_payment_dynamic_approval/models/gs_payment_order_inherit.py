@@ -93,7 +93,7 @@ class GSPaymentOrderInherit(models.Model):
                             {'type': 'user_connection', 'title': _(
                                 'Notitification'), 'message': 'You have approval notification for Payment Order %s' % (self.name), 'sticky': True, 'warning': True}])
                     print("nnnn111", notifications)
-                    self.env['bus.bus']._sendmany(notifications)
+                    self.env['bus.bus']._sendone(notifications)
 
             if lines[0].approve_by == 'user':
                 self.write({
@@ -115,7 +115,7 @@ class GSPaymentOrderInherit(models.Model):
                             (self._cr.dbname, 'res.partner', user.partner_id.id),
                             {'type': 'user_connection', 'title': _('Notitification'), 'message': 'You have approval notification for Payment Order %s' % (self.name), 'sticky': True, 'warning': True}])
                     print("nnnn222", notifications)
-                    self.env['bus.bus']._sendmany(notifications)
+                    self.env['bus.bus']._sendone(notifications)
 
             super(GSPaymentOrderInherit, self).action_submit()
         else:
@@ -190,7 +190,7 @@ class GSPaymentOrderInherit(models.Model):
                             (self._cr.dbname, 'res.partner', user.partner_id.id),
                             {'type': 'user_connection', 'title': _(
                                 'Notitification'), 'message': 'You have approval notification for Payment Order %s' % (self.name), 'sticky': True, 'warning': True}])
-                    self.env['bus.bus']._sendmany(notifications)
+                    self.env['bus.bus']._sendone(notifications)
 
             if next_line.approve_by == 'user':
                 self.write({
@@ -217,7 +217,7 @@ class GSPaymentOrderInherit(models.Model):
                             (self._cr.dbname, 'res.partner', user.partner_id.id),
                             {'type': 'user_connection', 'title': _(
                                 'Notitification'), 'message': 'You have approval notification for Payment Order %s' % (self.name), 'sticky': True, 'warning': True}])
-                    self.env['bus.bus']._sendmany(notifications)
+                    self.env['bus.bus']._sendone(notifications)
 
         else:
             template_id = self.env.ref(
