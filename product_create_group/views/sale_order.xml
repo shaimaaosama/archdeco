@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+        <record id="sale_order_line_inherit_ver5" model="ir.ui.view">
+            <field name="name">sale.order.view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_id']" position="attributes">
+                    <attribute name="groups">product_create_group.product_open_group</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_id']" position="after">
+                    <field name="product_id" groups="!product_create_group.product_open_group"
+                           options="{'no_open':True}"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_template_id']" position="attributes">
+                    <attribute name="groups">product_create_group.product_open_group</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']//list//field[@name='product_template_id']" position="after">
+                    <field name="product_id" groups="!product_create_group.product_open_group"
+                           options="{'no_open':True}"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="sale_order_manager_inherit_ver5" model="ir.ui.view">
+            <field name="name">sale.order.view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_management.sale_order_form_quote"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_order_option_ids']//list//field[@name='product_id']" position="attributes">
+                    <attribute name="groups">product_create_group.product_open_group</attribute>
+                </xpath>
+                <xpath expr="//field[@name='sale_order_option_ids']//list//field[@name='product_id']" position="after">
+                    <field name="product_id" groups="!product_create_group.product_open_group"
+                           options="{'no_open':True}"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="sale_order_inherit_v8" model="ir.ui.view">
+            <field name="name">sale.order.view</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="gs_sale_quotation_report_custom.sale_order"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_detials']//list//field[@name='prodcut_id']" position="attributes">
+                    <attribute name="groups">product_create_group.product_open_group</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_detials']//list//field[@name='prodcut_id']" position="after">
+                    <field name="prodcut_id" groups="!product_create_group.product_open_group"
+                           options="{'no_open':True}"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

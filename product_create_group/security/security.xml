@@ -1,0 +1,7 @@
+<odoo>
+    <data>
+        <record id="product_open_group" model="res.groups">
+            <field name="name"> Product Open Permission </field>
+        </record>
+    </data>
+</odoo>
