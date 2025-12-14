@@ -16,7 +16,7 @@
                     <attribute name="groups">product_create_group.product_open_group</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']//list//field[@name='product_template_id']" position="after">
-                    <field name="product_id" groups="!product_create_group.product_open_group"
+                    <field name="product_template_id" groups="!product_create_group.product_open_group"
                            options="{'no_open':True}"/>
                 </xpath>
 
