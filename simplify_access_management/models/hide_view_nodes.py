@@ -31,7 +31,7 @@ class hide_view_nodes(models.Model):
         # string_value is used in case of kanban view button store, 
         string_value = 'string_value' in self._context.keys() and self._context['string_value'] or False
 
-        store_model_button_obj = self.env['store.model.nodes']
+        store_model_button_obj = self.env['store.model.nodes'].sudo()
         name = btn.get('string') or string_value
         if smart_button:
             name = smart_button_string
@@ -46,7 +46,7 @@ class hide_view_nodes(models.Model):
         })
 
     def _get_smart_btn_string(self, btn_list, type=False):
-        store_model_button_obj = self.env['store.model.nodes']
+        store_model_button_obj = self.env['store.model.nodes'].sudo()
 
         def _get_span_text(span_list):
             name = ''
@@ -92,8 +92,8 @@ class hide_view_nodes(models.Model):
     @api.model
     @api.onchange('model_id')
     def _get_button(self):
-        store_model_nodes_obj = self.env['store.model.nodes']
-        view_obj = self.env['ir.ui.view']
+        store_model_nodes_obj = self.env['store.model.nodes'].sudo()
+        view_obj = self.env['ir.ui.view'].sudo()
 
         if self.model_id and self.model_name:
 

@@ -11,7 +11,7 @@ class ir_ui_menu(models.Model):
         # user = self.env.user
         # # user.clear_caches()
         # self.env['ir.ui.view'].sudo().clear_caches()
-        request.registry.clear_cache()
+        # request.registry.clear_cache()
         # self.sudo().clear_caches()
         try:
             cids = request.httprequest.cookies.get('cids') and request.httprequest.cookies.get('cids').split('-')[0] or self.env.company.id
@@ -37,7 +37,14 @@ class ir_ui_menu(models.Model):
         for record in res:
             menu_item_obj.create({'name':record.display_name,'menu_id':record.id})
         return res
-
+    
+    def write(self, vals):
+        res = super(ir_ui_menu, self).write(vals)
+        menu_item_obj = self.env['menu.item'].sudo()
+        for record in self:
+            menu_item_obj.search([('menu_id','=',record.id)]).write({'name':record.display_name})
+        return res
+    
     def unlink(self):
         menu_item_obj = self.env['menu.item'].sudo()
         for record in self:

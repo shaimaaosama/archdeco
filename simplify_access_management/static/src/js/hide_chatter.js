@@ -10,7 +10,7 @@ patch(Chatter.prototype, {
     this.orm = useService("orm");
     this.access = useState({hide_log_notes: false, hide_send_mail: false, hide_schedule_activity: false});
     onMounted(async () => {
-      debugger;
+      
       var self = this;
       let model = this.props.threadModel;
       console.log(model);

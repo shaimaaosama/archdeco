@@ -5,6 +5,7 @@ from odoo.tools.translate import _
 from odoo.http import request
 from odoo.exceptions import UserError
 from odoo import http
+from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
 
 class Action(Action):
     
@@ -29,8 +30,8 @@ class Action(Action):
         return res
     
     @http.route('/web/action/load', type='json', auth="user")
-    def load(self, action_id, additional_context=None):
-        res = super(Action,self).load(action_id, additional_context=additional_context)
+    def load(self, action_id, context=None):
+        res = super(Action,self).load(action_id, context=context)
         if res:
             cids = int(request.httprequest.cookies.get('cids') and request.httprequest.cookies.get('cids').split('-')[0] or request.env.company.id)
             remove_action = request.env['remove.action'].sudo().search([('view_data_ids','!=',False),
@@ -51,26 +52,63 @@ class Action(Action):
 class Home(Home):
 
     # @http.route('/web', type='http', auth="none")
+    # @http.route()
+    # def web_client(self, s_action=None, **kw):
+    #     ensure_db()
+    #     # request.env['ir.ui.view'].flush_recordset()
+    #     # request.env.flush_all()
+    #     # request.env['ir.qweb'].clear_caches()
+    #     # request.env['ir.ui.view'].clear_caches()
+    #     # request.env.registry.clear_cache()
+    #     request.env.registry.clear_all_caches()
+        
+    #     user = request.env.user.browse(request.session.uid)
+    #     # if len(user.company_ids) > 1:
+    #     #     request.env['ir.ui.menu'].clear_caches()
+    #     if not kw.get('debug') or kw.get('debug') != "0":
+    #         cids = request.httprequest.cookies.get('cids') and request.httprequest.cookies.get('cids').split('-')[0] or request.env.company.id
+    #         access_management = request.env['access.management'].sudo().search([('active','=',True),('disable_debug_mode','=',True),('user_ids','in',user.id)],limit=1)
+
+    #         req_url = request.httprequest.url
+    #         if access_management and access_management.is_apply_on_without_company:
+    #             if 'debug=1' in req_url:
+    #                 req_url = req_url.replace('debug=1', 'debug=0')
+    #                 return request.redirect(req_url)
+    #             # return request.redirect('/web?debug=0')
+    #         elif int(cids) in access_management.company_ids.ids:
+    #             if 'debug=1' in req_url:
+    #                 req_url = req_url.replace('debug=1', 'debug=0')
+    #                 return request.redirect(req_url)
+    #             # return request.redirect('/web?debug=0')
+    #             # request.session.debug = '0'
+
+    #     return super().web_client(s_action=s_action, **kw)
+    
     @http.route()
     def web_client(self, s_action=None, **kw):
         ensure_db()
-        # request.env['ir.ui.view'].flush_recordset()
-        # request.env.flush_all()
-        # request.env['ir.qweb'].clear_caches()
-        # request.env['ir.actions.actions'].clear_caches()
-        # request.env.registry.clear_cache()
-        request.env.registry.clear_all_caches()
+        # request.env.registry.clear_all_caches()
         
         user = request.env.user.browse(request.session.uid)
-        # if len(user.company_ids) > 1:
-        #     request.env['ir.ui.menu'].clear_caches()
-        if not kw.get('debug') or kw.get('debug') != "0":
-            cids = request.httprequest.cookies.get('cids') and request.httprequest.cookies.get('cids').split('-')[0] or request.env.company.id
-            access_management = request.env['access.management'].sudo().search([('active','=',True),('disable_debug_mode','=',True),('user_ids','in',user.id)],limit=1)
-            if access_management and access_management.is_apply_on_without_company:
-                return request.redirect('/web?debug=0')
-            elif int(cids) in access_management.company_ids.ids:
-                return request.redirect('/web?debug=0')
-                # request.session.debug = '0'
+        cids = request.httprequest.cookies.get('cids', '').split('-')[0] or request.env.company.id
+        cids = int(cids)
+        
+        access_management = request.env['access.management'].sudo().search([
+            ('active', '=', True),
+            ('disable_debug_mode', '=', True),
+            ('user_ids', 'in', user.id)
+        ], limit=1)
+
+        if access_management:
+            should_redirect = access_management.is_apply_on_without_company or cids in access_management.company_ids.ids
+            if should_redirect and (kw.get('debug') != '0'):
+                # Parse the URL and force debug=0, preserving other parameters
+                parts = urlparse(request.httprequest.url)
+                query = parse_qs(parts.query)
+                query['debug'] = ['0']
+                new_query = urlencode(query, doseq=True)
+                new_parts = parts._replace(query=new_query)
+                new_url = urlunparse(new_parts)
+                return request.redirect(new_url)
 
         return super().web_client(s_action=s_action, **kw)

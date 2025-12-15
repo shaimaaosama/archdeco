@@ -11,7 +11,7 @@
 
 {
     'name': 'Simplify Access Management',
-    'version': '18.0.3.1.2',
+    'version': '18.0.5.7.13',
     'sequence': 5,
     'author': 'Terabits Technolab',
     'license': 'OPL-1',
@@ -228,7 +228,7 @@
 	
     """,
     "images": ["static/description/banner.gif"],
-    "price": "417.97",
+    "price": "392.97",
     "currency": "USD",
     'data': [
         'security/res_groups.xml',
@@ -242,16 +242,17 @@
         'web.assets_backend': [
             '/simplify_access_management/static/src/js/action_menus.js',
             '/simplify_access_management/static/src/js/hide_chatter.js',
+            '/simplify_access_management/static/src/js/list_spreadsheet.js',
             '/simplify_access_management/static/src/js/cog_menu.js',
             '/simplify_access_management/static/src/js/form_controller.js', 
-            '/simplify_access_management/static/src/xml/mailChatter.xml'
+            '/simplify_access_management/static/src/xml/mailChatter.xml',
             # '/simplify_access_management/static/src/js/model_field_selector.js',
             # '/simplify_access_management/static/src/js/search_bar_menu.js', 
             # '/simplify_access_management/static/src/js/custom_group_by_item.js',
             # '/simplify_access_management/static/src/xml/custom_group_by_item.xml',
         ],
     },
-    'depends': ['web','advanced_web_domain_widget'],
+    'depends': ['base','mail','web','advanced_web_domain_widget'],
     'post_init_hook': 'post_install_action_dup_hook',
     'application': True,
     'installable': True,

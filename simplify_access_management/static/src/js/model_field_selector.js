@@ -11,7 +11,6 @@ patch(ModelFieldSelectorPopover.prototype, {
   },
   async loadPages(resModel, path) {
     let page = await super.loadPages(...arguments);
-    debugger
     const res = await this.orm.call("access.management", "get_hidden_field", [
       "",
       resModel,
@@ -34,7 +33,7 @@ patch(ModelFieldSelector.prototype, {
   },
   async updateState(params, isConcurrent) {
     const { resModel, path } = params;
-    debugger
+
     const res = await this.orm.call("access.management", "get_hidden_field", [
       "",
       resModel,

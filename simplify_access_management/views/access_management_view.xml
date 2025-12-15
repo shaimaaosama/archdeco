@@ -40,8 +40,7 @@
                                 <field name="total_rules" invisible="1"/>
                             </group>
                             <group>
-                                <field name="user_ids" widget='many2many_tags' options="{'no_create': True}"
-                                       domain="[('share','=',False)]"/>
+                                <field name="user_ids" widget='many2many_tags' options="{'no_create': True}"/>
                                 <field name="disable_debug_mode"/>
                             </group>
                         </group>
@@ -90,9 +89,9 @@
                                         <field name="restrict_delete" width='10'/>
                                         <field name="restrict_archive_unarchive" width='10'/>
                                         <field name="restrict_duplicate" width='10'/>
-                                        <field name="restrict_import" width='10'/>
-                                        <field name="restrict_export" width='10'/>
-                                        <field name="restrict_spreadsheet" width='10'/>
+                                        <field name="restrict_import" width='10' readonly="parent.hide_import == True"/>
+                                        <field name="restrict_export" width='10' readonly="parent.hide_export == True"/>
+                                        <field name="restrict_spreadsheet" width='10' readonly="parent.hide_spreadsheet == True"/>
                                     </list>
                                 </field>
                                 <p role="alert"
@@ -178,7 +177,23 @@
                                                        options="{'model': 'model_name'}"
                                                        invisible="apply_domain != True  or read_right == False"/>
                                             </group>
+                                            <p role="alert"
+                                            class="fa fa-info-circle  alert alert-info alert-dismissible rounded-0 fade show d-print-none css_editable_mode_hidden"
+                                            style="font-size: 15px;letter-spacing: 1px;width: 100%; margin-top: 10px;"
+                                            invisible="apply_domain != True">
 
+                                                    • Access rules limit which records a user can see.
+                                                    <br/>
+                                                    • These limits also apply to domain filter dropdown lists.
+                                                    <br/>
+                                                    • Users will only see allowed records in dropdowns based on the rules.
+                                                    <br/>
+                                                    • Admin users will still be able to see all records in dropdowns, regardless of rules.
+                                                    <br/>
+                                                    • This ensures admins have full control and access at all times.
+                                                    <br/>
+                                                    • When the <b>Company Filter Toggle</b> is enabled, the company selected in the environment is applied to the domain.
+                                            </p>
                                         </sheet>
                                     </form>
                                     <list>
@@ -252,7 +267,7 @@
                                     </a>
                                 </p>
                             </page>
-                            <page string='Hide Filter/Group By'>
+                            <page string='Search Panel Access'>
                                 <field name="hide_filters_groups_ids">
                                     <list editable="bottom">
                                         <field name="model_id" context="{'is_access_rights': True}"
@@ -282,16 +297,16 @@
                                 </p>
                             </page>
                             <page string='Chatter'>
-                                <field name="hide_chatter_ids">
+                                <field name="hide_chatter_ids" readonly="hide_chatter == True">
                                     <list editable="bottom">
                                         <field name="model_id" context="{'is_access_rights': True}"
                                                options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                                                width="20" domain="[('model','not in',['access.management', 'access.domain.ah', 'action.data', 'hide.field', 'hide.view.nodes', 'store.model.nodes', 'remove.action', 'view.data'])]"
                                                required="1"/>
                                         <field name="hide_chatter" width="20"/>
-                                        <field name="hide_send_mail" width="20"/>
-                                        <field name="hide_log_notes" width="20"/>
-                                        <field name="hide_schedule_activity" width="20"/>
+                                        <field name="hide_send_mail" width="20" readonly="hide_chatter == True or parent.hide_send_mail == True"/>
+                                        <field name="hide_log_notes" width="20" readonly="hide_chatter == True or parent.hide_log_notes == True"/>
+                                        <field name="hide_schedule_activity" width="20" readonly="hide_chatter == True or parent.hide_schedule_activity == True"/>
 
                                     </list>
                                 </field>
@@ -308,9 +323,9 @@
                                 <group>
                                     <group string="Chatter">
                                         <field name="hide_chatter"/>
-                                        <field name="hide_send_mail"/>
-                                        <field name="hide_log_notes"/>
-                                        <field name="hide_schedule_activity"/>
+                                        <field name="hide_send_mail" readonly="hide_chatter == True"/>
+                                        <field name="hide_log_notes" readonly="hide_chatter == True"/>
+                                        <field name="hide_schedule_activity" readonly="hide_chatter == True"/>
                                     </group>
                                     <group string="Import &amp; Export">
                                         <field name="hide_import"/>
@@ -318,19 +333,18 @@
                                         <field name="hide_spreadsheet"/>
                                         <field name="hide_add_property"/>
                                     </group>
-
+                                    <group string="Others">
+                                        <field name="disable_login"/>
+                                    </group>
                                 </group>
-                                <group string="Others">
-                                    <field name="disable_login"/>
-
-                                </group>
+                                
                                 <p role="alert"
                                    class="fa fa-info-circle  alert alert-info alert-dismissible rounded-0 fade show d-print-none css_editable_mode_hidden"
                                    style="font-size: 15px;letter-spacing: 1px;">
                                     In this tab you can apply the rule for every model.
                                     <br/>
                                     <br/>You can hide chatter, send message, log notes, schedule activities, import,
-                                    export from everywhere with single chabox
+                                    export from everywhere with single checkbox
                                     <br/>
                                     <br/>selection for specific user.
                                 </p>
