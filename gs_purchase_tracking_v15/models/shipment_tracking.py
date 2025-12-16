@@ -430,7 +430,7 @@ class GsShipmentTracking(models.Model):
                             'product_id': pro.product_id.id if pro.product_id.id else False,
                             'name': pro.description_picking if pro.description_picking else False,
                             'company_id': pro.company_id.id if pro.company_id.id else False,
-                            'product_type': pro.product_type if pro.product_type else False,
+                            # 'product_type': pro.product_type if pro.product_type else False,
                             'date_planned': pro.date if pro.date else False,
                             'product_qty': pro.product_uom_qty if pro.product_uom_qty else False,
                             'product_uom': pro.product_uom.id if pro.product_uom.id else False,
