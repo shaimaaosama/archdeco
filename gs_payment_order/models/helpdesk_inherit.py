@@ -30,6 +30,7 @@ class GSSaleOrder(models.Model):
 
     is_create_payment_new = fields.Boolean()
     payment_count = fields.Integer("Payment count", compute='_compute_payment_count')
+    analytic_account_id = fields.Many2one('account.analytic.account')
     # is_create_payment_order = fields.Boolean(compute="_get_default_create_payment_order")
 
     # def _get_default_create_payment_order(self):
