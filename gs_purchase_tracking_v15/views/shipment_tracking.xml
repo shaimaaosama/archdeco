@@ -199,21 +199,21 @@
                                         <create context="{'default_display_type': 'line_section'}" name="add_section_control" string="Add a section"/>
                                         <create context="{'default_display_type': 'line_note'}" name="add_note_control" string="Add a note"/>
                                     </control>
-                                    <field invisible="1" name="id_field"/>
+                                    <field invisible="1" name="id_field" column_invisible="1"/>
                                     <field name="sequence" widget="handle"/>
-                                    <field invisible="1" name="shipment_id"/>
-                                    <field invisible="1" name="product_type"/>
-                                    <field invisible="1" name="display_type"/>
+                                    <field invisible="1" name="shipment_id" column_invisible="1"/>
+                                    <field invisible="1" name="product_type" column_invisible="1"/>
+                                    <field invisible="1" name="display_type" column_invisible="1"/>
                                     <field name="product_id"/>
                                     <field name="name" readonly="0"/>
                                     <field name="date_planned" optional="hide" required="0"/>
                                     <field name="product_qty" optional="show"/>
-                                    <field invisible="1" name="sh_is_secondary_unit"/>
+                                    <field invisible="1" name="sh_is_secondary_unit" column_invisible="1"/>
                                     <field name="sh_sec_qty" optional="hide"/>
                                     <field name="sh_sec_uom" optional="hide"/>
-                                    <field invisible="1" name="category_id"/>
-                                    <field invisible="1" name="currency_id"/>
-                                    <field invisible="1" name="product_uom_category_id"/>
+                                    <field invisible="1" name="category_id" column_invisible="1"/>
+                                    <field invisible="1" name="currency_id" column_invisible="1"/>
+                                    <field invisible="1" name="product_uom_category_id" column_invisible="1"/>
                                     <field force_save="1" name="product_uom" optional="hide" readonly="0" required="0" string="UoM"/>
                                     <field name="price_unit" optional="show"/>
                                     <field context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]" name="taxes_id" optional="show" options="{'no_create': True}" widget="many2many_tags"/>
