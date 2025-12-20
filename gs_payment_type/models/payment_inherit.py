@@ -34,7 +34,7 @@ class AccountPaymentInherit(models.Model):
                         pay.destination_account_id = pay.partner_id.with_company(pay.company_id).property_account_receivable_id
                     else:
                         pay.destination_account_id = self.env['account.account'].search([
-                            ('company_id', '=', pay.company_id.id),
+                            ('company_ids', 'in', [pay.company_id.id]),
                             ('internal_type', '=', 'receivable'),
                             ('deprecated', '=', False),
                         ], limit=1)
@@ -44,7 +44,7 @@ class AccountPaymentInherit(models.Model):
                         pay.destination_account_id = pay.partner_id.with_company(pay.company_id).property_account_payable_id
                     else:
                         pay.destination_account_id = self.env['account.account'].search([
-                            ('company_id', '=', pay.company_id.id),
+                            ('company_ids', 'in', [pay.company_id.id]),
                             ('internal_type', '=', 'payable'),
                             ('deprecated', '=', False),
                         ], limit=1)
