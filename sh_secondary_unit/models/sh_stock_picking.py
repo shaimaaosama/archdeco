@@ -245,6 +245,7 @@ class ShStockMoveLine(models.Model):
                                                    'description': description,
                                                    'qty_done': qty_done,
                                                    'qty_ordered': qty_ordered or qty_done,
+                                                   'quantity': qty_done,
                                                    'product_uom': uom,
                                                    'product_uom_rec': uom,
                                                    'product': move_line.product_id,
@@ -255,6 +256,7 @@ class ShStockMoveLine(models.Model):
             else:
                 aggregated_move_lines[line_key]['qty_ordered'] += qty_done
                 aggregated_move_lines[line_key]['qty_done'] += qty_done
+                aggregated_move_lines[line_key]['quantity'] = aggregated_move_lines[line_key]['qty_done']
 
         # Does the same for empty move line to retrieve the ordered qty. for partially done moves
         # (as they are splitted when the transfer is done and empty moves don't have move lines).
@@ -274,6 +276,7 @@ class ShStockMoveLine(models.Model):
                     'description': description,
                     'qty_done': False,
                     'qty_ordered': qty_ordered,
+                    'quantity': False,
                     'product_uom': uom,
                     'product': empty_move.product_id,
                     'packaging': empty_move.product_packaging_id,
