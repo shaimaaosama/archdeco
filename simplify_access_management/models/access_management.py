@@ -58,6 +58,50 @@ class access_management(models.Model):
                                               copy=True)
     is_apply_on_without_company = fields.Boolean(string="Apply Without Company", default=True,help="When 'Apply Without Company' is selected, the rules will be applied to every company.")
     
+    @api.model
+    def _search_panel_domain_image(self, field_name, model_domain, limit=0):
+        """
+        Override to handle Many2many fields in search panel.
+        Fixes TypeError when grouping by Many2many fields that might have data issues.
+        """
+        if field_name not in ['user_ids', 'company_ids']:
+            return super()._search_panel_domain_image(field_name, model_domain, limit=limit)
+        
+        try:
+            return super()._search_panel_domain_image(field_name, model_domain, limit=limit)
+        except (TypeError, ValueError):
+            # Handle case where field value is boolean instead of recordset
+            # This can happen due to data corruption or improper field access
+            domain = list(model_domain) if model_domain else []
+            records = self.search(domain, limit=limit if limit else None)
+            field = self._fields.get(field_name)
+            
+            if not field or field.type != 'many2many':
+                return []
+            
+            # Build groups manually, skipping invalid records
+            groups = {}
+            for record in records:
+                try:
+                    field_value = record[field_name]
+                    # Skip if field_value is a boolean (invalid data)
+                    if isinstance(field_value, bool):
+                        continue
+                    # Ensure it's a recordset
+                    if hasattr(field_value, 'ids'):
+                        for rel_id in field_value.ids:
+                            if rel_id and rel_id not in groups:
+                                try:
+                                    rel_record = self.env[field.relation].browse(rel_id)
+                                    if rel_record.exists():
+                                        groups[rel_id] = (rel_id, rel_record.display_name)
+                                except Exception:
+                                    continue
+                except Exception:
+                    continue
+            
+            return list(groups.values())
+    
     def _count_total_rules(self):
         for rec in self:
             rule = 0
