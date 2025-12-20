@@ -245,11 +245,11 @@ class ShStockMoveLine(models.Model):
                                                    'description': description,
                                                    'qty_done': qty_done,
                                                    'qty_ordered': qty_ordered or qty_done,
-                                                   'product_uom': uom.name,
+                                                   'product_uom': uom,
                                                    'product_uom_rec': uom,
                                                    'product': move_line.product_id,
                                                    'sh_sec_qty': move_line.sh_sec_qty,
-                                                   'sh_sec_uom': move_line.sh_sec_uom.name,
+                                                   'sh_sec_uom': move_line.sh_sec_uom.name if move_line.sh_sec_uom else '',
                                                    }
             else:
                 aggregated_move_lines[line_key]['qty_ordered'] += qty_done
@@ -273,7 +273,7 @@ class ShStockMoveLine(models.Model):
                     'description': description,
                     'qty_done': False,
                     'qty_ordered': qty_ordered,
-                    'product_uom': uom.name,
+                    'product_uom': uom,
                     'product': empty_move.product_id,
                 }
             else:
