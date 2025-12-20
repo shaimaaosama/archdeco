@@ -371,10 +371,6 @@
                     <group expand="0" string="Group By">
                         <filter string="Created By" name="created_by" domain="[]" context="{'group_by': 'create_uid'}"/>
                     </group>
-                    <searchpanel>
-                        <field name="user_ids" select="multi" string="Users" enable_counters="1"/>
-                        <field name="company_ids" select="multi" string="Companies" enable_counters="1"/>
-                    </searchpanel>
                 </search>
             </field>
         </record>

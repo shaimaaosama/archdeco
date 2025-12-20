@@ -52,11 +52,12 @@ class access_management(models.Model):
                                         help="Developer mode will be hidden from the defined users.")
 
     company_ids = fields.Many2many('res.company', 'access_management_comapnay_rel', 'access_management_id',
-                                   'company_id', 'Companies', default=lambda self: self.env.company)
+                                   'company_id', 'Companies', default=lambda self: [(6, 0, [self.env.company.id])] if self.env.company else [])
 
     hide_filters_groups_ids = fields.One2many('hide.filters.groups', 'access_management_id', 'Hide Filters/Group By',
                                               copy=True)
     is_apply_on_without_company = fields.Boolean(string="Apply Without Company", default=True,help="When 'Apply Without Company' is selected, the rules will be applied to every company.")
+    
     def _count_total_rules(self):
         for rec in self:
             rule = 0
