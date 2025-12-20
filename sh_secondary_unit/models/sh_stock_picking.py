@@ -260,7 +260,7 @@ class ShStockMoveLine(models.Model):
         if kwargs.get('strict'):
             return aggregated_move_lines
         pickings = (self.picking_id | backorders)
-        for empty_move in pickings.move_lines:
+        for empty_move in pickings.move_ids:
             if not (empty_move.state == "cancel" and empty_move.product_uom_qty
                     and float_is_zero(empty_move.quantity_done, precision_rounding=empty_move.product_uom.rounding)):
                 continue
