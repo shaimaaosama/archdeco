@@ -35,7 +35,7 @@ class AccountPaymentInherit(models.Model):
                     else:
                         pay.destination_account_id = self.env['account.account'].search([
                             ('company_ids', 'in', [pay.company_id.id]),
-                            ('internal_type', '=', 'receivable'),
+                            ('account_type', '=', 'asset_receivable'),
                             ('deprecated', '=', False),
                         ], limit=1)
                 elif pay.partner_type == 'supplier':
@@ -45,7 +45,7 @@ class AccountPaymentInherit(models.Model):
                     else:
                         pay.destination_account_id = self.env['account.account'].search([
                             ('company_ids', 'in', [pay.company_id.id]),
-                            ('internal_type', '=', 'payable'),
+                            ('account_type', '=', 'liability_payable'),
                             ('deprecated', '=', False),
                         ], limit=1)
         else:
