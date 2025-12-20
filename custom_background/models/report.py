@@ -7,7 +7,7 @@ from contextlib import closing
 from itertools import islice
 
 from lxml import etree
-from PyPDF2 import PdfFileReader, PdfFileWriter
+from PyPDF2 import PdfFileReader, PdfWriter
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -334,7 +334,7 @@ class IrActionsReport(models.Model):
             temp_report_id, temp_report_path = tempfile.mkstemp(
                 suffix=".pdf", prefix="with_back_report.tmp."
             )
-            output = PdfFileWriter()
+            output = PdfWriter()
             pdf_reader_content = PdfFileReader(pdf_report_path, "rb")
             temporary_files.append(pdf_reader_content)
 
@@ -554,7 +554,7 @@ class IrActionsReport(models.Model):
                 temp_report_id, temp_report_path = tempfile.mkstemp(
                     suffix=".pdf", prefix="with_back_report.tmp."
                 )
-                output = PdfFileWriter()
+                output = PdfWriter()
                 pdf_reader_content = PdfFileReader(pdf_report_path, "rb")
                 temporary_files.append(pdf_reader_content)
 
