@@ -1,6 +1,7 @@
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
 from odoo.http import request
+from odoo.osv import expression
 from .query_prepare import search_data
 
 class access_management(models.Model):
@@ -59,48 +60,82 @@ class access_management(models.Model):
     is_apply_on_without_company = fields.Boolean(string="Apply Without Company", default=True,help="When 'Apply Without Company' is selected, the rules will be applied to every company.")
     
     @api.model
-    def _search_panel_domain_image(self, field_name, model_domain, limit=0):
+    def _search_panel_domain_image(self, field_name, domain, set_count=False, limit=False):
         """
         Override to handle Many2many fields in search panel.
         Fixes TypeError when grouping by Many2many fields that might have data issues.
+        Returns dict in format: {id: {'id': id, 'display_name': display_name}, ...}
         """
         if field_name not in ['user_ids', 'company_ids']:
-            return super()._search_panel_domain_image(field_name, model_domain, limit=limit)
+            return super()._search_panel_domain_image(field_name, domain, set_count=set_count, limit=limit)
         
         try:
-            return super()._search_panel_domain_image(field_name, model_domain, limit=limit)
+            return super()._search_panel_domain_image(field_name, domain, set_count=set_count, limit=limit)
         except (TypeError, ValueError):
             # Handle case where field value is boolean instead of recordset
             # This can happen due to data corruption or improper field access
-            domain = list(model_domain) if model_domain else []
-            records = self.search(domain, limit=limit if limit else None)
             field = self._fields.get(field_name)
             
             if not field or field.type != 'many2many':
-                return []
+                return {}
             
-            # Build groups manually, skipping invalid records
-            groups = {}
-            for record in records:
+            # Build domain with filter to exclude False values
+            safe_domain = expression.AND([
+                domain or [],
+                [(field_name, '!=', False)],
+            ])
+            
+            # Use read_group but handle errors gracefully
+            try:
+                groups = self.read_group(safe_domain, [field_name], [field_name], limit=limit)
+            except Exception:
+                # If read_group fails, fall back to manual processing
+                groups = []
+                records = self.search(safe_domain, limit=limit if limit else None)
+                # Group manually
+                seen_ids = set()
+                for record in records:
+                    try:
+                        field_value = record[field_name]
+                        if isinstance(field_value, bool):
+                            continue
+                        if hasattr(field_value, 'ids'):
+                            for rel_id in field_value.ids:
+                                if rel_id and rel_id not in seen_ids:
+                                    seen_ids.add(rel_id)
+                                    groups.append({field_name: rel_id})
+                    except Exception:
+                        continue
+            
+            # Build domain_image dict in the correct format
+            domain_image = {}
+            for group in groups:
                 try:
-                    field_value = record[field_name]
+                    field_value = group[field_name]
                     # Skip if field_value is a boolean (invalid data)
                     if isinstance(field_value, bool):
                         continue
-                    # Ensure it's a recordset
-                    if hasattr(field_value, 'ids'):
-                        for rel_id in field_value.ids:
-                            if rel_id and rel_id not in groups:
-                                try:
-                                    rel_record = self.env[field.relation].browse(rel_id)
-                                    if rel_record.exists():
-                                        groups[rel_id] = (rel_id, rel_record.display_name)
-                                except Exception:
-                                    continue
+                    
+                    # For Many2many, field_value should be the ID
+                    if isinstance(field_value, (int, list)):
+                        rel_id = field_value if isinstance(field_value, int) else (field_value[0] if field_value else None)
+                        if rel_id:
+                            try:
+                                rel_record = self.env[field.relation].browse(rel_id)
+                                if rel_record.exists():
+                                    values = {
+                                        'id': rel_id,
+                                        'display_name': rel_record.display_name,
+                                    }
+                                    if set_count:
+                                        values['__count'] = group.get(field_name + '_count', 0)
+                                    domain_image[rel_id] = values
+                            except Exception:
+                                continue
                 except Exception:
                     continue
             
-            return list(groups.values())
+            return domain_image
     
     def _count_total_rules(self):
         for rec in self:
