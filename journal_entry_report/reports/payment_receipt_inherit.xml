@@ -217,13 +217,13 @@
                         </div>
                     </div>
 
-                    <div class="col-6" t-if="o.ref">
+                    <div class="col-6" t-if="o.memo">
                         <div class="row">
                             <div class="col-3 text-right">
                                 <span style="float:right;text-align:left">البيان</span>
                             </div>
                             <div class="col-6 text-center">
-                                <span t-field="o.ref"/>
+                                <span t-field="o.memo"/>
                             </div>
                             <div class="col-3 text-left">
                                 <span style="float:left;text-align:left">Memo</span>
@@ -267,7 +267,7 @@
                             <span t-field="inv.name"/>
                         </td>
                         <td class="text-center">
-                            <span t-field="inv.ref"/>
+                            <span t-field="inv.memo"/>
                         </td>
                         <td class="text-center">
                             <span t-field="inv.amount_total"/>
