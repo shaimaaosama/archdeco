@@ -1,29 +1,14 @@
 <odoo>
-    <data>
-        <record id="gs_sale_order_form_inherit" model="ir.ui.view">
-            <field name="name">sale.order.form.inherit</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='order_line']/list//field[@name='price_unit']" position="after">
-                    <field name="lowest_price" invisible="1"/>
-                </xpath>
-            </field>
-        </record>
+    <record id="view_product_template_form_lowest_price" model="ir.ui.view">
+        <field name="name">product.template.form.lowest.price</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
 
-        <record id="gs_product_template_form_inherit" model="ir.ui.view">
-            <field name="name">product.template.form.inherit</field>
-            <field name="model">product.template</field>
-            <field name="inherit_id" ref="product.product_template_form_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//page[@name='general_information']/group/group[@name='group_standard_price']//div[@name='standard_price_uom']" position="after">
-                    <label for="lowest_price"/>
-                    <div name="lowest_price">
-                      <field name="lowest_price" class="oe_inline" widget='monetary'
-                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
-                    </div>
-                </xpath>
-            </field>
-        </record>
-    </data>
+             <xpath expr="//div[@name='list_price_uom']" position="after">
+                <field name="lowest_price"/>
+              </xpath>
+
+        </field>
+    </record>
 </odoo>

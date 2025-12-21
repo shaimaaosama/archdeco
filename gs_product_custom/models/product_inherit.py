@@ -3,28 +3,31 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError, ValidationError
 
 
-class ProductTemplateInherit(models.Model):
+class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    lowest_price = fields.Float(
-        'Lowest Price',
-        digits='Product Price',
+    lowest_price = fields.Monetary(
+        string="Lowest Allowed Price",
+        currency_field='currency_id',
     )
 
 
-class SaleOrderInherit(models.Model):
+class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    lowest_price = fields.Float(
-        'Lowest Price',
-        digits='Product Price', related="product_id.lowest_price"
-    )
+    @api.constrains('price_unit', 'product_template_id', 'product_uom_qty')
+    def _check_lowest_price(self):
+        for line in self:
+            if not line.product_template_id:
+                continue
 
-    @api.onchange('price_unit')
-    def _onchange_gs_price_unit(self):
-        for rec in self:
-            if rec.lowest_price and rec.price_unit:
-                if rec.lowest_price > rec.price_unit:
-                    raise ValidationError(
-                        _("The lowest price is greater than the unit price.")
-                    )
+            product = line.product_template_id
+            lowest_price = product.lowest_price
+
+            if lowest_price and line.price_unit < lowest_price:
+                raise ValidationError(_(
+                    "Product '%(product)s' cannot be sold below the Lowest Allowed Price (%(price)s)."
+                ) % {
+                                          'product': product.display_name,
+                                          'price': lowest_price,
+                                      })
