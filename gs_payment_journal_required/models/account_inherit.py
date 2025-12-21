@@ -48,7 +48,7 @@ class AccountInherit(models.Model):
     #     check_company=True, domain="[('id', 'in', suitable_journal_ids)]",
     #     default=_get_default_journal)
 
-    currency_id = fields.Many2one('res.currency', store=True, readonly=True, tracking=True, required=True,
-        states={'draft': [('readonly', False)]},
-        string='Currency',
-        default=_get_default_currency)
+    # currency_id = fields.Many2one('res.currency', store=True, readonly=True, tracking=True, required=True,
+    #     states={'draft': [('readonly', False)]},
+    #     string='Currency',
+    #     default=_get_default_currency)
