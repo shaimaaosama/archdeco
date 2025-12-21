@@ -213,10 +213,10 @@
                         <div style="padding:20px">
                             <u>General Conditions:
                             </u>
-                            <p>• This offer is for Supply or Supply and Installation. All screws, adhesive and/or any
+                            <p style="font-size:14px;">• This offer is for Supply or Supply and Installation. All screws, adhesive and/or any
                                 components needed to install
                             </p>
-                            <p>the system will be provided by
+                            <p style="font-size:14px;">the system will be provided by
                                 <strong>ARCH
                                     <strong style="color:#CA8211">DECO</strong>
                                 </strong>
@@ -225,16 +225,16 @@
                                 materials that may obstruct the
                                 installation
                             </p>
-                            <p>• A site delivery note should be signed before starting the work. After which, any damage
+                            <p style="font-size:14px;">• A site delivery note should be signed before starting the work. After which, any damage
                                 caused to our
                             </p>
-                            <p>undelivered work by any work or activity handled by the client or other subcontractors
+                            <p style="font-size:14px;">undelivered work by any work or activity handled by the client or other subcontractors
                                 will be charged
                                 <br/>
                                 • In case, we are carrying out work round the clock or extended hours to finish it fast,
                                 all the facilities must be provided by the client on site
                             </p>
-                            <p>• The client should provide free access, safe working conditions and environment
+                            <p style="font-size:14px;">• The client should provide free access, safe working conditions and environment
                                 <br/>• The client should provide water, power, light and other facilities to carry out
                                 the work easily and fast
                                 <br/>• The client should provide a covered store and a site office space with provision
@@ -245,12 +245,12 @@
                                 is responsible of furnishing
 
                             </p>
-                            <p>• The client should provide necessary equipments, cranes, scaffolds and hoists needed to
+                            <p style="font-size:14px;">• The client should provide necessary equipments, cranes, scaffolds and hoists needed to
                                 offload the material and
                                 <br/>transpot them to the concerned area free of charge
 
                             </p>
-                            <p>• The customer has to provide a container inside the project to throw the waste materials
+                            <p style="font-size:14px;">• The customer has to provide a container inside the project to throw the waste materials
                                 <br/>• Spare quantity is not included in our offer. If required, it will be invoiced
                                 separately
                                 <br/>• Mock-up will be invoiced separately
@@ -262,16 +262,14 @@
 
 
                             </p>
-                            <br/>
                             <u>
                                 <strong>Special Conditions:
                                 </strong>
                             </u>
-                            <p>
+                            <p style="font-size:14px;">
                                 <strong t-field="doc.special_conditions">
                                 </strong>
                             </p>
-                            <br/>
                             <table style="width:100%;border:2px solid #000000">
                                 <thead style="background-color:#DAA520;color:#0000;padding:15px;">
                                     <tr>
