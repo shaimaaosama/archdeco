@@ -1,0 +1,54 @@
+<odoo>
+
+    <!-- Demo Sequences -->
+
+<!--    ================= Sale ====================-->
+
+    <record id="seq_sale_order_1" model="ir.sequence">
+        <field name="name">Sale Order</field>
+        <field name="padding" eval="5" />
+        <field name="prefix">SO/</field>
+    </record>
+
+    <record id="sale_sequence_option" model="ir.sequence.option">
+        <field name="name">Sale Sequence Options</field>
+        <field name="model">sale.order</field>
+        <field name="use_sequence_option" eval="False" />
+    </record>
+
+    <record id="sale_sequence_option_line_1" model="ir.sequence.option.line">
+        <field name="base_id" ref="sale_sequence_option" />
+        <field name="name">SO Option 1</field>
+        <field name="filter_domain">[]</field>
+        <field
+            name="sequence_id"
+            ref="account_sequence_option.seq_sale_order_1"
+        />
+    </record>
+
+<!--    ================= Purchase ====================-->
+
+    <record id="seq_purchase_order_1" model="ir.sequence">
+        <field name="name">purchase Order</field>
+        <field name="padding" eval="5" />
+        <field name="prefix">PO/</field>
+    </record>
+
+    <record id="purchase_sequence_option" model="ir.sequence.option">
+        <field name="name">purchase Sequence Options</field>
+        <field name="model">purchase.order</field>
+        <field name="use_sequence_option" eval="False" />
+    </record>
+
+    <record id="purchase_sequence_option_line_1" model="ir.sequence.option.line">
+        <field name="base_id" ref="purchase_sequence_option" />
+        <field name="name">PO Option 1</field>
+        <field name="filter_domain">[]</field>
+        <field
+            name="sequence_id"
+            ref="account_sequence_option.seq_purchase_order_1"
+        />
+    </record>
+
+
+</odoo>
