@@ -2,7 +2,7 @@ from odoo import models, SUPERUSER_ID, _
 from odoo.tools.translate import _
 from odoo.http import request
 import ast
-
+from .query_prepare import search_data
 
 class ir_ui_view(models.Model):
     _inherit = 'ir.ui.view'
@@ -10,13 +10,14 @@ class ir_ui_view(models.Model):
     def _postprocess_tag_field(self, node, name_manager, node_info):
         super()._postprocess_tag_field(node, name_manager, node_info)
         try:
-            hide_field_obj = self.env['hide.field'].sudo()
-            hide_fields = hide_field_obj.search(
-                        [('model_id.model', '=', name_manager.model._name), ('access_management_id.active', '=', True),
-                         ('access_management_id.user_ids', 'in', request.env.uid)])
+            # hide_field_obj = self.env['hide.field'].sudo()
+            # hide_fields = hide_field_obj.search(
+            #             [('model_id.model', '=', name_manager.model._name), ('access_management_id.active', '=', True),
+            #              ('access_management_id.user_ids', 'in', request.env.uid)])
             
-            hide_fields -= hide_fields.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
+            # hide_fields -= hide_fields.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
 
+            hide_fields = search_data(self, 'hide.field', name_manager.model._name)
             if node.tag == 'field' or node.tag == 'label':
                 for hide_field in hide_fields:
                     for field_id in hide_field.field_id:
@@ -65,14 +66,15 @@ class ir_ui_view(models.Model):
             super(ir_ui_view, self)._postprocess_tag_button(node, name_manager, node_info)
 
         hide = None
-        hide_button_obj = self.env['hide.view.nodes']
-        hide_button_ids = hide_button_obj.sudo().search(
-            [('model_id.model', '=', name_manager.model._name), ('access_management_id.active', '=', True),
-             ('access_management_id.user_ids', 'in', request.env.uid)])
+        # hide_button_obj = self.env['hide.view.nodes']
+        # hide_button_ids = hide_button_obj.sudo().search(
+        #     [('model_id.model', '=', name_manager.model._name), ('access_management_id.active', '=', True),
+        #      ('access_management_id.user_ids', 'in', request.env.uid)])
         
-        hide_button_ids -= hide_button_ids.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
+        # hide_button_ids -= hide_button_ids.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
+        hide_button_ids = search_data(self, 'hide.view.nodes', name_manager.model._name)
         # Filtered with same env user and current model
-        btn_store_model_nodes_ids = hide_button_ids.mapped('btn_store_model_nodes_ids')
+        btn_store_model_nodes_ids = hide_button_ids.mapped('btn_store_model_nodes_ids') if hide_button_ids else False
         # translation_obj = self.env['ir.translation']
         if btn_store_model_nodes_ids:
             for btn in btn_store_model_nodes_ids:
@@ -94,24 +96,31 @@ class ir_ui_view(models.Model):
             super(ir_ui_view, self)._postprocess_tag_page(node, name_manager, node_info)
 
         hide = None
-        hide_tab_obj = self.env['hide.view.nodes']
-        hide_tab_ids = hide_tab_obj.sudo().search([('model_id.model', '=', name_manager.model._name),
-                                                   ('access_management_id.active', '=', True),
-                                                   ('access_management_id.user_ids', 'in', request.env.uid)])
+        # hide_tab_obj = self.env['hide.view.nodes']
+        # hide_tab_ids = hide_tab_obj.sudo().search([('model_id.model', '=', name_manager.model._name),
+        #                                            ('access_management_id.active', '=', True),
+        #                                            ('access_management_id.user_ids', 'in', request.env.uid)])
         
-        hide_tab_ids -= hide_tab_ids.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
-        page_store_model_nodes_ids = hide_tab_ids.mapped('page_store_model_nodes_ids')
+        # hide_tab_ids -= hide_tab_ids.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
+        hide_tab_ids = search_data(self, 'hide.view.nodes', name_manager.model._name)
+        page_store_model_nodes_ids = hide_tab_ids.mapped('page_store_model_nodes_ids') if hide_tab_ids else False
         if page_store_model_nodes_ids:
 
             for tab in page_store_model_nodes_ids:
                 attribute_string = tab.attribute_string
+                attribute_name = tab.attribute_name
+                
                 if tab.lang_code != self.env.lang:
                     field = self.env['ir.ui.view']._fields['arch_db']
                     translation_dictionary = field.get_translation_dictionary(
                         self.with_context(lang=tab.lang_code).arch_db,
                         {self.env.lang: self.with_context(lang=self.env.lang)['arch_db']})
                     attribute_string = translation_dictionary[attribute_string][self.env.lang]
-                if attribute_string == node.get('string'):
+                    if not attribute_string:
+                        if tab.attribute_name == node.attrib.get('name'):
+                            hide = [tab]
+                            break
+                if attribute_string == node.get('string') or attribute_name == node.get('name'):
                     hide = [tab]
                     break
         if hide:
@@ -130,13 +139,14 @@ class ir_ui_view(models.Model):
             super(ir_ui_view, self)._postprocess_tag_page(node, name_manager, node_info)
 
         hide = None
-        hide_tab_obj = self.env['hide.view.nodes']
-        hide_tab_ids = hide_tab_obj.sudo().search([('model_id.model', '=', name_manager.model._name),
-                                                   ('access_management_id.active', '=', True),
-                                                   ('access_management_id.user_ids', 'in', request.env.uid)])
+        # hide_tab_obj = self.env['hide.view.nodes']
+        # hide_tab_ids = hide_tab_obj.sudo().search([('model_id.model', '=', name_manager.model._name),
+        #                                            ('access_management_id.active', '=', True),
+        #                                            ('access_management_id.user_ids', 'in', request.env.uid)])
         
-        hide_tab_ids -= hide_tab_ids.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
-        link_store_model_nodes_ids = hide_tab_ids.mapped('link_store_model_nodes_ids')
+        # hide_tab_ids -= hide_tab_ids.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
+        hide_tab_ids = search_data(self, 'hide.view.nodes', name_manager.model._name)
+        link_store_model_nodes_ids = hide_tab_ids.mapped('link_store_model_nodes_ids') if hide_tab_ids else False
         if link_store_model_nodes_ids:
             for link in link_store_model_nodes_ids:
                 if _(link.attribute_name) == node.get('name'):
@@ -157,15 +167,16 @@ class ir_ui_view(models.Model):
         if postprocessor:
             super(ir_ui_view, self)._postprocess_tag_page(node, name_manager, node_info)
 
-        hide_button_obj = self.env['hide.view.nodes']
-        setting_tabs = hide_button_obj.sudo().search([('model_id.model', '=', name_manager.model._name),
-                                                       ('access_management_id.active', '=', True),
-                                                       ('access_management_id.user_ids', 'in', request.env.uid)])
+        # hide_button_obj = self.env['hide.view.nodes']
+        # setting_tabs = hide_button_obj.sudo().search([('model_id.model', '=', name_manager.model._name),
+        #                                                ('access_management_id.active', '=', True),
+        #                                                ('access_management_id.user_ids', 'in', request.env.uid)])
         
-        setting_tabs -= setting_tabs.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
-
+        # setting_tabs -= setting_tabs.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
+        setting_tabs = search_data(self, 'hide.view.nodes', name_manager.model._name)
         if name_manager.model._name == 'res.config.settings' and node.tag == 'app' and node.get('string'):
-            for setting_tab in setting_tabs.mapped('page_store_model_nodes_ids'):
+            setting_tabs = setting_tabs.mapped('page_store_model_nodes_ids') if setting_tabs else False
+            for setting_tab in setting_tabs:
                 attribute_string = setting_tab.attribute_string
                 if setting_tab.lang_code != self.env.lang:
                     field = self.env['ir.ui.view']._fields['arch_db']
@@ -187,22 +198,24 @@ class ir_ui_view(models.Model):
             super(ir_ui_view, self)._postprocess_tag_page(node, name_manager, node_info)
 
         if node.tag == 'filter' or node.tag == 'group':
-            hide_filter_group_obj = self.env['hide.filters.groups'].sudo().search(
-                [('model_id.model', '=', name_manager.model._name), ('access_management_id.active', '=', True),
-                 ('access_management_id.user_ids', 'in', request.env.uid)])
-            
-            hide_filter_group_obj -= hide_filter_group_obj.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
 
-            for hide_field_obj in hide_filter_group_obj:
-                for hide_filter in hide_field_obj.filters_store_model_nodes_ids.mapped('attribute_name'):
-                    if hide_filter == node.get('name', False):
-                        node_info['invisible'] = True
-                        node.set('invisible', '1')
+            # hide_filter_group_obj = self.env['hide.filters.groups'].sudo().search(
+            #     [('model_id.model', '=', name_manager.model._name), ('access_management_id.active', '=', True),
+            #      ('access_management_id.user_ids', 'in', request.env.uid)])
+            
+            # hide_filter_group_obj -= hide_filter_group_obj.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
+            hide_filter_group_obj = search_data(self, 'hide.filters.groups', name_manager.model._name)
+            if hide_filter_group_obj:
                 for hide_field_obj in hide_filter_group_obj:
-                    for hide_filter in hide_field_obj.groups_store_model_nodes_ids.mapped('attribute_name'):
+                    for hide_filter in hide_field_obj.filters_store_model_nodes_ids.mapped('attribute_name'):
                         if hide_filter == node.get('name', False):
                             node_info['invisible'] = True
                             node.set('invisible', '1')
+                    for hide_field_obj in hide_filter_group_obj:
+                        for hide_filter in hide_field_obj.groups_store_model_nodes_ids.mapped('attribute_name'):
+                            if hide_filter == node.get('name', False):
+                                node_info['invisible'] = True
+                                node.set('invisible', '1')
         return None
         
     def _postprocess_tag_label(self, node, name_manager, node_info):
@@ -211,17 +224,18 @@ class ir_ui_view(models.Model):
         if postprocessor:
             super(ir_ui_view, self)._postprocess_tag_label(node, name_manager, node_info)
             if node.get('for'):
-                hide_lable = hide_field_obj.search([('model_id.model','=',name_manager.model._name),
-                                                    ('access_management_id.active','=',True),
-                                                    ('access_management_id.user_ids','in',request.env.uid)])
+                # hide_lable = hide_field_obj.search([('model_id.model','=',name_manager.model._name),
+                #                                     ('access_management_id.active','=',True),
+                #                                     ('access_management_id.user_ids','in',request.env.uid)])
                 
-                hide_lable -= hide_lable.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
-
-                for hide_field in hide_lable:
-                    for field_id in hide_field.field_id:
-                        if node.get('for') == field_id.name and node.get('string') == field_id.field_description:
-                            node_info['invisible'] = True
-                            node.set('invisible', '1')
+                # hide_lable -= hide_lable.filtered(lambda x: x.access_management_id.is_apply_on_without_company == False and self.env.company.id not in x.access_management_id.company_ids.ids)
+                hide_lable = search_data(self, 'hide.field', name_manager.model._name)
+                if hide_lable:
+                    for hide_field in hide_lable:
+                        for field_id in hide_field.field_id:
+                            if node.get('for') == field_id.name and node.get('string') == field_id.field_description:
+                                node_info['invisible'] = True
+                                node.set('invisible', '1')
 
             
 

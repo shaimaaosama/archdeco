@@ -11,14 +11,14 @@ patch(ActionMenus.prototype, {
         "get_remove_options",
         [1, this.props.resModel]
       );
-      const isExportHidden = await this.orm.call(
-        "access.management",
-        "is_export_hide",
-        [1, this.props.resModel]
-      );
-      if (isExportHidden) {
-        return res.filter((ele) => !RestActions.includes(ele.key) && ele.key != "export");
-      }
+      // const isExportHidden = await this.orm.call(
+      //   "access.management",
+      //   "is_export_hide",
+      //   [1, this.props.resModel]
+      // );
+      // if (isExportHidden) {
+      //   return res.filter((ele) => !RestActions.includes(ele.key) && ele.key != "export");
+      // }
       return res.filter((ele) => !RestActions.includes(ele.key));
     }
     return res

@@ -30,11 +30,13 @@ class access_domain_ah(models.Model):
     def _check_read(self):
         for rec in self:
             if not rec.read_right:
-                rec.create_right = False
-                rec.write_right = False
-                rec.delete_right = False
-                rec.apply_domain = True
-                rec.domain = '[["id","=",False]]'
+                rec.update({
+                'create_right': False,
+                'write_right': False,
+                'delete_right': False,
+                'apply_domain': True,
+                'domain': '[["id","=",False]]'
+            })
 
     @api.onchange('create_right')
     def _check_create(self):
@@ -56,5 +58,4 @@ class access_domain_ah(models.Model):
     def _check_delete(self):
         for rec in self:
             if rec.delete_right:
-                rec.read_right = True
-                rec.write_right = True
+                rec.update({'read_right': True, 'write_right': True})

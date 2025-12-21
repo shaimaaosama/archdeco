@@ -1,5 +1,6 @@
 from odoo import fields, models, api, _
 from lxml import etree
+import ast
 
 
 class hide_filters_groups(models.Model):
@@ -25,8 +26,8 @@ class hide_filters_groups(models.Model):
     @api.model
     @api.onchange('model_id')
     def _get_filter_groups(self):
-        store_filters_groups_obj = self.env['store.filters.groups']
-        view_obj = self.env['ir.ui.view']
+        store_filters_groups_obj = self.env['store.filters.groups'].sudo()
+        view_obj = self.env['ir.ui.view'].sudo()
 
         if self.model_id and self.model_name:
 
@@ -53,24 +54,45 @@ class hide_filters_groups(models.Model):
                                         'attribute_string': group.get('string')
                                     })
 
-                        object_filters = doc.xpath("//filter")
-                        for filter in object_filters:
+                    object_filters = doc.xpath("//filter")
+                    for filter in object_filters:
 
-                            ## Filters By records
-                            if filter.get('name', False) and filter.get('string', False) and \
-                                    (not (filter.get('invisible', False) == '1' or filter.get('invisible',
-                                                                                              False) == 1)) and (
-                            not filter.get('context', False)):
+                        ## Filters By records
+                        if filter.get('name', False) or filter.get('string', False) and \
+                            (not (filter.get('invisible', False) == '1' or filter.get('invisible',False) == 1)):
 
+                            filter_string = filter.get('string', False)
+                            if filter.get('context', False) and 'group_by' in filter.get('context', False):
                                 domain = [('attribute_name', '=', filter.get('name')),
-                                          ('model_id', '=', self.model_id.id), ('node_option', '=', 'filter')]
+                                        ('model_id', '=', self.model_id.id), ('node_option', '=', 'group')]
+                                
+                                
+                                if not filter_string:
+                                    filter_string = self.env[self.model_id.model].sudo()._fields[ast.literal_eval(filter.get('context')).get('group_by')].string
+                                if filter_string and not store_filters_groups_obj.search(domain):
+                                    store_filters_groups_obj.create({
+                                        'model_id': self.model_id.id,
+                                        'node_option': 'group',
+                                        'attribute_name': filter.get('name'),
+                                        'attribute_string': filter_string
+                                    })
+                            else:
+                                domain = [('attribute_name', '=', filter.get('name')),
+                                        ('model_id', '=', self.model_id.id), ('node_option', '=', 'filter')]
 
-                                if not store_filters_groups_obj.search(domain):
+                                if not filter.get('string', False):
+                                    if 'date' in filter.attrib:
+                                        filter_string = self.env[self.model_id.model].sudo()._fields[filter.attrib.get('date')].string
+                                    pass
+                                if not filter_string and 'help' in filter.attrib:
+                                    filter_string = filter.attrib.get('help', False)
+                                if filter_string and not store_filters_groups_obj.search(domain):
+                                    
                                     store_filters_groups_obj.create({
                                         'model_id': self.model_id.id,
                                         'node_option': 'filter',
                                         'attribute_name': filter.get('name'),
-                                        'attribute_string': filter.get('string')
+                                        'attribute_string': filter_string
                                     })
 
 

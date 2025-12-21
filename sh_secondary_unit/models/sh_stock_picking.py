@@ -245,22 +245,25 @@ class ShStockMoveLine(models.Model):
                                                    'description': description,
                                                    'qty_done': qty_done,
                                                    'qty_ordered': qty_ordered or qty_done,
-                                                   'product_uom': uom.name,
+                                                   'quantity': qty_done,
+                                                   'product_uom': uom,
                                                    'product_uom_rec': uom,
                                                    'product': move_line.product_id,
+                                                   'packaging': move_line.move_id.product_packaging_id,
                                                    'sh_sec_qty': move_line.sh_sec_qty,
-                                                   'sh_sec_uom': move_line.sh_sec_uom.name,
+                                                   'sh_sec_uom': move_line.sh_sec_uom.name if move_line.sh_sec_uom else '',
                                                    }
             else:
                 aggregated_move_lines[line_key]['qty_ordered'] += qty_done
                 aggregated_move_lines[line_key]['qty_done'] += qty_done
+                aggregated_move_lines[line_key]['quantity'] = aggregated_move_lines[line_key]['qty_done']
 
         # Does the same for empty move line to retrieve the ordered qty. for partially done moves
         # (as they are splitted when the transfer is done and empty moves don't have move lines).
         if kwargs.get('strict'):
             return aggregated_move_lines
         pickings = (self.picking_id | backorders)
-        for empty_move in pickings.move_lines:
+        for empty_move in pickings.move_ids:
             if not (empty_move.state == "cancel" and empty_move.product_uom_qty
                     and float_is_zero(empty_move.quantity_done, precision_rounding=empty_move.product_uom.rounding)):
                 continue
@@ -273,8 +276,10 @@ class ShStockMoveLine(models.Model):
                     'description': description,
                     'qty_done': False,
                     'qty_ordered': qty_ordered,
-                    'product_uom': uom.name,
+                    'quantity': False,
+                    'product_uom': uom,
                     'product': empty_move.product_id,
+                    'packaging': empty_move.product_packaging_id,
                 }
             else:
                 aggregated_move_lines[line_key]['qty_ordered'] += empty_move.product_uom_qty

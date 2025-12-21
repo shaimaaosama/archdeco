@@ -1,12 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_access_management_portal_user,access.access.management.portal.user,model_access_management,base.group_user,1,0,0,0
-access_remove_action_portal_user,access.remove.action.portal.user,model_remove_action,base.group_user,1,0,0,0
-access_hide_field_portal_user,access.hide.field.portal.user,model_hide_field,base.group_user,1,0,0,0
-access_access_domain_ah_portal_user,access.access.domain.ah.portal.user,model_access_domain_ah,base.group_user,1,0,0,0
-access_hide_view_nodes_portal_user,access.hide.view.nodes.portal.user,model_hide_view_nodes,base.group_user,1,0,0,0
-access_hide_filters_groups_portal_user,access_hide_filters_groups_portal_user,model_hide_filters_groups,base.group_user,1,0,0,0
-access_hide_chatter_portal_user,access.hide.chatter.portal.user,model_hide_chatter,base.group_user,1,0,0,0
-
 access_action_data,access.action.data,model_action_data,base.group_user,1,1,1,1
 access_view_data,access.view.data,model_view_data,base.group_user,1,1,1,1
 access_store_model_nodes,access.store.model.nodes,model_store_model_nodes,base.group_user,1,1,1,1

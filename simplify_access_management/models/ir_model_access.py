@@ -3,6 +3,7 @@ import logging
 from odoo.http import request
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import ValidationError, AccessError
+from odoo.tools import SQL, Query
 
 _logger = logging.getLogger(__name__)
 
@@ -31,26 +32,26 @@ class ir_model_access(models.Model):
             In case of any record found in access management.
         """
         try:
-            value = self._cr.execute(
-                """SELECT value from ir_config_parameter where key='uninstall_simplify_access_management' """)
+            value = self._cr.execute(SQL(
+                """SELECT value from ir_config_parameter where key='uninstall_simplify_access_management' """))
             value = self._cr.fetchone()
             if not value:
                 if is_model_exists:
                 
-                    self._cr.execute("SELECT id FROM ir_model WHERE model='" + model + "'")
+                    self._cr.execute(SQL("SELECT id FROM ir_model WHERE model='%s'" % model))
                     model_numeric_id = self._cr.fetchone()[0]
                     if model_numeric_id and isinstance(model_numeric_id, int) and self.env.user:
-                        self._cr.execute("""
+                        self._cr.execute(SQL("""
                                         SELECT dm.id
                                         FROM access_domain_ah as dm
-                                        WHERE dm.model_id=%s AND dm.access_management_id 
+                                        WHERE dm.model_id=%s AND dm.apply_domain AND dm.access_management_id 
                                         IN (SELECT am.id 
                                             FROM access_management as am 
                                             WHERE active='t' AND am.id 
                                             IN (SELECT amusr.access_management_id
                                                 FROM access_management_users_rel_ah as amusr
                                                 WHERE amusr.user_id=%s))
-                                        """, [model_numeric_id, self.env.user.id])
+                                        """% (model_numeric_id, self.env.user.id)))
                     
                         
                         access_domain_ah_ids = self.env['access.domain.ah'].sudo().browse(
@@ -63,12 +64,12 @@ class ir_model_access(models.Model):
                         elif mode == 'write':
                             access_domain_ah_ids = access_domain_ah_ids.filtered(lambda x: x.write_right)
                         elif mode == 'unlink':
-                            access_domain_ah_ids = access_domain_ah_ids.filtered(lambda x: x.unlink_right)
+                            access_domain_ah_ids = access_domain_ah_ids.filtered(lambda x: x.delete_right)
                         if access_domain_ah_ids:
                             has_access = bool(access_domain_ah_ids)
             
                     read_value = True
-                    self._cr.execute("SELECT state FROM ir_module_module WHERE name='simplify_access_management'")
+                    self._cr.execute(SQL("SELECT state FROM ir_module_module WHERE name='simplify_access_management'"))
                     data = self._cr.fetchone() or False
                     if data and data[0] != 'installed':
                         read_value = False
@@ -77,15 +78,15 @@ class ir_model_access(models.Model):
         
                     if self.env.user.id and read_value and cids:
                     
-                        self._cr.execute("""SELECT access_management_id FROM access_management_comapnay_rel WHERE company_id = %s""",[cids])
+                        self._cr.execute(SQL("""SELECT access_management_id FROM access_management_comapnay_rel WHERE company_id = %s"""% cids))
                         a = self._cr.fetchall()
                         if a:
                             
-                            self._cr.execute("""SELECT access_management_id FROM access_management_users_rel_ah WHERE user_id = %s AND access_management_id in %s""",[self.env.user.id,tuple([i[0] for i in a] + [0])])
+                            self._cr.execute(SQL("""SELECT access_management_id FROM access_management_users_rel_ah WHERE user_id = %s AND access_management_id in %s""" % (self.env.user.id,tuple([i[0] for i in a] + [0]))))
                             a = self._cr.fetchall()
                             if a:
-                                self._cr.execute("""SELECT id FROM access_management WHERE active='t' AND id in %s AND readonly = True""",[
-                                    tuple([i[0] for i in a] + [0])])
+                                self._cr.execute(SQL("""SELECT id FROM access_management WHERE active='t' AND id in %s AND readonly = True""", (
+                                    tuple([i[0] for i in a] + [0]))))
                                 a = self._cr.fetchall()
                         if bool(a):
                             if mode != 'read':

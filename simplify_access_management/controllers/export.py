@@ -30,7 +30,7 @@ class Export(Export):
                    import_compat=import_compat, parent_field_type=parent_field_type,
                    parent_field=parent_field, exclude=exclude)
         
-        invisible_field_ids = request.env['hide.field'].search(
+        invisible_field_ids = request.env['hide.field'].sudo().search(
                         [('model_id.model', '=', request.params.get('model')),
                          ('access_management_id.active', '=', True),
                          ('access_management_id.user_ids', 'in', request.env.user.id),

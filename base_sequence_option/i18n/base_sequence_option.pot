@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -59,7 +59,6 @@ msgid "Description"
 msgstr ""
 
 #. module: base_sequence_option
-#: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence__display_name
 #: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence_option__display_name
 #: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence_option_line__display_name
 msgid "Display Name"
@@ -67,7 +66,6 @@ msgstr ""
 
 #. module: base_sequence_option
 #: model_terms:ir.ui.view,arch_db:base_sequence_option.view_ir_sequence_option_form
-#: model_terms:ir.ui.view,arch_db:base_sequence_option.view_ir_sequence_option_line_tree
 msgid "Doctype Sequence"
 msgstr ""
 
@@ -77,7 +75,6 @@ msgid "Find matching option by document values"
 msgstr ""
 
 #. module: base_sequence_option
-#: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence__id
 #: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence_option__id
 #: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence_option_line__id
 msgid "ID"
@@ -97,13 +94,6 @@ msgid "Implementation"
 msgstr ""
 
 #. module: base_sequence_option
-#: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence____last_update
-#: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence_option____last_update
-#: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence_option_line____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: base_sequence_option
 #: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence_option__write_uid
 #: model:ir.model.fields,field_description:base_sequence_option.field_ir_sequence_option_line__write_uid
 msgid "Last Updated by"
@@ -118,7 +108,6 @@ msgstr ""
 #. module: base_sequence_option
 #: model:ir.actions.act_window,name:base_sequence_option.action_ir_sequence_option
 #: model:ir.ui.menu,name:base_sequence_option.menu_ir_sequence_option
-#: model_terms:ir.ui.view,arch_db:base_sequence_option.view_ir_sequence_option_tree
 msgid "Manage Sequence Options"
 msgstr ""
 
@@ -128,8 +117,8 @@ msgid "Matching Domain"
 msgstr ""
 
 #. module: base_sequence_option
+#. odoo-python
 #: code:addons/base_sequence_option/models/ir_sequence_option.py:0
-#, python-format
 msgid "Multiple optional sequences found for this model!"
 msgstr ""
 

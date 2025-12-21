@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    HOST = "157.175.78.253"
+    HOST = "15.185.35.160"
     USER = "admin"
     SERVICE = "systemctl restart odoo18"
     CREDID = "arch18"
