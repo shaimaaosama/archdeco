@@ -15,13 +15,10 @@ class PricelistInherit(models.Model):
     _inherit = 'product.pricelist'
 
     @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
+    def _search(self, args, offset=0, limit=None, order=None):
         if self.env.user.sh_pricelist_ids.ids:
             args.append(('id', 'in', self.env.user.sh_pricelist_ids.ids))
-        return super(PricelistInherit, self).name_search(
-            name=name,
-            args=args,
-            operator=operator,
-            limit=limit,
-        )
+        res = super(PricelistInherit, self)._search(args, offset=offset, limit=limit,
+                                                    order=order)
+        return res
 
