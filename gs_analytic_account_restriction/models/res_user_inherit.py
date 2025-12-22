@@ -38,9 +38,28 @@ class GsAccountAnalyticAccountInherit(models.Model):
     #     if not self.env.user.has_group('base.group_system'):
     #         return {'domain': {'group_id': [('id', 'in', user.account_analytic_group_ids.ids)]}}
     @api.model
-    def _search(self, args, offset=0, limit=None, order=None):
-        if self.env.user.account_analytic_account_ids.ids:
-            args.append(('id', 'in', self.env.user.account_analytic_account_ids.ids))
-        res = super(GsAccountAnalyticAccountInherit, self)._search(args, offset=offset, limit=limit,
-                                                    order=order)
-        return res
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        args = args or []
+
+        # Get the current user
+
+        user = self.env.user
+
+        # Restrict to analytic accounts the user owns
+        allowed_ids = user.account_analytic_account_ids.ids
+
+        # Only keep search results in those IDs
+        if allowed_ids:
+            args += [('id', 'in', allowed_ids)]
+        else:
+            # If the user has none, return empty
+            return []
+
+        # If name contains something, Odoo will automatically handle the matching
+        # on rec_name (usually name field) + our args.
+        return super(GsAccountAnalyticAccountInherit, self).name_search(
+            name=name,
+            args=args,
+            operator=operator,
+            limit=limit,
+        )
