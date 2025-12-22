@@ -22,13 +22,16 @@ class Model(models.AbstractModel):
 
             # Modify the form XML
             for node in arch.xpath("//field[@name='pricelist_id']"):
-                # readonly expression:
-                # It evaluates true only when current record has an analytic_account_id
-                # AND that id is not in the user’s allowed list.
+
                 expr = (
                     "pricelist_id "
                     "and pricelist_id not in %s"
                 ) % allowed
+                if allowed:
+                    for node in arch.xpath("//field[@name='pricelist_id']"):
+                        # set a proper domain list
+                        domain = f"[('id', 'in', {allowed})]"
+                        node.set('domain', domain)
                 node.set('readonly', expr)
 
                 # Also update the JS modifiers so the client enforces readonly
