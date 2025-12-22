@@ -2,3 +2,4 @@
 # Part of Softhealer Technologies.
 
 from . import res_users_inherit
+from . import base

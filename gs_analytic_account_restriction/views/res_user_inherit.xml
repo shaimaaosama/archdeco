@@ -16,25 +16,25 @@
                  </xpath>
             </field>
         </record>
-        <record id="view_account_analytic_account_form_inherit" model="ir.ui.view">
-            <field name="name">account.analytic.account</field>
-            <field name="model">account.analytic.account</field>
-            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
-            <field name="arch" type="xml">
-<!--                <xpath expr="//field[@name='group_id']" position="attributes">-->
-<!--                    <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_open': True}</attribute>-->
+<!--        <record id="view_account_analytic_account_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">account.analytic.account</field>-->
+<!--            <field name="model">account.analytic.account</field>-->
+<!--            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--&lt;!&ndash;                <xpath expr="//field[@name='group_id']" position="attributes">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <attribute name="options">{'no_create_edit': True,'no_create': True, 'no_open': True}</attribute>&ndash;&gt;-->
+<!--&lt;!&ndash;                </xpath>&ndash;&gt;-->
+<!--                <xpath expr="//sheet" position="inside">-->
+<!--                    <notebook>-->
+<!--                        <page string="Users">-->
+<!--&lt;!&ndash;                            <button name="action_set_analytic_account" string="Refresh" type="object"  class="oe_highlight"/>&ndash;&gt;-->
+<!--                            <group>-->
+<!--                                <field name="user_ids" widget="many2many_tags"/>-->
+<!--                            </group>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
 <!--                </xpath>-->
-                <xpath expr="//sheet" position="inside">
-                    <notebook>
-                        <page string="Users">
-                            <button name="action_set_analytic_account" string="Refresh" type="object"  class="oe_highlight"/>
-                            <group>
-                                <field name="user_ids" widget="many2many_tags"/>
-                            </group>
-                        </page>
-                    </notebook>
-                </xpath>
-            </field>
-        </record>
+<!--            </field>-->
+<!--        </record>-->
     </data>
 </odoo>
