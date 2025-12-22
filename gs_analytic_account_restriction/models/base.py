@@ -1,5 +1,6 @@
 from  odoo import models,api
-
+from lxml import etree
+import json
 
 
 class Model(models.AbstractModel):
@@ -29,6 +30,11 @@ class Model(models.AbstractModel):
                     "analytic_account_id "
                     "and analytic_account_id not in %s"
                 ) % allowed
+                if allowed:
+                    for node in arch.xpath("//field[@name='analytic_account_id']"):
+                        # set a proper domain list
+                        domain = f"[('id', 'in', {allowed})]"
+                        node.set('domain', domain)
                 node.set('readonly', expr)
 
                 # Also update the JS modifiers so the client enforces readonly
