@@ -19,80 +19,87 @@
             <!--            <t t-set="o" t-value="o.with_context(lang=lang)"/>-->
             <style>
                 @font-face {
-                                font-family: 'amiri_bold';
-                                src: local('amiri_bold'), local('amiri_bold'), url(/gs_payment_reports/static/src/fonts/amiri-bold.ttf) format('opentype');
-                            }
+                font-family: 'amiri_bold';
+                src: local('amiri_bold'), local('amiri_bold'), url(/gs_payment_reports/static/src/fonts/amiri-bold.ttf)
+                format('opentype');
+                }
 
-                            @font-face {
-                                font-family: 'neo_sans';
-                                src: local('neo_sans'), local('neo_sans'), url(/gs_payment_reports/static/src/fonts/NeoSansArabic.ttf) format('opentype');
-                            }
+                @font-face {
+                font-family: 'neo_sans';
+                src: local('neo_sans'), local('neo_sans'), url(/gs_payment_reports/static/src/fonts/NeoSansArabic.ttf)
+                format('opentype');
+                }
 
-                            @font-face {
-                                font-family: 'amiri_regular';
-                                src: local('amiri_regular'), local('amiri_regular'), url(/gs_payment_reports/static/src/fonts/amiri-regular.ttf) format('opentype');
-                            }
+                @font-face {
+                font-family: 'amiri_regular';
+                src: local('amiri_regular'), local('amiri_regular'),
+                url(/gs_payment_reports/static/src/fonts/amiri-regular.ttf) format('opentype');
+                }
 
-                            //better for English or Arabic
-                            @font-face {
-                                font-family: 'kawkab_bold';
-                                src: local('kawkab_bold'), local('kawkab_bold'), url(/gs_payment_reports/static/src/fonts/kawkab-bold.ttf) format('opentype');
-                            }
+                //better for English or Arabic
+                @font-face {
+                font-family: 'kawkab_bold';
+                src: local('kawkab_bold'), local('kawkab_bold'),
+                url(/gs_payment_reports/static/src/fonts/kawkab-bold.ttf) format('opentype');
+                }
 
-                            @font-face {
-                                font-family: 'kawkab_regular';
-                                src: local('kawkab_regular'), local('kawkab_regular'), url(/gs_payment_reports/static/src/fonts/KawkabMono-Regular.ttf) format('opentype');
-                            }
+                @font-face {
+                font-family: 'kawkab_regular';
+                src: local('kawkab_regular'), local('kawkab_regular'),
+                url(/gs_payment_reports/static/src/fonts/KawkabMono-Regular.ttf) format('opentype');
+                }
 
-                            @font-face {
-                                font-family: 'Cairo-Regular';
-                                src: local('Cairo-Regular'), local('Cairo-Regular'), url(/gs_payment_reports/static/src/fonts/cairo/Cairo-Regular.ttf) format('opentype');
-                            }
+                @font-face {
+                font-family: 'Cairo-Regular';
+                src: local('Cairo-Regular'), local('Cairo-Regular'),
+                url(/gs_payment_reports/static/src/fonts/cairo/Cairo-Regular.ttf) format('opentype');
+                }
 
 
+                .font_amiri{
+                font-family: amiri_bold;
+                }
 
-                            .font_amiri{
-                                font-family: amiri_bold;
-                            }
+                .font_cairo{
+                font-family: Cairo-Regular;
+                }
 
-                            .font_cairo{
-                                font-family: Cairo-Regular;
-                            }
+                .font_neo{
+                font-family: neo_sans;
+                }
 
-                            .font_neo{
-                                font-family: neo_sans;
-                            }
+                .font_kawkab{
+                font-family: kawkab_regular;
+                }
 
-                            .font_kawkab{
-                                font-family: kawkab_regular;
-                            }
-
-                            .font_kawkab_bold{
-                                font-family: kawkab_bold;
-                            }
+                .font_kawkab_bold{
+                font-family: kawkab_bold;
+                }
             </style>
             <div class="page font_cairo" style="direction: rtl;">
                 <br/>
                 <h3 t-if="o.payment_type == 'outbound'" class="text-center" style="margin-bottom:30px">
                     <div style="border-radius: 25px;background: #eef2f3; padding: 3px 0 3px 0;
-                                width:50%;border:3px solid;display:inline-block;">سند صرف - Payment Voucher</div>
+                                width:50%;border:3px solid;display:inline-block;">سند صرف - Payment Voucher
+                    </div>
                 </h3>
                 <h3 t-if="o.payment_type == 'inbound'" class="text-center" style="margin-bottom:30px">
                     <div style="border-radius: 25px;background: #eef2f3; padding: 3px 0 3px 0;
-                                width:50%;border:3px solid;display:inline-block;">سند قبض - Receipt Voucher</div>
+                                width:50%;border:3px solid;display:inline-block;">سند قبض - Receipt Voucher
+                    </div>
                 </h3>
                 <div class="row mt-2" style="margin-top:20px;">
-                <div class="col-6" >
+                    <div class="col-6">
                         <div class="row">
                             <div class="col-3 text-right">
-                            <span style="float:right;text-align:right">رقم الدفعة</span>
+                                <span style="float:right;text-align:right">رقم الدفعة</span>
 
                             </div>
                             <div class="col-5 text-center">
                                 <span t-esc="o.name"/>
                             </div>
                             <div class="col-4 text-left">
-                            <span style="float:left;text-align:left">Payment NO</span>
+                                <span style="float:left;text-align:left">Payment NO</span>
 
                             </div>
                         </div>
@@ -123,7 +130,8 @@
                             <div class="col-3 text-right">
                                 <span style="float:right;text-align:right;
                                 clear: both;display: inline-block;
-                                overflow: hidden;white-space: nowrap;">اسم العميل</span>
+                                overflow: hidden;white-space: nowrap;">اسم العميل
+                                </span>
 
                             </div>
                             <div class="col-6 text-center">
@@ -132,11 +140,11 @@
                             </div>
                             <div class="col-3 text-left">
 
-                                <t  t-if="o.partner_type == 'customer'">
-                                    <span style="float:left" >Customer</span>
+                                <t t-if="o.partner_type == 'customer'">
+                                    <span style="float:left">Customer</span>
                                 </t>
                                 <t t-if="o.partner_type == 'supplier'">
-                                    <span style="float:left" >Vendor</span>
+                                    <span style="float:left">Vendor</span>
                                 </t>
                             </div>
 
@@ -148,7 +156,8 @@
                         <div class="row">
                             <div class="col-3 text-right">
                                 <span style="float:right;text-align:right;clear: both;display: inline-block;overflow: hidden;
-                                white-space: nowrap;">اليومية</span>
+                                white-space: nowrap;">اليومية
+                                </span>
                             </div>
                             <div class="col-6 text-center">
                                 <span t-field="o.journal_id"/>
@@ -158,43 +167,43 @@
                             </div>
                         </div>
                     </div>
-                <t t-if="o.amount">
-                    <div class="col-6">
-                        <div class="row">
-                        <div class="col-3 text-right">
-                            <span style="float:right;text-align:right">القيمة</span>
-                        </div>
-
+                    <t t-if="o.amount">
                         <div class="col-6">
-                            <div class="text-center">
-                                <span t-field="o.amount"
-                                      t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                            <div class="row">
+                                <div class="col-3 text-right">
+                                    <span style="float:right;text-align:right">القيمة</span>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="text-center">
+                                        <span t-field="o.amount"
+                                              t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-left">
+                                    <span style="float:left;text-align:left">Amount</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-3 text-left">
-                            <span style="float:left;text-align:left">Amount</span>
-                        </div>
-                        </div>
-                    </div>
-                </t>
+                    </t>
 
                 </div>
                 <t t-if="o.amount">
-                <div class="row">
-                    <div class="col-12 text-left">
-<!--                        <span t-if="o.user_id.lang == 'ar_001'" style="float:left;text-align:left;-->
-<!--                                clear: both;display: inline-block;overflow: hidden;-->
-<!--                                white-space: nowrap;" t-esc="o.num_word_ar"/>-->
-<!--                        <span t-if="o.user_id.lang == 'en_US'" style="float:left;text-align:left;-->
-<!--                                clear: both;display: inline-block;overflow: hidden;-->
-<!--                                white-space: nowrap;" t-esc="o.num_word_en"/>-->
-                        <span style="float:left;text-align:left; padding-right:5px;
+                    <div class="row">
+                        <div class="col-12 text-left">
+                            <!--                        <span t-if="o.user_id.lang == 'ar_001'" style="float:left;text-align:left;-->
+                            <!--                                clear: both;display: inline-block;overflow: hidden;-->
+                            <!--                                white-space: nowrap;" t-esc="o.num_word_ar"/>-->
+                            <!--                        <span t-if="o.user_id.lang == 'en_US'" style="float:left;text-align:left;-->
+                            <!--                                clear: both;display: inline-block;overflow: hidden;-->
+                            <!--                                white-space: nowrap;" t-esc="o.num_word_en"/>-->
+                            <span style="float:left;text-align:left; padding-right:5px;
                                 clear: both;display: inline-block;overflow: hidden;
                                 white-space: nowrap;" t-esc="o.num_word"/>
-<!--                                white-space: nowrap;" t-esc="o.amount_text_arabic(o.amount)"/>-->
+                            <!--                                white-space: nowrap;" t-esc="o.amount_text_arabic(o.amount)"/>-->
 
+                        </div>
                     </div>
-                </div>
                 </t>
 
                 <div class="row mt-2">
@@ -211,7 +220,8 @@
                             <div class="col-4 text-left">
                                 <span style="float:left;text-align:left;
                                 clear: both;display: inline-block;overflow: hidden;
-                                white-space: nowrap;">Payment Method</span>
+                                white-space: nowrap;">Payment Method
+                                </span>
 
                             </div>
                         </div>
@@ -233,7 +243,8 @@
                 </div>
 
             </div>
-            <table class="font_cairo mt-3 rounded table table-sm table-striped table-bordered" style="direction:ltr !important">
+            <table class="font_cairo mt-3 rounded table table-sm table-striped table-bordered"
+                   style="direction:ltr !important">
                 <thead class="text-center">
                     <tr>
                         <th>
@@ -257,34 +268,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-set="partials"
-                       t-value="o.move_id and o.move_id._get_reconciled_invoices_partials() or []"/>
-
-                    <tr t-foreach="partials" t-as="rec">
-                        <t t-set="amount" t-value="rec[1]"/>
-                        <t t-set="inv" t-value="rec[0].move_id"/>
-
-                        <td class="text-center">
-                            <span t-field="inv.invoice_date"/>
-                        </td>
-                        <td class="text-center">
-                            <span t-field="inv.name"/>
-                        </td>
-                        <td class="text-center">
-                            <span t-field="inv.memo"/>
-                        </td>
-                        <td class="text-center">
-                            <span t-field="inv.amount_total"/>
-                        </td>
-                        <td class="text-center">
-                            <span t-esc="amount"
-                                  t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/>
-                        </td>
-                        <td class="text-center">
-                            <span t-field="inv.amount_residual"/>
-                        </td>
-                    </tr>
-                </tbody>
+                    <t t-if="o.move_id">
+                        <tr t-foreach="o.move_id._get_reconciled_invoices_partials()[0]" t-as="rec">
+                            <t t-set="amount" t-value="rec[1]"/>
+                            <t t-set="inv" t-value="rec[2].move_id"/>
+                            <td class="text-center">
+                                <span t-field="inv.invoice_date"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="inv.name"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="inv.ref"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="inv.amount_total"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-esc="amount"
+                                      t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="inv.amount_residual"/>
+                            </td>
+                        </tr>
+                    </t>
 
 
             </table>
