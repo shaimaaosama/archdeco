@@ -15,6 +15,12 @@ class AccountPaymentInherit(models.Model):
 
     payment_type_id = fields.Many2one('gs.account.payment.type', string='Payment Type',)
 
+
+    def create_draft_journal(self):
+        if not self.move_id:
+           self._generate_journal_entry()
+           self.state = 'draft'
+
     @api.onchange('payment_type_id')
     def onchange_partner_id_method00(self):
         for rec in self:
