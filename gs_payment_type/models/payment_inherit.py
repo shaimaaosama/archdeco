@@ -20,6 +20,12 @@ class AccountPaymentInherit(models.Model):
         if not self.move_id:
            self._generate_journal_entry()
            self.state = 'draft'
+    def _generate_move_vals(self, write_off_line_vals=None, force_balance=None, line_ids=None):
+        res = super()._generate_move_vals(write_off_line_vals, force_balance, line_ids)
+        res.update({
+            'branch_id': self.branch_id.id,
+        })
+        return res
 
     @api.onchange('payment_type_id')
     def onchange_partner_id_method00(self):
