@@ -51,32 +51,32 @@ class ShAccountJournalRestrict(models.Model):
     #         order=order,
     #
     #     )
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        args = args or []
-
-        # Get the current user
-
-        user = self.env.user
-
-        # Restrict to analytic accounts the user owns
-        allowed_ids = user.journal_ids.ids
-
-        # Only keep search results in those IDs
-        if allowed_ids:
-            args += [('id', 'in', allowed_ids)]
-        else:
-            # If the user has none, return empty
-            return []
-
-        # If name contains something, Odoo will automatically handle the matching
-        # on rec_name (usually name field) + our args.
-        return super(ShAccountJournalRestrict, self).name_search(
-            name=name,
-            args=args,
-            operator=operator,
-            limit=limit,
-        )
+    # @api.model
+    # def name_search(self, name='', args=None, operator='ilike', limit=100):
+    #     args = args or []
+    #
+    #     # Get the current user
+    #
+    #     user = self.env.user
+    #
+    #     # Restrict to analytic accounts the user owns
+    #     allowed_ids = user.journal_ids.ids
+    #
+    #     # Only keep search results in those IDs
+    #     if allowed_ids:
+    #         args += [('id', 'in', allowed_ids)]
+    #     else:
+    #         # If the user has none, return empty
+    #         return []
+    #
+    #     # If name contains something, Odoo will automatically handle the matching
+    #     # on rec_name (usually name field) + our args.
+    #     return super(ShAccountJournalRestrict, self).name_search(
+    #         name=name,
+    #         args=args,
+    #         operator=operator,
+    #         limit=limit,
+    #     )
 
 class AccountPayment(models.Model):
     _inherit = 'account.payment'
