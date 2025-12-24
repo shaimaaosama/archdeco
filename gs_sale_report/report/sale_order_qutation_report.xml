@@ -9,14 +9,14 @@
                      t-att-data-oe-id="doc and doc.id">
                     <t t-call="gs_sale_report.custom_sale_order_header"/>
                     <style>
-                        @font-face {
-                        font-family: 'Cairo-Regular';
-                        src: local('Cairo-Regular'), local('Cairo-Regular'),
-                        url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('opentype');
-                        }
+<!--                        @font-face {-->
+<!--                        font-family: 'Arial';-->
+<!--                        src: local('Cairo-Regular'), local('Cairo-Regular'),-->
+<!--                        url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('opentype');-->
+<!--                        }-->
 
                         .font_cairo{
-                        font-family: Cairo-Regular;
+                        font-family: Arial;
                         }
 
                         .gs_table {
@@ -80,7 +80,7 @@
                             </div>
                         </h5>
                         <div class="row p-3" style="direction:ltr;">
-                            <div class="col-6" style="font-size:14px;">
+                            <div class="col-6" style="font-size:12px;">
                                 <table class="mt-2 table table-borderless" style="width:100%;border:0;direction: ltr;">
                                     <tr>
                                         <td>
@@ -139,7 +139,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div class="col-6" style="font-size:14px;">
+                            <div class="col-6" style="font-size:12px;">
                                 <table class="table table-borderless" style="width:100%;border:0">
                                     <tr>
                                         <td style="text-align:left">
@@ -178,7 +178,7 @@
                                         <td style="text-align:left">
                                             <strong style="display:inline-block;color:#3B124C;">Terms</strong>
                                         </td>
-                                        <td style="text-align:center;font-size:13px">
+                                        <td style="text-align:center;font-size:12px">
                                             <span t-field="doc.payment_term_id"/>
                                         </td>
                                         <td style="text-align:right">
@@ -240,7 +240,7 @@
                                     <th style="font-size:12px;" name="th_taxes">
                                         <span>VAT</span>
                                         <br/>
-                                        <span style="font-size:11px;">الضريبة</span>
+                                        <span style="font-size:12px;">الضريبة</span>
                                     </th>
                                     <th style="font-size:12px" class="text-center" name="th_subtotal">
                                         <span groups="account.group_show_line_subtotals_tax_excluded">Subtotal
