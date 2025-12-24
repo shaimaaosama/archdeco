@@ -22,30 +22,31 @@ class PricelistInherit(models.Model):
     #                                                 order=order)
     #     return res
 
-    @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
-        args = args or []
-
-        # Get the current user
-
-        user = self.env.user
-
-        # Restrict to analytic accounts the user owns
-        allowed_ids = user.sh_pricelist_ids.ids
-
-        # Only keep search results in those IDs
-        if allowed_ids:
-            args += [('id', 'in', allowed_ids)]
-        else:
-            # If the user has none, return empty
-            return []
-
-        # If name contains something, Odoo will automatically handle the matching
-        # on rec_name (usually name field) + our args.
-        return super(PricelistInherit, self).name_search(
-            name=name,
-            args=args,
-            operator=operator,
-            limit=limit,
-        )
+    # @api.model
+    # def name_search(self, name='', args=None, operator='ilike', limit=100):
+    #     args = args or []
+    #
+    #     # Get the current user
+    #     model = self.env.context.get('active_model')
+    #     print('Ahmed123456', self._name)
+    #     user = self.env.user
+    #
+    #     # Restrict to analytic accounts the user owns
+    #     allowed_ids = user.sh_pricelist_ids.ids
+    #
+    #     # Only keep search results in those IDs
+    #     if allowed_ids:
+    #         args += [('id', 'in', allowed_ids)]
+    #     else:
+    #         # If the user has none, return empty
+    #         return []
+    #
+    #     # If name contains something, Odoo will automatically handle the matching
+    #     # on rec_name (usually name field) + our args.
+    #     return super(PricelistInherit, self).name_search(
+    #         name=name,
+    #         args=args,
+    #         operator=operator,
+    #         limit=limit,
+    #     )
 
