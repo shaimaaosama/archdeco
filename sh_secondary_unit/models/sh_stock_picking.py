@@ -188,7 +188,7 @@ class ShStockMoveLine(models.Model):
                     rec.sh_sec_qty,
                     rec.product_uom_id
                 )
-                rec.move_id.quantity_done = rec.sh_sec_qty
+                rec.move_id.quantity = rec.sh_sec_qty
 
     def _get_aggregated_product_quantities(self, **kwargs):
         """ Returns a dictionary of products (key = id+name+description+uom) and corresponding values of interest.
@@ -265,7 +265,7 @@ class ShStockMoveLine(models.Model):
         pickings = (self.picking_id | backorders)
         for empty_move in pickings.move_ids:
             if not (empty_move.state == "cancel" and empty_move.product_uom_qty
-                    and float_is_zero(empty_move.quantity_done, precision_rounding=empty_move.product_uom.rounding)):
+                    and float_is_zero(empty_move.quantity, precision_rounding=empty_move.product_uom.rounding)):
                 continue
             line_key, name, description, uom = get_aggregated_properties(move=empty_move)
 
