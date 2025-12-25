@@ -38,8 +38,8 @@ class ShAccountJournalRestrict(models.Model):
     def _search(self, args, offset=0, limit=None, order=None):
         _ = self._context or {}
         if(
-            self.env.user.has_group("sh_journal_restrict.group_journal_restrict_feature") and not
-            (self.env.user.has_group("base.group_erp_manager"))
+            self.env.user.has_group("sh_journal_restrict.group_journal_restrict_feature")
+
         ):
             args += [
                 ("id", "in", self.env.user.journal_ids.ids),
