@@ -93,7 +93,7 @@
                         <div class="row p-3" style="direction:ltr;">
                             <div class="col-auto col-2">
                                 <p class="col-6 me-3">
-                                    <img t-if="o._l10n_sa_is_legal() and o.l10n_sa_qr_code_str" class="d-block" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 130, 130)"/>
+                                    <img t-if="o._l10n_sa_is_legal() and o.l10n_sa_qr_code_str" class="d-block" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 110, 110)"/>
                                 </p>
                             </div>
                             <div class="col-5" style="font-size:14px;">
