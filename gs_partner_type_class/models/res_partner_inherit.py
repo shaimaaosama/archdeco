@@ -97,18 +97,18 @@ class ResPartnerInherit(models.Model):
 
     partner_type = fields.Many2one('gs.partner.type', string='Partner Type')
     partner_class = fields.Many2one('gs.partner.class', string='Partner Class')
-    run_compute_boolean = fields.Boolean(compute="_compute_run",)
+    run_compute_boolean = fields.Boolean()
     run_compute = fields.Integer()
 
-    def _compute_run(self):
-        for rec in self:
-            rec.run_compute += 1
-            if rec.run_compute == 1000:
-                rec.run_compute = 0
-            if not rec.run_compute_boolean:
-                rec.run_compute_boolean = True
-            else:
-                rec.run_compute_boolean = False
+    # def _compute_run(self):
+    #     for rec in self:
+    #         rec.run_compute += 1
+    #         if rec.run_compute == 1000:
+    #             rec.run_compute = 0
+    #         if not rec.run_compute_boolean:
+    #             rec.run_compute_boolean = True
+    #         else:
+    #             rec.run_compute_boolean = False
 
 
 class AccountMoveLineInherit(models.Model):
