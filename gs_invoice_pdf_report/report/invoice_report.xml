@@ -55,7 +55,7 @@
                         }
                         gs_customer_info2 tr td strong{font-color:#000000;}
                     </style>
-                    <div class="page font_cairo">
+                    <div class="page">
                     <!-- <br/><br/> -->
                         <h5 class="text-center" style="margin-bottom:30px">
                             <div class="o_force_ltr" style="border-radius: 25px;background: #eef2f3; padding: 3px 0 3px 0;
@@ -96,7 +96,7 @@
                                     <img t-if="o._l10n_sa_is_legal() and o.l10n_sa_qr_code_str" class="d-block" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 130, 130)"/>
                                 </p>
                             </div>
-                            <div class="col-5" style="font-size:14px;">
+                            <div class="col-5" style="font-size:12px;">
                                 <table class="mt-2 table table-borderless" style="width:100%;border:0;direction: ltr;">
                                     <tr>
                                         <td>
@@ -209,7 +209,7 @@
                                 <!--                                <span t-field="doc.user_id.name" class="gs_customer_infor_td_vals" style="font-size:12px;"/>-->
                                 <!--                                <strong style="float:right;color:#000000;position:relative;left:15px"> المندوب </strong>-->
 
-                                <table class="table table-borderless " style="width:100%;border:0">
+                                <table class="table table-borderless " style="width:100%;border:0 font-size:12px;">
                                     <tr>
                                         <td style="text-align:left">
                                             <span  style="color:#000000;">Date</span>
@@ -288,7 +288,7 @@
                         <t t-set="total_before_amount1" t-value="0"/>
                         <!--  create the invoice table -->
                         <t t-set="seq" t-value="1"/>
-                        <table class="text-center table table-border mt-2" style="width:100%;border:0;direction: ltr;">
+                        <table class="text-center table table-borderless mt-2" style="width:100%;border:0;direction: ltr;">
                             <thead style="background-color:#e1c793;color:#1a1919;padding:15px;">
                                 <tr>
                                     <th style="width:5%; font-size:12px">
@@ -394,9 +394,9 @@
                                             </td>
                                             <td class="o_price_total">
                                                 <span class="text-nowrap" t-field="line.price_subtotal"
-                                                      groups="account.group_show_line_subtotals_tax_excluded"/>
+                                                      />
                                                 <span class="text-nowrap" t-field="line.price_total"
-                                                      groups="account.group_show_line_subtotals_tax_included"/>
+                                                      />
                                             </td>
                                         </t>
                                         <!--                                        <t t-set="seq" t-value="seq+1"/>-->
