@@ -11,7 +11,7 @@
                         @font-face {
                         font-family: 'Cairo-Regular';
                         src: local('Cairo-Regular'), local('Cairo-Regular'),
-                        url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('opentype');
+                        url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('truetype');
                         }
 
                         .font_cairo{
@@ -351,8 +351,7 @@
                                             <td class="o_price_total">
                                                 <span class="text-nowrap" t-field="line.price_subtotal"
                                                       />
-                                                <span class="text-nowrap" t-field="line.price_total"
-                                                      />
+
                                             </td>
                                         </t>
                                         <t t-if="line.display_type == 'line_section'">
