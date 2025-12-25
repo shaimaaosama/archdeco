@@ -13,7 +13,6 @@
         <field name="name">journal Restriction Admin</field>
         <field ref="account.model_account_move" name="model_id"/>
         <field name="domain_force">[(1,'=',1)]</field>
-        <field name="groups" eval="[(4, ref('gs_analytic_account_restriction.group_gs_analytic_account_admin'))]"/>
     </record>
 
 </odoo>
