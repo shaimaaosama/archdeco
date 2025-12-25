@@ -99,13 +99,13 @@
                                 </t>
                             </div>
                             <div class="col-5" style="font-size:14px;">
-                                <table class="mt-2 gs_customer_infor table-borderless" style="width:95%;border:0;direction: ltr;">
+                                <table class="mt-2  table-borderless" style="width:95%;border:0;direction: ltr;">
                                     <tr>
                                         <td>
                                             <strong style="color:#000000;float:left">Customer</strong>
                                         </td>
-                                        <td style="text-align:center ">
-                                            <span class="text-center" t-field="doc.partner_id.name"/>
+                                        <td class="text-center">
+                                            <span  t-field="doc.partner_id.name"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">العميل</strong>
@@ -126,8 +126,8 @@
                                         <td>
                                             <strong style="color:#000000;float:left">Address</strong>
                                         </td>
-                                        <td style="text-align:center">
-                                            <span class="text-center" t-field="doc.partner_id.street"/>
+                                        <td class="text-center">
+                                            <span  t-field="doc.partner_id.street"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">العنوان</strong>
@@ -137,8 +137,8 @@
                                         <td>
                                             <strong style="color:#000000;float:left">Phone/Fax</strong>
                                         </td>
-                                        <td style="text-align:center">
-                                            <span class="text-center" t-field="doc.partner_id.phone"/>
+                                        <td class="text-center">
+                                            <span  t-field="doc.partner_id.phone"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">الهاتف/الفاكس</strong>
@@ -148,7 +148,7 @@
                                         <td>
                                             <strong style="color:#000000;float:left">Comm.Reg.NO</strong>
                                         </td>
-                                        <td style="text-align:center">
+                                        <td class="text-center">
 <!--                                            todo remove comm.-->
                                             <!--                                            <span t-field="doc.partner_id.cr_id" style="display:inline-block;"/>-->
                                         </td>
@@ -160,8 +160,8 @@
                                         <td>
                                             <strong style="color:#000000;float:left">VAT.Reg.NO</strong>
                                         </td>
-                                        <td style="text-align:center">
-                                            <span class="text-center" t-field="doc.partner_id.vat"/>
+                                        <td class="text-center">
+                                            <span  t-field="doc.partner_id.vat"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">الرقم الضريبي</strong>
@@ -171,8 +171,8 @@
                                         <td>
                                             <strong style="color:#000000;float:left">Customer Ref</strong>
                                         </td>
-                                        <td style="text-align:center">
-                                            <span class="text-center" t-field="doc.ref"/>
+                                        <td class="text-center">
+                                            <span  t-field="doc.ref"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">مرجع العميل</strong>
