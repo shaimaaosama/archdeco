@@ -105,7 +105,7 @@
                                             <strong style="color:#000000;float:left">Customer</strong>
                                         </td>
                                         <td style="text-align:center ">
-                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.name"/>
+                                            <span class="text-center" t-field="doc.partner_id.name"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">العميل</strong>
@@ -127,7 +127,7 @@
                                             <strong style="color:#000000;float:left">Address</strong>
                                         </td>
                                         <td style="text-align:center">
-                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.street"/>
+                                            <span class="text-center" t-field="doc.partner_id.street"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">العنوان</strong>
@@ -138,7 +138,7 @@
                                             <strong style="color:#000000;float:left">Phone/Fax</strong>
                                         </td>
                                         <td style="text-align:center">
-                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.phone"/>
+                                            <span class="text-center" t-field="doc.partner_id.phone"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">الهاتف/الفاكس</strong>
@@ -161,7 +161,7 @@
                                             <strong style="color:#000000;float:left">VAT.Reg.NO</strong>
                                         </td>
                                         <td style="text-align:center">
-                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.vat"/>
+                                            <span class="text-center" t-field="doc.partner_id.vat"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">الرقم الضريبي</strong>
@@ -172,7 +172,7 @@
                                             <strong style="color:#000000;float:left">Customer Ref</strong>
                                         </td>
                                         <td style="text-align:center">
-                                            <span class="gs_customer_infor_td_vals" t-field="doc.ref"/>
+                                            <span class="text-center" t-field="doc.ref"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">مرجع العميل</strong>
