@@ -11,7 +11,7 @@
                 <field name="sh_secondary_uom" invisible="sh_is_secondary_unit  ==  False "
                        required="sh_is_secondary_unit ==  True" domain="[('category_id','=',category_id)]"/>
             </xpath>
-              <xpath position="after" expr="//field[@name='type']">
+            <xpath position="after" expr="//field[@name='type']">
                 <xpath expr="//field[@name='invoice_policy']" position="move"/>
             </xpath>
         </field>
@@ -53,6 +53,17 @@
             <xpath expr="//list/field[@name='product_uom_id']" position="after">
                 <field name="sh_secondary_unit_qty" groups="sh_secondary_unit.group_secondary_unit_inventory"/>
                 <field name="sh_secondary_unit" groups="sh_secondary_unit.group_secondary_unit_inventory"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="sh_product_tree_view" model="ir.ui.view">
+        <field name="name">sh.product.tree.view</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="stock.product_product_stock_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//list/field[@name='uom_id']" position="after">
+                <field name="sh_secondary_uom_onhand" groups="sh_secondary_unit.group_secondary_unit_inventory"/>
+                <field name="sh_secondary_uom" groups="sh_secondary_unit.group_secondary_unit_inventory"/>
             </xpath>
         </field>
     </record>
