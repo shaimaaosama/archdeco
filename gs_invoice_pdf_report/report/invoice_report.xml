@@ -94,12 +94,12 @@
                             <div class="col-auto col-2">
                                 <t t-if="doc.company_id.print_qr">
                                     <p>
-                                        <img t-if="o.l10n_sa_qr_code_str" style="display:block;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 150, 150)"/>
+                                        <img t-if="o.l10n_sa_qr_code_str" style="display:block;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 130, 130)"/>
                                     </p>
                                 </t>
                             </div>
                             <div class="col-5" style="font-size:14px;">
-                                <table class="mt-2 gs_customer_infor table-borderless" style="width:98%;border:0;direction: ltr;">
+                                <table class="mt-2 gs_customer_infor table-borderless" style="width:95%;border:0;direction: ltr;">
                                     <tr>
                                         <td>
                                             <strong style="color:#000000;float:left">Customer</strong>
@@ -539,12 +539,12 @@
                                 </t>
                             </table>
                         </div>
-                        <div t-if="o.invoice_payment_term_id.note" style="float: left; width:60%; text-align:left">
+                        <div t-if="o.invoice_payment_term_id.note" style="float: left; width:60%; text-align:left; font-size:14px;">
                             <strong><u>Payment Terms</u></strong><br/>
                             <span t-field="o.invoice_payment_term_id.note"/>
                         </div>
 						<div t-if="o.narration">
-                        <div style="float: left; width:60%; text-align:left">
+                        <div style="float: left; width:60%; text-align:left; font-size:14px;">
 							<strong><u>Terms And Conditions</u></strong><br/>
                             <span t-esc="o.narration"/>
                         </div>
