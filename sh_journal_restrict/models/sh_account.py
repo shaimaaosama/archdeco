@@ -34,23 +34,23 @@ class ShAccountJournalRestrict(models.Model):
     #     return self._search(expression.AND([domain, args]), limit=limit, access_rights_uid=name_get_uid)
     #
     # # To apply domain to load menu_________ 1
-    @api.model
-    def _search(self, args, offset=0, limit=None, order=None):
-        _ = self._context or {}
-        if(
-            self.env.user.has_group("sh_journal_restrict.group_journal_restrict_feature")
-
-        ):
-            args += [
-                ("id", "in", self.env.user.journal_ids.ids),
-            ]
-        return super(ShAccountJournalRestrict, self)._search(
-            args,
-            offset=offset,
-            limit=limit,
-            order=order,
-
-        )
+    # @api.model
+    # def _search(self, args, offset=0, limit=None, order=None):
+    #     _ = self._context or {}
+    #     if(
+    #         self.env.user.has_group("sh_journal_restrict.group_journal_restrict_feature")
+    #
+    #     ):
+    #         args += [
+    #             ("id", "in", self.env.user.journal_ids.ids),
+    #         ]
+    #     return super(ShAccountJournalRestrict, self)._search(
+    #         args,
+    #         offset=offset,
+    #         limit=limit,
+    #         order=order,
+    #
+    #     )
     # @api.model
     # def name_search(self, name='', args=None, operator='ilike', limit=100):
     #     args = args or []
