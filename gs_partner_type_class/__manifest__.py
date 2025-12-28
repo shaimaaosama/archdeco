@@ -15,7 +15,7 @@
         'views/partner_type.xml',
         'views/partner_class.xml',
         'views/res_partner_inherit.xml',
-        'security/security.xml',
+        # 'security/security.xml',
     ],
 
 }
