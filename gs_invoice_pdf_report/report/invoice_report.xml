@@ -36,17 +36,20 @@
                         gs_customer_info {
                         table-layout: fixed
                         }
-                        .gs_customer_info td {
-                        height: 10px;
-                        vertical-align: middle;
-                        padding:5;
-                        }
-                        .gs_customer_infor {
-                        border-collapse: collapse;
+                      .gs_customer_infor {
+                            padding-right: 10px;
+                            width:95%;
+                            border:0
+                            border-collapse: collapse;
+                            border-style : hidden!important;
                         }
                         .gs_customer_infor td {
                         vertical-align: middle;
+                        border-style : hidden!important;
                         }
+                        <!--                        .gs_customer_infor td {-->
+                        <!--                        vertical-align: middle;-->
+                        <!--                        }-->
                         .gs_customer_infor_td_vals{
                         float:left !important;text-align:left !important
                         }
@@ -56,28 +59,28 @@
                         gs_customer_info2 tr td strong{font-color:#000000;}
                     </style>
                     <div class="page font_cairo">
-                    <!-- <br/><br/> -->
+                        <!-- <br/><br/> -->
                         <h5 class="text-center" style="margin-bottom:30px">
                             <div class="o_force_ltr" style="border-radius: 25px;background: #eef2f3; padding: 3px 0 3px 0;
                                         width:55%;border:3px solid;display:inline-block;">
                                 <t t-if="doc.move_type=='out_invoice'">
-									<t t-if="doc.state != 'draft'">
-										<t t-if="doc.partner_id.vat">
-											<span>VAT Invoice - فاتورة ضريبية</span>
-										</t>
-										<t t-if="not doc.partner_id.vat">
-											<span>Simplified VAT Invoice - فاتورة ضريبية مبسطة</span>
-										</t>
-									</t>
+                                    <t t-if="doc.state != 'draft'">
+                                        <t t-if="doc.partner_id.vat">
+                                            <span>VAT Invoice - فاتورة ضريبية</span>
+                                        </t>
+                                        <t t-if="not doc.partner_id.vat">
+                                            <span>Simplified VAT Invoice - فاتورة ضريبية مبسطة</span>
+                                        </t>
+                                    </t>
 
-									<t t-if="doc.state == 'draft'">
-										<t t-if="doc.partner_id.vat">
-											<span>Draft Invoice - فاتورة أولية</span>
-										</t>
-										<t t-if="not doc.partner_id.vat">
-											<span>Simplified Draft Invoice - فاتورة أولية مبسطة</span>
-										</t>
-									</t>
+                                    <t t-if="doc.state == 'draft'">
+                                        <t t-if="doc.partner_id.vat">
+                                            <span>Draft Invoice - فاتورة أولية</span>
+                                        </t>
+                                        <t t-if="not doc.partner_id.vat">
+                                            <span>Simplified Draft Invoice - فاتورة أولية مبسطة</span>
+                                        </t>
+                                    </t>
                                 </t>
                                 <t t-if="doc.move_type =='out_refund'">
                                     <span>Credite Note - اشعار دائن</span>
@@ -93,17 +96,18 @@
                         <div class="row p-3" style="direction:ltr;">
                             <div class="col-auto col-2">
                                 <p class="col-6 me-3">
-                                    <img t-if="o._l10n_sa_is_legal() and o.l10n_sa_qr_code_str" class="d-block" t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 120, 120)"/>
+                                    <img t-if="o._l10n_sa_is_legal() and o.l10n_sa_qr_code_str" class="d-block"
+                                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 120, 120)"/>
                                 </p>
                             </div>
                             <div class="col-5" style="font-size:14px;">
-                                <table class="mt-2  table-borderless" style="width:90%;border:0;direction: ltr;">
+                                <table class="mt-2  gs_customer_infor" style="direction: ltr;">
                                     <tr>
                                         <td>
                                             <strong style="color:#000000;float:left">Customer</strong>
                                         </td>
                                         <td class="text-center">
-                                            <span  t-field="doc.partner_id.name"/>
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.name"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">العميل</strong>
@@ -125,7 +129,7 @@
                                             <strong style="color:#000000;float:left">Address</strong>
                                         </td>
                                         <td class="text-center">
-                                            <span  t-field="doc.partner_id.street"/>
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.street"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">العنوان</strong>
@@ -136,7 +140,7 @@
                                             <strong style="color:#000000;float:left">Phone/Fax</strong>
                                         </td>
                                         <td class="text-center">
-                                            <span  t-field="doc.partner_id.phone"/>
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.phone"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">الهاتف/الفاكس</strong>
@@ -147,8 +151,8 @@
                                             <strong style="color:#000000;float:left">Comm.Reg.NO</strong>
                                         </td>
                                         <td class="text-center">
-<!--                                            todo remove comm.-->
-                                            <!--                                            <span t-field="doc.partner_id.cr_id" style="display:inline-block;"/>-->
+                                            <!--                                            todo remove comm.-->
+<!--                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.vat" style="display:inline-block;"/>-->
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">السجل التجاري</strong>
@@ -159,7 +163,7 @@
                                             <strong style="color:#000000;float:left">VAT.Reg.NO</strong>
                                         </td>
                                         <td class="text-center">
-                                            <span  t-field="doc.partner_id.vat"/>
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.vat"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">الرقم الضريبي</strong>
@@ -170,7 +174,7 @@
                                             <strong style="color:#000000;float:left">Customer Ref</strong>
                                         </td>
                                         <td class="text-center">
-                                            <span  t-field="doc.ref"/>
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.ref"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">مرجع العميل</strong>
@@ -209,49 +213,49 @@
                                 <!--                                <span t-field="doc.user_id.name" class="gs_customer_infor_td_vals" style="font-size:12px;"/>-->
                                 <!--                                <strong style="float:right;color:#000000;position:relative;left:15px"> المندوب </strong>-->
 
-                                <table class=" gs_customer_info2 table-borderless" style="width:110%;border:0">
+                                <table class="gs_customer_infor" style="width:110%;!important">
                                     <tr>
                                         <td style="text-align:left">
                                             <strong class="dir_ltr" style="color:#000000;">Date</strong>
                                         </td>
-                                        <td class="text-center">
-                                            <span t-field="doc.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/>
+                                        <td >
+                                            <span  t-field="doc.invoice_date" t-options='{"format": "dd/MM/yyyy"}'/>
                                         </td>
                                         <td style="text-align:right; margin-right:-10px;">
-                                            <strong dir="rtl" style="color:#000000;">التاريخ</strong>
+                                            <strong class="dir_rtl" style="color:#000000;">التاريخ</strong>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align:left">
                                             <strong class="dir_ltr" style="color:#000000;">Invoice</strong>
                                         </td>
-                                        <td class="text-center">
-                                            <span t-field="doc.name"/>
+                                        <td >
+                                            <span t-field="doc.name" class="gs_customer_infor_td_vals" style="font-size:13px"/>
                                         </td>
                                         <td style="text-align:right; margin-right:-10px;">
-                                            <strong dir="rtl" style="color:#000000;">الفاتورة</strong>
+                                            <strong class="dir_rtl" style="color:#000000;">الفاتورة</strong>
                                         </td>
                                     </tr>
-                                    <tr >
+                                    <tr>
                                         <td style="text-align:left">
                                             <strong class="dir_ltr" style="color:#000000;">Due Date</strong>
                                         </td>
-                                        <td class="text-center">
-                                            <span t-field="doc.invoice_date_due" t-options='{"format": "dd/MM/yyyy"}'/>
+                                        <td>
+                                            <span  t-field="doc.invoice_date_due" t-options='{"format": "dd/MM/yyyy"}'/>
                                         </td>
-                                        <td style="text-align:right;width:30%;">
-                                            <strong dir="rtl" style="color:#000000;">تاريخ الاستحقاق</strong>
+                                        <td style="text-align:right;">
+                                            <strong class="dir_rtl" style="color:#000000;width:30%;">تاريخ الاستحقاق</strong>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td style="text-align:left">
                                             <strong style="display:inline-block;color:#000000;">Terms</strong>
                                         </td>
-                                        <td class="text-center">
+                                        <td>
                                             <span t-field="doc.invoice_payment_term_id"/>
                                         </td>
                                         <td style="text-align:right; margin-right:-10px;">
-                                            <strong dir="rtl" style="color:#000000;">شروط الدفع</strong>
+                                            <strong class="dir_rtl" style="color:#000000;">شروط الدفع</strong>
                                         </td>
                                     </tr>
                                     <tr>
@@ -260,11 +264,11 @@
                                                 Person
                                             </strong>
                                         </td>
-                                        <td class="text-center">
-                                            <span t-field="doc.user_id.name"/>
+                                        <td>
+                                            <span  t-field="doc.user_id.name"/>
                                         </td>
                                         <td style="text-align:right; margin-right:-10px;">
-                                            <strong dir="rtl" style="color:#000000;">مندوب المبيعات</strong>
+                                            <strong class="dir_rtl" style="color:#000000;">مندوب المبيعات</strong>
                                         </td>
                                     </tr>
                                     <tr>
@@ -273,11 +277,11 @@
                                                 Branch
                                             </strong>
                                         </td>
-                                        <td class="text-center">
-                                            <span t-field="doc.branch_id"/>
+                                        <td >
+                                            <span  t-field="doc.branch_id"/>
                                         </td>
                                         <td style="text-align:right; margin-right:-10px;">
-                                            <strong dir="rtl" style="color:#000000;">الفرع</strong>
+                                            <strong class="dir_rtl" style="color:#000000;">الفرع</strong>
                                         </td>
                                     </tr>
                                 </table>
@@ -288,7 +292,8 @@
                         <t t-set="total_before_amount1" t-value="0"/>
                         <!--  create the invoice table -->
                         <t t-set="seq" t-value="1"/>
-                        <table class="text-center gs_table table-borderless mt-2" style="width:100%;border:0;direction: ltr;">
+                        <table class="text-center gs_table table-borderless mt-2"
+                               style="width:100%;border:0;direction: ltr;">
                             <thead style="background-color:#e1c793;color:#1a1919;padding:15px;">
                                 <tr>
                                     <th style="width:5%; font-size:12px">
@@ -311,7 +316,7 @@
                                         <br/>
                                         <span style="font-size:12px;">العدد</span>
                                     </th>
-									<!-- <th style="width:8%;" name="th_units">
+                                    <!-- <th style="width:8%;" name="th_units">
                                         <span style="font-size:12px;">Unit</span>
                                         <br/>
                                         <span style="font-size:12px;">الوحدة</span>
@@ -332,7 +337,7 @@
                                         <span style="font-size:11px;">الضريبة</span>
                                     </th>
                                     <th style="font-size:12px" class="text-center" name="th_subtotal">
-                                        <span >Subtotal</span>
+                                        <span>Subtotal</span>
                                         <br/>
                                         <span>الاجمالي</span>
                                     </th>
@@ -344,7 +349,7 @@
                                    t-value="o.invoice_line_ids.sorted(key=lambda l: (-l.sequence, l.date, l.move_name, -l.id), reverse=True)"/>
                                 <t t-foreach="lines" t-as="line">
                                     <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
-                                       />
+                                    />
 
 
                                     <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section'
@@ -354,7 +359,8 @@
                                         <!--                                            <span t-esc="seq"/>-->
                                         <!--                                        </td>-->
 
-                                        <t t-if="line.display_type == 'product'" name="account_invoice_line_accountable">
+                                        <t t-if="line.display_type == 'product'"
+                                           name="account_invoice_line_accountable">
                                             <td name="seq" style="width:4%;">
                                                 <span t-esc="seq"/>
                                                 <t t-set="seq" t-value="seq+1"/>
@@ -369,14 +375,14 @@
                                                 <!--                                                qty-->
                                                 <!--                                                <t t-set="total_qty1" t-value="total_qty1+line.quantity"/>-->
                                                 <br/>
-                                                 <span t-field="line.product_uom_id" />
+                                                <span t-field="line.product_uom_id"/>
                                             </td>
                                             <td style="font-size:12px;width:8%;">
                                                 <span t-esc="'%.0f'% line.sh_sec_qty"/>
                                                 <br/>
                                                 <span t-esc="line.sh_sec_uom.name"/>
                                             </td>
-											<!-- <td style="font-size:12px;width:8%;">
+                                            <!-- <td style="font-size:12px;width:8%;">
                                                 <span t-field="line.product_uom_id" groups="uom.group_uom"/>
                                             </td> -->
                                             <td style="width:10%;">
@@ -393,9 +399,9 @@
                                             </td>
                                             <td class="o_price_total">
                                                 <span class="text-nowrap" t-field="line.price_subtotal"
-                                                      />
-<!--                                                <span class="text-nowrap" t-field="line.price_total"-->
-<!--                                                      groups="account.group_show_line_subtotals_tax_included"/>-->
+                                                />
+                                                <!--                                                <span class="text-nowrap" t-field="line.price_total"-->
+                                                <!--                                                      groups="account.group_show_line_subtotals_tax_included"/>-->
                                             </td>
                                         </t>
                                         <!--                                        <t t-set="seq" t-value="seq+1"/>-->
@@ -433,7 +439,8 @@
                             </tbody>
                         </table>
                         <div id="total" style="float: right; width:60%; text-align:left">
-                            <table class="gs_table table-borderless" style="direction:ltr;border:0px;page-break-inside: avoid;">
+                            <table class="gs_table table-borderless"
+                                   style="direction:ltr;border:0px;page-break-inside: avoid;">
                                 <t t-set="disc1" t-value="total_before_amount1-o.amount_untaxed"/>
                                 <tr style="">
                                     <td>
@@ -470,13 +477,13 @@
                                     </td>
                                 </tr>
                                 <tr style="">
-                                        <td>
-                                            <span style="color:#000000;">VAT ضريبة القيمة المضافة
-                                            </span>
-                                        </td>
-                                        <td class="text-center">
-                                            <span class="gs_customer_infor_td_vals" t-field="o.amount_tax"/>
-                                        </td>
+                                    <td>
+                                        <span style="color:#000000;">VAT ضريبة القيمة المضافة
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="gs_customer_infor_td_vals" t-field="o.amount_tax"/>
+                                    </td>
                                 </tr>
 
                                 <tr class="border-black o_total">
@@ -496,7 +503,7 @@
                                             <strong style="margin: 0 8px 0 8px; text-align:center; font-size:14px;"
                                                     t-esc="o.amount_text_arabic(o.amount_total)"/>
                                         </div>
-										<div style="text-align:center;border-radius: 25px;background: #eef2f3; padding: 3px 0 3px 0;
+                                        <div style="text-align:center;border-radius: 25px;background: #eef2f3; padding: 3px 0 3px 0;
                                                             width:100%;border:2px solid #38383d;display:inline-block;font-size:14px;">
                                             <!-- <strong style="margin: 0 8px 0 8px; text-align:center"
                                                     t-esc="o.compute_amount_in_word(o.amount_total)"/> -->
@@ -537,16 +544,23 @@
                                 </t>
                             </table>
                         </div>
-                        <div t-if="o.invoice_payment_term_id.note" style="float: left; width:60%; text-align:left; font-size:14px;">
-                            <strong><u>Payment Terms</u></strong><br/>
+                        <div t-if="o.invoice_payment_term_id.note"
+                             style="float: left; width:60%; text-align:left; font-size:14px;">
+                            <strong>
+                                <u>Payment Terms</u>
+                            </strong>
+                            <br/>
                             <span t-field="o.invoice_payment_term_id.note"/>
                         </div>
-						<div t-if="o.narration">
-                        <div style="float: left; width:60%; text-align:left; font-size:14px;">
-							<strong><u>Terms And Conditions</u></strong><br/>
-                            <span t-esc="o.narration"/>
+                        <div t-if="o.narration">
+                            <div style="float: left; width:60%; text-align:left; font-size:14px;">
+                                <strong>
+                                    <u>Terms And Conditions</u>
+                                </strong>
+                                <br/>
+                                <span t-esc="o.narration"/>
+                            </div>
                         </div>
-                    </div>
                     </div>
 
                 </div>
@@ -554,35 +568,35 @@
         </t>
     </template>
     <!-- QWeb Reports -->
-   <!--<record id="account_sale_invoices" model="ir.actions.report">
-        <field name="name">VAT Invoice فاتورة ضريبية</field>
-        <field name="model">account.move</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">gs_invoice_pdf_report.report_sale_invoice_document1</field>
-        <field name="report_file">gs_invoice_pdf_report.report_sale_invoice_document1</field>
-        <field name="paperformat_id" ref="gs_invoice_pdf_report.paperformat_sale_invoice_report"/>
-        <field name="print_report_name">(object._get_report_base_filename())</field>
-        <field name="print_report_name">'Sale Invoices - %s' % (object.name)</field>
-        <field name="binding_model_id" ref="account.model_account_move"/>
-        <field name="binding_type">report</field>
-    </record>
+    <!--<record id="account_sale_invoices" model="ir.actions.report">
+         <field name="name">VAT Invoice فاتورة ضريبية</field>
+         <field name="model">account.move</field>
+         <field name="report_type">qweb-pdf</field>
+         <field name="report_name">gs_invoice_pdf_report.report_sale_invoice_document1</field>
+         <field name="report_file">gs_invoice_pdf_report.report_sale_invoice_document1</field>
+         <field name="paperformat_id" ref="gs_invoice_pdf_report.paperformat_sale_invoice_report"/>
+         <field name="print_report_name">(object._get_report_base_filename())</field>
+         <field name="print_report_name">'Sale Invoices - %s' % (object.name)</field>
+         <field name="binding_model_id" ref="account.model_account_move"/>
+         <field name="binding_type">report</field>
+     </record>
 
-	<template id="gs_report_invoice_document" inherit_id="account.report_invoice_document">
-      <xpath expr="//t" position="replace">
-        <t t-call="gs_invoice_pdf_report.report_sale_invoice_document1"/>
-      </xpath>
-    </template>
+     <template id="gs_report_invoice_document" inherit_id="account.report_invoice_document">
+       <xpath expr="//t" position="replace">
+         <t t-call="gs_invoice_pdf_report.report_sale_invoice_document1"/>
+       </xpath>
+     </template>
 
-    <record id="account_sale_invoice_uae" model="ir.actions.report">
-        <field name="name">VAT Invoice فاتورة ضريبية</field>
-        <field name="model">account.move</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">gs_invoice_pdf_report.gs_report_invoice_document</field>
-        <field name="report_file">gs_invoice_pdf_report.gs_report_invoice_document</field>
-        <field name="paperformat_id" ref="gs_invoice_pdf_report.paperformat_sale_invoice_report"/>
-        <field name="print_report_name">(object._get_report_base_filename())</field>
-        <field name="print_report_name">'Invoice - %s' % (object.name)</field>
-        <field name="binding_model_id" ref="account.model_account_move"/>
-        <field name="binding_type">report</field>
-    </record>-->
+     <record id="account_sale_invoice_uae" model="ir.actions.report">
+         <field name="name">VAT Invoice فاتورة ضريبية</field>
+         <field name="model">account.move</field>
+         <field name="report_type">qweb-pdf</field>
+         <field name="report_name">gs_invoice_pdf_report.gs_report_invoice_document</field>
+         <field name="report_file">gs_invoice_pdf_report.gs_report_invoice_document</field>
+         <field name="paperformat_id" ref="gs_invoice_pdf_report.paperformat_sale_invoice_report"/>
+         <field name="print_report_name">(object._get_report_base_filename())</field>
+         <field name="print_report_name">'Invoice - %s' % (object.name)</field>
+         <field name="binding_model_id" ref="account.model_account_move"/>
+         <field name="binding_type">report</field>
+     </record>-->
 </odoo>
