@@ -213,7 +213,7 @@
                                 <!--                                <span t-field="doc.user_id.name" class="gs_customer_infor_td_vals" style="font-size:12px;"/>-->
                                 <!--                                <strong style="float:right;color:#000000;position:relative;left:15px"> المندوب </strong>-->
 
-                                <table class="gs_customer_infor" style="width:110%;!important">
+                                <table class="gs_customer_infor" style="">
                                     <tr>
                                         <td style="text-align:left">
                                             <strong class="dir_ltr" style="color:#000000;">Date</strong>
