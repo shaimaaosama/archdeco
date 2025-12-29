@@ -12,7 +12,7 @@
         <field name="margin_left">3</field>
         <field name="margin_right">3</field>
         <field name="header_line" eval="False"/>
-        <field name="header_spacing">25</field>
+        <field name="header_spacing">30</field>
         <field name="dpi">90</field>
     </record>
     <!--    override Journal entry report record to  binding by paperformat  -->
