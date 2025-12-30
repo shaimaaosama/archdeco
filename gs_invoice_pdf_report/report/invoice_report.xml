@@ -8,17 +8,14 @@
                      t-att-data-oe-id="doc and doc.id">
                     <!-- <t t-call="gs_invoice_pdf_report.custom_invoice_payment_header"/> -->
                     <style>
-
                         @font-face {
-                        font-family: 'Cairo-Regular';
-                        src: local('Cairo-Regular'), local('Cairo-Regular'),
-                        url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('truetype');
-                        }
+                                font-family: 'Cairo-Regular';
+                                src: local('Cairo-Regular'), local('Cairo-Regular'), url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('opentype');
+                            }
 
                         .font_cairo{
-                        font-family: Cairo-Regular;
+                                font-family: Cairo-Regular;
                         }
-
                         .gs_table {
                         border-collapse: collapse;
                         border: 0px solid #ddd;
@@ -37,7 +34,6 @@
                         table-layout: fixed
                         }
                       .gs_customer_infor {
-<!--                            padding-right: 10px;-->
                             width:95%;
                             border:0
                             border-collapse: collapse;
@@ -152,7 +148,7 @@
                                         </td>
                                         <td>
                                             <!--                                            todo remove comm.-->
-                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.cr_id" style="display:inline-block;"/>
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.cr_id"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">السجل التجاري</strong>
@@ -166,7 +162,7 @@
                                             <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.vat"/>
                                         </td>
                                         <td>
-                                            <strong style="color:#000000;float:right">الرقم الضريبي</strong>
+                                            <strong style="color:#000000;float:right">رقم ضريبي</strong>
                                         </td>
                                     </tr>
                                     <tr>
