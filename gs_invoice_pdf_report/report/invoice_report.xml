@@ -9,10 +9,10 @@
                     <!-- <t t-call="gs_invoice_pdf_report.custom_invoice_payment_header"/> -->
                     <style>
 
+
                         @font-face {
-                        font-family: 'Cairo-Regular';
-                        src: local('Cairo-Regular'), local('Cairo-Regular'),
-                        url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('truetype');
+                            font-family: 'Cairo-Regular';
+                            src: local('Cairo-Regular'), local('Cairo-Regular'), url(/gs_invoice_pdf_report/static/src/fonts/cairo/Cairo-Regular.ttf) format('opentype');
                         }
 
                         .font_cairo{
@@ -152,7 +152,7 @@
                                         </td>
                                         <td>
                                             <!--                                            todo remove comm.-->
-<!--                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.vat" style="display:inline-block;"/>-->
+                                            <span class="gs_customer_infor_td_vals" t-field="doc.partner_id.vat" style="display:inline-block;"/>
                                         </td>
                                         <td>
                                             <strong style="color:#000000;float:right">السجل التجاري</strong>
