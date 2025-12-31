@@ -24,9 +24,9 @@ class AccountMove(models.Model):
 
     @api.onchange('branch_id')
     def _onchange_branch_id(self):
-        if self.state != 'draft':
-            raise UserError(
-                "You can only change the branch when the invoice is in draft state.")
+        # if self.state != 'draft':
+        #     raise UserError(
+        #         "You can only change the branch when the invoice is in draft state.")
         selected_branch = self.branch_id
         user = self.env.user
         if selected_branch:
