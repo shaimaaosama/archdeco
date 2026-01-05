@@ -47,6 +47,28 @@ class hr_employee(models.Model):
         groups="hr.group_hr_user", tracking=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
     is_readonly = fields.Boolean()
+    state = fields.Selection(
+        string='State',
+        selection=[('draft', 'Draft'),
+                   ('processing', 'Processing'),
+                   ('approved', 'Approved'),
+                   ],
+        required=False, default='draft')
+
+    def action_processing(self):
+        for rec in self:
+            rec.write({'state': 'processing'})
+        return True
+
+    def action_approved(self):
+        for rec in self:
+            rec.write({'state': 'approved'})
+        return True
+
+    def action_reset_to_draft(self):
+        for rec in self:
+            rec.write({'state': 'draft'})
+        return True
 
     @api.onchange('job_id')
     def _onchange_job_id(self):
