@@ -2,3 +2,4 @@
 
 from . import payment_inherit
 from . import payment_type
+from . import account_move
