@@ -27,7 +27,7 @@ class AccountPayment(models.Model):
 
     @api.onchange('branch_id')
     def _onchange_branch_id(self):
-        if self.state != 'draft':
+        if self.state != 'draft' and not self.env.user.has_group('branch.can_edit_branch_in_payment'):
             raise UserError(
                 "You can only change the branch when the payment is in draft state.")
         selected_branch = self.branch_id
