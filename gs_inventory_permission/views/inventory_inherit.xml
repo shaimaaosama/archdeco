@@ -65,7 +65,7 @@
                     <field invisible="1" name="is_tr_return_picking" readonly="0"/>
                 </xpath>
                 <xpath expr="//button[@name='action_confirm']" position="attributes">
-                    <attribute name="invisible">is_tr_confirm != True</attribute>
+                    <attribute name="invisible">{'invisible': [('show_mark_as_todo', '=', False), ('is_tr_confirm', '!=', True)]}</attribute>
                 </xpath>
                 <xpath expr="//button[@name='action_assign']" position="attributes">
                     <attribute name="invisible">show_check_availability == False and is_tr_assign != True</attribute>
@@ -74,10 +74,10 @@
                     <attribute name="invisible">state not in ('assigned', 'confirmed', 'draft', 'waiting') or is_tr_cancel != True</attribute>
                 </xpath>
                 <xpath expr="//button[@name='button_validate']" position="attributes">
-                    <attribute name="invisible">state in ('waiting', 'confirmed')  or is_tr_validate != True</attribute>
+                    <attribute name="invisible">state in ('waiting', 'confirmed') or is_tr_validate != True</attribute>
                 </xpath>
                 <xpath expr="//button[@name='button_validate'][last()]" position="attributes">
-                    <attribute name="invisible">state not in ('waiting', 'confirmed')  and is_tr_validate != True</attribute>
+                    <attribute name="invisible">state not in ('waiting', 'confirmed') or is_tr_validate != True</attribute>
                 </xpath>
 <!--                <xpath expr="//button[@name='action_set_quantities_to_reservation']" position="attributes">-->
 <!--                    <attribute name="invisible">show_validate == False or immediate_transfer == True or is_tr_set_quantities != True</attribute>-->
