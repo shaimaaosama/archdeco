@@ -6,6 +6,9 @@
             <field name="name">Branch</field>
             <field name="sequence">11</field>
         </record>
+        <record id="can_edit_branch_in_payment" model="res.groups">
+            <field name="name">Can Edit Branch In Payment</field>
+        </record>
 
         <record id="group_branch_user" model="res.groups">
             <field name="name">User</field>
