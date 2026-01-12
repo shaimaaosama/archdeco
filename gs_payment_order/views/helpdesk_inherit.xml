@@ -32,7 +32,7 @@
                 </button>
             </xpath>
             <xpath expr="//group//group[2]" position="inside">
-                <field name="analytic_account_id" />
+                <field name="analytic_account_id"  force_save="1"/>
             </xpath>
 <!--            <xpath expr="//field[@name='project_id']" position="attributes">-->
 <!--                <attribute name="required">1</attribute>-->
