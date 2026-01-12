@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-
+import json
 
 class GSAccountPayment(models.Model):
     _inherit = 'helpdesk.ticket'
@@ -24,13 +24,27 @@ class GSAccountPayment(models.Model):
         payment = self.env['gs.payment.order'].search_count([('helpdesk_ticket_id', '=', self.id)])
         self.payment_count = payment
 
-
 class GSSaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _name = 'sale.order'
+    _inherit = ['sale.order', 'analytic.domain.mixin']
 
     is_create_payment_new = fields.Boolean()
     payment_count = fields.Integer("Payment count", compute='_compute_payment_count')
     analytic_account_id = fields.Many2one('account.analytic.account')
+
+    readonly_analytic = fields.Boolean(compute="_compute_readonly_analytic")
+    @api.depends('analytic_account_id')
+    def _compute_readonly_analytic(self):
+        for record in self:
+            allowed = self.env.user.account_analytic_account_ids or []
+            if record.analytic_account_id and record.analytic_account_id in allowed:
+               record.readonly_analytic = False
+            elif not record.analytic_account_id:
+                record.readonly_analytic = False
+
+            else:
+                record.readonly_analytic = True
+
     # is_create_payment_order = fields.Boolean(compute="_get_default_create_payment_order")
 
     # def _get_default_create_payment_order(self):
@@ -60,6 +74,7 @@ class GSSaleOrder(models.Model):
     @api.constrains('analytic_account_id', 'order_line')
     @api.onchange('analytic_account_id','order_line')
     def _onchange_analytic_account_id(self):
+        self.clear_caches()
         if self.analytic_account_id:
             self.order_line.update({'analytic_distribution': {self.analytic_account_id.id:100}})
 

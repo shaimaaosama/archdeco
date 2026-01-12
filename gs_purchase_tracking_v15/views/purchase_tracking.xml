@@ -7,7 +7,8 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='partner_id']" position="after">
                 <field name="tracking_id" readonly="1"/>
-            </xpath></field>
+            </xpath>
+        </field>
     </record>
     <record id="gs_purchase_tracking_view_search" model="ir.ui.view">
         <field name="name">gs.purchase.tracking.view.search</field>
@@ -16,13 +17,15 @@
             <search>
                 <field name="name"/>
                 <field name="partner_ref"/>
-                <field filter_domain="[('order_line_tracking.product_id.name','ilike',self)]" name="order_line_tracking" string="product name"/>
+                <field filter_domain="[('order_line_tracking.product_id.name','ilike',self)]" name="order_line_tracking"
+                       string="product name"/>
                 <field name="currency_id"/>
                 <field name="partner_id"/>
                 <field name="company_id"/>
                 <field name="user_id"/>
                 <field name="date_order"/>
-            </search></field>
+            </search>
+        </field>
     </record>
     <record id="gs_purchase_tracking_view_tree" model="ir.ui.view">
         <field name="name">gs.purchase.tracking.view.tree</field>
@@ -36,13 +39,15 @@
                 <field name="company_id" optional="show"/>
                 <field name="user_id" optional="hide"/>
                 <field name="date_order" optional="show"/>
-                <field name="amount_untaxed" optional="hide" string="Untaxed" sum="Total Untaxed amount" widget="monetary"/>
+                <field name="amount_untaxed" optional="hide" string="Untaxed" sum="Total Untaxed amount"
+                       widget="monetary"/>
                 <field name="amount_total" optional="show" sum="Total amount" widget="monetary"/>
                 <field name="origin" optional="hide"/>
                 <field name="payment_term_id" optional="hide"/>
                 <field name="incoterm_id" optional="hide"/>
                 <field name="state" optional="hide"/>
-            </list></field>
+            </list>
+        </field>
     </record>
     <record id="gs_purchase_tracking_view_form" model="ir.ui.view">
         <field name="name">gs.purchase.tracking.view.form</field>
@@ -50,26 +55,40 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button class="oe_highlight" invisible="is_submit != True or state != 'draft'" name="action_submit" string="Submit" type="object"/>
-                    <button class="oe_highlight" invisible="state != 'submit'" name="action_approved" string="Approve" type="object"/>
-                    <button invisible="is_cancel != True or state not in ['draft', 'submit']" name="action_cancel" string="Cancel" type="object"/>
-                    <button invisible="is_draft != True or state not in ['cancel', 'locked']" name="action_draft" string="Set to Draft" type="object"/>
-                    <button invisible="state in ['draft', 'locked'] or is_lock_bol != True" name="action_lock" string="Lock" type="object"/>
-                    <button invisible="state != 'locked' or is_unlock_bol != True" name="action_unlock" string="Unlock" type="object"/>
-                    <button class="oe_highlight" invisible="is_crate_receipt != True or is_finish == True or state != 'approved'" name="%(gs_receipt_button_wizard_action)d" string="Create Receipt" type="action"/>
+                    <button class="oe_highlight" invisible="is_submit != True or state != 'draft'" name="action_submit"
+                            string="Submit" type="object"/>
+                    <button class="oe_highlight" invisible="state != 'submit'" name="action_approved" string="Approve"
+                            type="object"/>
+                    <button invisible="is_cancel != True or state not in ['draft', 'submit']" name="action_cancel"
+                            string="Cancel" type="object"/>
+                    <button invisible="is_draft != True or state not in ['cancel', 'locked']" name="action_draft"
+                            string="Set to Draft" type="object"/>
+                    <button invisible="state in ['draft', 'locked'] or is_lock_bol != True" name="action_lock"
+                            string="Lock" type="object"/>
+                    <button invisible="state != 'locked' or is_unlock_bol != True" name="action_unlock" string="Unlock"
+                            type="object"/>
+                    <button class="oe_highlight"
+                            invisible="is_crate_receipt != True or is_finish == True or state != 'approved'"
+                            name="%(gs_receipt_button_wizard_action)d" string="Create Receipt" type="action"/>
                     <!-- attrs="{'invisible':[('picking_id','!=', False)]}"-->
-                    <button class="oe_highlight" invisible="is_create_bill_bol != True or is_create_bill != True or state != 'approved'" name="action_create_bill" string="Create Bill" type="object"/>
+                    <button class="oe_highlight"
+                            invisible="is_create_bill_bol != True or is_create_bill != True or state != 'approved'"
+                            name="action_create_bill" string="Create Bill" type="object"/>
                     <field name="state" statusbar_visible="draft,submit,approved" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" icon="fa-edit" invisible="invoice_count == 0" name="open_gs_invoice" type="object">
+                        <button class="oe_stat_button" icon="fa-edit" invisible="invoice_count == 0"
+                                name="open_gs_invoice" type="object">
                             <field name="invoice_count" string="Invoices" widget="statinfo"/>
                         </button>
-                        <button class="oe_stat_button" groups="stock.group_stock_user" icon="fa-truck" invisible="incoming_picking_count == 0" name="action_view_picking" type="object">
-                            <field help="Incoming Shipments" name="incoming_picking_count" string="Receipt" widget="statinfo"/>
+                        <button class="oe_stat_button" groups="stock.group_stock_user" icon="fa-truck"
+                                invisible="incoming_picking_count == 0" name="action_view_picking" type="object">
+                            <field help="Incoming Shipments" name="incoming_picking_count" string="Receipt"
+                                   widget="statinfo"/>
                         </button>
-                        <button class="oe_stat_button" groups="stock.group_stock_user" icon="fa-search" invisible="shipment_count == 0" name="action_view_shipment" type="object">
+                        <button class="oe_stat_button" groups="stock.group_stock_user" icon="fa-search"
+                                invisible="shipment_count == 0" name="action_view_shipment" type="object">
                             <field name="shipment_count" string="Shipment Tracking" widget="statinfo"/>
                         </button>
                     </div>
@@ -110,8 +129,10 @@
                                 <list editable="bottom">
                                     <control>
                                         <create name="add_product_control" string="Add a product"/>
-                                        <create context="{'default_display_type': 'line_section'}" name="add_section_control" string="Add a section"/>
-                                        <create context="{'default_display_type': 'line_note'}" name="add_note_control" string="Add a note"/>
+                                        <create context="{'default_display_type': 'line_section'}"
+                                                name="add_section_control" string="Add a section"/>
+                                        <create context="{'default_display_type': 'line_note'}" name="add_note_control"
+                                                string="Add a note"/>
                                     </control>
                                     <field name="sequence" widget="handle"/>
                                     <field invisible="1" name="tracking_id" column_invisible="1"/>
@@ -134,14 +155,19 @@
                                     <field invisible="1" name="currency_id" column_invisible="1"/>
                                     <field invisible="1" name="display_type" column_invisible="1"/>
                                     <field invisible="1" name="product_uom_category_id" column_invisible="1"/>
-                                    <field force_save="1" name="product_uom" optional="hide" readonly="0" required="0" string="UoM"/>
+                                    <field force_save="1" name="product_uom" optional="hide" readonly="0" required="0"
+                                           string="UoM"/>
                                     <field name="price_unit" optional="show"/>
-                                    <field context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]" name="taxes_id" optional="show" options="{'no_create': True}" widget="many2many_tags"/>
+                                    <field context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}"
+                                           domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]"
+                                           name="taxes_id" optional="show" options="{'no_create': True}"
+                                           widget="many2many_tags"/>
                                     <field name="price_subtotal" optional="show" widget="monetary"/>
                                 </list>
                             </field>
                             <group class="oe_subtotal_footer oe_right">
-                                <field colspan="2" name="tax_totals_json" nolabel="1" widget="account-tax-totals-field" />
+                                <field colspan="2" name="tax_totals_json" nolabel="1"
+                                       widget="account-tax-totals-field"/>
                             </group>
                         </page>
                         <page string="Other Information">
@@ -156,8 +182,12 @@
                                 <group>
                                     <field name="payment_term_id"/>
                                     <field name="incoterm_id"/>
-                                    <field force_save="1" groups="analytic.group_analytic_accounting" name="analytic_account_id"/>
-<!--                                    <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>-->
+                                    <field name="analytic_domain" invisible="1"/>
+                                    <field name="readonly_analytic" invisible="1"/>
+                                    <field force_save="1" groups="analytic.group_analytic_accounting"
+                                           name="analytic_account_id"  domain="analytic_domain"  context="{ 'default_partner_id': partner_id}"
+                                           readonly="readonly_analytic"/>
+                                    <!--                                    <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>-->
                                 </group>
                             </group>
                         </page>
@@ -185,12 +215,13 @@
                         </page>
                     </notebook>
                 </sheet>
-<!--                <div class="oe_chatter">-->
-<!--                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>-->
-<!--                    <field name="activity_ids" widget="mail_activity"/>-->
-<!--                    <field name="message_ids" widget="mail_thread"/>-->
-<!--                </div>-->
-            </form></field>
+                <!--                <div class="oe_chatter">-->
+                <!--                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>-->
+                <!--                    <field name="activity_ids" widget="mail_activity"/>-->
+                <!--                    <field name="message_ids" widget="mail_thread"/>-->
+                <!--                </div>-->
+            </form>
+        </field>
     </record>
     <record id="gs_purchase_tracking_view_kanban" model="ir.ui.view">
         <field name="name">gs.purchase.tracking.kanban</field>
@@ -241,17 +272,20 @@
                                 <div class="o_kanban_record_bottom h5 mt-2 mb-0">
                                     <div class="d-flex flex-grow-1 text-600 mt-1" id="utm_statistics"/>
                                     <div class="oe_kanban_bottom_left">
-                                        <span class="badge badge-pill float-right mt4 mr16" style="border-color:#5e75c8;background: #5e75c8;color: whitesmoke;">
+                                        <span class="badge badge-pill float-right mt4 mr16"
+                                              style="border-color:#5e75c8;background: #5e75c8;color: whitesmoke;">
                                             <field name="state"/>
                                         </span>
                                     </div>
                                     <div class="oe_kanban_bottom_right">
-                                        <span class="badge badge-pill float-right mt4 mr16" style="background: #00A09D;color: whitesmoke;">
+                                        <span class="badge badge-pill float-right mt4 mr16"
+                                              style="background: #00A09D;color: whitesmoke;">
                                             <field name="user_id"/>
                                         </span>
                                     </div>
                                     <div class="oe_kanban_bottom_right">
-                                        <span class="badge badge-pill float-right mt4 mr16" style="background: #00A09D;color: whitesmoke;">
+                                        <span class="badge badge-pill float-right mt4 mr16"
+                                              style="background: #00A09D;color: whitesmoke;">
                                             Amount:
                                             <field name="amount_total"/>
                                         </span>
@@ -261,7 +295,8 @@
                         </div>
                     </t>
                 </templates>
-            </kanban></field>
+            </kanban>
+        </field>
     </record>
     <record id="gs_purchase_tracking_report_graph" model="ir.ui.view">
         <field name="name">gs.purchase.tracking.report.graph</field>
@@ -272,7 +307,8 @@
                 <field name="user_id"/>
                 <field name="picking_type_id"/>
                 <field name="amount_total" type="measure"/>
-            </graph></field>
+            </graph>
+        </field>
     </record>
     <record id="view_gs_purchase_tracking_pivot" model="ir.ui.view">
         <field name="name">gs.purchase.tracking.pivot</field>
@@ -280,7 +316,8 @@
         <field name="arch" type="xml">
             <pivot disable_linking="True" display_quantity="true" string="Exterior Purchase Order Analysis">
                 <field name="name" type="row"/>
-            </pivot></field>
+            </pivot>
+        </field>
     </record>
     <record id="gs_purchase_tracking_action" model="ir.actions.act_window">
         <field name="name">Exterior Purchase Order</field>
@@ -288,7 +325,10 @@
         <field name="res_model">gs.purchase.tracking</field>
         <field name="view_mode">kanban,list,form,graph,pivot</field>
     </record>
-    <menuitem id="menu_gs_tracking" name="Exterior Purchase" sequence="5" web_icon="gs_purchase_tracking_v15,static/description/TEST.png"/>
-    <menuitem id="menu_gs_purchase_tracking" name="Exterior Purchase" parent="gs_purchase_tracking_v15.menu_gs_tracking" sequence="1"/>
-    <menuitem action="gs_purchase_tracking_action" id="sub_gs_purchase_tracking" name="Exterior Purchase Order" parent="gs_purchase_tracking_v15.menu_gs_purchase_tracking" sequence="1"/>
+    <menuitem id="menu_gs_tracking" name="Exterior Purchase" sequence="5"
+              web_icon="gs_purchase_tracking_v15,static/description/TEST.png"/>
+    <menuitem id="menu_gs_purchase_tracking" name="Exterior Purchase" parent="gs_purchase_tracking_v15.menu_gs_tracking"
+              sequence="1"/>
+    <menuitem action="gs_purchase_tracking_action" id="sub_gs_purchase_tracking" name="Exterior Purchase Order"
+              parent="gs_purchase_tracking_v15.menu_gs_purchase_tracking" sequence="1"/>
 </odoo>

@@ -6,16 +6,19 @@
         <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button class="oe_highlight"  invisible="is_create_payment_new == True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+                <button class="oe_highlight" invisible="is_create_payment_new == True"
+                        name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
-                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
+                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0"
+                        name="action_view_payment" type="object">
                     <field name="payment_count" string="Payment Order" widget="statinfo"/>
                 </button>
             </xpath>
             <xpath expr="//field[@name='company_id']" position="after">
                 <field invisible="1" name="is_create_payment_new"/>
-            </xpath></field>
+            </xpath>
+        </field>
     </record>
     <record id="gs_payment_sale_order_view_form_inherit" model="ir.ui.view">
         <field name="name">sale.order.view.form.inherit</field>
@@ -24,19 +27,25 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <field invisible="1" name="is_create_payment_new"/>
-                <button class="oe_highlight" invisible="is_create_payment_new == True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+                <button class="oe_highlight" invisible="is_create_payment_new == True"
+                        name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
-                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
+                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0"
+                        name="action_view_payment" type="object">
                     <field name="payment_count" string="Payment Order" widget="statinfo"/>
                 </button>
             </xpath>
             <xpath expr="//group//group[2]" position="inside">
-                <field name="analytic_account_id"  force_save="1"/>
+                <field name="analytic_domain" invisible="1"/>
+                <field name="readonly_analytic" invisible="1"/>
+                <field name="analytic_account_id" force_save="1" domain="analytic_domain" readonly="readonly_analytic"
+                  context="{ 'default_partner_id': partner_id}"
+                />
             </xpath>
-<!--            <xpath expr="//field[@name='project_id']" position="attributes">-->
-<!--                <attribute name="required">1</attribute>-->
-<!--            </xpath>-->
+            <!--            <xpath expr="//field[@name='project_id']" position="attributes">-->
+            <!--                <attribute name="required">1</attribute>-->
+            <!--            </xpath>-->
         </field>
     </record>
     <record id="gs_payment_purchase_order_view_form_inherit" model="ir.ui.view">
@@ -46,13 +55,16 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <field invisible="1" name="is_create_payment_new"/>
-                <button class="oe_highlight"  invisible="is_create_payment_new == True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+                <button class="oe_highlight" invisible="is_create_payment_new == True"
+                        name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
-                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
+                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0"
+                        name="action_view_payment" type="object">
                     <field name="payment_count" string="Payment Order" widget="statinfo"/>
                 </button>
-            </xpath></field>
+            </xpath>
+        </field>
     </record>
     <record id="gs_payment_purchase_tracking_view_form_inherit" model="ir.ui.view">
         <field name="name">gs.purchase.tracking.view.form.inherit</field>
@@ -61,12 +73,15 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <field invisible="1" name="is_create_payment_new"/>
-                <button class="oe_highlight"  invisible="is_create_payment_new == True" name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
+                <button class="oe_highlight" invisible="is_create_payment_new == True"
+                        name="%(gs_payment_order_action2)d" string="Create Payment Order" type="action"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
-                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0" name="action_view_payment" type="object">
+                <button class="oe_stat_button" icon="fa-dollar" invisible="payment_count == 0"
+                        name="action_view_payment" type="object">
                     <field name="payment_count" string="Payment Order" widget="statinfo"/>
                 </button>
-            </xpath></field>
+            </xpath>
+        </field>
     </record>
 </odoo>

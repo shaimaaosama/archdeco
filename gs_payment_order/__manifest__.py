@@ -4,7 +4,7 @@
     'author': "Global Solutions",
     'website': "http://www.globalsolutions.dev",
     'category': 'Uncategorized',
-    'depends': ['base', 'account', 'mail', 'branch', 'helpdesk', 'purchase', 'sale', 'gs_purchase_tracking_v15'],
+    'depends': ['base', 'account', 'mail', 'branch', 'helpdesk', 'purchase', 'sale', 'gs_purchase_tracking_v15','analytic_domain_mixin'],
     "images": [
         'static/description/icon.png'
     ],
@@ -27,4 +27,5 @@
         'views/permission_inherit.xml',
         'report/payment_order_report.xml',
     ],
+
 }
