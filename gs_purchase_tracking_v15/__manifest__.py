@@ -5,7 +5,7 @@
     'website': "http://www.yourcompany.com",
     'category': 'Uncategorized',
     'version': '0.1',
-    'depends': ['base', 'contacts', 'purchase', 'purchase_stock', 'sh_secondary_unit', 'stock'],
+    'depends': ['base', 'contacts', 'purchase', 'purchase_stock', 'sh_secondary_unit', 'stock', 'analytic_domain_mixin'],
     "images": [
         'static/description/icon.png'
     ],
