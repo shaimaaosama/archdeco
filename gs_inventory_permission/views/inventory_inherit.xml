@@ -114,6 +114,16 @@
 <!--                </xpath>-->
             </field>
         </record>
+        <record id="stock_picking_form_inherit_v2" model="ir.ui.view">
+              <field name="name">stock.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock_account.view_picking_form"/>
+            <field name="arch" type="xml">
+                   <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">
+                    <attribute name="invisible">state != 'done' or is_tr_return_picking != True</attribute>
+                </xpath>
+            </field>
+        </record>
         <record id="stock_scrap_form_inherit" model="ir.ui.view">
             <field name="name">stock.scrap.form.inherit</field>
             <field name="model">stock.scrap</field>

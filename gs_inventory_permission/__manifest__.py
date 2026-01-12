@@ -4,7 +4,7 @@
     'author': "My Company",
     'website': "http://www.yourcompany.com",
     'category': 'Uncategorized',
-    'depends': ['base', 'stock', 'sgeede_internal_transfer'],
+    'depends': ['base', 'stock', 'sgeede_internal_transfer', 'stock_account'],
     "images": [
         'static/description/icon.png'
     ],
