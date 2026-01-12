@@ -182,11 +182,9 @@
                                 <group>
                                     <field name="payment_term_id"/>
                                     <field name="incoterm_id"/>
-                                    <field name="analytic_domain" invisible="1"/>
-                                    <field name="readonly_analytic" invisible="1"/>
+
                                     <field force_save="1" groups="analytic.group_analytic_accounting"
-                                           name="analytic_account_id"  domain="analytic_domain"  context="{ 'default_partner_id': partner_id}"
-                                           readonly="readonly_analytic"/>
+                                           name="analytic_account_id" />
                                     <!--                                    <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>-->
                                 </group>
                             </group>

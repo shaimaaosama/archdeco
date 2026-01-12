@@ -9,8 +9,11 @@
                 <field invisible="1" name="shipment_tracking_id"/>
             </xpath>
             <xpath expr="//field[@name='payment_term_id']" position="after">
-                <field force_save="1" groups="analytic.group_analytic_accounting" name="analytic_account_id"/>
-<!--                <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>-->
+                <field name="analytic_domain" invisible="1"/>
+                <field name="readonly_analytic" invisible="1"/>
+                <field force_save="1" groups="analytic.group_analytic_accounting" name="analytic_account_id"  domain="analytic_domain"  context="{ 'default_partner_id': partner_id}"
+                                           readonly="readonly_analytic"/>
+                <!--                <field force_save="1" groups="analytic.group_analytic_tags" name="analytic_tag_id"/>-->
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Project Information">
@@ -35,7 +38,8 @@
                         </group>
                     </group>
                 </page>
-            </xpath></field>
+            </xpath>
+        </field>
     </record>
     <record id="gs_shipment_tracking_view_search" model="ir.ui.view">
         <field name="name">gs.shipment.tracking.search</field>
@@ -45,7 +49,8 @@
                 <group expand="0" string="Group By...">
                     <filter context="{'group_by':'state'}" domain="[]" name="group_by_state" string="Status"/>
                 </group>
-            </search></field>
+            </search>
+        </field>
     </record>
     <record id="gs_shipment_tracking_view_tree" model="ir.ui.view">
         <field name="name">gs.shipment.tracking.view.tree</field>
@@ -74,7 +79,8 @@
                 <field name="roll_over" optional="hide"/>
                 <field name="customs_statement" optional="hide"/>
                 <field name="state"/>
-            </list></field>
+            </list>
+        </field>
     </record>
     <record id="gs_shipment_tracking_view_form" model="ir.ui.view">
         <field name="name">gs.shipment.tracking.view.form</field>
@@ -82,30 +88,50 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button class="oe_highlight" invisible="is_submit != True or state != 'draft'" name="action_submit" string="Submit" type="object"/>
-                    <button class="oe_highlight" invisible="is_confirmed != True or state != 'submit'" name="action_confirmed" string="Confirm" type="object"/>
-                    <button class="oe_highlight" invisible="is_booking != True or state != 'confirmed'" name="action_booking" string="Booking" type="object"/>
-                    <button class="oe_highlight" invisible="is_booked != True or state != 'booking'" name="action_booked" string="Booked" type="object"/>
-                    <button class="oe_highlight" invisible="is_loading != True or state != 'booked'" name="action_loading" string="Loading" type="object"/>
-                    <button class="oe_highlight" invisible="is_loaded != True or state != 'loading'" name="action_loaded" string="Loaded" type="object"/>
-                    <button class="oe_highlight" invisible="is_on_board != True or state != 'loaded'" name="action_on_board" string="On Board" type="object"/>
-                    <button class="oe_highlight" invisible="is_departed != True or state != 'on_board'" name="action_departed" string="Departed" type="object"/>
-                    <button class="oe_highlight" invisible="is_doc_collect != True or state != 'departed'" name="action_doc_collect" string="Doc Collect" type="object"/>
-                    <button class="oe_highlight" invisible="is_issue_insurance != True or state != 'doc_collect'" name="action_issue_insurance" string="Issue Insurance" type="object"/>
-                    <button class="oe_highlight" invisible="is_arrived != True or state != 'issue_insurance'" name="action_arrived" string="Arrived" type="object"/>
-                    <button class="oe_highlight" invisible="is_under_clearance != True or state != 'arrived'" name="action_under_clearance" string="Under Clearance" type="object"/>
-                    <button class="oe_highlight" invisible="is_cleared != True or state != 'under_clearance'" name="action_cleared" string="Cleared" type="object"/>
-                    <button class="oe_highlight" invisible="is_paneling_delivery != True or state != 'cleared'" name="action_paneling_delivery" string="Pending Delivery" type="object"/>
-                    <button class="oe_highlight" invisible="is_received != True or state != 'paneling_delivery'" name="action_received" string="Received" type="object"/>
-                    <button invisible="is_cancel != True or state not in ['draft', 'submit']" name="action_cancel" string="Cancel" type="object"/>
-                    <button invisible="is_draft != True or state != 'cancel'" name="action_draft" string="Set to Draft" type="object"/>
-                    <button class="oe_highlight" invisible="is_finish == True" name="action_crate_one2many" string="Create Lines" type="object"/>
+                    <button class="oe_highlight" invisible="is_submit != True or state != 'draft'" name="action_submit"
+                            string="Submit" type="object"/>
+                    <button class="oe_highlight" invisible="is_confirmed != True or state != 'submit'"
+                            name="action_confirmed" string="Confirm" type="object"/>
+                    <button class="oe_highlight" invisible="is_booking != True or state != 'confirmed'"
+                            name="action_booking" string="Booking" type="object"/>
+                    <button class="oe_highlight" invisible="is_booked != True or state != 'booking'"
+                            name="action_booked" string="Booked" type="object"/>
+                    <button class="oe_highlight" invisible="is_loading != True or state != 'booked'"
+                            name="action_loading" string="Loading" type="object"/>
+                    <button class="oe_highlight" invisible="is_loaded != True or state != 'loading'"
+                            name="action_loaded" string="Loaded" type="object"/>
+                    <button class="oe_highlight" invisible="is_on_board != True or state != 'loaded'"
+                            name="action_on_board" string="On Board" type="object"/>
+                    <button class="oe_highlight" invisible="is_departed != True or state != 'on_board'"
+                            name="action_departed" string="Departed" type="object"/>
+                    <button class="oe_highlight" invisible="is_doc_collect != True or state != 'departed'"
+                            name="action_doc_collect" string="Doc Collect" type="object"/>
+                    <button class="oe_highlight" invisible="is_issue_insurance != True or state != 'doc_collect'"
+                            name="action_issue_insurance" string="Issue Insurance" type="object"/>
+                    <button class="oe_highlight" invisible="is_arrived != True or state != 'issue_insurance'"
+                            name="action_arrived" string="Arrived" type="object"/>
+                    <button class="oe_highlight" invisible="is_under_clearance != True or state != 'arrived'"
+                            name="action_under_clearance" string="Under Clearance" type="object"/>
+                    <button class="oe_highlight" invisible="is_cleared != True or state != 'under_clearance'"
+                            name="action_cleared" string="Cleared" type="object"/>
+                    <button class="oe_highlight" invisible="is_paneling_delivery != True or state != 'cleared'"
+                            name="action_paneling_delivery" string="Pending Delivery" type="object"/>
+                    <button class="oe_highlight" invisible="is_received != True or state != 'paneling_delivery'"
+                            name="action_received" string="Received" type="object"/>
+                    <button invisible="is_cancel != True or state not in ['draft', 'submit']" name="action_cancel"
+                            string="Cancel" type="object"/>
+                    <button invisible="is_draft != True or state != 'cancel'" name="action_draft" string="Set to Draft"
+                            type="object"/>
+                    <button class="oe_highlight" invisible="is_finish == True" name="action_crate_one2many"
+                            string="Create Lines" type="object"/>
                     <field name="state" statusbar_visible="draft,submit,received" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button class="oe_stat_button" icon="fa-credit-card" invisible="purchase_order_count == 0" name="action_view_purchase_order" type="object">
-                            <field help="Purchase Order" name="purchase_order_count" string="Purchase Order" widget="statinfo"/>
+                        <button class="oe_stat_button" icon="fa-credit-card" invisible="purchase_order_count == 0"
+                                name="action_view_purchase_order" type="object">
+                            <field help="Purchase Order" name="purchase_order_count" string="Purchase Order"
+                                   widget="statinfo"/>
                         </button>
                     </div>
                     <h1>
@@ -196,8 +222,10 @@
                                 <list editable="bottom">
                                     <control>
                                         <create name="add_product_control" string="Add a product"/>
-                                        <create context="{'default_display_type': 'line_section'}" name="add_section_control" string="Add a section"/>
-                                        <create context="{'default_display_type': 'line_note'}" name="add_note_control" string="Add a note"/>
+                                        <create context="{'default_display_type': 'line_section'}"
+                                                name="add_section_control" string="Add a section"/>
+                                        <create context="{'default_display_type': 'line_note'}" name="add_note_control"
+                                                string="Add a note"/>
                                     </control>
                                     <field invisible="1" name="id_field" column_invisible="1"/>
                                     <field name="sequence" widget="handle"/>
@@ -214,14 +242,19 @@
                                     <field invisible="1" name="category_id" column_invisible="1"/>
                                     <field invisible="1" name="currency_id" column_invisible="1"/>
                                     <field invisible="1" name="product_uom_category_id" column_invisible="1"/>
-                                    <field force_save="1" name="product_uom" optional="hide" readonly="0" required="0" string="UoM"/>
+                                    <field force_save="1" name="product_uom" optional="hide" readonly="0" required="0"
+                                           string="UoM"/>
                                     <field name="price_unit" optional="show"/>
-                                    <field context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}" domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]" name="taxes_id" optional="show" options="{'no_create': True}" widget="many2many_tags"/>
+                                    <field context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}"
+                                           domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]"
+                                           name="taxes_id" optional="show" options="{'no_create': True}"
+                                           widget="many2many_tags"/>
                                     <field name="price_subtotal" optional="show" widget="monetary"/>
-                                </list></field>
-<!--                            <group class="oe_subtotal_footer oe_right">-->
-<!--                                <field colspan="2" name="tax_totals_json" nolabel="1" widget="account-tax-totals-field"/>-->
-<!--                            </group>-->
+                                </list>
+                            </field>
+                            <!--                            <group class="oe_subtotal_footer oe_right">-->
+                            <!--                                <field colspan="2" name="tax_totals_json" nolabel="1" widget="account-tax-totals-field"/>-->
+                            <!--                            </group>-->
                         </page>
                         <page string="Shipment Documents">
                             <field name="shipment_documents_ids" widget="section_and_note_one2many">
@@ -236,8 +269,10 @@
                                     <field name="amount" required="is_required == True"/>
                                     <field name="is_required" readonly="1"/>
                                     <field invisible="1" name="hide"/>
-                                    <button class="btn-primary" invisible="hide == True" name="create_purchase_order" string="Create PO" type="object"/>
-                                </list></field>
+                                    <button class="btn-primary" invisible="hide == True" name="create_purchase_order"
+                                            string="Create PO" type="object"/>
+                                </list>
+                            </field>
                         </page>
                         <page string="Clearance Documents">
                             <field name="clearance_documents_ids" widget="section_and_note_one2many">
@@ -252,12 +287,15 @@
                                     <field name="amount" required="is_required == True"/>
                                     <field name="is_required" readonly="1"/>
                                     <field invisible="1" name="hide"/>
-                                    <button class="btn-primary" invisible="hide == True" name="create_purchase_order" string="Create PO" type="object"/>
-                                </list></field>
+                                    <button class="btn-primary" invisible="hide == True" name="create_purchase_order"
+                                            string="Create PO" type="object"/>
+                                </list>
+                            </field>
                         </page>
                         <page string="Comparison Sheet">
                             <field invisible="1" name="is_approved_line"/>
-                            <field name="comparison_sheet_ids" readonly="is_approved_line == True" widget="section_and_note_one2many">
+                            <field name="comparison_sheet_ids" readonly="is_approved_line == True"
+                                   widget="section_and_note_one2many">
                                 <list editable="bottom">
                                     <field invisible="1" name="link_id"/>
                                     <field name="name"/>
@@ -270,8 +308,10 @@
                                     <field name="etd"/>
                                     <field name="is_approved" readonly="1"/>
                                     <field invisible="1" name="readonly_approved"/>
-                                    <button class="oe_highlight" invisible="readonly_approved != True" name="action_approved" string="Approved" type="object"/>
-                                </list></field>
+                                    <button class="oe_highlight" invisible="readonly_approved != True"
+                                            name="action_approved" string="Approved" type="object"/>
+                                </list>
+                            </field>
                         </page>
                         <page string="Other Information">
                             <group>
@@ -288,12 +328,13 @@
                         </page>
                     </notebook>
                 </sheet>
-<!--                <div class="oe_chatter">-->
-<!--                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>-->
-<!--                    <field name="activity_ids" widget="mail_activity"/>-->
-<!--                    <field name="message_ids" widget="mail_thread"/>-->
-<!--                </div>-->
-            </form></field>
+                <!--                <div class="oe_chatter">-->
+                <!--                    <field groups="base.group_user" name="message_follower_ids" widget="mail_followers"/>-->
+                <!--                    <field name="activity_ids" widget="mail_activity"/>-->
+                <!--                    <field name="message_ids" widget="mail_thread"/>-->
+                <!--                </div>-->
+            </form>
+        </field>
     </record>
     <record id="gs_shipment_tracking_view_kanban" model="ir.ui.view">
         <field name="name">gs.shipment.tracking.kanban</field>
@@ -340,17 +381,20 @@
                                 <div class="o_kanban_record_bottom h5 mt-2 mb-0">
                                     <div class="d-flex flex-grow-1 text-600 mt-1" id="utm_statistics"/>
                                     <div class="oe_kanban_bottom_left">
-                                        <span class="badge badge-pill float-right mt4 mr16" style="border-color:#5e75c8;background: #5e75c8;color: whitesmoke;">
+                                        <span class="badge badge-pill float-right mt4 mr16"
+                                              style="border-color:#5e75c8;background: #5e75c8;color: whitesmoke;">
                                             <field name="state"/>
                                         </span>
                                     </div>
                                     <div class="oe_kanban_bottom_right">
-                                        <span class="badge badge-pill float-right mt4 mr16" style="background: #00A09D;color: whitesmoke;">
+                                        <span class="badge badge-pill float-right mt4 mr16"
+                                              style="background: #00A09D;color: whitesmoke;">
                                             <field name="user_id"/>
                                         </span>
                                     </div>
                                     <div class="oe_kanban_bottom_right">
-                                        <span class="badge badge-pill float-right mt4 mr16" style="background: #00A09D;color: whitesmoke;">
+                                        <span class="badge badge-pill float-right mt4 mr16"
+                                              style="background: #00A09D;color: whitesmoke;">
                                             Amount:
                                             <field name="amount_total"/>
                                         </span>
@@ -360,7 +404,8 @@
                         </div>
                     </t>
                 </templates>
-            </kanban></field>
+            </kanban>
+        </field>
     </record>
     <record id="gs_shipment_tracking_report_graph" model="ir.ui.view">
         <field name="name">gs.shipment.tracking.report.graph</field>
@@ -370,7 +415,8 @@
                 <field name="partner_id"/>
                 <field name="user_id"/>
                 <field name="picking_type_id"/>
-            </graph></field>
+            </graph>
+        </field>
     </record>
     <record id="view_gs_shipment_tracking_pivot" model="ir.ui.view">
         <field name="name">gs.shipment.tracking.pivot</field>
@@ -378,7 +424,8 @@
         <field name="arch" type="xml">
             <pivot disable_linking="True" display_quantity="true" string="Shipment Tracking Analysis">
                 <field name="name" type="row"/>
-            </pivot></field>
+            </pivot>
+        </field>
     </record>
     <record id="gs_shipment_tracking_action" model="ir.actions.act_window">
         <field name="name">Shipment Tracking</field>
@@ -387,5 +434,6 @@
         <field name="context">{'search_default_group_by_state':1}</field>
         <field name="view_mode">kanban,list,form,graph,pivot</field>
     </record>
-    <menuitem action="gs_shipment_tracking_action" id="sub_gs_shipment_tracking" name="Shipment Tracking" parent="gs_purchase_tracking_v15.menu_gs_purchase_tracking" sequence="2"/>
+    <menuitem action="gs_shipment_tracking_action" id="sub_gs_shipment_tracking" name="Shipment Tracking"
+              parent="gs_purchase_tracking_v15.menu_gs_purchase_tracking" sequence="2"/>
 </odoo>
