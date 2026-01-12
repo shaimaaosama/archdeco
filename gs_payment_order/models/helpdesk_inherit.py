@@ -57,6 +57,11 @@ class GSSaleOrder(models.Model):
         payment = self.env['gs.payment.order'].search_count([('sale_order_id', '=', self.id)])
         self.payment_count = payment
 
+    @api.constrains('analytic_account_id', 'order_line')
+    @api.onchange('analytic_account_id','order_line')
+    def _onchange_analytic_account_id(self):
+        if self.analytic_account_id:
+            self.order_line.update({'analytic_distribution': {self.analytic_account_id.id:100}})
 
 class GSPurchaseOrder(models.Model):
     _inherit = 'purchase.order'
