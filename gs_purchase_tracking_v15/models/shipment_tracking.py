@@ -5,7 +5,8 @@ from odoo.exceptions import ValidationError
 
 
 class GsPurchaseOrder(models.Model):
-    _inherit = 'purchase.order'
+    _name = 'purchase.order'
+    _inherit = ['purchase.order', 'analytic.domain.mixin']
 
     shipment_tracking_id = fields.Many2one('gs.shipment.tracking', string='Shipment')
     analytic_account_id = fields.Many2one('account.analytic.account', 'Analytic Account')
@@ -22,6 +23,19 @@ class GsPurchaseOrder(models.Model):
     bank_detials = fields.Text()
     special_conditions = fields.Text()
     client_order_ref = fields.Text()
+    readonly_analytic = fields.Boolean(compute="_compute_readonly_analytic")
+
+    @api.depends('analytic_account_id')
+    def _compute_readonly_analytic(self):
+        for record in self:
+            allowed = self.env.user.account_analytic_account_ids or []
+            if record.analytic_account_id and record.analytic_account_id in allowed:
+                record.readonly_analytic = False
+            elif not record.analytic_account_id:
+                record.readonly_analytic = False
+
+            else:
+                record.readonly_analytic = True
 
 class GsPurchaseLineOrder(models.Model):
     _inherit = 'purchase.order.line'
