@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_auto_reconcile_settings" model="ir.ui.view">
+        <field name="name">res.config.settings.auto.reconcile</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+
+        <field name="arch" type="xml">
+
+
+            <xpath expr="//block[@id='invoicing_settings']" position="inside">
+
+                <setting id="auto_reconcile_method_setting" string="Auto Reconcile Method"
+                         help="Automatically reconcile invoice based on payment.">
+
+                    <field name="auto_reconcile_method"/>
+
+                </setting>
+
+            </xpath>
+
+        </field>
+    </record>
+</odoo>
