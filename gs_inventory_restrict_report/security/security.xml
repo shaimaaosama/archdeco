@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_on_hand_location_restriction" model="ir.rule">
+            <field name="name">Stock On Hand Location Restriction</field>
+            <field ref="stock.model_stock_quant" name="model_id"/>
+            <field name="domain_force">[('location_id', 'in', user.stock_location_ids.ids)]</field>
+        </record>
+
+    </data>
+</odoo>
