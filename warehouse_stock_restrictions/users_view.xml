@@ -25,9 +25,7 @@
                 </group>
                 <notebook>
                     <page  string="Allowed Stock Locations">
-                        <field colspan="2" name="stock_location_ids"
-                               domain="[('usage','=','internal')]"
-                               nolabel="1"/>
+                        <field colspan="2" name="stock_location_ids" nolabel="1"/>
                     </page>
                 </notebook></field>
         </record>
