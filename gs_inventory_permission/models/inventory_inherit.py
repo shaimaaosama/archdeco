@@ -104,6 +104,11 @@ class StockPickingInherit(models.Model):
     is_tr_signature = fields.Boolean(compute="_get_default_tr_signature")
     is_tr_return_picking = fields.Boolean(compute="_get_default_tr_return_picking")
 
+    def button_validate(self):
+        # validate without record rules restrictions
+        pickings = self.sudo()
+        return super(StockPickingInherit, pickings).button_validate()
+
     def _get_default_tr_confirm(self):
         for rec in self:
             user = rec.env.user.id
