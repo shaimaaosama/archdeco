@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="hr_attendance_geofence_gmap" model="ir.ui.view">
+        <field name="name">hr.attendance.geofence</field>
+        <field name="model">hr.attendance.geofence</field>
+        <field name="arch" type="xml">
+            <geofence_view library="drawing" groups="pt_attendance_portal.group_geofence_access">
+                <field name="overlay_paths"/>
+            </geofence_view>
+        </field>
+    </record>
+
+    <record id="hr_attendance_geofence_form" model="ir.ui.view">
+        <field name="name">hr.attendance.geofence</field>
+        <field name="model">hr.attendance.geofence</field>
+        <field name="arch" type="xml">
+            <form string="Employee attendances" groups="pt_attendance_portal.group_geofence_access">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="company_id"/>
+                            <field name="employee_ids" widget="many2many_tags" can_create="true" can_write="true"
+                                   modifiers="{}" id="employee_ids"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="overlay_paths" string="Shape">
+                            <group>
+                                <group string="Manual Entry">
+                                    <group>
+                                        <field name="input_latitude" placeholder="e.g., 30.0444"/>
+                                        <field name="input_radius" placeholder="e.g., 100 (meters)"/>
+                                    </group>
+                                    <group>
+                                        <field name="input_longitude" placeholder="e.g., 31.2357"/>
+                                    </group>
+                                </group>
+                            </group>
+                            <div class="alert alert-info" role="alert">
+                                <strong>Instructions:</strong>
+                                You can either draw on the map below, or enter coordinates manually.
+                                Enter the latitude, longitude, and allowed distance (radius in meters) and the circle
+                                will be drawn on the map.
+                            </div>
+                            <field name="overlay_paths" widget="geofence_drawing"/>
+                        </page>
+                        <page name="geofence_info" string="Geofence Info">
+                            <group>
+                                <group name="coordinates" string="Coordinates">
+                                    <field name="center_latitude" readonly="1"/>
+                                    <field name="center_longitude" readonly="1"/>
+                                    <field name="coordinates_count" readonly="1"/>
+                                    <field name="area_size" readonly="1"/>
+                                </group>
+                                <group name="status" string="Status">
+                                    <field name="active"/>
+                                    <field name="is_valid" readonly="1"/>
+                                    <field name="radius" readonly="1"/>
+                                </group>
+                            </group>
+                            <group name="raw_data" string="Raw Data">
+                                <field name="overlay_paths" readonly="1" widget="text"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_attendance_geofence_tree" model="ir.ui.view">
+        <field name="name">hr.attendance.geofence.tree</field>
+        <field name="model">hr.attendance.geofence</field>
+        <field name="arch" type="xml">
+            <list string="Attendance Geofences">
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="coordinates_count"/>
+                <field name="area_size"/>
+                <field name="center_latitude"/>
+                <field name="center_longitude"/>
+                <field name="is_valid"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_attendance_geofence_action" model="ir.actions.act_window">
+        <field name="name">Attendances Geofence</field>
+        <field name="res_model">hr.attendance.geofence</field>
+        <field name="view_mode">list,kanban,form,geofence_view</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_empty_folder">
+                No Geofence records found
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+            id="menu_hr_attendance_geofence"
+            name="Geofences"
+            parent="hr_attendance.menu_hr_attendance_root"
+            sequence="15"
+            groups="pt_attendance_portal.group_geofence_access"
+            action="hr_attendance_geofence_action"/>
+</odoo>
