@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-inherit="hr_attendance.public_kiosk_app" t-inherit-mode="extension">
+        <xpath expr="//CardLayout" position="inside">       
+            <t t-if="this.state.active_display === 'main'">
+                <div t-attf-class="col-md-5 mb-5 mb-md-0 align-self-center {{ this.state.show_recognition ? '' : 'd-none' }}">
+                    <div class="col-12">
+                        <h3 class="mt0 mb8"><i>or</i></h3>
+                        <div class="col-12 mt16">
+                            <button class="btn btn-default o_hr_kiosk_face_recognition" t-on-click="onClickRecongintion">
+                                <img class="img img-fluid d-block mx-auto h-100" src="/pt_attendance_portal/static/src/img/kiosk_face_icon.png"/>
+                            </button>
+                            <h5 class="mt8 mb0 text-muted">Scan Your Face</h5>
+                        </div>                        
+                    </div>
+                </div>
+
+                <div class="attendance_controls_public">
+                    <div t-attf-class="glocation_container mb8 {{ this.state.show_geolocation ? '' : 'd-none' }}" id="glocation_container" t-ref="glocation_container">
+                        <i t-attf-class="fa fa-1x fa-angle-double-down glocation_toggle" id="glocation_toggle" t-on-click="onToggleGeolocation" t-ref="glocation_toggle">
+                            Geo Location
+                        </i>
+                        <div t-attf-class="glocation_view d-none" t-ref="glocation_view" >
+                            <span>Lattitude:  <t t-esc="state.latitude"/></span><br/>
+                            <span>Longitude: <t t-esc="state.longitude"/></span>
+                        </div>
+                    </div>
+                    <div t-attf-class="geofence_container mb8 {{ this.state.show_geofence ? '' : 'd-none' }}" id="geofence_container" t-ref="geofence_container">
+                        <i t-attf-class="fa fa-1x fa-angle-double-down geofence_toggle" id="geofence_toggle" t-on-click="onTogglegeofence" t-ref="geofence_toggle">
+                            Map Location
+                        </i>
+                        <div t-attf-class="geofence_view d-none" t-ref="geofence_view"></div>
+                    </div>
+
+                    <div t-attf-class="geoipaddress_container mb8 {{ this.state.show_ipaddress ? '' : 'd-none' }}" id="geoipaddress_container" t-ref="geoipaddress_container">
+                        <i t-attf-class="fa fa-1x fa-angle-double-down geoipaddress_toggle" id="geoipaddress_toggle"  t-on-click="onToggleGeoipaddress" t-ref="geoipaddress_toggle">
+                            IP Address (Public)
+                        </i>
+                        <div t-attf-class="geoipaddress_view d-none" t-ref="geoipaddress_view">
+                            <span> IP: <t t-esc="state.ipaddress"/></span>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+            </t>
+        </xpath>
+    </t>
+</template>

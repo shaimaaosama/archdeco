@@ -1,0 +1,247 @@
+.p_o_hr_attendance_kiosk_mode_container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    align-items: center;
+    position: inherit;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.p_o_hr_attendance_kiosk_mode_container h1, .h1 {
+    font-size: 2.16666667rem;
+}
+.p_o_hr_attendance_kiosk_backdrop h3, .h3 {
+    font-size: 1.40833333rem;
+}
+.p_o_hr_attendance_kiosk_backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.p_o_hr_attendance_kiosk_mode {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin: 1.25rem;
+}
+
+.p_o_hr_attendance_kiosk_mode .p_o_hr_attendance_user_badge {
+    background: linear-gradient(to right bottom, #77717e, #c9a8a9);
+}
+
+.p_o_hr_attendance_kiosk_mode .p_o_hr_attendance_user_badge img {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 1px solid #d7d7d7;
+}
+
+.p_o_hr_attendance_kiosk_mode .p_o_hr_attendance_sign_in_out_icon {
+    cursor: pointer;
+    margin: 0.1em 0 0.1em;
+    padding: 0.15em 0.3em;
+    border-radius: 0.1em;
+    box-shadow: inset 0 -3px 0 rgb(0 0 0 / 30%);
+}
+
+.fa-4x {
+    font-size: 4em;
+}
+.videoSource{
+    min-width: 100%;
+}
+
+/* Google Map toggle */
+.p_o_gmap_kisok_container {
+    margin-top: 10px;
+    position: relative; /* Ensure normal flow */
+    display: block;
+    width: 100%;
+    clear: both; /* Ensure it's below previous content */
+}
+
+.p_o_gmap_kisok_container h3 {
+    padding: 2px 2px 2px 2px;
+    color: #4c4c4c;
+}
+
+.p_o_gmap_kisok_view {
+    min-width: 550px;
+    min-height: 200px;
+    width: 100%;
+    height: 200px;
+    padding-top: 3px;
+    position: relative;
+    overflow: hidden;
+    display: block !important; /* Ensure it pushes content down when visible */
+    margin-bottom: 10px;
+    margin-top: 5px;
+    clear: both; /* Ensure it's below the toggle */
+}
+
+.p_o_gmap_kisok_view span {
+    font-size: 13px;
+}
+
+.p_o_gmap_kisok_toggle {
+    width: 100%;
+    right: 20px;
+    color: #555555;
+    cursor: pointer;
+    border-top: 1px dashed #adb5bd;
+    border-bottom: 1px dashed #adb5bd;
+    padding: 5px 5px 5px 5px;
+    background-color: #9e8b921f;
+}
+
+.p_o_gmap_kisok_toggle::before {
+    position: absolute;
+    right: 10px;
+}
+
+/* IP toggle */
+.p_o_gip_kisok_container {
+    margin-top: 10px;
+}
+
+.p_o_gip_kisok_container h3 {
+    padding: 2px 2px 2px 2px;
+    color: #4c4c4c;
+}
+
+.p_o_gip_kisok_view {
+    width: 100%;
+    height: 30px;
+    padding-top: 3px;
+    position: relative;
+
+}
+
+.p_o_gip_kisok_view span {
+    font-size: 13px;
+}
+
+.p_o_gip_kisok_toggle {
+    width: 100%;
+    right: 20px;
+    color: #555555;
+    cursor: pointer;
+    border-top: 1px dashed #adb5bd;
+    border-bottom: 1px dashed #adb5bd;
+    padding: 5px 5px 5px 5px;
+    background-color: #9e8b921f;
+}
+
+.p_o_gip_kisok_toggle::before {
+    position: absolute;
+    right: 10px;
+}
+
+
+/* Geolocation toggle */
+.p_o_glocation_kisok_container {
+    margin-top: 10px;
+    position: relative; /* Ensure normal flow */
+    display: block;
+    width: 100%;
+    clear: both; /* Ensure it's below previous content */
+}
+
+.p_o_glocation_kisok_container h3 {
+    padding: 2px 2px 2px 2px;
+    color: #4c4c4c;
+}
+
+.p_o_glocation_kisok_view {
+    display: block !important; /* Ensure it pushes content down when visible */
+    margin-bottom: 10px;
+    margin-top: 5px;
+    width: 100%;
+    min-height: 30px;
+    padding: 8px 5px;
+    position: relative;
+    clear: both; /* Ensure it's below the toggle */
+}
+
+.p_o_glocation_kisok_view span {
+    font-size: 13px;
+}
+
+.p_o_glocation_kisok_toggle {
+    width: 100%;
+    right: 20px;
+    color: #555555;
+    cursor: pointer;
+    border-top: 1px dashed #adb5bd;
+    border-bottom: 1px dashed #adb5bd;
+    padding: 5px 5px 5px 5px;
+    background-color: #9e8b921f;
+}
+
+.p_o_glocation_kisok_toggle::before {
+    position: absolute;
+    right: 10px;
+}
+
+.p_o_attendance_reason input{
+    width: 250px;
+    font-size: 12px;
+    order: 1px solid var(--o-input-border-color);
+    border-width: 0 0 1px 0;
+    padding: 2px 4px;
+    background-color: var(--o-input-background-color, white);
+}
+
+.swal2-container.swal2-center.swal2-backdrop-show {
+    background: #495057;
+}
+
+@media (min-width: 768px){
+    .p_o_hr_attendance_kiosk_mode_container {
+        justify-content: center;
+        min-height: 150px;
+    }
+
+    .p_o_hr_attendance_kiosk_mode {
+        width: auto;
+        max-width: 550px;
+        width: 100%;
+        border-radius: 0.2em;
+        font-size: 1.2em;
+        animation: fadeInDownSmall .3s;
+    }
+
+    .p_o_hr_attendance_kiosk_mode .p_o_hr_attendance_user_badge {
+        margin: 0;
+        height: 90px;
+        border-radius: 0.2em 0.2em 0 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        position: inherit;
+        top: 0;
+        left: 0;
+        bottom: 100%;
+        right: 0;
+        transform: translateY(0px);
+    }
+
+    .p_o_hr_attendance_kiosk_mode .p_o_hr_attendance_user_badge img {
+        width: 80px;
+        height: 80px;
+        transform: translateX(5%) translateY(7%);
+        top: auto;
+        left: auto;
+        bottom: 0;
+        right: auto;
+    }
+
+}
