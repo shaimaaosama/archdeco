@@ -20,3 +20,13 @@ class PurchaseOrder(models.Model):
         self = self.with_context(sequence_option_id=seq.id)
         res = super().create(vals)
         return res
+
+    def action_create_invoice(self):
+        res = super().action_create_invoice()
+        if self.invoice_ids:
+            for invoice in self.invoice_ids:
+                if invoice.invoice_line_ids:
+                    for line in invoice.invoice_line_ids:
+                        if line.purchase_line_id:
+                            line.discount = line.purchase_line_id.discount
+        return res
