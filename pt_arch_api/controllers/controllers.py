@@ -1,0 +1,198 @@
+import logging
+from datetime import datetime, time
+
+import pytz
+from odoo import http
+from odoo.http import request
+
+from odoo.addons.muk_rest import core
+from odoo.addons.muk_rest.tools.http import build_route
+
+_logger = logging.getLogger(__name__)
+
+
+class PtArchApiController(http.Controller):
+
+    @core.http.rest_route(
+        routes=build_route('/pt_arch_api/invoices'),
+        methods=['GET'],
+        protected=True,
+        docs=dict(
+            tags=['Custom'],
+            summary='Get posted customer invoices',
+            description='Returns all posted customer invoices with line details and sales info. Use `date_from` and `date_to` query parameters in DD/MM/YYYY (Saudi Arabia - Asia/Riyadh) format to filter by invoice date.',
+            responses={
+                '200': {
+                    'description': 'Invoices List',
+                    'content': {
+                        'application/json': {
+                            'schema': {'type': 'array'},
+                        }
+                    }
+                }
+            },
+            parameters=[
+                {
+                    'name': 'date_from',
+                    'in': 'query',
+                    'description': 'Start date (inclusive) in DD/MM/YYYY or YYYY-MM-DD (interpreted as Asia/Riyadh)',
+                    'schema': {'type': 'string'},
+                    'example': '01/02/2026'
+                },
+                {
+                    'name': 'date_to',
+                    'in': 'query',
+                    'description': 'End date (inclusive) in DD/MM/YYYY or YYYY-MM-DD (interpreted as Asia/Riyadh)',
+                    'schema': {'type': 'string'},
+                    'example': '28/02/2026'
+                }
+                ,
+                {
+                    'name': 'limit',
+                    'in': 'query',
+                    'description': 'Maximum number of records to return (use with `offset` or `page`/`per_page` for pagination)',
+                    'schema': {'type': 'integer'},
+                    'example': 50
+                },
+                {
+                    'name': 'offset',
+                    'in': 'query',
+                    'description': 'Number of records to skip (use with `limit`)',
+                    'schema': {'type': 'integer'},
+                    'example': 0
+                },
+                {
+                    'name': 'page',
+                    'in': 'query',
+                    'description': 'Page number (1-based). Use with `per_page` to paginate results.',
+                    'schema': {'type': 'integer'},
+                    'example': 1
+                },
+                {
+                    'name': 'per_page',
+                    'in': 'query',
+                    'description': 'Number of items per page when using `page`.',
+                    'schema': {'type': 'integer'},
+                    'example': 25
+                }
+            ],
+        ),
+    )
+    def invoices(self, **kw):
+        Invoice = request.env['account.move']
+        try:
+            domain = [
+                ('move_type', 'in', ('out_invoice', 'out_refund')),
+                ('state', '=', 'posted'),
+            ]
+            # Date filtering: accept DD/MM/YYYY (Saudi/Riyadh) or YYYY-MM-DD
+            def _parse_saudi_date(s):
+                if not s:
+                    return None
+                for fmt in ('%d/%m/%Y', '%Y-%m-%d'):
+                    try:
+                        dt = datetime.strptime(s, fmt)
+                        # Interpret as Asia/Riyadh local date
+                        tz = pytz.timezone('Asia/Riyadh')
+                        localized = tz.localize(datetime.combine(dt.date(), time.min))
+                        return localized.date()
+                    except Exception:
+                        continue
+                raise ValueError('Invalid date format: {}'.format(s))
+
+            date_from = None
+            date_to = None
+            if kw.get('date_from'):
+                date_from = _parse_saudi_date(kw.get('date_from'))
+            if kw.get('date_to'):
+                date_to = _parse_saudi_date(kw.get('date_to'))
+            if date_from:
+                domain.append(('invoice_date', '>=', str(date_from)))
+            if date_to:
+                domain.append(('invoice_date', '<=', str(date_to)))
+            # Pagination / limit handling
+            limit = None
+            offset = 0
+            try:
+                if kw.get('limit') is not None:
+                    limit = int(kw.get('limit'))
+                if kw.get('offset') is not None:
+                    offset = int(kw.get('offset'))
+                # support page/per_page
+                if kw.get('page') is not None and kw.get('per_page') is not None:
+                    page = int(kw.get('page'))
+                    per_page = int(kw.get('per_page'))
+                    if page > 0 and per_page > 0:
+                        limit = per_page
+                        offset = (page - 1) * per_page
+            except Exception:
+                raise ValueError('Invalid pagination parameters')
+
+            total_count = None
+            if limit is not None or kw.get('page') is not None or kw.get('per_page') is not None:
+                total_count = Invoice.search_count(domain)
+
+            search_kwargs = {}
+            if limit is not None:
+                search_kwargs['limit'] = limit
+            if offset:
+                search_kwargs['offset'] = offset
+
+            invoices = Invoice.search(domain, **search_kwargs)
+            result = []
+            for inv in invoices:
+                # Resolve sale order if available
+                sale_order = False
+                sale_orders = inv.invoice_line_ids.mapped('sale_line_ids.order_id')
+                if sale_orders:
+                    sale_order = sale_orders[0]
+                elif inv.invoice_origin:
+                    sale_order = request.env['sale.order'].search([('name', '=', inv.invoice_origin)], limit=1)
+
+                sales_team = sale_order.team_id.name if sale_order and sale_order.team_id else None
+                sales_person = sale_order.user_id.name if sale_order and sale_order.user_id else None
+
+                lines = []
+                for line in inv.invoice_line_ids:
+                    tax_names = line.tax_ids.mapped('name')
+                    product_name = line.product_id.display_name or line.name
+                    qty = float(line.quantity or 0.0)
+                    price_unit = float(line.price_unit or 0.0)
+                    line_total = float(getattr(line, 'price_subtotal', 0.0) or 0.0)
+                    lines.append({
+                        'product_name': product_name,
+                        'product_id': line.product_id.id if line.product_id else None,
+                        'quantity': qty,
+                        'price_unit': price_unit,
+                        'line_total': line_total,
+                        'line_taxes': list(tax_names),
+                    })
+
+                result.append({
+                    'invoice_id': inv.id,
+                    'partner_id': inv.partner_id.id if inv.partner_id else None,
+                    'customer_name': inv.partner_id.name,
+                    'invoice_date': str(inv.invoice_date) if inv.invoice_date else None,
+                    'products': lines,
+                    'invoice_total': float(inv.amount_total or 0.0),
+                    'invoice_total_tax': float(inv.amount_tax or 0.0),
+                    'sales_team': sales_team,
+                    'sales_person': sales_person,
+                    'salesperson_id': sale_order.user_id.id if sale_order and sale_order.user_id else (inv.user_id.id if getattr(inv, 'user_id', False) else None),
+                    'branch_id': getattr(inv, 'branch_id', False).id if getattr(inv, 'branch_id', False) else None,
+                })
+
+            # If pagination parameters provided, return meta with total/limit/offset
+            if total_count is not None:
+                meta = {
+                    'total': total_count,
+                    'limit': limit if limit is not None else total_count,
+                    'offset': offset,
+                }
+                return request.make_json_response({'data': result, 'meta': meta})
+
+            return request.make_json_response(result)
+
+        except Exception as e:
+            _logger.exception('Error building invoices response')
+            return request.make_json_response({'error': str(e)}, status=500)

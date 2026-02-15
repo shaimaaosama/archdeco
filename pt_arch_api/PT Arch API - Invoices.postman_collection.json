@@ -1,0 +1,231 @@
+{
+  "info": {
+    "_postman_id": "5eba826f-61b1-458b-ba23-7186458a88b3",
+    "name": "PT Arch API - Invoices",
+    "description": "Collection with examples for the pt_arch_api invoices endpoint.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "9938772",
+    "_collection_link": "https://go.postman.co/collection/9938772-5eba826f-61b1-458b-ba23-7186458a88b3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Get invoices - no filter",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://arch18.ptech.host/api/v2/pt_arch_api/invoices",
+          "protocol": "https",
+          "host": [
+            "arch18",
+            "ptech",
+            "host"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "pt_arch_api",
+            "invoices"
+          ]
+        },
+        "description": "Returns all posted customer invoices (no filtering)."
+      },
+      "response": []
+    },
+    {
+      "name": "Get invoices - date filter (Saudi Riyadh DD/MM/YYYY)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://arch18.ptech.host/api/v2/pt_arch_api/invoices?date_from=01/02/2026&date_to=28/02/2026",
+          "protocol": "https",
+          "host": [
+            "arch18",
+            "ptech",
+            "host"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "pt_arch_api",
+            "invoices"
+          ],
+          "query": [
+            {
+              "key": "date_from",
+              "value": "01/02/2026"
+            },
+            {
+              "key": "date_to",
+              "value": "28/02/2026"
+            }
+          ]
+        },
+        "description": "Filter invoices between 01/02/2026 and 28/02/2026 (DD/MM/YYYY interpreted as Asia/Riyadh)."
+      },
+      "response": []
+    },
+    {
+      "name": "Get invoices - limit & pagination",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://arch18.ptech.host/api/v2/pt_arch_api/invoices?limit=10&offset=20",
+          "protocol": "https",
+          "host": [
+            "arch18",
+            "ptech",
+            "host"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "pt_arch_api",
+            "invoices"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "10"
+            },
+            {
+              "key": "offset",
+              "value": "20"
+            }
+          ]
+        },
+        "description": "Example pagination using `limit` and `offset` query params. When pagination params are provided the endpoint returns an object with `data` and `meta` (total/limit/offset)."
+      },
+      "response": []
+    },
+    {
+      "name": "Get invoices - page & per_page",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "https://arch18.ptech.host/api/v2/pt_arch_api/invoices?page=2&per_page=5",
+          "protocol": "https",
+          "host": [
+            "arch18",
+            "ptech",
+            "host"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "pt_arch_api",
+            "invoices"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "2"
+            },
+            {
+              "key": "per_page",
+              "value": "5"
+            }
+          ]
+        },
+        "description": "Example pagination using `page` (1-based) and `per_page`. Response format: { data: [...], meta: { total, limit, offset } }"
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "clientSecret",
+        "value": "ikl4WASRJIihuCs5PFNrMG4lC06guaouRdCWwKmu",
+        "type": "string"
+      },
+      {
+        "key": "clientId",
+        "value": "AV2elJFJzGIMQVi15N996LJIe4lSi2oPFlYm4NBS",
+        "type": "string"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://arch18.ptech.host/api/v2/authentication/oauth2/token",
+        "type": "string"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials",
+        "type": "string"
+      },
+      {
+        "key": "authUrl",
+        "value": "",
+        "type": "string"
+      },
+      {
+        "key": "addTokenTo",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8069/api/v2"
+    },
+    {
+      "key": "username",
+      "value": "admin"
+    },
+    {
+      "key": "password",
+      "value": "admin"
+    }
+  ]
+}

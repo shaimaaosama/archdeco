@@ -1,0 +1,1 @@
+Font files are intentionally not duplicated. If you want the same Arya fonts, copy them from pt_git_api/static/src/fonts into this folder.
