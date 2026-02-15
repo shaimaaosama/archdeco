@@ -46,6 +46,35 @@ class PtArchApiController(http.Controller):
                     'schema': {'type': 'string'},
                     'example': '28/02/2026'
                 }
+                ,
+                {
+                    'name': 'limit',
+                    'in': 'query',
+                    'description': 'Maximum number of records to return (use with `offset` or `page`/`per_page` for pagination)',
+                    'schema': {'type': 'integer'},
+                    'example': 50
+                },
+                {
+                    'name': 'offset',
+                    'in': 'query',
+                    'description': 'Number of records to skip (use with `limit`)',
+                    'schema': {'type': 'integer'},
+                    'example': 0
+                },
+                {
+                    'name': 'page',
+                    'in': 'query',
+                    'description': 'Page number (1-based). Use with `per_page` to paginate results.',
+                    'schema': {'type': 'integer'},
+                    'example': 1
+                },
+                {
+                    'name': 'per_page',
+                    'in': 'query',
+                    'description': 'Number of items per page when using `page`.',
+                    'schema': {'type': 'integer'},
+                    'example': 25
+                }
             ],
         ),
     )
@@ -81,7 +110,35 @@ class PtArchApiController(http.Controller):
                 domain.append(('invoice_date', '>=', str(date_from)))
             if date_to:
                 domain.append(('invoice_date', '<=', str(date_to)))
-            invoices = Invoice.search(domain)
+            # Pagination / limit handling
+            limit = None
+            offset = 0
+            try:
+                if kw.get('limit') is not None:
+                    limit = int(kw.get('limit'))
+                if kw.get('offset') is not None:
+                    offset = int(kw.get('offset'))
+                # support page/per_page
+                if kw.get('page') is not None and kw.get('per_page') is not None:
+                    page = int(kw.get('page'))
+                    per_page = int(kw.get('per_page'))
+                    if page > 0 and per_page > 0:
+                        limit = per_page
+                        offset = (page - 1) * per_page
+            except Exception:
+                raise ValueError('Invalid pagination parameters')
+
+            total_count = None
+            if limit is not None or kw.get('page') is not None or kw.get('per_page') is not None:
+                total_count = Invoice.search_count(domain)
+
+            search_kwargs = {}
+            if limit is not None:
+                search_kwargs['limit'] = limit
+            if offset:
+                search_kwargs['offset'] = offset
+
+            invoices = Invoice.search(domain, **search_kwargs)
             result = []
             for inv in invoices:
                 # Resolve sale order if available
@@ -120,6 +177,15 @@ class PtArchApiController(http.Controller):
                     'sales_team': sales_team,
                     'sales_person': sales_person,
                 })
+
+            # If pagination parameters provided, return meta with total/limit/offset
+            if total_count is not None:
+                meta = {
+                    'total': total_count,
+                    'limit': limit if limit is not None else total_count,
+                    'offset': offset,
+                }
+                return request.make_json_response({'data': result, 'meta': meta})
 
             return request.make_json_response(result)
 
