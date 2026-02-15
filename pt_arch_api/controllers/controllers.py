@@ -161,6 +161,7 @@ class PtArchApiController(http.Controller):
                     line_total = float(getattr(line, 'price_subtotal', 0.0) or 0.0)
                     lines.append({
                         'product_name': product_name,
+                        'product_id': line.product_id.id if line.product_id else None,
                         'quantity': qty,
                         'price_unit': price_unit,
                         'line_total': line_total,
@@ -169,6 +170,7 @@ class PtArchApiController(http.Controller):
 
                 result.append({
                     'invoice_id': inv.id,
+                    'partner_id': inv.partner_id.id if inv.partner_id else None,
                     'customer_name': inv.partner_id.name,
                     'invoice_date': str(inv.invoice_date) if inv.invoice_date else None,
                     'products': lines,
@@ -176,6 +178,8 @@ class PtArchApiController(http.Controller):
                     'invoice_total_tax': float(inv.amount_tax or 0.0),
                     'sales_team': sales_team,
                     'sales_person': sales_person,
+                    'salesperson_id': sale_order.user_id.id if sale_order and sale_order.user_id else (inv.user_id.id if getattr(inv, 'user_id', False) else None),
+                    'branch_id': getattr(inv, 'branch_id', False).id if getattr(inv, 'branch_id', False) else None,
                 })
 
             # If pagination parameters provided, return meta with total/limit/offset
