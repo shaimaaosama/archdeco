@@ -4,13 +4,13 @@
     'author': "Global Solutions",
     'website': "https://www.globalsolutions.dev",
     'category': 'Uncategorized',
-    'depends': ['base', 'product', 'sale'],
+    'depends': ['base', 'product', 'sale','account_accountant'],
     "images": [
         'static/description/icon.png'
     ],
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
         'views/product_inherit.xml',
+        'security/security.xml',
     ],
 }

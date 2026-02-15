@@ -11,4 +11,28 @@
 
         </field>
     </record>
+            <record id="description_account_move_tree" model="ir.ui.view">
+            <field name="name">account.move.line.inherit.tree.descrip</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_move_line_tree" />
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="def_name" optional="hide" />
+                </field>
+            </field>
+        </record>
+            <record id="gs_account_line_search_view_inherit_lowest_price" model="ir.ui.view">
+            <field name="name">sdd.account.invoice.line.search</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search//field[@name='partner_id']" position="after">
+                    <field name="def_name" string="Description"/>
+                </xpath>
+                <xpath expr="//group" position="inside">
+                    <filter string="Description" name="def_name" domain="[]" context="{'group_by':'def_name'}" />
+                </xpath>
+            </field>
+        </record>
+
 </odoo>
