@@ -170,6 +170,8 @@ class PtArchApiController(http.Controller):
 
                 result.append({
                     'invoice_id': inv.id,
+                    'move_type': inv.move_type,
+                    'invoice_name': inv.name,
                     'partner_id': inv.partner_id.id if inv.partner_id else None,
                     'customer_name': inv.partner_id.name,
                     'invoice_date': str(inv.invoice_date) if inv.invoice_date else None,
