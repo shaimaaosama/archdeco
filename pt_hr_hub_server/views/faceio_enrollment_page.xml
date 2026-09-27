@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="faceio_enrollment_page" name="FaceIO Employee Enrollment Page">
+        <t t-call="web.layout">
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+                
+                .faceio-page { 
+                    font-family: 'Inter', sans-serif;
+                    background: linear-gradient(135deg, #f6f8fb 0%, #e5ebf1 100%); 
+                    min-height: 100vh; 
+                    padding: 40px 0; 
+                }
+                .faceio-header { 
+                    background: rgba(255, 255, 255, 0.8); 
+                    backdrop-filter: blur(12px);
+                    -webkit-backdrop-filter: blur(12px);
+                    border: 1px solid rgba(255, 255, 255, 0.5);
+                    border-radius: 20px;
+                    padding: 20px 30px; 
+                    display: flex; 
+                    align-items: center; 
+                    gap: 16px; 
+                    margin-bottom: 32px; 
+                    box-shadow: 0 10px 40px rgba(0,0,0,.03);
+                }
+                .faceio-header .faceio-icon { 
+                    width: 48px; height: 48px; 
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                    border-radius: 14px; 
+                    display: flex; align-items: center; justify-content: center; 
+                    box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+                }
+                .faceio-header .faceio-icon i { color: #fff; font-size: 24px; }
+                .faceio-header h4 { margin: 0; font-weight: 700; color: #1a202c; font-size: 22px; letter-spacing: -0.5px; }
+                .faceio-header p { margin: 4px 0 0; color: #718096; font-size: 14px; font-weight: 500; }
+                
+                .faceio-card { 
+                    background: rgba(255, 255, 255, 0.85); 
+                    backdrop-filter: blur(12px);
+                    border-radius: 20px; 
+                    border: 1px solid rgba(255, 255, 255, 0.6); 
+                    box-shadow: 0 10px 40px rgba(0,0,0,.04); 
+                    overflow: hidden;
+                    transition: transform 0.3s ease, box-shadow 0.3s ease;
+                }
+                .faceio-card:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 15px 50px rgba(0,0,0,.06);
+                }
+                .faceio-card-header { 
+                    padding: 20px 24px; 
+                    border-bottom: 1px solid rgba(226, 232, 240, 0.6); 
+                    background: rgba(255, 255, 255, 0.4);
+                }
+                .faceio-card-header h6 { margin: 0; font-weight: 700; color: #2d3748; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+                .faceio-card-header h6 i { color: #667eea; font-size: 16px; }
+                .faceio-card-body { padding: 24px; }
+                
+                .faceio-label { font-size: 13px; font-weight: 600; color: #4a5568; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+                .faceio-select, .faceio-input {
+                    width: 100%; padding: 12px 16px; border: 2px solid #e2e8f0;
+                    border-radius: 12px; font-size: 15px; color: #2d3748;
+                    background: #fff; transition: all .2s ease;
+                    appearance: none; -webkit-appearance: none;
+                    box-shadow: 0 2px 4px rgba(0,0,0,.01) inset;
+                }
+                .faceio-select:focus, .faceio-input:focus { 
+                    border-color: #667eea; outline: none; 
+                    box-shadow: 0 0 0 4px rgba(102, 126, 234, .15); 
+                    background: #fff;
+                }
+                .faceio-select-wrap { position: relative; }
+                .faceio-select-wrap::after { 
+                    content: "\f107"; font-family: FontAwesome; position: absolute; 
+                    right: 16px; top: 50%; transform: translateY(-50%); 
+                    color: #a0aec0; pointer-events: none; font-size: 18px;
+                }
+                
+                .faceio-btn { 
+                    display: inline-flex; align-items: center; justify-content: center; gap: 10px; 
+                    padding: 12px 24px; border-radius: 12px; font-size: 15px; font-weight: 600; 
+                    border: none; cursor: pointer; transition: all .2s cubic-bezier(0.4, 0, 0.2, 1); 
+                    width: 100%;
+                }
+                .faceio-btn-primary { 
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                    color: #fff; 
+                    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.35);
+                }
+                .faceio-btn-primary:hover:not(:disabled) { 
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
+                    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); 
+                }
+                .faceio-btn-secondary { 
+                    background: #fff; color: #4a5568; 
+                    border: 2px solid #e2e8f0; 
+                }
+                .faceio-btn-secondary:hover:not(:disabled) { 
+                    background: #f7fafc; border-color: #cbd5e0;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+                }
+                .faceio-btn-outline {
+                    background: transparent; color: #667eea; border: 2px solid #667eea; padding: 8px 16px; width: auto;
+                }
+                .faceio-btn-outline:hover { background: rgba(102, 126, 234, 0.1); }
+                .faceio-btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+                
+                .faceio-badge-enrolled { background: #c6f6d5; color: #22543d; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+                .faceio-badge-none { background: #feebc8; color: #7b341e; border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+                
+                .faceio-status { border-radius: 12px; padding: 16px 20px; font-size: 14px; font-weight: 500; display: none; box-shadow: 0 4px 15px rgba(0,0,0,.03); }
+                .faceio-status.success { background: #f0fff4; color: #276749; border: 1px solid #c6f6d5; display: flex; gap: 12px; }
+                .faceio-status.error   { background: #fff5f5; color: #c53030; border: 1px solid #fed7d7; display: flex; gap: 12px; }
+                .faceio-status.info    { background: #ebf8ff; color: #2b6cb0; border: 1px solid #bee3f8; display: flex; gap: 12px; }
+                .faceio-status pre { margin: 2px 0 0; font-family: 'Inter', sans-serif; font-size: 14px; white-space: pre-wrap; word-break: break-word; flex: 1; font-weight: 500; }
+                
+                .faceio-divider { border: none; border-top: 2px dashed #e2e8f0; margin: 24px 0; }
+                
+                .faceio-emp-info { 
+                    display: flex; align-items: center; gap: 16px; padding: 16px 20px; 
+                    background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
+                    border: 1px solid rgba(255,255,255,0.6); border-radius: 16px; 
+                    box-shadow: 0 4px 15px rgba(0,0,0,.02);
+                }
+                .faceio-emp-avatar { 
+                    width: 56px; height: 56px; border-radius: 50%; 
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                    color: #fff; display: flex; align-items: center; justify-content: center; 
+                    font-size: 22px; font-weight: 700; flex-shrink: 0; 
+                    box-shadow: 0 4px 10px rgba(118, 75, 162, 0.3);
+                }
+                .faceio-emp-name { font-weight: 700; font-size: 16px; color: #1a202c; letter-spacing: -0.2px; }
+                .faceio-emp-meta { font-size: 13px; font-weight: 500; color: #718096; margin-top: 3px; }
+                
+                #spinner { display: none; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .8s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+                @keyframes spin { to { transform: rotate(360deg); } }
+            </style>
+
+            <div class="faceio-page">
+
+                <!-- Header -->
+                <div class="faceio-header">
+                    <div class="faceio-icon"><i class="fa fa-user-circle"/></div>
+                    <div>
+                        <h4>FaceIO Employee Enrollment</h4>
+                        <p>Enroll employees with facial recognition or verify existing identities</p>
+                    </div>
+                    <a href="/web#action=&amp;model=hr.employee&amp;view_type=list" class="faceio-btn faceio-btn-secondary ms-auto">
+                        <i class="fa fa-arrow-left"/> Back to Employees
+                    </a>
+                </div>
+
+                <div class="container-fluid px-4" style="max-width:960px">
+
+                    <!-- Alerts -->
+                    <t t-if="not faceio_enabled">
+                        <div class="faceio-status info" style="display:flex; margin-bottom:16px;">
+                            <i class="fa fa-info-circle mt-1"/>
+                            <pre>FaceIO is disabled. Go to Settings → HR → FaceIO to enable it.</pre>
+                        </div>
+                    </t>
+                    <t t-if="faceio_enabled and not faceio_app_public_id">
+                        <div class="faceio-status error" style="display:flex; margin-bottom:16px;">
+                            <i class="fa fa-exclamation-circle mt-1"/>
+                            <pre>FaceIO Public App ID is missing. Configure it in Settings → HR → FaceIO.</pre>
+                        </div>
+                    </t>
+
+                    <!-- Employee selector -->
+                    <div class="faceio-card mb-3">
+                        <div class="faceio-card-header">
+                            <h6><i class="fa fa-user"/> Select Employee</h6>
+                        </div>
+                        <div class="faceio-card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="faceio-label">Employee *</div>
+                                    <div class="faceio-select-wrap">
+                                        <select id="employee_select" class="faceio-select">
+                                            <option value="">— Choose an employee —</option>
+                                            <t t-foreach="employees" t-as="emp">
+                                                <option
+                                                    t-att-value="emp.id"
+                                                    t-att-data-email="emp.work_email or ''"
+                                                    t-att-data-job="emp.job_id.name or ''"
+                                                    t-att-data-faceio="emp.x_faceio_id or ''"
+                                                    t-att-selected="'selected' if selected_employee_id and emp.id == selected_employee_id else None">
+                                                    <t t-esc="emp.name"/>
+                                                </option>
+                                            </t>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="faceio-label">Device UUID <span class="text-muted fw-normal">(optional)</span></div>
+                                    <input id="device_uuid" class="faceio-input" type="text" placeholder="e.g. e6fd8ef5-6d8e-4f72-99f5-9f5bb1dc8fd6"/>
+                                </div>
+                            </div>
+
+                            <!-- Employee info card (shown when selected) -->
+                            <div id="emp_info_wrap" style="display:none; margin-top:16px;">
+                                <hr class="faceio-divider"/>
+                                <div class="faceio-emp-info">
+                                    <div class="faceio-emp-avatar" id="emp_avatar">?</div>
+                                    <div>
+                                        <div class="faceio-emp-name" id="emp_name">—</div>
+                                        <div class="faceio-emp-meta" id="emp_meta">—</div>
+                                    </div>
+                                    <div class="ms-auto" id="emp_badge"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="faceio-card mb-3">
+                        <div class="faceio-card-header">
+                            <h6><i class="fa fa-camera"/> Facial Recognition Actions</h6>
+                        </div>
+                        <div class="faceio-card-body">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="faceio-label mb-2">New Enrollment</div>
+                                    <p class="text-muted" style="font-size:13px; margin-bottom:12px;">
+                                        Register this employee's face for the first time. The returned Facial ID will be saved automatically.
+                                    </p>
+                                    <button id="enroll_btn" class="faceio-btn faceio-btn-primary" type="button" disabled="disabled">
+                                        <span id="spinner"/>
+                                        <i id="enroll_icon" class="fa fa-user-plus"/>
+                                        Enroll New Face
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="faceio-label mb-2">Verify / Authenticate</div>
+                                    <p class="text-muted" style="font-size:13px; margin-bottom:12px;">
+                                        Authenticate a previously enrolled face to confirm the Facial ID matches the selected employee.
+                                    </p>
+                                    <button id="auth_btn" class="faceio-btn faceio-btn-secondary" type="button" disabled="disabled">
+                                        <i class="fa fa-check-circle"/>
+                                        Authenticate Face
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status / Result -->
+                    <div id="status_success" class="faceio-status success mb-3">
+                        <i class="fa fa-check-circle mt-1"/>
+                        <pre id="status_success_text"/>
+                    </div>
+                    <div id="status_error" class="faceio-status error mb-3">
+                        <i class="fa fa-times-circle mt-1"/>
+                        <pre id="status_error_text"/>
+                    </div>
+                    <div id="status_info" class="faceio-status info mb-3">
+                        <i class="fa fa-info-circle mt-1"/>
+                        <pre id="status_info_text"/>
+                    </div>
+
+                </div><!-- /container -->
+            </div><!-- /faceio-page -->
+
+            <div id="faceio-modal"/>
+            <script src="https://cdn.faceio.net/fio.js"/>
+            <script type="text/javascript">
+            (function () {
+                const faceioEnabled  = <t t-esc="'true' if faceio_enabled else 'false'"/>;
+                const appId          = "<t t-esc='faceio_app_public_id'/>";
+                const employeeSelect = document.getElementById("employee_select");
+                const deviceInput    = document.getElementById("device_uuid");
+                const enrollBtn      = document.getElementById("enroll_btn");
+                const authBtn        = document.getElementById("auth_btn");
+                const enrollIcon     = document.getElementById("enroll_icon");
+                const spinner        = document.getElementById("spinner");
+                const empInfoWrap    = document.getElementById("emp_info_wrap");
+                const empAvatar      = document.getElementById("emp_avatar");
+                const empName        = document.getElementById("emp_name");
+                const empMeta        = document.getElementById("emp_meta");
+                const empBadge       = document.getElementById("emp_badge");
+
+                // ── Status helpers ──────────────────────────────────────────
+                function clearStatus() {
+                    ["status_success","status_error","status_info"].forEach(function(id){
+                        document.getElementById(id).style.display = "none";
+                    });
+                }
+                function showSuccess(msg) {
+                    clearStatus();
+                    document.getElementById("status_success_text").textContent = msg;
+                    document.getElementById("status_success").style.display = "flex";
+                }
+                function showError(msg) {
+                    clearStatus();
+                    document.getElementById("status_error_text").textContent = msg;
+                    document.getElementById("status_error").style.display = "flex";
+                }
+                function showInfo(msg) {
+                    clearStatus();
+                    document.getElementById("status_info_text").textContent = msg;
+                    document.getElementById("status_info").style.display = "flex";
+                }
+
+                // ── Employee card ────────────────────────────────────────────
+                function updateEmployeeCard() {
+                    const opt = employeeSelect.options[employeeSelect.selectedIndex];
+                    if (!opt || !opt.value) {
+                        empInfoWrap.style.display = "none";
+                        enrollBtn.disabled = true;
+                        authBtn.disabled   = true;
+                        return;
+                    }
+                    const name    = opt.text;
+                    const email   = opt.dataset.email || "";
+                    const job     = opt.dataset.job   || "";
+                    const faceId  = opt.dataset.faceio || "";
+                    empAvatar.textContent = name.charAt(0).toUpperCase();
+                    empName.textContent   = name;
+                    empMeta.textContent   = [job, email].filter(Boolean).join(" · ") || "No additional info";
+                    if (faceId) {
+                        empBadge.innerHTML = '<span class="faceio-badge-enrolled"><i class="fa fa-check"></i> Enrolled</span>';
+                    } else {
+                        empBadge.innerHTML = '<span class="faceio-badge-none"><i class="fa fa-clock-o"></i> Not enrolled</span>';
+                    }
+                    empInfoWrap.style.display = "block";
+                    if (faceioEnabled &amp;&amp; appId) {
+                        enrollBtn.disabled = false;
+                        authBtn.disabled   = false;
+                    }
+                }
+                employeeSelect.addEventListener("change", function() {
+                    clearStatus();
+                    updateEmployeeCard();
+                });
+                updateEmployeeCard();
+
+                // ── Save to Odoo ─────────────────────────────────────────────
+                async function saveFacialId(employeeId, facialId) {
+                    const payload = {
+                        jsonrpc: "2.0", method: "call", id: Date.now(),
+                        params: {
+                            employee_id: employeeId,
+                            facial_id:   facialId,
+                            device_uuid: deviceInput.value || null,
+                        },
+                    };
+                    const response = await fetch("/hr_hub/faceio/save", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload),
+                    });
+                    const data = await response.json();
+                    if (data.error) {
+                        const msg = data.error.data &amp;&amp; data.error.data.message
+                            ? data.error.data.message : data.error.message;
+                        throw new Error(msg);
+                    }
+                    // Update badge in the dropdown option
+                    const opt = employeeSelect.options[employeeSelect.selectedIndex];
+                    if (opt) opt.dataset.faceio = facialId;
+                    updateEmployeeCard();
+                    return data.result;
+                }
+
+                // ── FaceIO Initialization ──────────────────────────────────────────
+                const faceio = new faceIO(appId);
+
+                // ── Enroll ───────────────────────────────────────────────────
+                enrollBtn.addEventListener("click", async function () {
+                    const employeeId = parseInt(employeeSelect.value, 10);
+                    if (!employeeId) { showError("Please select an employee first."); return; }
+                    clearStatus();
+                    enrollBtn.disabled = true;
+                    spinner.style.display = "inline-block";
+                    enrollIcon.style.display = "none";
+                    showInfo("Opening FaceIO camera — please look at the camera to enroll…");
+                    try {
+                        const userInfo = await faceio.enroll({
+                            locale: "auto",
+                            payload: { employee_id: employeeId },
+                        });
+                        showInfo("Face captured — saving to Odoo…");
+                        const result = await saveFacialId(employeeId, userInfo.facialId);
+                        showSuccess(
+                            "Enrollment successful!\n\n" +
+                            "Employee : " + result.employee_name + "\n" +
+                            "Facial ID: " + result.facial_id     + "\n" +
+                            "Gender   : " + (userInfo.details.gender || "—")   + "\n" +
+                            "Age est. : " + (userInfo.details.age    || "—")   + "\n" +
+                            "Date     : " + userInfo.timestamp
+                        );
+                    } catch (err) {
+                        showError("Enrollment failed: " + String(err));
+                    } finally {
+                        enrollBtn.disabled = false;
+                        spinner.style.display = "none";
+                        enrollIcon.style.display = "inline";
+                        try { faceio.restartSession(); } catch (e) {}
+                    }
+                });
+
+                // ── Authenticate ─────────────────────────────────────────────
+                authBtn.addEventListener("click", async function () {
+                    clearStatus();
+                    showInfo("Opening FaceIO camera — please look at the camera…");
+                    try {
+                        const userData = await faceio.authenticate({ locale: "auto" });
+                        const opt = employeeSelect.options[employeeSelect.selectedIndex];
+                        const enrolledId = opt ? opt.dataset.faceio : "";
+                        let matchNote = "";
+                        if (enrolledId) {
+                            matchNote = "\nMatch with selected employee: " +
+                                (enrolledId === userData.facialId ? "✓ Yes" : "✗ No — IDs differ");
+                        }
+                        showSuccess(
+                            "Authentication successful!\n\n" +
+                            "Facial ID: " + userData.facialId + matchNote
+                        );
+                    } catch (err) {
+                        showError("Authentication failed: " + String(err));
+                    } finally {
+                        try { faceio.restartSession(); } catch (e) {}
+                    }
+                });
+
+                if (!faceioEnabled || !appId) {
+                    enrollBtn.disabled = true;
+                    authBtn.disabled   = true;
+                }
+            })();
+            </script>
+        </t>
+    </template>
+
+    <record id="action_hr_hub_faceio_enroll_client" model="ir.actions.client">
+        <field name="name">FaceIO Enrollment Page</field>
+        <field name="tag">faceio_enrollment_action</field>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="menu_hr_hub_faceio_enroll_page" name="FaceIO Enroll Page" parent="menu_hub_server_root" action="action_hr_hub_faceio_enroll_client" sequence="30" groups="hr.group_hr_manager"/>
+</odoo>

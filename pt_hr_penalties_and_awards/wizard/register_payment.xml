@@ -1,0 +1,34 @@
+<odoo>
+    <record id="view_register_general_payment_wizard_form" model="ir.ui.view">
+        <field name="name">register.general.payment.wizard.form</field>
+        <field name="model">register.general.payment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Register General Payment" create="false" edit="false">
+                <group>
+                    <group>
+                        <field name="journal_id"/>
+                        <field name="account_id"/>
+                        <field name="amount"/>
+                    </group>
+                    <group>
+                        <field name="currency_id" readonly="1"/>
+                        <field name="payment_date"/>
+                        <field name="memo"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Register Payment" type="object" name="action_create_payment_entry"
+                            class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_register_general_payment_wizard" model="ir.actions.act_window">
+        <field name="name">Register Payment</field>
+        <field name="res_model">register.general.payment.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

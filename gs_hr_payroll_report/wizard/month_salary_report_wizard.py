@@ -208,7 +208,7 @@ class MonthSalaryReportWizard(models.TransientModel):
 
     date_from = fields.Date(string="From", )
     date_to = fields.Date(string="To", )
-    company_id = fields.Many2one('employee.company', string='Company')
+    company_id = fields.Many2one('res.company', string='Company')
 
     # allowance_ids = fields.Many2many('hr.allowance')
 

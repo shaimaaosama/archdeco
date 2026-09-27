@@ -1,0 +1,47 @@
+<odoo>
+   <record id="request_review_mail" model="mail.template">
+        <field name="name">Requesting for review</field>
+        <field name="subject">Request Request For Review</field>
+<!--        <field name="email_from">${object.email_from}</field>-->
+<!--        <field name="email_to">${object.recipient_partners}</field>-->
+        <field name="email_to">${object.partner_id.email}</field>
+        <field name="lang">${user.lang}</field>
+        <field name="model_id" ref="pt_hr_custody.model_hr_custody"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="body_html"><![CDATA[
+            <p>Hello Dear, </p>
+            <p>We have an Custody "<b>${object.name}</b>" requires your respond.</p>
+            <p>Please Click on "<b>View Details</b>" to respond</p>
+            <table>
+                <tr>
+                    <td>Custody's Code</td>
+                    <td>${object.name}</td>
+                </tr>
+
+                <tr>
+                    <td>Partner</td>
+                    <td> ${object.partner_id.name}</td>
+                </tr>
+                <tr>
+                    <td>Employee</td>
+                    <td> ${object.employee.name}</td>
+                </tr>
+                <tr>
+                    <td>Date</td>
+                    <td> ${object.date_request}</td>
+                </tr>
+            </table>
+
+            <div style="text-align: center; margin-top: 16px;font-size:20px;height:25px;">
+                <a href="/request_review/${object.id}" style="padding: 5px 10px; font-size: 12px; line-height: 18px; color: #ffffff; border-color:#875a7b; text-decoration: none; display: inline-block; margin-bottom: 0px; font-weight: 400; text-align: center; vertical-align: middle; cursor: pointer; white-space: nowrap; background-image: none; background-color:
+            #875A7B; border: 1px solid #875A7B; border-radius:3px">View Details</a>
+            </div>
+            <br>
+            <p>Regards</p>
+            ]]>
+
+        </field>
+  </record>
+
+
+</odoo>

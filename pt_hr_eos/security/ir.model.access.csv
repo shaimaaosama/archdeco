@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_end_reason,gs_end_reason,model_gs_end_reason,hr.group_hr_user,1,1,1,1
+access_gs_eos,gs_eos,model_gs_eos,hr.group_hr_user,1,1,1,1
+access_gs_eos_monthly,gs_eos_monthly,model_gs_eos_monthly,hr.group_hr_user,1,1,1,1
+access_eos_conf,eos_conf,model_eos_conf,hr.group_hr_user,1,1,1,1
+access_month_eos_report_wizard,month_eos_report_wizard,model_month_eos_report_wizard,hr.group_hr_user,1,1,1,1

@@ -1,0 +1,105 @@
+<odoo>
+      <template id="request_review" name='example'>
+      <t t-call="web.external_layout">
+        <div class="oe_structure">
+          <div class="container">
+            <table class="col-md-8">
+            <center><h3>Request Details (Request Review)</h3></center>
+            <style>
+                table, td, th {
+                    border: 1px solid #ddd;
+                    text-align: left;
+                }
+
+                table {
+                    border-collapse: collapse;
+                    width: 55%;
+                }
+
+                th, td {
+                    padding: 10px;
+                }
+              </style>
+      <form action="/request_approve" method="post"
+                    class="form-horizontal col-md-10 col-md-offset-1">
+        <t t-foreach="values" t-as="o">
+           <table align="center">
+
+              <tr>
+                <td>Code</td>
+                <td><span t-esc="o.name"/></td>
+              </tr>
+              <tr>
+                <td>Partner</td>
+                <td><span t-esc="o.partner_id.name"/></td>
+              </tr>
+              <tr>
+                <td>Employee</td>
+                <td><span t-esc="o.employee.name"/></td>
+              </tr>
+              <tr>
+                <td>Date</td>
+                <td><span t-esc="o.date_request"/></td>
+              </tr>
+              <tr>
+                <td style="display: none;">
+                Request
+                </td>
+                <td style="display: none;">:</td>
+                <td style="display: none;">
+                  <input type="integer" class="form-control" id="hr_custody"
+                          name="hr_custody" t-att-value="o.id"/>
+                </td>
+               </tr>
+
+          </table>
+             <br></br>
+             <br></br>
+              <div class='col-xs-6'>
+                  <div class="clearfix" style="padding:30px">
+                        <button style="position:absolute !important; right:60%;top:55%;" type="submit" id="button_enroll_update"
+                            class="btn btn-default btn-primary pull-right mb32 ">
+                           Approve
+                        </button>
+                  </div>
+              </div>
+            </t>
+          </form>
+
+         <div class='col-xs-1'>
+            <form action="/request_refuse" method="post"
+                  class="form-horizontal col-md-10 col-md-offset-1">
+                  <div style="display: none;">
+                  <span t-esc="values.id"/>
+                  <input type="integer" class="form-control" id="hr_custody"
+                                  name="hr_custody" t-att-value="values.id"/>
+                  </div>
+
+                  <div class="clearfix text-right">
+
+                    <button style="position:absolute !important; right:40%;top:55%;" type="submit" id="button_enroll_update1"
+                        class="btn btn-default btn-primary pull-right mb32 ">
+                       Reject
+                    </button>
+                  </div>
+               </form>
+             </div>
+
+              </table>
+              </div>
+            </div>
+          </t>
+        </template>
+
+
+         <template id="submit" name="Submit Page">
+              <t t-call="web.layout">
+                <div class="oe_structure">
+                  <div class="container">
+                        <center><h3 style="margin-top:100px">Your Process Has been Completed Successfully!!</h3></center>
+                  </div>
+                </div>
+              </t>
+         </template>
+
+</odoo>

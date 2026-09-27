@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Action for Settings -->
+    <record id="action_hr_hub_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'pt_hr_hub_server', 'bin_size': False}</field>
+    </record>
+
+    <!-- Menu for Settings -->
+    <menuitem id="menu_hr_hub_settings" name="Settings" parent="pt_hr_hub_server.menu_hub_server_root" action="action_hr_hub_config_settings" sequence="100" groups="hr.group_hr_manager"/>
+
+    <!-- FaceIO Settings View -->
+    <record id="view_res_config_settings_inherit_faceio" model="ir.ui.view">
+        <field name="name">res.config.settings.inherit.faceio</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="HR Hub" string="HR Hub" name="pt_hr_hub_server" groups="hr.group_hr_manager">
+                    <block title="Subscription Configuration" name="subscription_settings_block">
+                        <setting string="Central Server URL" help="URL of the central subscription server">
+                            <field name="central_server_url" placeholder="https://your-central-server.com"/>
+                        </setting>
+                        <setting string="Subscription Code" help="Your unique subscription code">
+                            <field name="subscription_code"/>
+                        </setting>
+                        <setting string="Subscription Status">
+                            <field name="subscription_valid" readonly="1" class="fw-bold" widget="boolean_toggle"/>
+                        </setting>
+                        <setting string="Max Users Allowed">
+                            <field name="subscription_max_users" readonly="1" class="fw-bold"/>
+                        </setting>
+                        <setting string="Subscription End Date">
+                            <field name="subscription_end_date" readonly="1" class="fw-bold"/>
+                            <div class="mt-2">
+                                <button name="action_sync_subscription" type="object" string="Sync Subscription" class="btn-primary" icon="fa-refresh"/>
+                            </div>
+                        </setting>
+                    </block>
+                    <block title="FaceIO Identity Verification" name="faceio_settings_block">
+                        <setting string="FaceIO Identity Verification" help="Enable FaceIO for facial recognition-based attendance verification">
+                            <field name="faceio_enabled"/>
+                        </setting>
+                        <setting string="FaceIO Public App ID" invisible="not faceio_enabled">
+                            <field name="faceio_app_public_id" placeholder="Your FaceIO App ID"/>
+                        </setting>
+                        <setting string="FaceIO Secret Key" invisible="not faceio_enabled">
+                            <field name="faceio_secret_key" password="True" placeholder="Your FaceIO API Secret Key"/>
+                        </setting>
+                        <setting string="FaceIO Endpoint" invisible="not faceio_enabled">
+                            <field name="faceio_identity_endpoint" placeholder="https://api.faceio.net/v2/identities/{faceio_id}"/>
+                            <div class="text-muted small">Use {faceio_id} placeholder for the identity endpoint</div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- HR FaceIO Enrollment Form -->
+    <record id="view_hr_faceio_enrollment_form" model="ir.ui.view">
+        <field name="name">hr.faceio.enrollment.form</field>
+        <field name="model">hr.faceio.enrollment</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="alert alert-info" role="alert">
+                        <strong>FaceIO Employee Enrollment</strong><br/>
+                        Register a new employee with FaceIO facial recognition or test enrollment workflow.
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="faceio_id" placeholder="e.g., 645f5a9b5f5a5f"/>
+                        </group>
+                        <group>
+                            <field name="device_uuid" placeholder="e.g., e6fd8ef5-6d8e-4f72-99f5-9f5bb1dc8fd6"/>
+                            <field name="test_latitude"/>
+                            <field name="test_longitude"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="enrollment_status" widget="text" readonly="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_verify_faceio_id" string="Verify FaceIO ID" type="object" class="btn-primary"/>
+                    <button name="action_save_enrollment" string="Save &amp; Enroll" type="object" class="btn-success"/>
+                    <button name="action_test_attendance_creation" string="Test Attendance" type="object" class="btn-info"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for HR FaceIO Enrollment -->
+    <record id="action_hr_faceio_enrollment" model="ir.actions.act_window">
+        <field name="name">FaceIO Employee Enrollment</field>
+        <field name="res_model">hr.faceio.enrollment</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Menu item for FaceIO Enrollment -->
+    <menuitem id="menu_hr_faceio_enrollment" name="FaceIO Enrollment" parent="hr.menu_hr_root" action="action_hr_faceio_enrollment" sequence="96" groups="hr.group_hr_manager"/>
+</odoo>

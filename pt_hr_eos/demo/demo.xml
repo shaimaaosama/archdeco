@@ -1,0 +1,80 @@
+<odoo>
+    <data>
+        <record id="gs_end_reason1" model="gs.end.reason">
+            <field name="name">Expiration of contract terms, or the parties have agreed to terminate the contract
+            </field>
+            <field name="contract_type">fixed_time</field>
+        </record>
+        <record id="gs_end_reason2" model="gs.end.reason">
+            <field name="name">Termination of the contract by the employer</field>
+            <field name="contract_type">fixed_time</field>
+        </record>
+        <record id="gs_end_reason3" model="gs.end.reason">
+            <field name="name">Termination of the contract by the employer for one of the terms and conditions stated in
+                Article (80).
+            </field>
+            <field name="contract_type">fixed_time</field>
+
+        </record>
+        <record id="gs_end_reason4" model="gs.end.reason">
+            <field name="name">Leaving work as a result of force majeure.</field>
+            <field name="contract_type">fixed_time</field>
+
+        </record>
+        <record id="gs_end_reason5" model="gs.end.reason">
+            <field name="name">The worker terminates the labor contract within six months into the marriage contract or
+                three months into birth.
+            </field>
+            <field name="contract_type">fixed_time</field>
+
+        </record>
+        <record id="gs_end_reason6" model="gs.end.reason">
+            <field name="name">The worker leaves work for one of the conditions stated in Article (81)</field>
+            <field name="contract_type">fixed_time</field>
+
+        </record>
+        <record id="gs_end_reason7" model="gs.end.reason">
+            <field name="name">Termination of the contract by the worker, or the worker has quit work for other reasons
+                not stated and in Article (81).
+            </field>
+            <field name="contract_type">fixed_time</field>
+
+        </record>
+
+
+
+        <record id="gs_end_reason8" model="gs.end.reason">
+            <field name="name">Leaving work as a result of force majeure.</field>
+            <field name="contract_type">unlimited_period</field>
+        </record>
+
+        <record id="gs_end_reason9" model="gs.end.reason">
+            <field name="name">Termination of the contract by the employer.</field>
+            <field name="contract_type">unlimited_period</field>
+        </record>
+        <record id="gs_end_reason10" model="gs.end.reason">
+            <field name="name">Termination of the contract by the employer for one of the terms and conditions stated in Article (80).</field>
+            <field name="contract_type">unlimited_period</field>
+        </record>
+        <record id="gs_end_reason11" model="gs.end.reason">
+            <field name="name">The resignation of a worker.</field>
+            <field name="contract_type">unlimited_period</field>
+        </record>
+        <record id="gs_end_reason12" model="gs.end.reason">
+            <field name="name">The worker and employer agree to terminate the contract.</field>
+            <field name="contract_type">unlimited_period</field>
+        </record>
+        <record id="gs_end_reason13" model="gs.end.reason">
+            <field name="name">The worker leaves work for one of the conditions stated in Article (81).</field>
+            <field name="contract_type">unlimited_period</field>
+        </record>
+        <record id="gs_end_reason14" model="gs.end.reason">
+            <field name="name">The worker leaves work without submitting his/her resignation, other than the conditions stated in Article (81).</field>
+            <field name="contract_type">unlimited_period</field>
+        </record>
+        <record id="gs_end_reason15" model="gs.end.reason">
+            <field name="name">The worker terminates the labor contract within six months into the marriage contract or three months into birth.</field>
+            <field name="contract_type">unlimited_period</field>
+        </record>
+    </data>
+</odoo>

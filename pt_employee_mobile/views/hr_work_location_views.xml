@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_work_location_form_view_mobile" model="ir.ui.view">
+        <field name="name">hr.work.location.form.mobile.app</field>
+        <field name="model">hr.work.location</field>
+        <field name="inherit_id" ref="hr.hr_work_location_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group" position="after">
+                <group string="Mobile App Geofence">
+                    <group>
+                        <field name="attendance_latitude"/>
+                        <field name="attendance_longitude"/>
+                        <field name="attendance_radius"/>
+                    </group>
+                    <group>
+                        <field name="attendance_map_url" widget="url" text="View on Map"
+                               invisible="not attendance_map_url"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_work_location_tree_view_mobile" model="ir.ui.view">
+        <field name="name">hr.work.location.list.mobile.app</field>
+        <field name="model">hr.work.location</field>
+        <field name="inherit_id" ref="hr.hr_work_location_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="before">
+                <field name="attendance_radius" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

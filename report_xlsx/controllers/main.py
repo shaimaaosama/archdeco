@@ -23,29 +23,77 @@ _logger = logging.getLogger(__name__)
 
 class ReportController(ReportController):
     @route()
+    # def report_routes(self, reportname, docids=None, converter=None, **data):
+    #     if converter == "xlsx":
+    #         report = request.env["ir.actions.report"]._get_report_from_name(reportname)
+    #         context = dict(request.env.context)
+    #         if docids:
+    #             docids = [int(i) for i in docids.split(",")]
+    #         if data.get("options"):
+    #             data.update(json.loads(data.pop("options")))
+    #         if data.get("context"):
+    #             data["context"] = json.loads(data["context"])
+    #             context.update(data["context"])
+    #         xlsx = report.with_context(**context)._render_xlsx(
+    #             reportname, docids, data=data
+    #         )[0]
+    #         xlsxhttpheaders = [
+    #             (
+    #                 "Content-Type",
+    #                 "application/vnd.openxmlformats-"
+    #                 "officedocument.spreadsheetml.sheet",
+    #             ),
+    #             ("Content-Length", len(xlsx)),
+    #         ]
+    #         return request.make_response(xlsx, headers=xlsxhttpheaders)
+    #     return super().report_routes(reportname, docids, converter, **data)
+
     def report_routes(self, reportname, docids=None, converter=None, **data):
         if converter == "xlsx":
             report = request.env["ir.actions.report"]._get_report_from_name(reportname)
             context = dict(request.env.context)
+
             if docids:
                 docids = [int(i) for i in docids.split(",")]
+
             if data.get("options"):
-                data.update(json.loads(data.pop("options")))
-            if data.get("context"):
-                data["context"] = json.loads(data["context"])
-                context.update(data["context"])
+                options = data.get("options")
+                if isinstance(options, str):
+                    options = options.strip()
+                    if options and options not in ("undefined", "null", "False", "None"):
+                        try:
+                            data.update(json.loads(options))
+                        except Exception:
+                            pass
+                elif isinstance(options, dict):
+                    data.update(options)
+
+            report_context = data.get("context")
+            if isinstance(report_context, str):
+                report_context = report_context.strip()
+                if report_context and report_context not in ("undefined", "null", "False", "None"):
+                    try:
+                        report_context = json.loads(report_context)
+                    except Exception:
+                        report_context = {}
+                else:
+                    report_context = {}
+            elif not isinstance(report_context, dict):
+                report_context = {}
+
+            data["context"] = report_context
+            context.update(report_context)
+
             xlsx = report.with_context(**context)._render_xlsx(
                 reportname, docids, data=data
             )[0]
-            xlsxhttpheaders = [
-                (
-                    "Content-Type",
-                    "application/vnd.openxmlformats-"
-                    "officedocument.spreadsheetml.sheet",
-                ),
+
+            headers = [
+                ("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),
                 ("Content-Length", len(xlsx)),
             ]
-            return request.make_response(xlsx, headers=xlsxhttpheaders)
+            return request.make_response(xlsx, headers=headers)
+
         return super().report_routes(reportname, docids, converter, **data)
 
     @route()

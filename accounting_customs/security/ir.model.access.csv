@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_partner_ledger_wizard,partner.ledger.xlsx.wizard,model_partner_ledger_xlsx_wizard,base.group_user,1,1,1,1
+analytic_account_branch_line_all,analytic_account_branch_line_all,model_analytic_account_branch_line,,1,1,1,1
+analytic_tag,analytic_tag,model_analytic_tag,,1,1,1,1
+budget_group,budget_group,model_budget_group,,1,1,1,1
+account_budget_line,account_budget_line,model_account_budget_line,,1,1,1,1

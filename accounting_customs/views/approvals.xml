@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="approval_request_view_form_inherit" model="ir.ui.view">
+            <field name="name">approval.request.form.inherit</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='has_date']" position="after">
+                    <field name="has_purchase_order" invisible="True"/>
+                    <field name="has_sale_order" invisible="True"/>
+                    <field name="has_paid" invisible="True"/>
+                    <field name="can_mark_ready_to_transfer" invisible="1"/>
+                    <field name="can_mark_paid" invisible="1"/>
+                    <field name="can_cancel_ready" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='reference']" position="after">
+                    <field name="purchase_order_id" invisible="has_purchase_order == False" readonly="request_status != 'new'" options="{'no_create': True, 'no_create_edit': True,}"/>
+                    <field name="sale_order_id" invisible="has_sale_order == False" readonly="request_status != 'new'" options="{'no_create': True, 'no_create_edit': True,}"/>
+                </xpath>
+                <xpath expr="//field[@name='reference']" position="attributes">
+                    <attribute name="readonly">request_status != 'new'</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_confirmed']" position="before">
+                    <field name="create_date" readonly="True"/>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True, 'no_open': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='request_owner_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True, 'no_open': True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount']" position="after">
+                    <field name="currency_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" invisible="has_amount == 'no'" required="has_amount == 'required' and request_status == 'new'" readonly="request_status != 'new'" />
+                </xpath>
+                <xpath expr="//page[@name='description']" position="before">
+                    <page string="Payment Details" name="payment_details" invisible="has_amount == 'no'">
+                        <group>
+                            <group>
+                                <field name="payment_method" required="has_amount == 'required'" readonly="request_status != 'new'"/>
+                                <field name="beneficiary_account_name" required="payment_method == 'transfer' and request_status == 'new'" invisible="payment_method != 'transfer'" readonly="request_status != 'new'"/>
+                                <field name="beneficiary_iban" required="payment_method == 'transfer' and request_status == 'new'" invisible="payment_method != 'transfer'" readonly="request_status != 'new'"/>
+                                <field name="beneficiary_bank" required="payment_method == 'transfer' and request_status == 'new'" invisible="payment_method != 'transfer'" readonly="request_status != 'new'"/>
+                                <field name="swiftcode" required="payment_method == 'transfer' and request_status == 'new'" invisible="payment_method != 'transfer'" readonly="request_status != 'new'"/>
+                                <field name="sadad_ref" required="payment_method == 'sadad' and request_status == 'new'" invisible="payment_method != 'sadad'" readonly="request_status != 'new'"/>
+                                <field name="sadad_account" required="payment_method == 'sadad' and request_status == 'new'" invisible="payment_method != 'sadad'" readonly="request_status != 'new'"/>
+                            </group>
+                            <group string="Payment Attachment" invisible="request_status not in ['ready_to_transfer', 'paid']">
+                                <field name="payment_date" invisible="request_status not in ['ready_to_transfer', 'paid']" readonly="request_status == 'paid'"/>
+                                <field name="payment_attachment_ids" widget="many2many_binary" string="Payment Attachments" invisible="request_status not in ['ready_to_transfer', 'paid']" readonly="request_status == 'paid'"/>
+                                <field
+                                    name="payment_attachment_filename"
+                                    invisible="1"
+                                />
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//button[@name='action_approve']" position="after">
+                    <button
+                        name="action_ready_to_transfer"
+                        type="object"
+                        string="Ready to Transfer"
+                        class="btn-warning"
+                        invisible="not can_mark_ready_to_transfer"
+                    />
+                    <button
+                        name="action_set_paid"
+                        type="object"
+                        string="Paid"
+                        class="btn-success"
+                        invisible="not can_mark_paid"
+                    />
+                    <button name="action_cancel_ready" type="object" string="Cancel" class="btn-danger" confirm="Are you sure you want to cancel this request?" invisible="not can_cancel_ready"/>
+
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+                    <attribute name="invisible">
+                        request_status in ['ready_to_transfer', 'paid']
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_withdraw']" position="attributes">
+                    <attribute name="invisible">
+                        request_status in ['ready_to_transfer', 'paid']
+                    </attribute>
+                </xpath>
+                <!-- <xpath expr="//div[@name='button_box']" position="inside">
+                    <button
+                        name="action_account_payment"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-money"
+                        invisible="not has_paid or request_status not in ['approved', 'ready_to_transfer', 'paid']"
+                    >
+                        <field
+                            name="payment_count"
+                            widget="statinfo"
+                            string="Payments"
+                        />
+                    </button>
+                </xpath> -->
+                <xpath expr="//field[@name='reference']" position="replace"/>
+                <xpath expr="//group[group[@name='request_main'] and group[@name='request_details']]" position="after">
+                    <group col="1">
+                        <field
+                            name="reference"
+                            string="Reference"
+                            colspan="2"
+                            invisible="has_reference == 'no'"
+                            required="has_reference == 'required'"
+                            readonly="request_status != 'new'"
+                        />
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='approver_ids']" position="attributes">
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="approval_request_view_tree_inherit" model="ir.ui.view">
+            <field name="name">approval.request.view.list.inherit</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_request_view_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//list" position="attributes">
+                    <attribute name="decoration-info">request_status == 'new'</attribute>
+                    <attribute name="decoration-muted">request_status == 'pending'</attribute>
+                    <attribute name="decoration-primary">request_status == 'approved'</attribute>
+                    <attribute name="decoration-warning">request_status == 'ready_to_transfer'</attribute>
+                    <attribute name="decoration-success">request_status == 'paid'</attribute>
+                    <attribute name="decoration-danger">request_status in ['refused', 'cancel']</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='request_status']" position="attributes">
+                    <attribute name="decoration-info">request_status == 'new'</attribute>
+                    <attribute name="decoration-muted">request_status == 'pending'</attribute>
+                    <attribute name="decoration-primary">request_status == 'approved'</attribute>
+                    <attribute name="decoration-warning">request_status == 'ready_to_transfer'</attribute>
+                    <attribute name="decoration-success">request_status == 'paid'</attribute>
+                    <attribute name="decoration-danger">request_status in ['refused', 'cancel']</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='request_owner_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_confirmed']" position="attributes">
+                    <attribute name="width">95px</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='user_ids']" position="attributes">
+                    <attribute name="widget">many2many_tags</attribute>
+                    <attribute name="width">230px</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='request_owner_id']" position="before">
+                    <field name="create_date" widget="date" width="95px" optional="hide"/>
+                </xpath>
+
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="reference" string="Reference" optional="hide" width="230px" class="text-truncate"/>
+                    <field name="partner_id" string="Contact" optional="hide"/>
+                    <field name="amount" optional="hide" sum="Total"/>
+                    <field name="currency_id" optional="hide"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="approval_request_view_kanban_inherit" model="ir.ui.view">
+            <field name="name">approval.request.view.kanban.inherit</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_request_view_kanban"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//t[@t-name='card']/div[hasclass('ribbon')]" position="attributes">
+                    <attribute name="invisible">user_status not in ['pending', 'approved', 'refused', 'cancel'] or request_status in ['ready_to_transfer', 'paid']</attribute>
+                </xpath>
+
+                <xpath expr="//t[@t-name='card']/div[hasclass('ribbon')]" position="after">
+
+                    <div class="ribbon ribbon-top-right" invisible="request_status != 'ready_to_transfer'" >
+                        <span class="text-bg-warning">
+                            READY
+                        </span>
+                    </div>
+
+                    <div class="ribbon ribbon-top-right" invisible="request_status != 'paid'" >
+                        <span class="text-bg-success">
+                            PAID
+                        </span>
+                    </div>
+
+                </xpath>
+
+                <xpath expr="//kanban/field[@name='user_status']" position="after">
+                    <field name="approval_waiting_display"/>
+                </xpath>
+
+                <xpath expr="//t[@t-name='card']/field[@name='category_id']" position="after">
+                    <div class="text-muted" invisible="request_status != 'pending' or not approval_waiting_display">
+                        <strong>
+                            <field name="approval_waiting_display"/>
+                        </strong>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="approval_search_view_search_inherit" model="ir.ui.view">
+            <field name="name">approval.request.search.inherit</field>
+            <field name="model">approval.request</field>
+            <field name="inherit_id" ref="approvals.approval_search_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/field[@name='name']" position="after">
+                    <field name="reference"/>
+                    <field name="partner_id" string="Contact"/>
+                </xpath>
+                <xpath expr="//filter[@name='filter_approved_requests']" position="before">
+                    <filter string="Submitted" name="filter_submitted_requests" domain="[('request_status', '=', 'pending')]"/>
+                </xpath>
+
+                <xpath expr="//filter[@name='filter_approved_requests']" position="after">
+                    <filter string="Ready for Transfer" name="filter_ready_to_transfer_requests" domain="[('request_status', '=', 'ready_to_transfer')]"/>
+                    <filter string="Paid" name="filter_paid_requests" domain="[('request_status', '=', 'paid')]"/>
+                </xpath>
+
+                <xpath expr="//filter[@name='filter_canceled_requests']" position="after">
+                    <separator/>
+                    <filter string="Creation Date" name="filter_creation_date" date="create_date"/>
+                </xpath>
+
+                <xpath expr="//filter[@name='groupby_category_id']" position="after">
+                    <filter string="Payment Method" name="groupby_payment_method" context="{'group_by': 'payment_method'}"/>
+                    <filter string="Status" name="groupby_request_status" context="{'group_by': 'request_status'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="approvals.approval_request_action_to_review" model="ir.actions.act_window">
+            <field name="domain">[("waiting_for_my_approval", "=", True), ("request_status", "=", "pending")]</field>
+        </record>
+
+        <!-- approval.category -->
+
+        <record id="approval_category_view_form_inherit" model="ir.ui.view">
+            <field name="name">approval.category.form.inherit</field>
+            <field name="model">approval.category</field>
+            <field name="inherit_id" ref="approvals.approval_category_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='options']" position="after">
+                    <page string="More Options" name="more_options">
+                        <group>
+                            <group>
+                                <field name="has_purchase_order"/>
+                                <field name="has_sale_order"/>
+                                <field name="has_ready_to_transfer"/>
+                                <field name="resposibles_for_transfer" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" widget="many2many_tags" required="has_ready_to_transfer == True" invisible="has_ready_to_transfer == False" domain="[('share', '=', False)]"/>
+                                <field name="allowed_cancel_ready" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" widget="many2many_tags" invisible="has_ready_to_transfer == False" domain="[('share', '=', False)]"/>
+                                <field name="has_paid"/>
+                                <field name="resposibles_for_payment" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}" widget="many2many_tags" required="has_paid == True" invisible="has_paid == False" domain="[('share', '=', False)]"/>
+                            </group>
+                        </group>
+                        <group string="Access Control">
+                            <field name="allowed_users_ids" options="{'no_create': True, 'no_create_edit': True,}" widget="many2many_tags" domain="[('share', '=', False)]"/>
+                            <field name="allowed_for_all_approvals" options="{'no_create': True, 'no_create_edit': True,}" widget="many2many_tags" domain="[('share', '=', False)]"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="approval_category_approver_view_list_inherit" model="ir.ui.view">
+            <field name="name">approval.category.approver.list.inherit</field>
+            <field name="model">approval.category.approver</field>
+            <field name="inherit_id" ref="approvals.approval_category_approver_view_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='required']" position="after">
+                    <field name="stage"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record id="penalty_cash_view" model="ir.ui.view">
+            <field name="name">Penalty Cash</field>
+            <field name="model">penalty.cash</field>
+            <field name="arch" type="xml">
+                <form>
+                        <group>
+                            <group>
+                                <field name="journal_id"/>
+                                <field name="pa_installment_loan_ids" invisible="1"/>
+                                <field name="account_id"/>
+                                <field name="pa_installment_loan_id"/>
+                                <field name="amount"/>
+                            </group>
+                        </group>
+                         <footer>
+                	<button class="oe_highlight" name="payment" string="Payment Cash" type="object" />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

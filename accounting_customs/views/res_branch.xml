@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="branch_res_branch_view_form_inherit" model="ir.ui.view">
+            <field name="name">res.branch.form.inherit</field>
+            <field name="model">res.branch</field>
+            <field name="inherit_id" ref="branch.branch_res_branch_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/group" position="after">
+                    <group string="Cinema Products">
+                        <field name="is_cinema_branch"/>
+                        <field name="cinema_product_tag_ids" widget="many2many_tags" invisible="not is_cinema_branch" required="is_cinema_branch" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

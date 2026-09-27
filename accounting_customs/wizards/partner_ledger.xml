@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_partner_ledger_wizard" model="ir.ui.view">
+            <field name="name">partner.ledger.xlsx.wizard.form</field>
+            <field name="model">partner.ledger.xlsx.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Partner Ledger Excel">
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="account_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="date_to"/>
+                            <field name="partner_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+
+                    <footer>
+                        <button name="action_print_excel"
+                                type="object"
+                                string="Export Excel"
+                                class="btn-primary"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_partner_ledger_wizard" model="ir.actions.act_window">
+            <field name="name">Partner Ledger Excel</field>
+            <field name="res_model">partner.ledger.xlsx.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- XLSX Report Action -->
+        <record id="partner_ledger_xlsx_report" model="ir.actions.report">
+            <field name="name">Partner Ledger XLSX</field>
+            <field name="model">partner.ledger.xlsx.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">accounting_customs.partner_ledger_xlsx</field>
+            <field name="report_file">accounting_customs.partner_ledger_xlsx</field>
+            <field name="print_report_name">object.get_xlsx_report_filename()</field>
+            <field name="binding_model_id" ref="model_partner_ledger_xlsx_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <menuitem id="menu_partner_ledger_excel"
+                  name="Partner Ledger Excel"
+                  action="action_partner_ledger_wizard"
+                  parent="account.account_reports_partners_reports_menu"
+                  sequence="500"/>
+
+    </data>
+</odoo>

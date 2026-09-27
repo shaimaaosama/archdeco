@@ -1,0 +1,381 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#       * hr_end_service_benefits
+#
+#. module: pt_hr_end_service_benefits
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-30 11:28+0000\n"
+"PO-Revision-Date: 2026-03-30 11:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+# --- Python translatable strings (hr_end_service_benefits) ---
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:30
+#, python-format
+msgid "Employee has another end service benefit that date"
+msgstr "للموظف مكافأة نهاية خدمة أخرى بهذا التاريخ"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:212
+#, python-format
+msgid "New"
+msgstr "جديد"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:448
+#, python-format
+msgid "You can only delete draft end service benefits"
+msgstr "يمكنك حذف مزايا نهاية الخدمة في حالة المسودة فقط"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:487
+#, python-format
+msgid "Please assign at least one active user to the group: %s"
+msgstr "يرجى تعيين مستخدم نشط واحد على الأقل للمجموعة: %s"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:595
+#, python-format
+msgid "Journal entry has been successfully posted."
+msgstr "تم ترحيل القيد المحاسبي بنجاح."
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:598
+#, python-format
+msgid "No draft journal entry found or the entry is already posted. Please create the draft entry first."
+msgstr "لم يتم العثور على قيد مسودة أو تم ترحيله بالفعل. يرجى إنشاء القيد المسودة أولاً."
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:646
+#, python-format
+msgid "EOS Needs First Approval"
+msgstr "مكافأة نهاية الخدمة تحتاج موافقة أولى"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:647
+#, python-format
+msgid "End Of Service Reward %(name)s needs first approval."
+msgstr "مكافأة نهاية الخدمة %(name)s تحتاج موافقة أولى."
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:658
+#, python-format
+msgid "EOS Needs Second Approval"
+msgstr "مكافأة نهاية الخدمة تحتاج موافقة ثانية"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:659
+#, python-format
+msgid "End Of Service Reward %(name)s needs second approval."
+msgstr "مكافأة نهاية الخدمة %(name)s تحتاج موافقة ثانية."
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:667
+#, python-format
+msgid "EOS Ready For Payment Progress"
+msgstr "مكافأة نهاية الخدمة جاهزة للدفع"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:668
+#, python-format
+msgid "End Of Service Reward %(name)s is ready for payment progress."
+msgstr "مكافأة نهاية الخدمة %(name)s جاهزة لإجراء الدفع."
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:685
+#, python-format
+msgid "Register Payment"
+msgstr "تسجيل الدفع"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit.py:717
+#, python-format
+msgid "No journal entry is linked to this record."
+msgstr "لا يوجد قيد محاسبي مرتبط بهذا السجل."
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit_type.py:27
+#, python-format
+msgid "You can not delete that type as it a predefine type"
+msgstr "لا يمكن حذف هذا النوع لأنه نوع معرّف مسبقًا"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/models/hr_end_service_benefit_type.py:59
+#, python-format
+msgid "You can not delete that line as it is belongs to predefine type"
+msgstr "لا يمكن حذف هذا السطر لأنه ينتمي إلى نوع معرّف مسبقًا"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/reports/ending_service_reports.py:43
+#, python-format
+msgid "There is no employee to show"
+msgstr "لا يوجد موظف للعرض"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:189
+#, python-format
+msgid "Ending service reward settlement of %s"
+msgstr "تسوية مكافأة نهاية خدمة %s"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:203
+#, python-format
+msgid "Account for type allowances not found."
+msgstr "لم يتم العثور على حساب نوع البدلات."
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:215
+#, python-format
+msgid "Account for type deduction not found."
+msgstr "لم يتم العثور على حساب نوع الخصميات."
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:231
+#, python-format
+msgid "Please Add Account To Eos Vacation in Type Allowance"
+msgstr "يرجى إضافة حساب لإجازة نهاية الخدمة في نوع البدل"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:236
+#, python-format
+msgid "Vacation Amount"
+msgstr "مبلغ الإجازة"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:248
+#, python-format
+msgid "Please Add Account To Payroll in Type Allowance"
+msgstr "يرجى إضافة حساب لكشف الرواتب في نوع البدل"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:252
+#, python-format
+msgid "Payroll"
+msgstr "كشف الرواتب"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:261
+#, python-format
+msgid "Account for Eos Indemnity account not found."
+msgstr "لم يتم العثور على حساب التعويض لنهاية الخدمة."
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:266
+#, python-format
+msgid "EOS Idemnity"
+msgstr "تعويض نهاية الخدمة"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:305
+#, python-format
+msgid "This employee has no private address, please add it to the employee profile!"
+msgstr "لا يوجد عنوان شخصي لهذا الموظف، يرجى إضافته في ملف الموظف!"
+
+#. module: pt_hr_end_service_benefits
+#: code:addons/hr_end_service_benefits/wizards/settlement.py:308
+#, python-format
+msgid "Ending service reward payment of %s"
+msgstr "دفع مكافأة نهاية خدمة %s"
+
+# --- XML view strings (hr_end_service_benefits) ---
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/reports/ending_service_report.xml
+msgid "End of Service Statement"
+msgstr "كشف نهاية الخدمة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/reports/ending_service_reports_wizard.xml
+msgid "Print"
+msgstr "طباعة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/reports/ending_service_reports_wizard.xml
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/reports/report_ending_service.xml
+msgid "Events report"
+msgstr "تقرير الأحداث"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/config_views.xml
+msgid "Ending Service Settlement Config"
+msgstr "إعداد تسوية نهاية الخدمة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/config_views.xml
+msgid "Ending Service"
+msgstr "نهاية الخدمة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_employee_views.xml
+msgid "ES Rewards"
+msgstr "مكافآت نهاية الخدمة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_employee_views.xml
+msgid "Hiring Date"
+msgstr "تاريخ التعيين"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_type_views.xml
+msgid "Units"
+msgstr "الوحدات"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_type_views.xml
+msgid "Zero Message"
+msgstr "رسالة الصفر"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "ES Analysis"
+msgstr "تحليل نهاية الخدمة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Confirm"
+msgstr "تأكيد"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Employee"
+msgstr "موظف"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Status"
+msgstr "الحالة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Company"
+msgstr "شركة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Date"
+msgstr "التاريخ"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "End Of Service Reward"
+msgstr "مكافأة نهاية الخدمة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Set to Draft"
+msgstr "تعيين كمسودة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Post Journal Entries"
+msgstr "ترحيل القيود المحاسبية"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Draft Journal Entries"
+msgstr "قيود محاسبية مسودة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Payment"
+msgstr "دفعة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Submit"
+msgstr "تقديم"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Second Approve"
+msgstr "موافقة ثانية"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Refuse"
+msgstr "رفض"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Reset To Draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "End of Service"
+msgstr "نهاية الخدمة"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Deduction Loan"
+msgstr "خصم القرض"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Other Deduction"
+msgstr "خصميات أخرى"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Holidays"
+msgstr "الإجازات"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Allowances"
+msgstr "البدلات"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Add a Allowances"
+msgstr "إضافة بدل"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Total Allowances"
+msgstr "إجمالي البدلات"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Deduction"
+msgstr "خصم"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Add a Deduction"
+msgstr "إضافة خصم"
+
+#. module: pt_hr_end_service_benefits
+#: hr_end_service_benefits/views/hr_end_service_benefit_views.xml
+msgid "Total Detuction"
+msgstr "إجمالي الخصميات"
+

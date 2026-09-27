@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="gs_vacation_view_hr_contract_form" model="ir.ui.view">
+        <field name="name">hr.contract.branch.form</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet//field[@name='state']" position="after">
+                <field name="vacation_state" invisible="1"/>
+                <widget name="web_ribbon" title="Unpaid Vacation" invisible="vacation_state != 'unpaid_vacation'"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="unpaid_vacation" string="Unpaid Vacation">
+                    <field name="unpaid_vacation_ids">
+                        <list editable="bottom">
+                            <field name="contract_id" column_invisible="1"/>
+                            <field name="employee_id" column_invisible="1"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="years" optional="hide"/>
+                            <field name="months" optional="hide"/>
+                            <field name="days" optional="hide"/>
+                            <field name="duration"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

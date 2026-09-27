@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="action_timeoff_xlsx_report" model="ir.actions.report">
+            <field name="name">timeoff Excel Report</field>
+            <field name="model">timeoff.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">pt_hr_timeoff_report.timeoff_xlsx_report</field>
+            <field name="report_file">pt_hr_timeoff_report.timeoff_xlsx_report</field>
+    </record>
+</odoo>

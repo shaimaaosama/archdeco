@@ -1,0 +1,287 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* gs_hr_eos
+#
+#. module: pt_hr_eos
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-21 07:34+0000\n"
+"PO-Revision-Date: 2022-03-21 07:34+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: gs_hr_eos
+#: model_terms:ir.ui.view,arch_db:gs_hr_eos.gs_eos_view_form
+msgid "<strong class=\"mr8\">Day</strong>"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model_terms:ir.ui.view,arch_db:gs_hr_eos.gs_eos_view_form
+msgid "<strong class=\"mr8\">Month</strong>"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_end_reason__create_uid
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_end_reason__create_date
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__day
+msgid "Day"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_end_reason__display_name
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.ui.menu,name:gs_hr_eos.menu_gs_eos
+#: model:ir.ui.menu,name:gs_hr_eos.sub_gs_eos
+msgid "EOS"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__eos_total_amount
+msgid "EOS Total Amount"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__employee_id
+msgid "Employee"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,help:gs_hr_eos.field_gs_eos__joining_date
+msgid "Employee joining date computed from the contract start date"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.actions.act_window,name:gs_hr_eos.gs_eos_action
+#: model:ir.model,name:gs_hr_eos.model_gs_eos
+msgid "End Of Service"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__end_of_service
+msgid "End Of Service Date"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.actions.act_window,name:gs_hr_eos.gs_end_reason_action
+#: model:ir.model,name:gs_hr_eos.model_gs_end_reason
+#: model:ir.ui.menu,name:gs_hr_eos.sub_gs_end_reason
+msgid "End Reason"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason1
+msgid ""
+"Expiration of contract terms, or the parties have agreed to terminate the contract\n"
+"            "
+msgstr "انتهاء مدة العقد، أو باتفاق الطرفين على إنهاء العقد"
+
+#. module: gs_hr_eos
+#: model:ir.model.fields.selection,name:gs_hr_eos.selection__gs_end_reason__contract_type__fixed_time
+#: model:ir.model.fields.selection,name:gs_hr_eos.selection__gs_eos__contract_type__fixed_time
+msgid "Fixed time"
+msgstr ""
+"محدد المدة"
+
+#. module: gs_hr_eos
+#: model_terms:ir.ui.view,arch_db:gs_hr_eos.gs_end_reason_view_search
+msgid "Follower"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model_terms:ir.ui.view,arch_db:gs_hr_eos.gs_end_reason_view_search
+msgid "Group By"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_end_reason__id
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__id
+msgid "ID"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__joining_date
+msgid "Joining Date"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_end_reason____last_update
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_end_reason__write_uid
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_end_reason__write_date
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason4
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason8
+msgid "Leaving work as a result of force majeure."
+msgstr "ترك العمل نتيجة قوة قاهرة"
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__month
+msgid "Month"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_end_reason__name
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__name
+msgid "Name"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__reason_id
+msgid "Reason"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__service_period
+msgid "Service Period"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason2
+msgid "Termination of the contract by the employer"
+msgstr "فسخ العقد من صاحب العمل"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason3
+msgid ""
+"Termination of the contract by the employer for one of the terms and conditions stated in\n"
+"                Article (80).\n"
+"            "
+msgstr "فسخ العقد من قبل صاحب العمل لأحد الحالات الواردة في المادة (80)"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason10
+msgid ""
+"Termination of the contract by the employer for one of the terms and "
+"conditions stated in Article (80)."
+msgstr ""
+"فسخ العقد من قبل صاحب العمل لأحد الحالات الواردة في المادة (80)"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason9
+msgid "Termination of the contract by the employer."
+msgstr ""
+"فسخ العقد من صاحب العمل"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason7
+msgid ""
+"Termination of the contract by the worker, or the worker has quit work for other reasons\n"
+"                not stated and in Article (81).\n"
+"            "
+msgstr ""
+"فسخ العقد من قبل العامل أو ترك العامل العمل لغير الحالات الواردة في المادة "
+"(81)"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason11
+msgid "The resignation of a worker."
+msgstr ""
+"استقالة العامل"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason12
+msgid "The worker and employer agree to terminate the contract."
+msgstr ""
+"اتفاق العامل وصاحب العمل على إنهاء العقد"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason6
+msgid ""
+"The worker leaves work for one of the conditions stated in Article (81)"
+msgstr "ترك العامل العمل لأحد الحالات الواردة في المادة (81)"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason13
+msgid ""
+"The worker leaves work for one of the conditions stated in Article (81)."
+msgstr ""
+"ترك العامل العمل لأحد الحالات الواردة في المادة (81)"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason14
+msgid ""
+"The worker leaves work without submitting his/her resignation, other than "
+"the conditions stated in Article (81)."
+msgstr ""
+"ترك العامل العمل دون تقديم استقالة لغير الحالات الواردة في المادة (81)"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason5
+msgid ""
+"The worker terminates the labor contract within six months into the marriage contract or\n"
+"                three months into birth.\n"
+"            "
+msgstr ""
+"إنهاء العاملة لعقد العمل خلال ستة أشهر من عقد الزواج أو خلال ثلاثة أشهر من "
+"الوضع"
+
+#. module: gs_hr_eos
+#: model:gs.end.reason,name:gs_hr_eos.gs_end_reason15
+msgid ""
+"The worker terminates the labor contract within six months into the marriage"
+" contract or three months into birth."
+msgstr ""
+"إنهاء العاملة لعقد العمل خلال ستة أشهر من عقد الزواج أو خلال ثلاثة أشهر من الوضع"
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_end_reason__contract_type
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__contract_type
+#: model_terms:ir.ui.view,arch_db:gs_hr_eos.gs_end_reason_view_search
+msgid "Type of Contract"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields.selection,name:gs_hr_eos.selection__gs_end_reason__contract_type__unlimited_period
+#: model:ir.model.fields.selection,name:gs_hr_eos.selection__gs_eos__contract_type__unlimited_period
+msgid "Unlimited period"
+msgstr ""
+"غير محدد المدة"
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__value
+msgid "Value"
+msgstr ""
+
+#. module: gs_hr_eos
+#: model:ir.model.fields,field_description:gs_hr_eos.field_gs_eos__year
+#: model_terms:ir.ui.view,arch_db:gs_hr_eos.gs_eos_view_form
+msgid "Year"
+msgstr ""

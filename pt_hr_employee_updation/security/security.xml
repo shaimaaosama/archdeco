@@ -1,0 +1,13 @@
+<odoo>
+    <data>
+        <record id="iqama_group_notification" model="res.groups">
+            <field name="name">Iqama Notification</field>
+        </record>
+         <record id="passport_group_notification" model="res.groups">
+            <field name="name">Passport Notification</field>
+        </record>
+         <record id="balady_group_notification" model="res.groups">
+            <field name="name">Balady Notification</field>
+        </record>
+    </data>
+</odoo>

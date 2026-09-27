@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gs_penalties_awards_setting,gs_penalties_awards_setting,model_gs_penalties_awards_setting,hr.group_hr_user,1,1,1,1
+access_gs_penalties_awards,gs_penalties_awards,model_gs_penalties_awards,hr.group_hr_user,1,1,1,1
+access_gs_penalties_awards_installment,gs_penalties_awards_installment,model_gs_penalties_awards_installment,hr.group_hr_user,1,1,1,1
+access_gs_pa_update_amount,gs_pa_update_amount,model_gs_pa_update_amount,hr.group_hr_user,1,1,1,1
+access_gs_send_email_wizard,gs_send_email_wizard,model_gs_send_email_wizard,hr.group_hr_user,1,1,1,1
+access_register_general_payment_wizard,register_general_payment_wizard,model_register_general_payment_wizard,hr.group_hr_user,1,1,1,1

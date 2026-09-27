@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_project_status_ubr_dashboard" model="ir.actions.client">
+        <field name="name">Project Status &amp; UBR</field>
+        <field name="tag">project_status_ubr_dashboard</field>
+    </record>
+
+    <menuitem
+        id="menu_project_status_ubr_dashboard"
+        name="Project Status &amp; UBR"
+        parent="account.account_reports_management_menu"
+        sequence="3"
+        action="action_project_status_ubr_dashboard"
+        groups="project_status_ubr_dashboard.group_project_status_ubr"
+    />
+</odoo>

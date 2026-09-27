@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="gs_hr_eos_eos_conf_tree_view" model="ir.ui.view">
+        <field name="name">eos.conf.view.tree</field>
+        <field name="model">eos.conf</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="company_id"/>
+                <field name="journal_id"/>
+                <field name="account_id"/>
+                <field name="account_credit_id"/>
+                <field name="day_of_operation"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_hr_eos_eos_conf_form_view" model="ir.ui.view">
+        <field name="name">eos.conf.view.form</field>
+        <field name="model">eos.conf</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="journal_id"/>
+                        </group>
+                        <group>
+                            <field name="account_id"/>
+                            <field name="account_credit_id"/>
+                            <field name="day_of_operation"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_hr_eos_eos_conf_action" model="ir.actions.act_window">
+        <field name="name">Eos Conf</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">eos.conf</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="gs_hr_eos_menu_eos_conf" name="Eos Conf" parent="pt_hr_eos.menu_gs_eos" action="gs_hr_eos_eos_conf_action" sequence="3"/>
+</odoo>

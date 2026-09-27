@@ -1,0 +1,11 @@
+<odoo>
+
+    <record id="group_purchase_excel_report" model="res.groups">
+        <field name="name">Purchase Excel Report</field>
+    </record>
+
+    <record id="group_inventory_aging_report" model="res.groups">
+        <field name="name">Inventory Aging</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hub_client_config_hr_manager,hub.client.config manager,model_hub_client_config,hr.group_hr_manager,1,1,1,1
+access_hub_attendance_sync_queue_hr_manager,hub.attendance.sync.queue manager,model_hub_attendance_sync_queue,hr.group_hr_manager,1,1,1,1
+access_hr_faceio_enrollment,hr.faceio.enrollment manager,model_hr_faceio_enrollment,hr.group_hr_manager,1,1,1,1

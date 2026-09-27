@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="gs_hr_insurance_employee_inherit_form_view" model="ir.ui.view" >
+            <field name="name">hr.employee.form.inherit.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <div class="oe_button_box" position="inside">
+                    <button class="oe_stat_button" name="follower_view" type="object" icon="fa-users">
+                        <field string="Follower" name="follower_count" widget="statinfo"/>
+                    </button>
+                </div>
+
+                    <xpath expr="//field[@name='fam_ids']/list//field[@name='member_name']" position="before">
+                    <field name="follower_id"/>
+                </xpath>
+
+                <xpath expr="//field[@name='fam_ids']/list//field[@name='birth_date']" position="before">
+                    <field name="gender" readonly="0"/>
+                </xpath>
+
+                <xpath expr="//field[@name='fam_ids']/list//field[@name='member_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='fam_ids']/list//field[@name='member_contact']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                    <attribute name="required">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='fam_ids']/list//field[@name='birth_date']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='fam_ids']/list//field[@name='relation_id']" position="attributes">
+                    <attribute name="readonly">0</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

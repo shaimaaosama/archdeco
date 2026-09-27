@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_attendance_view_form_mobile" model="ir.ui.view">
+        <field name="name">hr.attendance.form.mobile.app</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group" position="inside">
+                <separator string="Mobile App" invisible="in_mode != 'mobile' and out_mode != 'mobile'"
+                           colspan="2"/>
+                <group colspan="2" invisible="in_mode != 'mobile' and out_mode != 'mobile'">
+                    <group>
+                        <field name="mobile_check_in_location" invisible="in_mode != 'mobile'"/>
+                        <field name="mobile_check_in_distance" invisible="in_mode != 'mobile'"/>
+                    </group>
+                    <group>
+                        <field name="mobile_check_out_location" invisible="out_mode != 'mobile'"/>
+                        <field name="mobile_check_out_distance" invisible="out_mode != 'mobile'"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_attendance_tree_mobile" model="ir.ui.view">
+        <field name="name">hr.attendance.list.mobile.app</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <field name="out_country_name" position="after">
+                <field name="mobile_check_in_location" string="Mobile Location (In)" optional="hidden"/>
+                <field name="mobile_check_in_distance" string="Mobile Distance (In)" optional="hidden"/>
+                <field name="mobile_check_out_location" string="Mobile Location (Out)" optional="hidden"/>
+                <field name="mobile_check_out_distance" string="Mobile Distance (Out)" optional="hidden"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

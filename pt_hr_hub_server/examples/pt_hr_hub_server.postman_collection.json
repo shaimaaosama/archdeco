@@ -1,0 +1,1101 @@
+{
+  "info": {
+    "_postman_id": "7ad20610-7f7a-4e5e-84f6-2f8de7e2f2a1",
+    "name": "PT HR Hub Server - MuK REST",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman collection for pt_hr_hub_server and core MuK REST flows using HTTP Basic authentication only.\n\nHow to use:\n1) Set the collection or environment variables: base_url, user_login, user_password.\n2) Basic authentication is configured at collection level and inherited by all requests.\n3) Optional variables are provided for employee, expense, meeting, and payslip examples."
+  },
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{user_login}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{user_password}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Hub Attendance Endpoint",
+      "item": [
+        {
+          "name": "Create Attendance via pt_hr_hub_server",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employee_id\": {{employee_id}},\n  \"device_uuid\": \"{{device_uuid}}\",\n  \"faceio_id\": \"{{faceio_id}}\",\n  \"lat\": {{geofence_latitude}},\n  \"long\": {{geofence_longitude}}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/attendance",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "attendance"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Hub attendance created', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "var body = pm.response.json();",
+                  "pm.test('Attendance response contains success and attendance_id', function () {",
+                  "  pm.expect(body).to.have.property('success', true);",
+                  "  pm.expect(body).to.have.property('attendance_id');",
+                  "});",
+                  "if (body && body.attendance_id) {",
+                  "  pm.collectionVariables.set('attendance_id', body.attendance_id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Employee Data (CRUD)",
+      "item": [
+        {
+          "name": "Create Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.employee\",\n  \"values\": {\n    \"name\": \"Postman Employee\",\n    \"work_email\": \"postman.employee@example.com\",\n    \"x_device_uuid\": \"{{device_uuid}}\",\n    \"x_faceio_id\": \"{{faceio_id}}\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "create"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (Array.isArray(body) && body.length) {",
+                  "  pm.collectionVariables.set('employee_id', body[0]);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Read Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.employee\",\n  \"ids\": [{{employee_id}}],\n  \"fields\": [\"name\", \"work_email\", \"require_face_attendance\", \"x_device_uuid\", \"x_faceio_id\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/read",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "read"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Employee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.employee\",\n  \"ids\": [{{employee_id}}],\n  \"values\": {\n    \"work_email\": \"updated.employee@example.com\",\n    \"require_face_attendance\": {{require_face_attendance}},\n    \"x_geofence_enabled\": true,\n    \"x_geofence_latitude\": {{geofence_latitude}},\n    \"x_geofence_longitude\": {{geofence_longitude}},\n    \"x_geofence_radius_m\": {{geofence_radius_m}}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/write",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "write"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.employee\",\n  \"ids\": [{{employee_id}}]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/unlink",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "unlink"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Expenses (CRUD)",
+      "item": [
+        {
+          "name": "Create Expense",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.expense\",\n  \"values\": {\n    \"name\": \"Taxi - Airport\",\n    \"employee_id\": {{employee_id}},\n    \"unit_amount\": 50.0,\n    \"quantity\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "create"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (Array.isArray(body) && body.length) {",
+                  "  pm.collectionVariables.set('expense_id', body[0]);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Expense",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.expense\",\n  \"ids\": [{{expense_id}}],\n  \"values\": {\n    \"name\": \"Taxi - Airport (Updated)\",\n    \"unit_amount\": 55.0\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/write",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "write"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Expense",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.expense\",\n  \"domain\": [[\"employee_id\", \"=\", {{employee_id}}]],\n  \"fields\": [\"name\", \"employee_id\", \"unit_amount\", \"state\"],\n  \"limit\": 20,\n  \"order\": \"id desc\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/search_read",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "search_read"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Expense",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.expense\",\n  \"ids\": [{{expense_id}}]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/unlink",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "unlink"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Expense Approval",
+      "item": [
+        {
+          "name": "Create Expense Sheet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.expense.sheet\",\n  \"values\": {\n    \"name\": \"Sheet from Postman\",\n    \"employee_id\": {{employee_id}},\n    \"expense_line_ids\": [[6, 0, [{{expense_id}}]]]\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/create",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "create"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var body = pm.response.json();",
+                  "if (Array.isArray(body) && body.length) {",
+                  "  pm.collectionVariables.set('expense_sheet_id', body[0]);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Submit Expense Sheet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.expense.sheet\",\n  \"method\": \"action_submit_sheet\",\n  \"ids\": [{{expense_sheet_id}}],\n  \"args\": [],\n  \"kwargs\": {}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/call",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "call"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Approve Expense Sheet",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"hr.expense.sheet\",\n  \"method\": \"action_approve_expense_sheets\",\n  \"ids\": [{{expense_sheet_id}}],\n  \"args\": [],\n  \"kwargs\": {}\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/call",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "call"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports",
+      "item": [
+        {
+          "name": "Download Payslip PDF",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/report?report=hr_payroll.report_payslip&ids=[{{payslip_id}}]&type=PDF",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "report"
+              ],
+              "query": [
+                {
+                  "key": "report",
+                  "value": "hr_payroll.report_payslip"
+                },
+                {
+                  "key": "ids",
+                  "value": "[{{payslip_id}}]"
+                },
+                {
+                  "key": "type",
+                  "value": "PDF"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Central Server (Subscription)",
+      "item": [
+        {
+          "name": "Validate Client Subscription",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_code\": \"your_generated_uuid_code\",\n  \"server_url\": \"{{base_url}}\"\n}"
+            },
+            "url": {
+              "raw": "https://your-central-server.com/api/subscription/validate",
+              "protocol": "https",
+              "host": [
+                "your-central-server",
+                "com"
+              ],
+              "path": [
+                "api",
+                "subscription",
+                "validate"
+              ]
+            }
+          },
+          "auth": {
+            "type": "noauth"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Portal HR Hub (Portal Users)",
+      "item": [
+        {
+          "name": "Submit My Expense",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Travel to Client\",\n  \"product_id\": 1,\n  \"amount\": 120.0,\n  \"quantity\": 1,\n  \"submit\": true,\n  \"receipt_filename\": \"{{expense_receipt_filename}}\",\n  \"receipt_mimetype\": \"{{expense_receipt_mimetype}}\",\n  \"receipt_image_base64\": \"{{expense_receipt_image_base64}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/expense/submit",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "expense",
+                "submit"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Expenses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/expenses",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "expenses"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Payslips",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/payslips",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "payslips"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Payslip By Month (JSON)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/payslip?month={{payslip_month}}&year={{payslip_year}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "payslip"
+              ],
+              "query": [
+                {
+                  "key": "month",
+                  "value": "{{payslip_month}}"
+                },
+                {
+                  "key": "year",
+                  "value": "{{payslip_year}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Submit Leave Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"holiday_status_id\": 1,\n  \"date_from\": \"2026-05-10 08:00:00\",\n  \"date_to\": \"2026-05-15 17:00:00\",\n  \"description\": \"Summer Vacation\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/leave/request",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "leave",
+                "request"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Leaves",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/leaves",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "leaves"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Tasks",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/tasks",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "tasks"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Tasks Summary",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/tasks/summary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "tasks",
+                "summary"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Dashboard",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/dashboard?meetings_limit={{dashboard_meetings_limit}}&notifications_limit={{dashboard_notifications_limit}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "dashboard"
+              ],
+              "query": [
+                {
+                  "key": "meetings_limit",
+                  "value": "{{dashboard_meetings_limit}}"
+                },
+                {
+                  "key": "notifications_limit",
+                  "value": "{{dashboard_notifications_limit}}"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Dashboard returns employee and permissions payload', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  var body = pm.response.json();",
+                  "  pm.expect(body).to.have.property('employee_id');",
+                  "  pm.expect(body).to.have.property('permissions');",
+                  "  pm.expect(body.permissions).to.have.property('require_face_attendance');",
+                  "});",
+                  "var dashboard = pm.response.json();",
+                  "if (dashboard && dashboard.employee_id) {",
+                  "  pm.collectionVariables.set('employee_id', dashboard.employee_id);",
+                  "}",
+                  "if (dashboard && dashboard.permissions) {",
+                  "  pm.collectionVariables.set('require_face_attendance', String(Boolean(dashboard.permissions.require_face_attendance)));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get My Meetings (Filtered)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/meetings?from={{meeting_from}}&to={{meeting_to}}&limit={{meeting_limit}}&upcoming_only={{upcoming_only}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "meetings"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "{{meeting_from}}"
+                },
+                {
+                  "key": "to",
+                  "value": "{{meeting_to}}"
+                },
+                {
+                  "key": "limit",
+                  "value": "{{meeting_limit}}"
+                },
+                {
+                  "key": "upcoming_only",
+                  "value": "{{upcoming_only}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Mark My Task Done",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": {{task_id}},\n  \"feedback\": \"Completed from mobile\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/my/tasks/done",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "my",
+                "tasks",
+                "done"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Payroll: Get Employee Payslips",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/payroll/payslips",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "payroll",
+                "payslips"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Payroll: Get Employee Payslip Detail (JSON)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/payroll/payslip?employee_id={{employee_id}}&month={{payslip_month}}&year={{payslip_year}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "payroll",
+                "payslip"
+              ],
+              "query": [
+                {
+                  "key": "employee_id",
+                  "value": "{{employee_id}}"
+                },
+                {
+                  "key": "month",
+                  "value": "{{payslip_month}}"
+                },
+                {
+                  "key": "year",
+                  "value": "{{payslip_year}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Manager: List All Employees",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/manager/employees",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "manager",
+                "employees"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Payroll: List Available Payslip Months For Employee",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/payroll/payslip/months?employee_id={{employee_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "payroll",
+                "payslip",
+                "months"
+              ],
+              "query": [
+                {
+                  "key": "employee_id",
+                  "value": "{{employee_id}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Manager: Get Pending Approvals",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/manager/approvals",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "manager",
+                "approvals"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Manager: Assign Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employee_id\": {{employee_id}},\n  \"res_model\": \"sale.order\",\n  \"res_id\": 1,\n  \"summary\": \"Follow up with customer\",\n  \"note\": \"Call before end of day\",\n  \"date_deadline\": \"2026-05-10\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/manager/tasks/assign",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "manager",
+                "tasks",
+                "assign"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Manager: Approve Request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": {{approval_id}},\n  \"model\": \"hr.expense.sheet\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v2/hr_hub/manager/approve",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "hr_hub",
+                "manager",
+                "approve"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://test18.ptech.host"
+    },
+    {
+      "key": "db",
+      "value": "your_db_name"
+    },
+    {
+      "key": "user_login",
+      "value": "user@example.com"
+    },
+    {
+      "key": "user_password",
+      "value": "your_password"
+    },
+    {
+      "key": "employee_id",
+      "value": "1"
+    },
+    {
+      "key": "attendance_id",
+      "value": "1"
+    },
+    {
+      "key": "expense_id",
+      "value": "1"
+    },
+    {
+      "key": "expense_sheet_id",
+      "value": "1"
+    },
+    {
+      "key": "payslip_id",
+      "value": "1"
+    },
+    {
+      "key": "payslip_month",
+      "value": "5"
+    },
+    {
+      "key": "payslip_year",
+      "value": "2026"
+    },
+    {
+      "key": "task_id",
+      "value": "1"
+    },
+    {
+      "key": "approval_id",
+      "value": "1"
+    },
+    {
+      "key": "device_uuid",
+      "value": "e6fd8ef5-6d8e-4f72-99f5-9f5bb1dc8fd6"
+    },
+    {
+      "key": "faceio_id",
+      "value": "faceio_facial_id_here"
+    },
+    {
+      "key": "meeting_from",
+      "value": "2026-05-01 00:00:00"
+    },
+    {
+      "key": "meeting_to",
+      "value": "2026-05-31 23:59:59"
+    },
+    {
+      "key": "meeting_limit",
+      "value": "20"
+    },
+    {
+      "key": "dashboard_meetings_limit",
+      "value": "20"
+    },
+    {
+      "key": "dashboard_notifications_limit",
+      "value": "20"
+    },
+    {
+      "key": "upcoming_only",
+      "value": "true"
+    },
+    {
+      "key": "geofence_latitude",
+      "value": "24.7136"
+    },
+    {
+      "key": "geofence_longitude",
+      "value": "46.6753"
+    },
+    {
+      "key": "geofence_radius_m",
+      "value": "150"
+    },
+    {
+      "key": "expense_receipt_filename",
+      "value": "receipt.png"
+    },
+    {
+      "key": "expense_receipt_mimetype",
+      "value": "image/png"
+    },
+    {
+      "key": "expense_receipt_image_base64",
+      "value": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIHWP4////fwAJ+wP9KobjigAAAABJRU5ErkJggg=="
+    }
+  ]
+}

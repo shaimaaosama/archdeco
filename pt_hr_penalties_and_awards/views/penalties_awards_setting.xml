@@ -1,0 +1,52 @@
+<odoo>
+
+    <record id="gs_penalties_awards_setting_view_tree" model="ir.ui.view">
+        <field name="name">gs.penalties.awards.setting.view.tree</field>
+        <field name="model">gs.penalties.awards.setting</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="base_amount_ids" widget="many2many_tags"/>
+                <field name="base_num"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_penalties_awards_setting_view_form" model="ir.ui.view">
+        <field name="name">gs.penalties.awards.setting.view.form</field>
+        <field name="model">gs.penalties.awards.setting</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="base_num" invisible="is_type_fixed == True" />
+                            <field name="country_labour"/>
+                            <field name="penalty_employee"/>
+                            <field name="account_debit_id"/>
+                        </group>
+                        <group>
+                            <field name="type"/>
+                            <field name="is_type_fixed"/>
+                            <field name="base_amount_ids" widget="many2many_tags" invisible="is_type_fixed == True"/>
+                            <field name="penalty_labour"/>
+                            <field name="account_credit_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_penalties_awards_setting_action" model="ir.actions.act_window">
+        <field name="name">Penalties &amp; Awards Setting</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.penalties.awards.setting</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="sub_gs_penalties_awards_setting" name="Penalties &amp; Awards Setting"  parent="pt_hr_insurance.gs_hr_settings_main_menu" action="gs_penalties_awards_setting_action" sequence="23"/>
+
+</odoo>

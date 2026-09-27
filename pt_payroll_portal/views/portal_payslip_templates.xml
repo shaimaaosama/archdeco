@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--For Breadcrumbs-->
+    <template id="portal_breadcrumbs_requests" name="Portal layout : Expense Requests menu entries" inherit_id="portal.portal_breadcrumbs" priority="21">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'payslips' or payslip" t-attf-class="breadcrumb-item #{'active ' if not payslip else ''}">
+                <a t-if="payslip" t-attf-href="/my/payslips?{{ keep_query() }}">Payslips</a>
+                <t t-else="">Payslips</t>
+            </li>
+            
+            <li t-if="payslip" class="breadcrumb-item active">
+                <span t-field="payslip.name"/>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- Portal layout extension -->
+    <template id="portal_my_home_payslip" name="Portal My Home : payslip entries" inherit_id="portal.portal_my_home" priority="30">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-set="pt_payroll_portal_enable" t-value="True"/>
+            <div id="pt_payroll_portal">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="icon" t-value="'/pt_payroll_portal/static/src/img/payslip.svg'"/>
+                    <t t-set="title">Payslips</t>
+                    <t t-set="text">Follow your Employee Payslips details</t>
+                    <t t-set="url" t-value="'/my/payslips'"/>
+                    <t t-set="placeholder_count" t-value="'payslip_count'"/>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+    <!-- Main payslips list -->
+    <template id="portal_my_payslips" name="My Payslips">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Payslips</t>
+            </t>
+
+            <t t-if="not payslips">
+                <div class="alert alert-info" role="alert">
+                    <p class="mb-0">There are currently no payslips available for your account.</p>
+                </div>
+            </t>
+
+            <t t-if="payslips">
+                <table class="table table-striped table-hover o_portal_my_doc_table">
+                    <thead>
+                        <tr class="active">
+                            <th>Reference</th>
+                            <th>Period</th>
+                            <th>Company</th>
+                            <th class="text-end">Net Salary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="payslips" t-as="payslip">
+                            <tr>
+                                <td>
+                                    <a t-attf-href="/my/payslip/#{payslip.id}?access_token=#{payslip.access_token}">
+                                        <span t-field="payslip.name"/>
+                                    </a>
+                                </td>
+                                <td>
+                                    <span t-field="payslip.date_from" t-options='{"widget": "date"}'/>
+
+                                    <span>-</span>
+                                    <span t-field="payslip.date_to" t-options='{"widget": "date"}'/>
+                                </td>
+                                <td>
+                                    <span t-field="payslip.company_id.name"/>
+                                </td>
+                                <td class="text-end">
+                                    <span t-field="payslip.net_wage"
+                                          t-options='{"widget": "monetary", "display_currency": payslip.company_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+        </t>
+    </template>
+
+    <!-- Single payslip view -->
+    <template id="portal_my_payslip" name="My Payslip">
+        <t t-call="portal.portal_layout">
+            <div class="container">
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h2>Payslip:
+                                <span t-field="payslip.name"/>
+                            </h2>
+                            <div>
+                                <a t-attf-href="/my/payslips" class="btn btn-secondary btn-sm me-2">
+                                    <i class="fa fa-arrow-left"/>
+                                    Back to List
+                                </a>
+                                <a t-attf-href="/my/payslip/#{payslip.id}/download?access_token=#{payslip.access_token}" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-download"/>
+                                    Download PDF
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">Employee Information</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Employee:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.employee_id.name"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Department:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.employee_id.department_id.name"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Job Position:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.employee_id.job_id.name"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Contract:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.contract_id.name"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Company:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.company_id.name"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">Payslip Information</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Reference:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.number"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Batch name:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.payslip_run_id.name"/>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Period:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.date_from" t-options='{"widget": "date"}'/>
+                                        <span>-</span>
+                                        <span t-field="payslip.date_to" t-options='{"widget": "date"}'/>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Payment Date:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.paid_date" t-options='{"widget": "date"}'/>
+                                    </div>
+                                </div>
+                                <div class="row mb-2">
+                                    <div class="col-6 text-muted">Status:</div>
+                                    <div class="col-6">
+                                        <span t-field="payslip.state"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">Wage Details</h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td class="w-25"><strong>Basic Salary (<span class="text-capitalize" t-out="payslip.contract_id.wage_type"/>)</strong></td>
+                                        <td style="color:#875A7B" class="w-25">
+                                            <span t-out="payslip.contract_id._get_contract_wage()" t-options="{'widget': 'monetary', 'display_currency': payslip.company_id.currency_id}"/>
+                                        </td>
+                                        <td class="w-25"><strong>Gross Wage</strong></td>
+                                        <td style="color:#875A7B" class="w-25">
+                                            <span t-field="payslip.gross_wage" t-options="{'widget': 'monetary', 'display_currency': payslip.company_id.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="w-25"><strong>Net Wage</strong></td>
+                                        <td style="color:#875A7B" class="w-25" colspan="3">
+                                            <span t-field="payslip.net_wage" t-options="{'widget': 'monetary', 'display_currency': payslip.company_id.currency_id}"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="mb-0">Salary Details</h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th class="text-end">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="payslip.line_ids.filtered(lambda l: l.appears_on_payslip)"
+                                           t-as="line">
+                                            <tr>
+                                                <td>
+                                                    <span t-field="line.name"/>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-field="line.total"
+                                                          t-options='{"widget": "monetary", "display_currency": payslip.company_id.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="border-top">
+                                            <th>Net Salary</th>
+                                            <th class="text-end">
+                                                <span t-field="payslip.net_wage"
+                                                      t-options='{"widget": "monetary", "display_currency": payslip.company_id.currency_id}'/>
+                                            </th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4 mb-4">
+                    <div class="col-12 text-center">
+                        <a t-attf-href="/my/payslip/#{payslip.id}/download?access_token=#{payslip.access_token}" class="btn btn-primary">
+                            <i class="fa fa-download"/>
+                            Download Payslip PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

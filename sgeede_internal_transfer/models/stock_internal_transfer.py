@@ -140,6 +140,7 @@ class stock_internal_transfer(models.Model):
     def _get_warehouse_qty(self):
         for rec in self:
             for line in self.line_ids:
+                # line.available_quantity = line.backorder_id.source_warehouse_id.lot_location_id.available_quantity
                 stock_quant = self.env['stock.quant'].sudo().search([('product_id','=', line.product_id.id)
                                                                       , ('location_id.usage', '=', 'internal')])
                 for qty in stock_quant:
@@ -208,12 +209,16 @@ class stock_internal_transfer_line(models.Model):
 
 
     )
+    available_quantity = fields.Float()
+
 
     @api.onchange('product_qty')
     def _onchange_product_qty(self):
         if self.product_qty:
             if self.qty_warehouse < self.product_qty:
                 raise ValidationError(_("Quantity Bigger Than Quantity Qty Warehouse."))
+            # elif self.available_quantity > self.product_qty:
+            #     raise ValidationError(_("Quantity Bigger Than Available quantity in source location."))
 
     @api.onchange('product_id')
     def _onchange_product_id_is_secondary_unit(self):

@@ -1,0 +1,7 @@
+<odoo>
+
+    <record id="group_project_status_ubr" model="res.groups">
+        <field name="name">Project Status &amp; UBR Dashboard</field>
+    </record>
+
+</odoo>

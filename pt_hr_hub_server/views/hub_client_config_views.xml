@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hub_client_config_tree" model="ir.ui.view">
+        <field name="name">hub.client.config.tree</field>
+        <field name="model">hub.client.config</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="client_url"/>
+                <field name="client_db"/>
+                <field name="api_user"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hub_client_config_form" model="ir.ui.view">
+        <field name="name">hub.client.config.form</field>
+        <field name="model">hub.client.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="client_url"/>
+                        <field name="client_db"/>
+                        <field name="api_user"/>
+                        <field name="api_key" password="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hub_client_config" model="ir.actions.act_window">
+        <field name="name">Hub Client Configs</field>
+        <field name="res_model">hub.client.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hub_server_root" name="HR Hub" parent="hr.menu_hr_root" sequence="95" groups="hr.group_hr_manager"/>
+    <menuitem id="menu_hub_client_config" name="Client Configs" parent="menu_hub_server_root" action="action_hub_client_config" sequence="10" groups="hr.group_hr_manager"/>
+</odoo>

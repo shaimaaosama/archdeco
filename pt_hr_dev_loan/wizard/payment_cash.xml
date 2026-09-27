@@ -1,0 +1,38 @@
+<odoo>
+    <data>
+
+        <record id="payment_cash_view" model="ir.ui.view">
+            <field name="name">Cash Payment</field>
+            <field name="model">payment.cash</field>
+            <field name="arch" type="xml">
+                <form>
+                        <group>
+                            <group>
+                                <field name="journal_id"/>
+                                <field name="installment_loan_ids" invisible="1"/>
+                                <field name="selected_installment_ids"
+                                   domain="[('id', 'in', installment_loan_ids)]"
+                                   widget="many2many_tags"/>
+<!--                                <field name="installment_loan_id" domain="[('id', 'in', installment_loan_ids)]"/>-->
+                                <field name="amount" readonly="1"/>
+                            </group>
+                        </group>
+                         <footer>
+
+                	<button class="oe_highlight" name="payment" string="Payment Cash" type="object" />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+                </form>
+            </field>
+        </record>
+
+                <!-- Wizard Action -->
+        <record id="action_payment_cash" model="ir.actions.act_window">
+            <field name="name">Cash Payment</field>
+            <field name="res_model">payment.cash</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

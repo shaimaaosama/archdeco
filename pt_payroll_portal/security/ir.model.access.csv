@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_payslip_portal,hr.payslip.portal,hr_payroll.model_hr_payslip,base.group_portal,1,0,0,0
+access_hr_payslip_line_portal,hr.payslip.line.portal,hr_payroll.model_hr_payslip_line,base.group_portal,1,0,0,0

@@ -1,0 +1,1575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+
+    <t
+        t-name="project_status_ubr_dashboard.ProjectStatusUBRDashboard"
+        owl="1"
+    >
+        <div class="o_project_ubr_dashboard">
+
+            <div class="o_project_ubr_header">
+                <div class="o_project_ubr_header_content">
+
+                    <div class="o_project_ubr_header_text">
+                        <h1 class="o_project_ubr_title">
+                            Project Status &amp; UBR
+                        </h1>
+
+                        <p class="o_project_ubr_subtitle">
+                            Project financial performance,
+                            progress and profitability overview
+                        </p>
+                    </div>
+
+                    <div class="o_project_ubr_header_actions">
+                        <button
+                            type="button"
+                            class="btn o_project_ubr_export_button"
+                            t-on-click="exportExcel"
+                            t-att-disabled="state.loading"
+                        >
+                            <i class="fa fa-file-excel-o me-2"/>
+                            Export Excel
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="o_project_ubr_body">
+
+                <div class="o_project_ubr_filter_card">
+
+                    <div class="o_project_ubr_filter_header">
+
+                        <div class="o_project_ubr_filter_heading">
+
+                            <div class="o_project_ubr_filter_icon">
+                                <i class="fa fa-sliders"/>
+                            </div>
+
+                            <div>
+                                <h3>Dashboard Filters</h3>
+
+                                <span>
+                                    Refine the dashboard using one
+                                    or multiple selections
+                                </span>
+                            </div>
+
+                        </div>
+
+                        <div class="o_project_ubr_result_count">
+                            <i class="fa fa-briefcase me-2"/>
+
+                            <strong t-esc="state.count"/>
+
+                            <span class="ms-1">
+                                Projects
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="o_project_ubr_filter_grid">
+
+                        <!-- Projects -->
+                        <div class="o_project_ubr_filter_control">
+
+                            <label>
+                                <i class="fa fa-briefcase"/>
+                                Projects
+                            </label>
+
+                            <div class="o_project_ubr_multi_dropdown">
+
+                                <button
+                                    type="button"
+                                    class="o_project_ubr_dropdown_button"
+                                    t-on-click="
+                                        (event) =>
+                                        this.toggleDropdown(
+                                            'projects',
+                                            event
+                                        )
+                                    "
+                                >
+                                    <span
+                                        class="o_project_ubr_dropdown_text"
+                                        t-esc="
+                                            getSelectedText(
+                                                'project_ids',
+                                                state.options.projects,
+                                                'All Projects'
+                                            )
+                                        "
+                                    />
+
+                                    <span class="o_project_ubr_dropdown_end">
+
+                                        <span
+                                            t-if="
+                                                getSelectedCount(
+                                                    'project_ids'
+                                                )
+                                            "
+                                            class="o_project_ubr_selection_count"
+                                            t-esc="
+                                                getSelectedCount(
+                                                    'project_ids'
+                                                )
+                                            "
+                                        />
+
+                                        <i
+                                            t-att-class="
+                                                isDropdownOpen(
+                                                    'projects'
+                                                )
+                                                ? 'fa fa-chevron-up'
+                                                : 'fa fa-chevron-down'
+                                            "
+                                        />
+
+                                    </span>
+                                </button>
+
+                                <div
+                                    t-if="
+                                        isDropdownOpen(
+                                            'projects'
+                                        )
+                                    "
+                                    class="o_project_ubr_dropdown_menu"
+                                    t-on-click.stop="() => {}"
+                                >
+                                    <div class="o_project_ubr_dropdown_toolbar">
+
+                                        <span>
+                                            Select Projects
+                                        </span>
+
+                                        <button
+                                            type="button"
+                                            t-on-click="
+                                                (event) =>
+                                                this.clearMultiFilter(
+                                                    'project_ids',
+                                                    event
+                                                )
+                                            "
+                                        >
+                                            Clear
+                                        </button>
+
+                                    </div>
+
+                                    <div class="o_project_ubr_dropdown_search">
+
+                                        <i class="fa fa-search"/>
+
+                                        <input
+                                            type="text"
+                                            placeholder="Search projects..."
+                                            t-att-value="
+                                                state.search.projects
+                                            "
+                                            t-on-input="
+                                                (event) =>
+                                                this.updateDropdownSearch(
+                                                    'projects',
+                                                    event
+                                                )
+                                            "
+                                            t-on-click.stop="() => {}"
+                                        />
+
+                                        <button
+                                            t-if="
+                                                state.search.projects
+                                            "
+                                            type="button"
+                                            class="o_project_ubr_search_clear"
+                                            title="Clear search"
+                                            t-on-click="
+                                                (event) =>
+                                                this.clearDropdownSearch(
+                                                    'projects',
+                                                    event
+                                                )
+                                            "
+                                        >
+                                            <i class="fa fa-times"/>
+                                        </button>
+
+                                    </div>
+
+                                    <div class="o_project_ubr_dropdown_options">
+
+                                        <label
+                                            t-foreach="
+                                                getFilteredProjects()
+                                            "
+                                            t-as="project"
+                                            t-key="project.id"
+                                            class="o_project_ubr_dropdown_option"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="
+                                                    isOptionSelected(
+                                                        'project_ids',
+                                                        project.id
+                                                    )
+                                                "
+                                                t-on-change="
+                                                    (event) =>
+                                                    this.toggleMultiOption(
+                                                        'project_ids',
+                                                        project.id,
+                                                        event
+                                                    )
+                                                "
+                                            />
+
+                                            <span t-esc="project.name"/>
+                                        </label>
+
+                                        <div
+                                            t-if="
+                                                !getFilteredProjects().length
+                                            "
+                                            class="o_project_ubr_no_options"
+                                        >
+                                            No matching projects found
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="o_project_ubr_filter_control">
+
+                            <label>
+                                <i class="fa fa-tasks"/>
+                                Status
+                            </label>
+
+                            <div class="o_project_ubr_multi_dropdown">
+
+                                <button
+                                    type="button"
+                                    class="o_project_ubr_dropdown_button"
+                                    t-on-click="
+                                        (event) =>
+                                        this.toggleDropdown(
+                                            'statuses',
+                                            event
+                                        )
+                                    "
+                                >
+                                    <span
+                                        class="o_project_ubr_dropdown_text"
+                                        t-esc="
+                                            getSelectedText(
+                                                'status_ids',
+                                                state.options.statuses,
+                                                'All Statuses'
+                                            )
+                                        "
+                                    />
+
+                                    <span class="o_project_ubr_dropdown_end">
+
+                                        <span
+                                            t-if="
+                                                getSelectedCount(
+                                                    'status_ids'
+                                                )
+                                            "
+                                            class="o_project_ubr_selection_count"
+                                            t-esc="
+                                                getSelectedCount(
+                                                    'status_ids'
+                                                )
+                                            "
+                                        />
+
+                                        <i
+                                            t-att-class="
+                                                isDropdownOpen(
+                                                    'statuses'
+                                                )
+                                                ? 'fa fa-chevron-up'
+                                                : 'fa fa-chevron-down'
+                                            "
+                                        />
+
+                                    </span>
+                                </button>
+
+                                <div
+                                    t-if="
+                                        isDropdownOpen(
+                                            'statuses'
+                                        )
+                                    "
+                                    class="o_project_ubr_dropdown_menu"
+                                    t-on-click.stop="() => {}"
+                                >
+                                    <div class="o_project_ubr_dropdown_toolbar">
+
+                                        <span>Select Status</span>
+
+                                        <button
+                                            type="button"
+                                            t-on-click="
+                                                (event) =>
+                                                this.clearMultiFilter(
+                                                    'status_ids',
+                                                    event
+                                                )
+                                            "
+                                        >
+                                            Clear
+                                        </button>
+
+                                    </div>
+
+                                    <div class="o_project_ubr_dropdown_options">
+
+                                        <label
+                                            t-foreach="
+                                                state.options.statuses
+                                            "
+                                            t-as="status"
+                                            t-key="status.id"
+                                            class="o_project_ubr_dropdown_option"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="
+                                                    isOptionSelected(
+                                                        'status_ids',
+                                                        status.id
+                                                    )
+                                                "
+                                                t-on-change="
+                                                    (event) =>
+                                                    this.toggleMultiOption(
+                                                        'status_ids',
+                                                        status.id,
+                                                        event
+                                                    )
+                                                "
+                                            />
+
+                                            <span t-esc="status.name"/>
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Branch -->
+                        <div class="o_project_ubr_filter_control">
+
+                            <label>
+                                <i class="fa fa-sitemap"/>
+
+                                <t
+                                    t-esc="
+                                        state.options.branch_label
+                                        || 'Branch'
+                                    "
+                                />
+                            </label>
+
+                            <div class="o_project_ubr_multi_dropdown">
+
+                                <button
+                                    type="button"
+                                    class="o_project_ubr_dropdown_button"
+                                    t-on-click="
+                                        (event) =>
+                                        this.toggleDropdown(
+                                            'branches',
+                                            event
+                                        )
+                                    "
+                                >
+                                    <span
+                                        class="o_project_ubr_dropdown_text"
+                                        t-esc="
+                                            getSelectedText(
+                                                'branch_ids',
+                                                state.options.branches,
+                                                'All Branches'
+                                            )
+                                        "
+                                    />
+
+                                    <span class="o_project_ubr_dropdown_end">
+
+                                        <span
+                                            t-if="
+                                                getSelectedCount(
+                                                    'branch_ids'
+                                                )
+                                            "
+                                            class="o_project_ubr_selection_count"
+                                            t-esc="
+                                                getSelectedCount(
+                                                    'branch_ids'
+                                                )
+                                            "
+                                        />
+
+                                        <i
+                                            t-att-class="
+                                                isDropdownOpen(
+                                                    'branches'
+                                                )
+                                                ? 'fa fa-chevron-up'
+                                                : 'fa fa-chevron-down'
+                                            "
+                                        />
+
+                                    </span>
+                                </button>
+
+                                <div
+                                    t-if="
+                                        isDropdownOpen(
+                                            'branches'
+                                        )
+                                    "
+                                    class="o_project_ubr_dropdown_menu"
+                                    t-on-click.stop="() => {}"
+                                >
+                                    <div class="o_project_ubr_dropdown_toolbar">
+
+                                        <span>Select Branches</span>
+
+                                        <button
+                                            type="button"
+                                            t-on-click="
+                                                (event) =>
+                                                this.clearMultiFilter(
+                                                    'branch_ids',
+                                                    event
+                                                )
+                                            "
+                                        >
+                                            Clear
+                                        </button>
+
+                                    </div>
+
+                                    <div class="o_project_ubr_dropdown_options">
+
+                                        <label
+                                            t-foreach="
+                                                state.options.branches
+                                            "
+                                            t-as="branch"
+                                            t-key="branch.id"
+                                            class="o_project_ubr_dropdown_option"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="
+                                                    isOptionSelected(
+                                                        'branch_ids',
+                                                        branch.id
+                                                    )
+                                                "
+                                                t-on-change="
+                                                    (event) =>
+                                                    this.toggleMultiOption(
+                                                        'branch_ids',
+                                                        branch.id,
+                                                        event
+                                                    )
+                                                "
+                                            />
+
+                                            <span t-esc="branch.name"/>
+                                        </label>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Partner -->
+                        <div class="o_project_ubr_filter_control">
+
+                            <label>
+                                <i class="fa fa-user"/>
+                                Partner
+                            </label>
+
+                            <div class="o_project_ubr_multi_dropdown">
+
+                                <button
+                                    type="button"
+                                    class="o_project_ubr_dropdown_button"
+                                    t-on-click="
+                                        (event) =>
+                                        this.toggleDropdown(
+                                            'partners',
+                                            event
+                                        )
+                                    "
+                                >
+                                    <span
+                                        class="o_project_ubr_dropdown_text"
+                                        t-esc="
+                                            getSelectedText(
+                                                'partner_ids',
+                                                state.options.partners,
+                                                'All Partners'
+                                            )
+                                        "
+                                    />
+
+                                    <span class="o_project_ubr_dropdown_end">
+
+                                        <span
+                                            t-if="
+                                                getSelectedCount(
+                                                    'partner_ids'
+                                                )
+                                            "
+                                            class="o_project_ubr_selection_count"
+                                            t-esc="
+                                                getSelectedCount(
+                                                    'partner_ids'
+                                                )
+                                            "
+                                        />
+
+                                        <i
+                                            t-att-class="
+                                                isDropdownOpen(
+                                                    'partners'
+                                                )
+                                                ? 'fa fa-chevron-up'
+                                                : 'fa fa-chevron-down'
+                                            "
+                                        />
+
+                                    </span>
+                                </button>
+
+                                <div
+                                    t-if="
+                                        isDropdownOpen(
+                                            'partners'
+                                        )
+                                    "
+                                    class="o_project_ubr_dropdown_menu"
+                                    t-on-click.stop="() => {}"
+                                >
+                                    <div class="o_project_ubr_dropdown_toolbar">
+
+                                        <span>Select Partners</span>
+
+                                        <button
+                                            type="button"
+                                            t-on-click="
+                                                (event) =>
+                                                this.clearMultiFilter(
+                                                    'partner_ids',
+                                                    event
+                                                )
+                                            "
+                                        >
+                                            Clear
+                                        </button>
+
+                                    </div>
+
+                                    <div class="o_project_ubr_dropdown_search">
+
+                                        <i class="fa fa-search"/>
+
+                                        <input
+                                            type="text"
+                                            placeholder="Search partners..."
+                                            t-att-value="
+                                                state.search.partners
+                                            "
+                                            t-on-input="
+                                                (event) =>
+                                                this.updateDropdownSearch(
+                                                    'partners',
+                                                    event
+                                                )
+                                            "
+                                            t-on-click.stop="() => {}"
+                                        />
+
+                                        <button
+                                            t-if="
+                                                state.search.partners
+                                            "
+                                            type="button"
+                                            class="o_project_ubr_search_clear"
+                                            title="Clear search"
+                                            t-on-click="
+                                                (event) =>
+                                                this.clearDropdownSearch(
+                                                    'partners',
+                                                    event
+                                                )
+                                            "
+                                        >
+                                            <i class="fa fa-times"/>
+                                        </button>
+
+                                    </div>
+
+                                    <div class="o_project_ubr_dropdown_options">
+
+                                        <label
+                                            t-foreach="
+                                                getFilteredPartners()
+                                            "
+                                            t-as="partner"
+                                            t-key="partner.id"
+                                            class="o_project_ubr_dropdown_option"
+                                        >
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="
+                                                    isOptionSelected(
+                                                        'partner_ids',
+                                                        partner.id
+                                                    )
+                                                "
+                                                t-on-change="
+                                                    (event) =>
+                                                    this.toggleMultiOption(
+                                                        'partner_ids',
+                                                        partner.id,
+                                                        event
+                                                    )
+                                                "
+                                            />
+
+                                            <span t-esc="partner.name"/>
+                                        </label>
+
+                                        <div
+                                            t-if="
+                                                !getFilteredPartners().length
+                                            "
+                                            class="o_project_ubr_no_options"
+                                        >
+                                            No matching partners found
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Accounting Period -->
+                        <div
+                            class="
+                                o_project_ubr_filter_control
+                                o_project_ubr_period_control
+                            "
+                        >
+                            <label>
+                                <i class="fa fa-calendar"/>
+                                Accounting Period
+                            </label>
+
+                            <div class="o_project_ubr_date_range">
+
+                                <div class="o_project_ubr_date_field">
+                                    <span>From</span>
+
+                                    <input
+                                        type="date"
+                                        class="form-control"
+                                        t-att-value="
+                                            state.filters.date_from
+                                        "
+                                        t-on-change="
+                                            (event) =>
+                                            this.updateDate(
+                                                'date_from',
+                                                event
+                                            )
+                                        "
+                                    />
+                                </div>
+
+                                <div class="o_project_ubr_date_separator">
+                                    <i class="fa fa-long-arrow-right"/>
+                                </div>
+
+                                <div class="o_project_ubr_date_field">
+                                    <span>To</span>
+
+                                    <input
+                                        type="date"
+                                        class="form-control"
+                                        t-att-value="
+                                            state.filters.date_to
+                                        "
+                                        t-on-change="
+                                            (event) =>
+                                            this.updateDate(
+                                                'date_to',
+                                                event
+                                            )
+                                        "
+                                    />
+                                </div>
+
+                            </div>
+
+                            <div class="o_project_ubr_date_hint">
+                                <i class="fa fa-info-circle"/>
+
+                                <span>
+                                    Leave the dates empty to display
+                                    amounts for all periods.
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="o_project_ubr_filter_footer">
+
+                        <div class="o_project_ubr_filter_actions">
+
+                            <button
+                                type="button"
+                                class="btn o_project_ubr_reset_button"
+                                t-on-click="resetFilters"
+                                t-att-disabled="state.loading"
+                            >
+                                <i class="fa fa-refresh me-2"/>
+                                Reset
+                            </button>
+
+                            <button
+                                type="button"
+                                class="btn o_project_ubr_apply_button"
+                                t-on-click="applyFilters"
+                                t-att-disabled="state.loading"
+                            >
+                                <i class="fa fa-filter me-2"/>
+                                Apply Filters
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="o_project_ubr_loading"
+                    t-if="state.loading"
+                >
+                    <div class="o_project_ubr_spinner"/>
+
+                    <strong>
+                        Loading project information...
+                    </strong>
+                </div>
+
+                <div
+                    class="o_project_ubr_table_card"
+                    t-if="!state.loading"
+                >
+                    <div class="o_project_ubr_table_wrapper">
+
+                        <table class="o_project_ubr_table">
+
+                            <thead>
+                                <tr>
+                                    <th class="o_sticky_column o_project_column">
+                                        Project
+                                    </th>
+
+                                    <th class="o_status_column">
+                                        Status
+                                    </th>
+
+                                    <th class="o_sales_order_column">
+                                        Sales Orders
+                                    </th>
+
+                                    <th class="o_analytic_column">
+                                        Analytic Accounts
+                                    </th>
+
+                                    <th class="o_branch_column">
+                                        Branch
+                                    </th>
+
+                                    <th class="o_partner_column">
+                                        Partner
+                                    </th>
+
+                                    <th>Sales Orders Value</th>
+                                    <th>Adjusted Orders Value</th>
+                                    <th>Total Sales Orders Value</th>
+                                    <th>Total Expected Expenses</th>
+                                    <th>Actual Expenses</th>
+                                    <th>Actual Sales</th>
+                                    <th>POC %</th>
+                                    <th>UBR</th>
+                                    <th>Retention (12102)</th>
+                                    <th>Advance Payment (12103)</th>
+                                    <th>LG (1401)</th>
+                                    <th>Actual GM %</th>
+                                    <th>Expected Expenses</th>
+                                    <th>Expected Sales</th>
+                                    <th>Expected GM %</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <t
+                                    t-if="state.rows.length"
+                                    t-foreach="state.rows"
+                                    t-as="row"
+                                    t-key="row.project_id"
+                                >
+                                    <tr>
+
+                                        <!-- Project -->
+                                        <td
+                                            class="
+                                                o_sticky_column
+                                                o_project_name_cell
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <div class="o_project_ubr_project_name">
+                                                <t t-esc="row.project"/>
+                                            </div>
+                                        </td>
+
+                                        <!-- Status -->
+                                        <td
+                                            class="
+                                                o_project_ubr_center_cell
+                                                o_project_ubr_status_cell
+                                            "
+                                        >
+                                            <span class="o_project_ubr_status">
+                                                <t t-esc="row.status"/>
+                                            </span>
+                                        </td>
+
+                                        <!-- Sales Orders -->
+                                        <td class="o_project_ubr_sales_orders_cell">
+
+                                            <t
+                                                t-if="
+                                                    row.sales_orders
+                                                    &amp;&amp;
+                                                    row.sales_orders.length
+                                                "
+                                            >
+                                                <t
+                                                    t-foreach="
+                                                        row.sales_orders.split(', ')
+                                                    "
+                                                    t-as="sale_order_name"
+                                                    t-key="sale_order_name_index"
+                                                >
+                                                    <div class="o_project_ubr_list_line">
+
+                                                        <span class="o_project_ubr_list_bullet">
+                                                            *
+                                                        </span>
+
+                                                        <button
+                                                            type="button"
+                                                            class="o_project_ubr_value_link"
+                                                            t-on-click="
+                                                                () =>
+                                                                this.openSaleOrder(
+                                                                    row,
+                                                                    sale_order_name
+                                                                )
+                                                            "
+                                                        >
+                                                            <t t-esc="sale_order_name"/>
+                                                        </button>
+
+                                                    </div>
+                                                </t>
+                                            </t>
+
+                                            <span
+                                                t-else=""
+                                                class="o_project_ubr_empty_value"
+                                            >
+                                                -
+                                            </span>
+
+                                        </td>
+
+                                        <!-- Analytic Accounts -->
+                                        <td class="o_project_ubr_analytic_accounts">
+
+                                            <t
+                                                t-if="
+                                                    row.analytic_accounts
+                                                    &amp;&amp;
+                                                    row.analytic_accounts.length
+                                                "
+                                            >
+                                                <t
+                                                    t-foreach="
+                                                        row.analytic_accounts
+                                                    "
+                                                    t-as="analytic"
+                                                    t-key="analytic.id"
+                                                >
+                                                    <div class="o_project_ubr_list_line">
+
+                                                        <span class="o_project_ubr_list_bullet">
+                                                            *
+                                                        </span>
+
+                                                        <span t-esc="analytic.name"/>
+
+                                                    </div>
+                                                </t>
+                                            </t>
+
+                                            <span
+                                                t-else=""
+                                                class="o_project_ubr_empty_value"
+                                            >
+                                                -
+                                            </span>
+
+                                        </td>
+
+                                        <!-- Branch -->
+                                        <td
+                                            class="
+                                                o_project_ubr_branch_cell
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <div class="o_project_ubr_centered_list">
+
+                                                <t
+                                                    t-if="
+                                                        row.branch
+                                                        &amp;&amp;
+                                                        row.branch.length
+                                                    "
+                                                >
+                                                    <t
+                                                        t-foreach="
+                                                            row.branch.split(', ')
+                                                        "
+                                                        t-as="branch_name"
+                                                        t-key="branch_name_index"
+                                                    >
+                                                        <div class="o_project_ubr_list_line">
+
+                                                            <span class="o_project_ubr_list_bullet">
+                                                                *
+                                                            </span>
+
+                                                            <span t-esc="branch_name"/>
+
+                                                        </div>
+                                                    </t>
+                                                </t>
+
+                                                <span
+                                                    t-else=""
+                                                    class="o_project_ubr_empty_value"
+                                                >
+                                                    -
+                                                </span>
+
+                                            </div>
+                                        </td>
+
+                                        <!-- Partner -->
+                                        <td class="o_project_ubr_partner_cell">
+
+                                            <t
+                                                t-if="
+                                                    row.partner
+                                                    &amp;&amp;
+                                                    row.partner.length
+                                                "
+                                            >
+                                                <t
+                                                    t-foreach="
+                                                        row.partner.split(', ')
+                                                    "
+                                                    t-as="partner_name"
+                                                    t-key="partner_name_index"
+                                                >
+                                                    <div class="o_project_ubr_list_line">
+
+                                                        <span class="o_project_ubr_list_bullet">
+                                                            *
+                                                        </span>
+
+                                                        <span t-esc="partner_name"/>
+
+                                                    </div>
+                                                </t>
+                                            </t>
+
+                                            <span
+                                                t-else=""
+                                                class="o_project_ubr_empty_value"
+                                            >
+                                                -
+                                            </span>
+
+                                        </td>
+
+                                        <!-- Sales Orders Value -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <button
+                                                type="button"
+                                                class="o_project_ubr_value_link"
+                                                t-on-click="
+                                                    () =>
+                                                    this.openSalesOrders(
+                                                        row
+                                                    )
+                                                "
+                                            >
+                                                <t
+                                                    t-esc="
+                                                        formatAmount(
+                                                            row.sales_orders_value
+                                                        )
+                                                    "
+                                                />
+                                            </button>
+                                        </td>
+
+                                        <!-- Adjusted Orders Value -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <t
+                                                t-esc="
+                                                    formatAmount(
+                                                        row.adjusted_orders_value
+                                                    )
+                                                "
+                                            />
+                                        </td>
+
+                                        <!-- Total Sales Orders Value -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                                o_project_ubr_total_value
+                                            "
+                                        >
+                                            <t
+                                                t-esc="
+                                                    formatAmount(
+                                                        row.total_sales_orders_value
+                                                    )
+                                                "
+                                            />
+                                        </td>
+
+                                        <!-- Total Expected Expenses -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <button
+                                                type="button"
+                                                class="o_project_ubr_value_link"
+                                                t-on-click="
+                                                    () =>
+                                                    this.openExpectedExpenseSalesOrders(
+                                                        row
+                                                    )
+                                                "
+                                            >
+                                                <t
+                                                    t-esc="
+                                                        formatAmount(
+                                                            row.total_expected_expenses
+                                                        )
+                                                    "
+                                                />
+                                            </button>
+                                        </td>
+
+                                        <!-- Actual Expenses -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <button
+                                                type="button"
+                                                class="o_project_ubr_value_link"
+                                                t-on-click="
+                                                    () =>
+                                                    this.openJournalItems(
+                                                        row,
+                                                        'actual_expenses'
+                                                    )
+                                                "
+                                            >
+                                                <t
+                                                    t-esc="
+                                                        formatAmount(
+                                                            row.actual_expenses
+                                                        )
+                                                    "
+                                                />
+                                            </button>
+                                        </td>
+
+                                        <!-- Actual Sales -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <button
+                                                type="button"
+                                                class="o_project_ubr_value_link"
+                                                t-on-click="
+                                                    () =>
+                                                    this.openJournalItems(
+                                                        row,
+                                                        'actual_sales'
+                                                    )
+                                                "
+                                            >
+                                                <t
+                                                    t-esc="
+                                                        formatAmount(
+                                                            row.actual_sales
+                                                        )
+                                                    "
+                                                />
+                                            </button>
+                                        </td>
+
+                                        <!-- POC -->
+                                        <td class="o_project_ubr_center_cell">
+                                            <div class="o_project_ubr_percentage_value">
+                                                <t
+                                                    t-esc="
+                                                        formatPercentage(
+                                                            row.poc
+                                                        )
+                                                    "
+                                                />
+                                            </div>
+                                        </td>
+
+                                        <!-- UBR -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <t
+                                                t-esc="
+                                                    formatAmount(
+                                                        row.ubr
+                                                    )
+                                                "
+                                            />
+                                        </td>
+
+                                        <!-- Retention -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <button
+                                                type="button"
+                                                class="o_project_ubr_value_link"
+                                                t-on-click="
+                                                    () =>
+                                                    this.openJournalItems(
+                                                        row,
+                                                        'retention'
+                                                    )
+                                                "
+                                            >
+                                                <t
+                                                    t-esc="
+                                                        formatAmount(
+                                                            row.retention
+                                                        )
+                                                    "
+                                                />
+                                            </button>
+                                        </td>
+
+                                        <!-- Advance Payment -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <button
+                                                type="button"
+                                                class="o_project_ubr_value_link"
+                                                t-on-click="
+                                                    () =>
+                                                    this.openJournalItems(
+                                                        row,
+                                                        'down_payment'
+                                                    )
+                                                "
+                                            >
+                                                <t
+                                                    t-esc="
+                                                        formatAmount(
+                                                            row.down_payment
+                                                        )
+                                                    "
+                                                />
+                                            </button>
+                                        </td>
+
+                                        <!-- LG -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <button
+                                                type="button"
+                                                class="o_project_ubr_value_link"
+                                                t-on-click="() => this.openJournalItems(row, 'lg')"
+                                            >
+                                                <t
+                                                    t-esc="
+                                                        formatAmount(
+                                                            row.lg
+                                                        )
+                                                    "
+                                                />
+                                            </button>
+                                        </td>
+
+                                        <!-- Actual GM -->
+                                        <td class="o_project_ubr_center_cell">
+                                            <span
+                                                t-att-class="
+                                                    'o_project_ubr_gm '
+                                                    +
+                                                    percentageClass(
+                                                        row.actual_gm
+                                                    )
+                                                "
+                                            >
+                                                <t
+                                                    t-esc="
+                                                        formatPercentage(
+                                                            row.actual_gm
+                                                        )
+                                                    "
+                                                />
+                                            </span>
+                                        </td>
+
+                                        <!-- Expected Expenses -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <t
+                                                t-esc="
+                                                    formatAmount(
+                                                        row.remaining_expected_expenses
+                                                    )
+                                                "
+                                            />
+                                        </td>
+
+                                        <!-- Expected Sales -->
+                                        <td
+                                            class="
+                                                o_project_ubr_amount
+                                                o_project_ubr_center_cell
+                                            "
+                                        >
+                                            <t
+                                                t-esc="
+                                                    formatAmount(
+                                                        row.expected_sales
+                                                    )
+                                                "
+                                            />
+                                        </td>
+
+                                        <!-- Expected GM -->
+                                        <td class="o_project_ubr_center_cell">
+                                            <span
+                                                t-att-class="
+                                                    'o_project_ubr_gm '
+                                                    +
+                                                    percentageClass(
+                                                        row.expected_gm
+                                                    )
+                                                "
+                                            >
+                                                <t
+                                                    t-esc="
+                                                        formatPercentage(
+                                                            row.expected_gm
+                                                        )
+                                                    "
+                                                />
+                                            </span>
+                                        </td>
+
+                                    </tr>
+                                </t>
+
+                                <tr
+                                    t-if="!state.rows.length"
+                                    class="o_project_ubr_empty_row"
+                                >
+                                    <td colspan="20">
+
+                                        <h4>No Projects Found</h4>
+
+                                        <p>
+                                            Change the selected filters
+                                            and try again.
+                                        </p>
+
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                            <tfoot t-if="state.rows.length">
+                                <tr>
+
+                                    <td
+                                        colspan="6"
+                                        class="o_project_ubr_total_label"
+                                    >
+                                        Total
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.sales_orders_value
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.adjusted_orders_value
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.total_sales_orders_value
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.total_expected_expenses
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.actual_expenses
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.actual_sales
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatPercentage(
+                                                    state.totals.poc
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.ubr
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.retention
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.down_payment
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.lg
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatPercentage(
+                                                    state.totals.actual_gm
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.remaining_expected_expenses
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatAmount(
+                                                    state.totals.expected_sales
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                    <td>
+                                        <t
+                                            t-esc="
+                                                formatPercentage(
+                                                    state.totals.expected_gm
+                                                )
+                                            "
+                                        />
+                                    </td>
+
+                                </tr>
+                            </tfoot>
+
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </t>
+
+</templates>

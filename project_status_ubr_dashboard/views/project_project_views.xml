@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_project_form_inherit_status_ubr" model="ir.ui.view">
+        <field name="name">project.project.form.status.ubr</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='settings']" position="inside">
+                <group string="Project Status &amp; UBR">
+                    <field name="adjusted_orders_value"/>
+                    <!-- <field name="expected_expenses"/> -->
+                </group>
+            </xpath>
+            <xpath expr="//page[@name='analytic']" position="attributes">
+                <attribute name="invisible"> 1 </attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

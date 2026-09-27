@@ -1,0 +1,243 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#       * gs_hr_penalties_and_awards
+#
+#. module: pt_hr_penalties_and_awards
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-30 11:28+0000\n"
+"PO-Revision-Date: 2026-03-30 11:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+# --- Python translatable strings (gs_hr_penalties_and_awards) ---
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/models/hr_employee_view.py:32
+#, python-format
+msgid "Penalties & Awards"
+msgstr "الجزاءات والمكافآت"
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/models/penalties_awards.py:121
+#, python-format
+msgid "No journal entries linked."
+msgstr "لا توجد قيود محاسبية مرتبطة."
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/models/penalties_awards.py:123
+#, python-format
+msgid "Journal Entry"
+msgstr "قيد محاسبي"
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/models/penalties_awards.py:195
+#, python-format
+msgid "New"
+msgstr "جديد"
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/models/penalties_awards.py:196
+#, python-format
+msgid "You cannot delete a Penalties & Awards that is in %s state."
+msgstr "لا يمكن حذف الجزاء/المكافأة وهو في حالة %s."
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/models/penalties_awards.py:305
+#, python-format
+msgid "No Draft Journal Entry linked."
+msgstr "لا يوجد قيد محاسبي مسودة مرتبط."
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/models/penalties_awards.py:307
+#, python-format
+msgid "Draft Journal Entry"
+msgstr "قيد محاسبي مسودة"
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/models/penalties_awards.py:394
+#, python-format
+msgid "No draft journal entry to post."
+msgstr "لا يوجد قيد محاسبي مسودة للترحيل."
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/models/penalties_awards.py:396
+#, python-format
+msgid "Journal Entry is already posted."
+msgstr "تم ترحيل القيد المحاسبي بالفعل."
+
+#. module: pt_hr_penalties_and_awards
+#: code:addons/gs_hr_penalties_and_awards/wizard/register_payment.py:38
+#, python-format
+msgid "Amount must be greater than 0."
+msgstr "يجب أن يكون المبلغ أكبر من الصفر."
+
+# --- XML view strings (gs_hr_penalties_and_awards) ---
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/hr_employee_view.xml
+msgid "Penalties &amp; Awards"
+msgstr "الجزاءات والمكافآت"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Payment Collections Search"
+msgstr "بحث تحصيل المدفوعات"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "To Approve"
+msgstr "في انتظار الاعتماد"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Today"
+msgstr "اليوم"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "This Week"
+msgstr "هذا الأسبوع"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "This Month"
+msgstr "هذا الشهر"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "This Year"
+msgstr "هذا العام"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Deduction"
+msgstr "خصم"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Award"
+msgstr "مكافأة"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Employee"
+msgstr "موظف"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Employee Code"
+msgstr "رمز الموظف"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Type"
+msgstr "النوع"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Status"
+msgstr "الحالة"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Create Draft Journal Entry"
+msgstr "إنشاء قيد محاسبي مسودة"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Post Draft Journal Entry"
+msgstr "ترحيل القيد المحاسبي المسودة"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Compute Installment"
+msgstr "احتساب القسط"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Submit"
+msgstr "تقديم"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Refuse"
+msgstr "رفض"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Reset To Draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Send By Email"
+msgstr "إرسال بالبريد الإلكتروني"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Register Payment"
+msgstr "تسجيل الدفع"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Installment"
+msgstr "قسط"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Update"
+msgstr "تحديث"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Payslip"
+msgstr "قسيمة الراتب"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/views/penalties_awards.xml
+msgid "Attachment"
+msgstr "مرفق"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/wizard/register_payment.xml
+msgid "Register General Payment"
+msgstr "تسجيل دفع عام"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/wizard/send_by_email.xml
+msgid "Change Attendance data"
+msgstr "تغيير بيانات الحضور"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/wizard/send_by_email.xml
+msgid "Send Email"
+msgstr "إرسال بريد إلكتروني"
+
+#. module: pt_hr_penalties_and_awards
+#: gs_hr_penalties_and_awards/wizard/update_installment_amount.xml
+msgid "Import Loan"
+msgstr "استيراد قرض"
+

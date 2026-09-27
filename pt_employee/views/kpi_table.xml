@@ -1,0 +1,54 @@
+<odoo>
+
+    <record id="gs_kpi_table_view_tree" model="ir.ui.view">
+        <field name="name">gs.kpi.table.view.tree</field>
+        <field name="model">gs.kpi.table</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="task_id"/>
+                <field name="job_id"/>
+                <field name="point"/>
+                <field name="percentage"/>
+                <field name="evaluated_by_ids" widget="many2many_tags"/>
+                <field name="notes"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_kpi_table_view_form" model="ir.ui.view">
+        <field name="name">gs.kpi.table.view.form</field>
+        <field name="model">gs.kpi.table</field>
+        <field name="arch" type="xml">
+            <form>
+<!--                <header>
+                    <button name="get_percentage" string="Get Percentage" type="object"/>
+                </header>-->
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="task_id"/>
+                            <field name="job_id"/>
+                            <field name="point"/>
+                        </group>
+                        <group>
+                            <field name="percentage" readonly="1"/>
+                            <field name="notes"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_kpi_table_action" model="ir.actions.act_window">
+        <field name="name">KPI Table</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.kpi.table</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+<!--    <menuitem id="sub_gs_kpi_table" name="KPI Table"  parent="pt_hr_insurance.gs_hr_settings_main_menu" action="gs_kpi_table_action" sequence="32"/>-->
+
+
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_account_budget_dashboard" model="ir.actions.client">
+        <field name="name">Budget Dashboard</field>
+        <field name="tag">account_budget_dashboard</field>
+    </record>
+
+    <menuitem id="menu_account_budget_dashboard"
+              name="Budget Dashboard"
+              action="action_account_budget_dashboard"
+              parent="account.account_reports_management_menu"
+              sequence="2"
+              />
+
+    <menuitem id="menu_branch_manager_budget_dashboard"
+              name="Budget Dashboard"
+              action="action_account_budget_dashboard"
+              parent="sale.menu_sale_report"
+              groups="accounting_customs.group_budget_branch_manager"
+              sequence="55"
+              />
+
+    <record id="view_budget_dashboard_move_line_list" model="ir.ui.view">
+
+        <field name="name">budget.dashboard.account.move.line.list</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//list" position="attributes">
+                <attribute name="create">0</attribute>
+                <attribute name="edit">0</attribute>
+                <attribute name="delete">0</attribute>
+                <attribute name="import">0</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

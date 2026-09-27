@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="gs_penalties_awards_employee_inherit_form_view" model="ir.ui.view" >
+            <field name="name">hr.employee.form.inherit.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <div class="oe_button_box" position="inside">
+                    <button class="oe_stat_button" name="penalties_awards_view" type="object" icon="fa-list-alt">
+                        <field string="Penalties &amp; Awards" name="penalties_awards_count" widget="statinfo"/>
+                    </button>
+                </div>
+
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

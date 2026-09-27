@@ -1,0 +1,260 @@
+<odoo>
+    <record id="view_gs_penalties_awards_search" model="ir.ui.view">
+        <field name="name">gs.penalties.awards.view.search</field>
+        <field name="model">gs.penalties.awards</field>
+        <field name="arch" type="xml">
+            <search string="Payment Collections Search">
+                <field name="sequence_penalties_awards"/>
+                <field name="employee_id"/>
+                <field name="registration_number2"/>
+                <separator/>
+                <filter name="to_approve" string="To Approve" domain="[('state', '=', 'submit')]"/>
+                <separator/>
+                <filter string="Today" name="today_date"
+                        domain="[('date','&gt;=',context_today().strftime('%%Y-%%m-%%d')),('date','&lt;',(context_today()+relativedelta(days=1)).strftime('%%Y-%%m-%%d'))]"/>
+                <filter string="This Week" name="this_week"
+                        domain="[('date','&gt;=',context_today().strftime('%%Y-%%m-%%d')),('date','&lt;',(context_today()+relativedelta(days=1,weekday=0)).strftime('%%Y-%%m-%d'))]"/>
+                <filter string="This Month" name="last_month"
+                        domain="[('date','&gt;=',context_today().strftime('%%Y-%%m-01')),('date','&lt;',(context_today()+relativedelta(months=1)).strftime('%%Y-%%m-01'))]"/>
+                <filter string="This Year" name="year"
+                        domain="[('date','&lt;=', time.strftime('%%Y-12-31')),('date','&gt;=',time.strftime('%%Y-01-01'))]"/>
+                <separator/>
+                <filter name="deduction" string="Deduction" domain="[('type', '=', 'deduction')]"/>
+                <filter name="award" string="Award" domain="[('type', '=', 'award')]"/>
+
+                <separator/>
+                <group expand="0" name="group_by" string="Group By">
+                    <filter name="group_by_employee" string="Employee" domain="[]" context="{'group_by' : 'employee_id'}"/>
+                    <filter name="group_by_registration_number2" string="Employee Code" domain="[]" context="{'group_by' : 'registration_number2'}"/>
+                    <filter name="group_by_type" string="Type" domain="[]" context="{'group_by' : 'type'}"/>
+                    <filter name="group_by_state" string="Status" domain="[]" context="{'group_by' : 'state'}"/>
+                    <filter name="group_by_employee" string="Employee" domain="[]"
+                            context="{'group_by' : 'employee_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="gs_penalties_awards_view_tree" model="ir.ui.view">
+        <field name="name">gs.penalties.awards.view.tree</field>
+        <field name="model">gs.penalties.awards</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence_penalties_awards"/>
+                <field name="date"/>
+                <field name="dedication_month"/>
+                <field name="type"/>
+                <field name="employee_id"/>
+                <field name="registration_number2"/>
+                <field name="number_of_days"/>
+                <field name="penalties_awards_id"/>
+                <field name="amount"/>
+                <field name="installment_amount"/>
+                <field name="paid_amount"/>
+                <field name="remaining_amount"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_penalties_awards_view_form" model="ir.ui.view">
+        <field name="name">gs.penalties.awards.view.form</field>
+        <field name="model">gs.penalties.awards</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_create_draft_journal_entry"
+                        string="Create Draft Journal Entry"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'approve' or not show_create_draft_btn"/>
+
+                      <!-- Post Draft -->
+                    <button name="action_post_draft_journal_entry"
+                        string="Post Draft Journal Entry"
+                        type="object"
+                        invisible="not show_post_draft_btn"
+                        class="btn-success"/>
+
+                    <button name="compute_installment" invisible="state != 'draft' or paid_by != 'employee'" string="Compute Installment"
+                            class="btn-primary" type="object" groups="base.group_user"/>
+                    <button name="action_submit" type="object" string="Submit" invisible="state != 'draft'"
+                            class="oe_highlight"/>
+                    <button name="action_approve" type="object" string="Approve" invisible="state != 'submit'"
+                            class="oe_highlight"/>
+                    <button name="action_refuse" type="object" string="Refuse" invisible="state != 'submit'"
+                            class="oe_highlight"/>
+                    <button name="action_cancel" type="object" string="Cancel" invisible="state == 'cancel'"/>
+                    <button name="action_reset_to_draft" type="object" string="Reset To Draft"
+                            invisible="state == 'cancel'"/>
+                    <button name="%(action_send_email_wizard)d" string="Send By Email" type="action"
+                            invisible="state != 'approve' or is_send_by_email == True"
+                    />
+                    <button name="%(action_register_general_payment_wizard)d"
+                            type="action"
+                            string="Register Payment"
+                            class="oe_highlight"
+                            invisible="(state != 'approve')"
+                            context="{'default_amount': amount}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve,paid"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <!-- Journal Entry  button -->
+                        <button name="action_open_journal_entries"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-bars"
+                                invisible="not journal_entry_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Payment Journal</span>
+                            </div>
+                        </button>
+                        <!-- Draft Journal Entry button -->
+                        <button name="action_open_draft_journal_entry"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-book"
+                                invisible="not draft_journal_entry_id">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Journal Entry</span>
+                            </div>
+                        </button>
+                    </div>
+                    <h1>
+                        <field name="sequence_penalties_awards" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group style="width:50%">
+                            <div>
+                                <label for="date"/>
+                                <br/>
+                                <field nolabel="1" name="date" required="1"/>
+                            </div>
+                        </group>
+                        <group style="width:50%">
+                            <div>
+                                <label for="employee_id"/>
+                                <br/>
+                                <field nolabel="1" name="employee_id" required="1" readonly="state in ('approve','paid')"/>
+                            </div>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="type" readonly="state in ('approve','paid')"/>
+                            <field name="penalties_awards_id" options="{'no_create': True, 'no_edit': True}" readonly="state in ('approve','paid')"/>
+                            <field name="penalty_number" readonly="state in ('approve','paid')"/>
+                            <field name="number_of_penalty_repeat" readonly="state in ('approve','paid')"/>
+                            <field name="penalty_date" readonly="state in ('approve','paid')"/>
+                            <field name="is_type_fixed" invisible="1"/>
+                            <field name="number_of_days" invisible='1'/>
+                            <field name="country_labour" invisible='1'/>
+                            <field name="penalty_employee" invisible='1'/>
+                            <field name="amount" readonly="state in ('approve','paid')"/>
+                            <field name="paid_by" widget="radio" readonly="state in ('approve','paid')"/>
+                            <field name="installment_amount" invisible="paid_by != 'employee'" readonly="state in ('approve','paid')"/>
+                            <field name="paid_amount" invisible="paid_by != 'employee'" readonly="state in ('approve','paid')"/>
+                            <field name="remaining_amount" invisible="paid_by != 'employee'" readonly="state in ('approve','paid')"/>
+                            <field name="refused_option" widget="radio"
+                                   invisible="penalty_labour == False and country_labour == False " readonly="state in ('approve','paid')"/>
+                            <field name="refused_number" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="penalty" invisible="penalty_employee == False" readonly="state in ('approve','paid')"/>
+                            <field name="penalty_area_number" invisible="penalty_employee == False" readonly="state in ('approve','paid')"/>
+                            <field name="refused_date" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="refused_state" widget="radio"
+                                   invisible="country_labour == False " readonly="state in ('approve','paid')"/>
+                            <field name="settlement_option" widget="radio" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="settlement_number" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="penalty_note" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="payment" widget="radio" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="payment_state" widget="radio" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="company_id" readonly="state in ('approve','paid')"/>
+                        </group>
+                        <group>
+                            <field name="start_date" readonly="state in ('approve','paid')"/>
+                            <field name="term" readonly="state in ('approve','paid')"/>
+                            <field name="end_date" readonly="state in ('approve','paid')"/>
+                            <field name="registration_number2" readonly="state in ('approve','paid')"/>
+                            <field name="analytic_account_id" readonly="state in ('approve','paid')"/>
+                            <field name="department_manager_id" readonly="state in ('approve','paid')"/>
+                            <field name="manager_id" readonly="state in ('approve','paid')"/>
+                            <field name="note" invisible="1"/>
+                            <field name="dedication_month" invisible="1"/>
+                            <field name="is_attachment" readonly="state in ('approve','paid')"/>
+                            <field name="recipient_users" invisible="1"/>
+                            <field name="user_id" invisible="1"/>
+                            <field name="is_send_by_email" invisible="1"/>
+                            <field name="penalty_labour" invisible="1"/>
+                            <field name="company_id" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="operation_update" invisible="penalty_employee == False" readonly="state in ('approve','paid')"/>
+                            <field name="payment_operation" widget="radio" invisible="penalty_employee == False" readonly="state in ('approve','paid')"/>
+                            <field name="description" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="penalty_items" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="penalty_num_close" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="last_refused_date" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="refused_note" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="operation_details" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="area_name" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+<!--                            <field name="penalty_num_repeat"-->
+<!--                                   invisible="country_labour == False and penalty_employee == False"/>-->
+                            <field name="penalty_build_num" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="penalty_update" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="operation" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="location" invisible="penalty_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="license_number" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="payment_number" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="penalty_amount" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+                            <field name="penalty_description" invisible="country_labour == False" readonly="state in ('approve','paid')"/>
+
+
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Installment" invisible="paid_by != 'employee'">
+                            <button name='%(pt_hr_penalties_and_awards.action_gs_pa_update_installment_amount)d'
+                                    type="action" string="Update"/>
+                            <field name="pa_installment_ids" readonly="0">
+                                <list string="Installment" decoration-success="is_paid == True"
+                                      decoration-muted="is_skip == True">
+                                    <field name="name"/>
+                                    <field name="payroll_paid"/>
+                                    <field name="date"/>
+                                    <field name="amount" sum="amount" invisible="1" column_invisible="1"/>
+                                    <field name="interest" sum="interest" invisible="1" column_invisible="1"/>
+                                    <field name="ins_interest" sum="ins_interest" invisible="1" column_invisible="1"/>
+                                    <field name="total_installment" sum="total_installment" invisible="1"
+                                           column_invisible="1"/>
+                                    <field name="is_paid" invisible="1" column_invisible="1"/>
+                                    <field name="is_skip" invisible="1" column_invisible="1"/>
+                                    <field name="installment_amt" sum="installment_amt"/>
+                                    <button type="object" name="action_view_payslip" string="Payslip"
+                                            class="btn-primary"
+                                            invisible="is_paid == False" groups="hr.group_hr_manager"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Attachment" invisible="is_attachment == True">
+                            <field name="attachment_ids" widget="pdf_viewer"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_penalties_awards_action" model="ir.actions.act_window">
+        <field name="name">Penalties &amp; Awards</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.penalties.awards</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_gs_penalties_awards" name="Penalties &amp; Awards" parent="pt_hr_insurance.gs_hr_main_menu"
+              sequence="16"/>
+    <menuitem id="sub_gs_penalties_awards" name="Penalties &amp; Awards" parent="menu_gs_penalties_awards"
+              action="gs_penalties_awards_action" sequence="1"/>
+
+</odoo>

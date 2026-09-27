@@ -1,0 +1,710 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+
+    <t t-name="inventory_customs.InventoryAgingDashboard">
+
+        <div class="o_inventory_aging_dashboard">
+
+            <t t-if="state.isLoading">
+                <div class="o_inv_loading_overlay">
+                    <div class="o_inv_loading_card">
+                        <div class="o_inv_loading_icon">
+                            <i class="fa fa-cubes"/>
+                        </div>
+
+                        <div class="o_inv_loading_dots">
+                            <span/>
+                            <span/>
+                            <span/>
+                        </div>
+
+                        <div class="o_inv_loading_title">
+                            Processing Inventory Aging...
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <div class="o_inv_dashboard_scroller">
+
+                <div class="o_inv_header">
+
+                    <div>
+                        <div class="o_inv_title">
+                            Inventory Aging Dashboard
+                        </div>
+
+                        <div class="o_inv_subtitle">
+                            Inventory quantity, valuation and aging analysis
+                        </div>
+                    </div>
+
+                    <button type="button" class="o_inv_export_btn" t-on-click="exportExcel">
+                        <i class="fa fa-file-excel-o"/>
+                        <span>Export Excel</span>
+                    </button>
+
+                </div>
+
+                <div class="o_inv_view_switch">
+
+                    <button
+                        type="button"
+                        t-att-class="'o_inv_view_switch_btn ' + (state.viewMode === 'detailed' ? 'active' : '')"
+                        t-on-click="() => this.selectViewMode('detailed')">
+
+                        <i class="fa fa-table"/>
+                        <span>Detailed</span>
+
+                    </button>
+
+                    <button
+                        type="button"
+                        t-att-class="'o_inv_view_switch_btn ' + (state.viewMode === 'summary' ? 'active' : '')"
+                        t-on-click="() => this.selectViewMode('summary')">
+
+                        <i class="fa fa-bar-chart"/>
+                        <span>Summary</span>
+
+                    </button>
+
+                </div>
+
+                <div class="o_inv_filters">
+
+                    <div class="o_inv_filter">
+                        <label>Aging Date</label>
+
+                        <input
+                            t-ref="agingDateInput"
+                            type="date"
+                            class="o_inv_input"
+                            t-att-value="state.agingDate"
+                            t-on-click="openDatePicker"
+                            t-on-change="onAgingDateChange"
+                        />
+                    </div>
+
+                    <div class="o_inv_filter o_inv_dropdown_filter">
+
+                        <label>Warehouse</label>
+
+                        <button
+                            type="button"
+                            class="o_inv_dropdown_button"
+                            t-on-click.stop="toggleWarehouseDropdown">
+
+                            <span t-esc="warehouseLabel"/>
+                            <i class="fa fa-angle-down"/>
+
+                        </button>
+
+                        <t t-if="state.showWarehouseDropdown">
+
+                            <div class="o_inv_dropdown_menu" t-on-click.stop="">
+
+                                <input
+                                    type="text"
+                                    class="o_inv_dropdown_search"
+                                    placeholder="Search Warehouse..."
+                                    t-att-value="state.warehouseSearch"
+                                    t-on-input="onWarehouseSearch"
+                                />
+
+                                <div class="o_inv_dropdown_items">
+
+                                    <t t-foreach="state.warehouseOptions" t-as="option" t-key="option.value">
+
+                                        <label class="o_inv_dropdown_item">
+
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="isWarehouseSelected(option.value)"
+                                                t-on-change="() => this.toggleWarehouse(option.value)"
+                                            />
+
+                                            <span t-esc="option.label"/>
+
+                                        </label>
+
+                                    </t>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </div>
+
+                    <div class="o_inv_filter o_inv_dropdown_filter">
+
+                        <label>Brand</label>
+
+                        <button
+                            type="button"
+                            class="o_inv_dropdown_button"
+                            t-on-click.stop="toggleBrandDropdown">
+
+                            <span t-esc="brandLabel"/>
+                            <i class="fa fa-angle-down"/>
+
+                        </button>
+
+                        <t t-if="state.showBrandDropdown">
+
+                            <div class="o_inv_dropdown_menu" t-on-click.stop="">
+
+                                <input
+                                    type="text"
+                                    class="o_inv_dropdown_search"
+                                    placeholder="Search Brand..."
+                                    t-att-value="state.brandSearch"
+                                    t-on-input="onBrandSearch"
+                                />
+
+                                <div class="o_inv_dropdown_items">
+
+                                    <t t-foreach="state.brandOptions" t-as="option" t-key="option.value">
+
+                                        <label class="o_inv_dropdown_item">
+
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="isBrandSelected(option.value)"
+                                                t-on-change="() => this.toggleBrand(option.value)"
+                                            />
+
+                                            <span t-esc="option.label"/>
+
+                                        </label>
+
+                                    </t>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </div>
+
+                    <div class="o_inv_filter o_inv_dropdown_filter">
+
+                        <label>Product Category</label>
+
+                        <button
+                            type="button"
+                            class="o_inv_dropdown_button"
+                            t-on-click.stop="toggleCategoryDropdown">
+
+                            <span t-esc="categoryLabel"/>
+                            <i class="fa fa-angle-down"/>
+
+                        </button>
+
+                        <t t-if="state.showCategoryDropdown">
+
+                            <div class="o_inv_dropdown_menu" t-on-click.stop="">
+
+                                <input
+                                    type="text"
+                                    class="o_inv_dropdown_search"
+                                    placeholder="Search Category..."
+                                    t-att-value="state.categorySearch"
+                                    t-on-input="onCategorySearch"
+                                />
+
+                                <div class="o_inv_dropdown_items">
+
+                                    <t t-foreach="state.categoryOptions" t-as="option" t-key="option.value">
+
+                                        <label class="o_inv_dropdown_item">
+
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="isCategorySelected(option.value)"
+                                                t-on-change="() => this.toggleCategory(option.value)"
+                                            />
+
+                                            <span t-esc="option.label"/>
+
+                                        </label>
+
+                                    </t>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </div>
+
+                    <div class="o_inv_filter o_inv_dropdown_filter">
+
+                        <label>Product</label>
+
+                        <button
+                            type="button"
+                            class="o_inv_dropdown_button"
+                            t-on-click.stop="toggleProductDropdown">
+
+                            <span t-esc="productLabel"/>
+                            <i class="fa fa-angle-down"/>
+
+                        </button>
+
+                        <t t-if="state.showProductDropdown">
+
+                            <div class="o_inv_dropdown_menu o_inv_product_dropdown" t-on-click.stop="">
+
+                                <input
+                                    type="text"
+                                    class="o_inv_dropdown_search"
+                                    placeholder="Search Product..."
+                                    t-att-value="state.productSearch"
+                                    t-on-input="onProductSearch"
+                                />
+
+                                <div class="o_inv_dropdown_items">
+
+                                    <t t-foreach="state.productOptions" t-as="option" t-key="option.value">
+
+                                        <label class="o_inv_dropdown_item">
+
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="isProductSelected(option.value)"
+                                                t-on-change="() => this.toggleProduct(option.value)"
+                                            />
+
+                                            <span t-esc="option.label"/>
+
+                                        </label>
+
+                                    </t>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </div>
+
+                    <div class="o_inv_filter">
+
+                        <label>Negative Stock</label>
+
+                        <select
+                            class="o_inv_input"
+                            t-att-value="state.negativeStock"
+                            t-on-change="onNegativeStockChange">
+
+                            <option value="all">All</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="o_inv_filter">
+
+                        <label>
+                            No Movement &gt;<t t-esc="getLastPeriodDays()"/>
+                        </label>
+
+                        <select
+                            class="o_inv_input"
+                            t-att-value="state.noMovement"
+                            t-on-change="onNoMovementChange">
+
+                            <option value="all">All</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="o_inv_filter o_inv_dropdown_filter">
+
+                        <label>Aging Risk Level</label>
+
+                        <button
+                            type="button"
+                            class="o_inv_dropdown_button"
+                            t-on-click.stop="toggleRiskDropdown">
+
+                            <span t-esc="riskLabel"/>
+                            <i class="fa fa-angle-down"/>
+
+                        </button>
+
+                        <t t-if="state.showRiskDropdown">
+
+                            <div class="o_inv_dropdown_menu o_inv_risk_dropdown" t-on-click.stop="">
+
+                                <div class="o_inv_dropdown_items">
+
+                                    <t t-foreach="riskOptions" t-as="option" t-key="option.value">
+
+                                        <label class="o_inv_dropdown_item">
+
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="isRiskSelected(option.value)"
+                                                t-on-change="() => this.toggleRisk(option.value)"
+                                            />
+
+                                            <span t-att-class="'o_inv_risk_option risk_' + option.value.toLowerCase()">
+                                                <t t-esc="option.label"/>
+                                            </span>
+
+                                        </label>
+
+                                    </t>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </div>
+
+                </div>
+
+                <div class="o_inv_filter_second_row">
+
+                    <div class="o_inv_filter" style="width: 190px; flex: 0 0 190px;">
+
+                        <label>Aging Period (Days)</label>
+
+                        <input
+                            type="text"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            autocomplete="off"
+                            class="o_inv_input"
+                            t-att-value="state.agingPeriodDays"
+                            t-on-input="onAgingPeriodDaysInput"
+                            t-on-change="onAgingPeriodDaysChange"
+                        />
+
+                    </div>
+
+                    <div class="o_inv_second_actions">
+
+                        <div class="o_inv_global_search">
+
+                            <i class="fa fa-search"/>
+
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                t-att-value="state.searchText"
+                                t-on-change="onSearchChange"
+                            />
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="o_inv_clear_btn"
+                            t-on-click="clearFilters">
+
+                            Clear Filters
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="o_inv_kpi_grid">
+
+                    <div class="o_inv_kpi_card">
+                        <div class="o_inv_kpi_label">Products (Count)</div>
+                        <div class="o_inv_kpi_value">
+                            <t t-esc="state.summary.products || 0"/>
+                        </div>
+                    </div>
+
+                    <div class="o_inv_kpi_card">
+                        <div class="o_inv_kpi_label">Current Stock (Qty)</div>
+                        <div class="o_inv_kpi_value">
+                            <t t-esc="formatNumber(state.summary.total_qty || 0)"/>
+                        </div>
+                    </div>
+
+                    <div class="o_inv_kpi_card o_inv_value_card">
+                        <div class="o_inv_kpi_label">Inventory Value (Amount)</div>
+                        <div class="o_inv_kpi_value">
+                            <t t-esc="formatNumber(state.summary.total_value || 0)"/>
+                        </div>
+                    </div>
+
+                    <div class="o_inv_kpi_card o_inv_negative_card">
+                        <div class="o_inv_kpi_label">Negative Stock (Count)</div>
+                        <div class="o_inv_kpi_value">
+                            <t t-esc="state.summary.negative_lines || 0"/>
+                        </div>
+                    </div>
+
+                    <div class="o_inv_kpi_card o_inv_movement_card">
+                        <div class="o_inv_kpi_label">
+                            No Movement &gt;<t t-esc="getLastPeriodDays()"/> (Count)
+                        </div>
+                        <div class="o_inv_kpi_value">
+                            <t t-esc="state.summary.no_movement_lines || 0"/>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="o_inv_aging_cards">
+
+                    <div class="o_inv_age_card">
+                        <span><t t-esc="getPeriodLabel(0)"/> Days Value (Amount)</span>
+                        <strong t-esc="formatNumber(state.summary.bucket_0_30_value || 0)"/>
+                    </div>
+
+                    <div class="o_inv_age_card">
+                        <span><t t-esc="getPeriodLabel(1)"/> Days Value (Amount)</span>
+                        <strong t-esc="formatNumber(state.summary.bucket_31_60_value || 0)"/>
+                    </div>
+
+                    <div class="o_inv_age_card">
+                        <span><t t-esc="getPeriodLabel(2)"/> Days Value (Amount)</span>
+                        <strong t-esc="formatNumber(state.summary.bucket_61_90_value || 0)"/>
+                    </div>
+
+                    <div class="o_inv_age_card">
+                        <span><t t-esc="getPeriodLabel(3)"/> Days Value (Amount)</span>
+                        <strong t-esc="formatNumber(state.summary.bucket_91_180_value || 0)"/>
+                    </div>
+
+                    <div class="o_inv_age_card">
+                        <span><t t-esc="getPeriodLabel(4)"/> Days Value (Amount)</span>
+                        <strong t-esc="formatNumber(state.summary.bucket_181_365_value || 0)"/>
+                    </div>
+
+                    <div class="o_inv_age_card">
+                        <span><t t-esc="getPeriodLabel(5)"/> Days Value (Amount)</span>
+                        <strong t-esc="formatNumber(state.summary.bucket_over_365_value || 0)"/>
+                    </div>
+
+                </div>
+
+                <div class="o_inv_table_header">
+
+                    <div>
+
+                        <strong>
+                            <t t-esc="tableTitle"/>
+                        </strong>
+
+                        <span class="o_inv_row_count">
+                            <t t-esc="state.totalRows || 0"/> records
+                        </span>
+
+                    </div>
+
+                    <div class="o_inv_columns_area">
+
+                        <button
+                            type="button"
+                            class="o_inv_columns_btn"
+                            t-on-click.stop="toggleColumnsDropdown">
+
+                            <i class="fa fa-columns"/>
+                            Visible Columns
+                            <i class="fa fa-angle-down"/>
+
+                        </button>
+
+                        <t t-if="state.showColumnsDropdown">
+
+                            <div class="o_inv_columns_dropdown" t-on-click.stop="">
+
+                                <button
+                                    type="button"
+                                    class="o_inv_select_all_columns"
+                                    t-on-click="selectAllColumns">
+
+                                    Select All
+
+                                </button>
+
+                                <div class="o_inv_columns_list">
+
+                                    <t t-foreach="availableColumns" t-as="column" t-key="column.key">
+
+                                        <label>
+
+                                            <input
+                                                type="checkbox"
+                                                t-att-checked="isColumnSelected(column.key)"
+                                                t-on-change="() => this.toggleColumn(column.key)"
+                                            />
+
+                                            <span t-esc="getColumnLabel(column)"/>
+
+                                        </label>
+
+                                    </t>
+
+                                </div>
+
+                            </div>
+
+                        </t>
+
+                    </div>
+
+                </div>
+
+                <div class="o_inv_table_wrapper">
+
+                    <table class="o_inv_table">
+
+                        <thead>
+
+                            <tr>
+
+                                <t t-foreach="visibleColumns" t-as="column" t-key="column.key">
+
+                                    <th t-att-class="getColumnClass(column)">
+                                        <t t-esc="getColumnLabel(column)"/>
+                                    </th>
+
+                                </t>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <t t-foreach="state.rows" t-as="row" t-key="row.key">
+
+                                <tr>
+
+                                    <t t-foreach="visibleColumns" t-as="column" t-key="column.key">
+
+                                        <td t-att-class="getColumnClass(column)">
+
+                                            <t t-if="column.type === 'risk'">
+
+                                                <span t-att-class="'o_inv_risk_badge risk_' + (row[column.key] || '').toLowerCase()">
+                                                    <t t-esc="row[column.key]"/>
+                                                </span>
+
+                                            </t>
+
+                                            <t t-elif="column.type === 'flag'">
+
+                                                <span t-att-class="'o_inv_flag ' + (row[column.key] === 'YES' ? 'yes' : 'no')">
+                                                    <t t-esc="row[column.key]"/>
+                                                </span>
+
+                                            </t>
+
+                                            <t t-else="">
+                                                <t t-esc="formatCell(row, column)"/>
+                                            </t>
+
+                                        </td>
+
+                                    </t>
+
+                                </tr>
+
+                            </t>
+
+                            <tr t-if="!state.rows.length">
+
+                                <td
+                                    t-att-colspan="visibleColumns.length"
+                                    class="o_inv_empty">
+
+                                    No inventory aging data found.
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                        <tfoot t-if="state.rows.length">
+
+                            <tr class="o_inv_total_row">
+
+                                <t t-foreach="visibleColumns" t-as="column" t-key="column.key">
+
+                                    <td t-att-class="getColumnClass(column)">
+
+                                        <t t-if="column.key === 'internal_reference'">
+                                            <strong>TOTAL</strong>
+                                        </t>
+
+                                        <t t-elif="column.total">
+                                            <strong>
+                                                <t t-esc="getTotalValue(column)"/>
+                                            </strong>
+                                        </t>
+
+                                    </td>
+
+                                </t>
+
+                            </tr>
+
+                        </tfoot>
+
+                    </table>
+
+                </div>
+
+                <div class="o_inv_pagination">
+
+                    <button
+                        type="button"
+                        class="o_inv_page_btn"
+                        t-att-disabled="state.page &lt;= 1"
+                        t-on-click="previousPage">
+
+                        <i class="fa fa-chevron-left"/>
+
+                    </button>
+
+                    <span>
+                        Page
+                        <strong t-esc="state.page"/>
+                        of
+                        <strong t-esc="state.totalPages"/>
+                    </span>
+
+                    <button
+                        type="button"
+                        class="o_inv_page_btn"
+                        t-att-disabled="state.page &gt;= state.totalPages"
+                        t-on-click="nextPage">
+
+                        <i class="fa fa-chevron-right"/>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </t>
+
+</templates>

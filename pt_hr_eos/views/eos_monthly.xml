@@ -1,0 +1,143 @@
+<odoo>
+    <record id="gs_eos_monthly_view_tree" model="ir.ui.view">
+        <field name="name">gs.eos.monthly.view.tree</field>
+        <field name="model">gs.eos.monthly</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="date"/>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="eos_total_amount"/>
+                <field name="eos_difference"/>
+                <field name="eos_total_amount_month"/>
+                <button name="action_open_monthly_journal" type="object" string="View Journals"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_eos_monthly_view_form" model="ir.ui.view">
+        <field name="name">gs.eos.monthly.view.form</field>
+        <field name="model">gs.eos.monthly</field>
+        <field name="arch" type="xml">
+            <form>
+<!--                <header>-->
+<!--                    <button name="action_send_request" states="draft" string="Create Journal Entry"-->
+<!--                            class="btn-primary" type="object" />-->
+<!--                </header>-->
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button type="object" name="action_open_monthly_journal" class="oe_stat_button" icon="fa-external-link" id="open_journal" invisible="journal_monthly_count == 0">
+                            <field name="journal_monthly_count" widget="statinfo" string="Journal"/>
+                        </button>
+                    </div>
+                    <h2>
+                        <field name="name" readonly="1"/>
+                    </h2>
+                    <group>
+                        <group>
+                            <field name="employee_id" required="1"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="eos_total_amount_month"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_eos_monthly_view_kanban" model="ir.ui.view">
+        <field name="name">gs.eos.monthly.kanban</field>
+        <field name="model">gs.eos.monthly</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1" quick_create="false">
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="eos_total_amount_month"/>
+                <field name="date"/>
+                <field name="journal_id"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="o_kanban_record_top mb16">
+                                <div class="o_kanban_record_headings mt4">
+                                    <strong class="o_kanban_record_title">
+                                        <span t-out="record.employee_id.value"/>
+                                    </strong>
+                                </div>
+                                <strong>
+                                    <field name="eos_total_amount_month" widget="monetary"/>
+                                </strong>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_left text-muted">
+                                    <span>
+                                        <t t-out="record.name.value"/> <t t-out="record.date.value"/>
+                                    </span>
+                                    <field name="activity_ids" widget="kanban_activity"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="gs_eos_monthly_view_pivot" model="ir.ui.view">
+        <field name="name">gs.eos.monthly.pivot</field>
+        <field name="model">gs.eos.monthly</field>
+        <field name="arch" type="xml">
+            <pivot string="Eos Monthly" sample="1">
+                <field name="date" type="row"/>
+                <field name="eos_total_amount_month" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="gs_eos_monthly_action" model="ir.actions.act_window">
+        <field name="name">End Of Service Monthly</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.eos.monthly</field>
+        <field name="view_mode">list,kanban,pivot,graph,form</field>
+    </record>
+
+    <record model="ir.actions.server" id="action_eos_create_journal">
+        <field name="name">Create Journal Entry</field>
+        <field name="model_id" ref="pt_hr_eos.model_gs_eos_monthly"/>
+        <field name="binding_model_id" ref="pt_hr_eos.model_gs_eos_monthly"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.create_journal_entry()
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="action_eos_delete_difference">
+        <field name="name">Delete Difference</field>
+        <field name="model_id" ref="pt_hr_eos.model_gs_eos_monthly"/>
+        <field name="binding_model_id" ref="pt_hr_eos.model_gs_eos_monthly"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.delete_eos_difference()
+        </field>
+    </record>
+
+    <menuitem id="sub_gs_eos_monthly" name="EOS Monthly" parent="pt_hr_eos.menu_gs_eos" action="gs_eos_monthly_action" sequence="2"/>
+
+    <record id="seq_eos_monthly" model="ir.sequence">
+        <field name="name">EOS Monthly Sequence</field>
+        <field name="code">eos.monthly</field>
+        <field name="prefix">EOS/%(year)s/</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,109 @@
+<?xml version="1.0" ?>
+<odoo>
+
+    <record id="gs_send_email_template" model="mail.template">
+        <field name="name">Penalties &amp; Awards : Send by email</field>
+        <field name="model_id" ref="pt_hr_penalties_and_awards.model_gs_penalties_awards"/>
+        <field name="email_from">${object.user_id.email_formatted |safe}</field>
+        <field name="email_to">${object.employee_id.work_email}</field>
+        <field name="subject">Penalties &amp; Awards</field>
+        <field name="body_html"><![CDATA[
+<table style="border-collapse: separate; padding-top: 16px; background-color: rgb(241, 241, 241); font-family: Verdana, Arial, sans-serif; color: rgb(69, 71, 72); width: 1069px;" cellspacing="0" cellpadding="0" border="0">
+   <tbody>
+      <tr>
+         <td align="center">
+            <table style="border-collapse: separate; padding: 16px; background-color: white;" width="590" cellspacing="0" cellpadding="0" border="0">
+               <tbody>
+                  <tr>
+                     <td style="min-width: 590px;" align="center">
+                        <table style="border-collapse: separate; min-width: 590px; padding: 0px 8px;" width="590" cellspacing="0" cellpadding="0" border="0">
+                           <tbody>
+                              <tr>
+                                 <td valign="middle"><span style="font-size: 10px;">Penalties &amp; Awards</span><br><span style="font-size: 20px; font-weight: bold;"> ${object.subject_id}</span></td>
+                                 <td valign="middle" align="right"><img src="/logo.png?company=${object.employee_id.company_id.id}" alt="${object.employee_id.company_id.name}" style="padding: 0px; margin: 0px; height: auto; width: 80px;"></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="2" style="text-align: center;">
+                                    <hr style="border-style:solid none none none;border-image-width:1;border-image-source:none;border-image-slice:100%;border-image-repeat:stretch;border-image-outset:0;border-left-color:currentcolor;border-bottom-color:currentcolor;border-right-color:currentcolor;margin: 16px 0px; border-width: medium; border-style: none; border-top-color: initial; background-color: rgb(204, 204, 204); clear: both; font-size: 0px; min-height: 1px; line-height: 0;" width="100%">
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="min-width: 590px;" align="center">
+                        <table style="border-collapse: separate; min-width: 590px; padding: 0px 8px;" width="590" cellspacing="0" cellpadding="0" border="0">
+                           <tbody>
+                              <tr>
+                                 <td style="font-size: 13px;" valign="top">
+                                    Hello Dear / <br>
+                                    This is Formal Notification Of (${object.get_type_state()}) ,
+                                    <br>
+                                    <br> <b>Penalties & Awards Information</b>
+                                    <br style="font-weight: bold;"> Penalties & Awards : (${object.penalties_awards_id.name})
+                                    <br style="font-weight: bold;"> Amount  : (${object.amount})
+                                    <br/>
+                                    <br style="font-weight: bold;"> Reason : (${object.note})
+                                    <br style="font-weight: bold;"> Payment Due Date : (${object.dedication_month})                                    <br><br>
+                                    <span style="font-weight: bold;"> For More Information Press On Button :  </span>
+                                    <div style="margin: 16px 0px;"><a href="${object.create_uid.partner_id.get_base_url()}/mail/view?model=gs.penalties.awards&amp;res_id=${object.id}" style="color: rgb(255, 255, 255); background-color: rgb(135, 90, 123); padding: 8px 16px; border-radius: 5px;" data-original-title="" title="" aria-describedby="tooltip234017">Open Request</a><br><br></div>
+
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td style="text-align: center;">
+                                    <hr style="border-style:solid none none none;border-image-width:1;border-image-source:none;border-image-slice:100%;border-image-repeat:stretch;border-image-outset:0;border-left-color:currentcolor;border-bottom-color:currentcolor;border-right-color:currentcolor;margin: 16px 0px; border-width: medium; border-style: none; border-top-color: initial; background-color: rgb(204, 204, 204); clear: both; font-size: 0px; min-height: 1px; line-height: 0;" width="100%">
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="min-width: 590px;" align="center">
+                        <table style="border-collapse: separate; min-width: 590px; font-size: 11px; padding: 0px 8px;" width="590" cellspacing="0" cellpadding="0" border="0">
+                           <tbody>
+                              <tr>
+                                 <td valign="middle" align="left">${object.employee_id.company_id.name}</td>
+                              </tr>
+                              <tr>
+                                 <td style="opacity: 0.7;" valign="middle" align="left">
+                                     ${object.employee_id.company_id.phone}
+                                     % if object.employee_id.company_id.email:
+                                          &nbsp;
+                                          <a href="${'mailto:%s' % object.employee_id.company_id.email}" style="color: rgb(69, 71, 72);">
+                                             ${object.employee_id.company_id.email}
+                                          </a>
+                                          &nbsp;
+                                     % endif
+                                     % if object.employee_id.company_id.website:
+                                         &nbsp;
+                                         <a style="color: rgb(69, 71, 72);">${object.employee_id.company_id.website}&nbsp;</a>
+                                     % endif
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </td>
+      </tr>
+      <tr>
+         <td style="min-width: 590px;" align="center">
+            <table style="border-collapse: separate; min-width: 590px; padding: 8px;" width="590" cellspacing="0" cellpadding="0" border="0">
+               <tbody>
+                  <tr>
+                  </tr>
+               </tbody>
+            </table>
+         </td>
+      </tr>
+   </tbody>
+</table>
+        ]]></field>
+    </record>
+
+</odoo>

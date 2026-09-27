@@ -1,0 +1,39 @@
+<odoo>
+    <data>
+        <record id="cron_check_contract" model="ir.cron">
+            <field name="name">Check Contract</field>
+            <field name="model_id" ref="model_hr_contract"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="False"/>
+            <field name="state">code</field>
+            <field name="code">model.check_contract()</field>
+        </record>
+        <!--
+                  <record id="object0" model="pt_employee.pt_employee">
+                    <field name="name">Object 0</field>
+                    <field name="value">0</field>
+                  </record>
+
+                  <record id="object1" model="pt_employee.pt_employee">
+                    <field name="name">Object 1</field>
+                    <field name="value">10</field>
+                  </record>
+
+                  <record id="object2" model="pt_employee.pt_employee">
+                    <field name="name">Object 2</field>
+                    <field name="value">20</field>
+                  </record>
+
+                  <record id="object3" model="pt_employee.pt_employee">
+                    <field name="name">Object 3</field>
+                    <field name="value">30</field>
+                  </record>
+
+                  <record id="object4" model="pt_employee.pt_employee">
+                    <field name="name">Object 4</field>
+                    <field name="value">40</field>
+                  </record>
+        -->
+    </data>
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_purchase_excel_report_wizard_form" model="ir.ui.view">
+        <field name="name">purchase.excel.report.wizard.form</field>
+        <field name="model">purchase.excel.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Purchase Excel Report">
+                <sheet>
+                    <field name="available_vendor_ids" invisible="1"/>
+
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="company_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        </group>
+                        <group>
+                            <field name="branch_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="partner_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="purchase_order_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                            <field name="include_cancelled_bills"/>
+                        </group>
+                    </group>
+
+                    <div class="alert alert-info" role="alert">
+                        This report includes purchase products received during the selected period based on the receipt Effective Date.
+                    </div>
+                </sheet>
+
+                <footer>
+                    <button name="action_export_xlsx" string="Export Excel" type="object" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_purchase_excel_report_wizard" model="ir.actions.act_window">
+        <field name="name">Purchase Excel Report</field>
+        <field name="res_model">purchase.excel.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_purchase_excel_report_wizard_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="action_purchase_excel_xlsx_report" model="ir.actions.report">
+        <field name="name">Purchase Excel Report</field>
+        <field name="model">purchase.excel.report.wizard</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">inventory_customs.purchase_excel_xlsx</field>
+        <field name="report_file">inventory_customs.purchase_excel_xlsx</field>
+        <field name="print_report_name">'Purchase Excel Report - %s - %s' % (object.date_from, object.date_to)</field>
+        <field name="binding_type">report</field>
+    </record>
+    
+    <menuitem id="menu_purchase_excel_report"
+          name="Purchase Excel Report"
+          parent="purchase.purchase_report_main"
+          action="action_purchase_excel_report_wizard"
+          sequence="10"
+          groups="inventory_customs.group_purchase_excel_report"/>
+</odoo>

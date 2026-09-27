@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Budget Form View -->
+        <record id="account_report_budget_form_inherit" model="ir.ui.view">
+            <field name="name">account.report.budget.inherit</field>
+            <field name="model">account.report.budget</field>
+            <field name="inherit_id" ref="account_reports.account_report_budget_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button name="action_submit"
+                                string="Submit"
+                                type="object"
+                                class="btn-primary"
+                                groups="accounting_customs.group_budget_submit"
+                                invisible="state != 'draft'"/>
+
+                        <button name="action_approve"
+                                string="Approve"
+                                type="object"
+                                class="btn-success"
+                                groups="accounting_customs.group_budget_approve"
+                                invisible="state != 'submitted'"/>
+
+                        <button name="action_reset_to_draft"
+                                string="Reset to Draft"
+                                type="object"
+                                groups="accounting_customs.group_budget_reset"
+                                invisible="state == 'draft'"/>
+
+                        <button name="action_recompute_budget_amounts"
+                                string="Recompute Amounts"
+                                type="object"
+                                class="btn-secondary"/>
+
+                        <field name="state"
+                               widget="statusbar"
+                               statusbar_visible="draft,submitted,approved"/>
+                    </header>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="readonly">state == 'approved'</attribute>
+                </xpath>
+
+                <xpath expr="//div" position="after">
+                    <group>
+                        <group>
+                            <field name="start_date" readonly="state == 'approved'"/>
+                            <field name="end_date" readonly="state == 'approved'"/>
+                            <field name="budget_year" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="branch_id"
+                                   options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                                   readonly="state == 'approved'"/>
+
+                            <field name="included_branch_ids"
+                                   options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"
+                                   readonly="state == 'approved'"
+                                   widget="many2many_tags"/>
+
+                            <field name="type"
+                                   widget="radio"
+                                   readonly="state == 'approved'"/>
+                        </group>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@name='budget_items']" position="attributes">
+                    <attribute name="invisible">type == 'group'</attribute>
+                    <attribute name="readonly">state == 'approved'</attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='budget_items']" position="after">
+                    <page string="Budget Lines"
+                          name="budget_lines"
+                          invisible="type == 'account'">
+
+                        <field name="budget_line_ids"
+                               nolabel="1"
+                               readonly="state == 'approved'">
+
+                            <list editable="bottom"
+                                  decoration-success="is_over_target"
+                                  decoration-danger="is_over_budget">
+
+                                <field name="sequence" widget="handle"/>
+
+                                <field name="budget_group_id"
+                                       options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+
+                                <field name="planned_amount"
+                                       sum="Planned Amount"/>
+
+                                <field name="theoretical_planned_amount"
+                                       sum="Theoretical Amount"
+                                       readonly="1"/>
+
+                                <field name="actual_amount"
+                                       sum="Actual Amount"
+                                       readonly="1"/>
+
+                                <field name="difference_amount"
+                                       sum="Difference Amount"
+                                       readonly="1"/>
+
+                            </list>
+                        </field>
+                    </page>
+                    <page string="Allowed Users"
+                          name="allowed_users" groups="accounting_customs.group_budget_assign_allowed_user">
+                          <field name="allowed_user_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+                      </page>
+                </xpath>
+
+                <xpath expr="//sheet" position="after">
+                    <chatter/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- Budget List View -->
+        <record id="account_report_budget_list_inherit" model="ir.ui.view">
+            <field name="name">account.report.budget.list.inherit</field>
+            <field name="model">account.report.budget</field>
+            <field name="inherit_id" ref="account_reports.account_report_budget_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//list" position="attributes">
+                    <attribute name="decoration-success">is_over_target</attribute>
+                    <attribute name="decoration-danger">is_over_budget</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="budget_year" optional="hide"/>
+                    <field name="branch_id" optional="hide"/>
+                    <field name="included_branch_ids"
+                           widget="many2many_tags"
+                           optional="hide"/>
+                    <field name="start_date" optional="hide"/>
+                    <field name="end_date" optional="hide"/>
+
+                    <field name="total_planned_amount"
+                           sum="Planned Amount"/>
+
+                    <field name="total_theoretical_amount"
+                           sum="Theoretical Amount"/>
+
+                    <field name="total_actual_amount"
+                           sum="Actual Amount"/>
+
+                    <field name="total_difference_amount"
+                           sum="Difference Amount"/>
+                </xpath>
+
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <!-- Custom Budget Search View -->
+        <record id="view_account_report_budget_search_custom" model="ir.ui.view">
+            <field name="name">account.report.budget.search.custom</field>
+            <field name="model">account.report.budget</field>
+            <field name="arch" type="xml">
+                <search string="Search Budget">
+
+                    <field name="name"/>
+                    <field name="branch_id"/>
+                    <field name="budget_year"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+
+                    <separator/>
+
+                    <filter name="draft"
+                            string="Draft"
+                            domain="[('state', '=', 'draft')]"/>
+
+                    <filter name="submitted"
+                            string="Submitted"
+                            domain="[('state', '=', 'submitted')]"/>
+
+                    <filter name="approved"
+                            string="Approved"
+                            domain="[('state', '=', 'approved')]"/>
+
+                    <separator/>
+
+                    <group expand="0" string="Group By">
+
+                        <filter name="group_by_budget_year"
+                                string="Budget Year"
+                                context="{'group_by': 'budget_year'}"/>
+
+                        <filter name="group_by_branch"
+                                string="Branch"
+                                context="{'group_by': 'branch_id'}"/>
+
+                        <filter name="group_by_state"
+                                string="Status"
+                                context="{'group_by': 'state'}"/>
+
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
+
+        <!-- Update Base Budget Action -->
+        <record id="account_reports.action_account_report_budget_tree" model="ir.actions.act_window">
+            <field name="search_view_id" ref="accounting_customs.view_account_report_budget_search_custom"/>
+            <field name="context" eval="{'search_default_group_by_budget_year': 1}"/>
+        </record>
+
+
+        <!-- Budget Group List -->
+        <record id="view_budget_group_list" model="ir.ui.view">
+            <field name="name">budget.group.list</field>
+            <field name="model">budget.group</field>
+            <field name="arch" type="xml">
+                <list string="Budget Groups" editable="bottom">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+
+        <!-- Budget Group Action -->
+        <record id="action_budget_group" model="ir.actions.act_window">
+            <field name="name">Budget Group</field>
+            <field name="res_model">budget.group</field>
+            <field name="view_mode">list</field>
+        </record>
+
+
+        <!-- Budget Group Menu -->
+        <menuitem name="Budget Group"
+                  id="budget_group_menu"
+                  action="action_budget_group"
+                  parent="account.account_account_menu"
+                  sequence="357"/>
+
+    </data>
+</odoo>

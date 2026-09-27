@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="penalties_and_awards_hr_payslip_inherit_form" model="ir.ui.view">
+         <field name="name">hr.payslip.inherit.form</field>
+         <field name="model">hr.payslip</field>
+         <field name="inherit_id" ref="hr_payroll.view_hr_payslip_form"/>
+         <field name="arch" type="xml">
+            <xpath expr="//field[@name='credit_note']" position="after">
+                <field name="penalties_awards_ids" widget="many2many_tags" readonly="state != 'draft'" invisible="1"/>
+                <field name="total_penalties_awards"/>
+                <field name="deduction_amount" invisible="1"/>
+                <field name="awards_amount" invisible="1"/>
+            </xpath>
+         </field>
+    </record>
+</odoo>

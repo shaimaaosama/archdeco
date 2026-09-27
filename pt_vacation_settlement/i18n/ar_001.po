@@ -1,0 +1,296 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#       * gs_vacation_settlement
+#
+#. module: pt_vacation_settlement
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-30 11:28+0000\n"
+"PO-Revision-Date: 2026-03-30 11:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+# --- Python translatable strings (gs_vacation_settlement) ---
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:71
+#, python-format
+msgid "New"
+msgstr "جديد"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:230
+#, python-format
+msgid "You are not allowed to %s this vacation settlement."
+msgstr "غير مسموح لك بـ %s هذه التسوية."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:245
+#, python-format
+msgid "Please assign at least one user to the required approval group before continuing."
+msgstr "يرجى تعيين مستخدم واحد على الأقل لمجموعة الموافقة المطلوبة قبل المتابعة."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:363
+#, python-format
+msgid "Vacation Settlement Needs First Approval"
+msgstr "تسوية الإجازة تحتاج موافقة أولى"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:385
+#, python-format
+msgid "First approval is only allowed from Submitted stage."
+msgstr "الموافقة الأولى مسموح بها فقط من مرحلة التقديم."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:388
+#, python-format
+msgid "first approve"
+msgstr "موافقة أولى"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:394
+#, python-format
+msgid "Vacation Settlement Needs Second Approval"
+msgstr "تسوية الإجازة تحتاج موافقة ثانية"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:406
+#, python-format
+msgid "Second approval is only allowed from First Approved stage."
+msgstr "الموافقة الثانية مسموح بها فقط من مرحلة الموافقة الأولى."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:409
+#, python-format
+msgid "second approve"
+msgstr "موافقة ثانية"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:415
+#, python-format
+msgid "Vacation Settlement Ready For Posting"
+msgstr "تسوية الإجازة جاهزة للترحيل"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:444
+#, python-format
+msgid "post"
+msgstr "ترحيل"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:447
+#, python-format
+msgid "You can only generate accounting entry for second approved settlement(s)."
+msgstr "يمكنك فقط إنشاء قيد محاسبي للتسويات المعتمدة اعتمادًا ثانيًا."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:450
+#, python-format
+msgid "The private address of the employee is required to post the settlement. Please add it on the employee form."
+msgstr "العنوان الشخصي للموظف مطلوب لترحيل التسوية. يرجى إضافته في نموذج الموظف."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:457
+#, python-format
+msgid "General journal not found."
+msgstr "لم يتم العثور على دفتر اليومية العام."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:471
+#, python-format
+msgid "Account for type allowances not found."
+msgstr "لم يتم العثور على حساب نوع البدلات."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:486
+#, python-format
+msgid "Account for type deduction not found."
+msgstr "لم يتم العثور على حساب نوع الخصميات."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:503
+#, python-format
+msgid "Default account not found."
+msgstr "لم يتم العثور على الحساب الافتراضي."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:508
+#, python-format
+msgid "Amount Due"
+msgstr "المبلغ المستحق"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:522
+#, python-format
+msgid "Ticket Value"
+msgstr "قيمة التذكرة"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:533
+#, python-format
+msgid "Please Add Account To Payroll in Type Allowance"
+msgstr "يرجى إضافة حساب لكشف الرواتب في نوع البدل"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:537
+#, python-format
+msgid "Payroll"
+msgstr "كشف الرواتب"
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:548
+#, python-format
+msgid "Employee bank account not found."
+msgstr "لم يتم العثور على الحساب البنكي للموظف."
+
+#. module: pt_vacation_settlement
+#: code:addons/gs_vacation_settlement/models/hr_vacation.py:593
+#, python-format
+msgid "Register Payment"
+msgstr "تسجيل الدفع"
+
+# --- XML view strings (gs_vacation_settlement) ---
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_leave_view.xml
+msgid "Validate"
+msgstr "تحقق"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Post Journal Entries"
+msgstr "ترحيل القيود المحاسبية"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Submit"
+msgstr "تقديم"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Second Approve"
+msgstr "موافقة ثانية"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Refuse"
+msgstr "رفض"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Cancel"
+msgstr "إلغاء"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Reset To Draft"
+msgstr "إعادة إلى مسودة"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Expenses"
+msgstr "المصروفات"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Employee Details"
+msgstr "بيانات الموظف"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Leave Details"
+msgstr "تفاصيل الإجازة"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Total"
+msgstr "المجموع"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Contract Details"
+msgstr "تفاصيل العقد"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Tickets"
+msgstr "التذاكر"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "By Company"
+msgstr "حسب الشركة"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Allowances"
+msgstr "البدلات"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Add a Allowances"
+msgstr "إضافة بدل"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Total Allowances"
+msgstr "إجمالي البدلات"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Deduction"
+msgstr "خصم"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Add a Deduction"
+msgstr "إضافة خصم"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Total Detuction"
+msgstr "إجمالي الخصميات"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Employee Code"
+msgstr "رمز الموظف"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/hr_vacation_settlement.xml
+msgid "Is Vacation"
+msgstr "إجازة"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/payslip_view.xml
+msgid "Send To Sent"
+msgstr "إرسال"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/views/payslip_view.xml
+msgid "Create Draft Entry"
+msgstr "إنشاء قيد مسودة"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/wizard/leave_wizard_view.xml
+msgid "Handle Leave Action"
+msgstr "معالجة إجراء الإجازة"
+
+#. module: pt_vacation_settlement
+#: gs_vacation_settlement/wizard/leave_wizard_view.xml
+msgid "Confirm"
+msgstr "تأكيد"
+

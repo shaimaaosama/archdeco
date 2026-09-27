@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="hr_employee_view_form_mobile" model="ir.ui.view">
+        <field name="name">hr.employee.form.mobile.app</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hr_settings']" position="after">
+                <page name="mobile_app" string="Mobile App" groups="hr.group_hr_user">
+                    <group>
+                        <group string="Access">
+                            <field name="mobile_app_access"/>
+                            <field name="mobile_attendance_restriction"/>
+                            <div class="text-muted" colspan="2">
+                                Login = Work Email + PIN (HR Settings tab).
+                            </div>
+                        </group>
+                        <group string="Lock Status">
+                            <field name="mobile_failed_attempts" readonly="1"/>
+                            <field name="mobile_locked_until" readonly="1"/>
+                            <field name="mobile_active_token_count" readonly="1"/>
+                            <div class="o_row" colspan="2">
+                                <button name="action_mobile_revoke_sessions" type="object"
+                                        string="Revoke App Sessions" class="btn-secondary"
+                                        confirm="This will sign the employee out of the mobile app on every device."/>
+                                <button name="action_mobile_unlock" type="object"
+                                        string="Unlock" class="btn-secondary"
+                                        invisible="not mobile_locked_until"/>
+                            </div>
+                        </group>
+                    </group>
+                    <separator string="Mobile App Sessions"/>
+                    <field name="mobile_token_ids" readonly="1">
+                        <list>
+                            <field name="device_name"/>
+                            <field name="platform"/>
+                            <field name="app_version"/>
+                            <field name="last_used"/>
+                            <field name="expires_at"/>
+                            <field name="active" widget="boolean_toggle"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_view_tree_mobile" model="ir.ui.view">
+        <field name="name">hr.employee.list.mobile.app</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <field name="work_location_id" position="after">
+                <field name="mobile_attendance_restriction" optional="hide"/>
+                <field name="mobile_app_access" optional="hide" widget="boolean_toggle"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_employee_view_search_mobile" model="ir.ui.view">
+        <field name="name">hr.employee.search.mobile.app</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <filter name="inactive" position="before">
+                <filter string="Mobile App Access Disabled" name="mobile_app_access_disabled"
+                        domain="[('mobile_app_access', '=', False)]"/>
+                <filter string="Mobile App Locked" name="mobile_app_locked"
+                        domain="[('mobile_locked_until', '!=', False)]"/>
+                <separator/>
+            </filter>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,243 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#       * pt_hr_contracts_management
+#
+#. module: pt_hr_contracts_management
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-30 11:28+0000\n"
+"PO-Revision-Date: 2026-03-30 11:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+# --- Python translatable strings (pt_hr_contracts_management) ---
+
+#. module: pt_hr_contracts_management
+#: code:addons/pt_hr_contracts_management/models/contract_management.py:27
+#, python-format
+msgid "New"
+msgstr "جديد"
+
+#. module: pt_hr_contracts_management
+#: code:addons/pt_hr_contracts_management/models/contract_management.py:157
+#, python-format
+msgid "Sales"
+msgstr "مبيعات"
+
+#. module: pt_hr_contracts_management
+#: code:addons/pt_hr_contracts_management/models/contract_management.py:178
+#, python-format
+msgid "Purchase"
+msgstr "مشتريات"
+
+#. module: pt_hr_contracts_management
+#: code:addons/pt_hr_contracts_management/models/subject.py:22
+#, python-format
+msgid "Contract Payment"
+msgstr "دفعة العقد"
+
+#. module: pt_hr_contracts_management
+#: code:addons/pt_hr_contracts_management/models/type_of_contracts.py:40
+#, python-format
+msgid "Contract Classification"
+msgstr "تصنيف العقد"
+
+# --- XML view strings (pt_hr_contracts_management) ---
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Contract Payment Schedules"
+msgstr "جداول دفع العقود"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Archived"
+msgstr "محفوظ"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Paid"
+msgstr "مدفوع"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Not Paid"
+msgstr "غير مدفوع"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Partner"
+msgstr "شريك"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Contract"
+msgstr "عقد"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Payment"
+msgstr "دفعة"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Status"
+msgstr "الحالة"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Payment State"
+msgstr "حالة الدفع"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Contract Reference"
+msgstr "مرجع العقد"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contact_payment_schedule.xml
+msgid "Payment Details"
+msgstr "تفاصيل الدفع"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Contract Management"
+msgstr "إدارة العقود"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Contracts"
+msgstr "العقود"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Running"
+msgstr "قيد التنفيذ"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Expire"
+msgstr "منتهي"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Canceled"
+msgstr "ملغي"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Renewable"
+msgstr "قابل للتجديد"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Sales Contracts"
+msgstr "عقود المبيعات"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Purchase Contracts"
+msgstr "عقود المشتريات"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Company"
+msgstr "شركة"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Create Sales"
+msgstr "إنشاء بيع"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Create Purchase"
+msgstr "إنشاء مشتريات"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Refresh Payments"
+msgstr "تحديث المدفوعات"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Contract Details"
+msgstr "تفاصيل العقد"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Financial &amp; Renewal"
+msgstr "المالية والتجديد"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Overview"
+msgstr "نظرة عامة"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Attachments"
+msgstr "المرفقات"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Payments"
+msgstr "المدفوعات"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Renewal"
+msgstr "التجديد"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Renewal Settings"
+msgstr "إعدادات التجديد"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/contract_management.xml
+msgid "Notes"
+msgstr "ملاحظات"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/subject.xml
+msgid "Payment Schedules"
+msgstr "جداول الدفع"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/subject.xml
+msgid "Subject Details"
+msgstr "تفاصيل الموضوع"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/subject.xml
+msgid "Content"
+msgstr "المحتوى"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/type_of_contracts.xml
+msgid "Classification Details"
+msgstr "تفاصيل التصنيف"
+
+#. module: pt_hr_contracts_management
+#: pt_hr_contracts_management/views/type_of_contracts.xml
+msgid "Parent Classification"
+msgstr "التصنيف الأصلي"
+

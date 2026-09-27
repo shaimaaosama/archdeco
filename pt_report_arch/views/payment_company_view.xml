@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payment_company_tree" model="ir.ui.view">
+        <field name="name">payment.company.tree</field>
+        <field name="model">payment.company</field>
+        <field name="arch" type="xml">
+            <list string="Payment Companies">
+                <field name="company_id_number"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_payment_company_form" model="ir.ui.view">
+        <field name="name">payment.company.form</field>
+        <field name="model">payment.company</field>
+        <field name="arch" type="xml">
+            <form string="Payment Company">
+                <sheet>
+                    <group>
+                        <field name="company_id_number"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_payment_company" model="ir.actions.act_window">
+        <field name="name">Payment Companies</field>
+        <field name="res_model">payment.company</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_payment_company"
+              name="Company IDs"
+              parent="hr.hr_menu_hr_reports"
+              action="action_payment_company"
+              sequence="49"/>
+
+    <menuitem id="menu_payment_company1"
+              name="Company IDs"
+              parent="hr_payroll.menu_hr_salary_configuration"
+              action="action_payment_company"
+              sequence="10"/>
+</odoo>

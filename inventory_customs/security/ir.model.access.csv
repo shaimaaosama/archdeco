@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_excel_report_wizard_user,purchase.excel.report.wizard.user,model_purchase_excel_report_wizard,,1,1,1,1
+access_inventory_aging_dashboard,inventory.aging.dashboard,model_inventory_aging_dashboard,,1,0,0,0

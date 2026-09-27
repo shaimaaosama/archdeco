@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="faceio_kiosk_page" name="FaceIO Attendance Kiosk">
+        <t t-call="web.layout">
+            <style>
+                /* ── Reset / base ─────────────────────────────────────────── */
+                *, *::before, *::after { box-sizing: border-box; }
+                body { margin: 0; background: #f0eff5; font-family: "Roboto", sans-serif; }
+
+                /* ── Full-screen kiosk layout ─────────────────────────────── */
+                .kiosk-wrap {
+                    min-height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: flex-start;
+                    background: linear-gradient(145deg, #f0eff5 0%, #e8e3f0 100%);
+                }
+
+                /* ── Top bar ──────────────────────────────────────────────── */
+                .kiosk-topbar {
+                    width: 100%;
+                    background: #714B67;
+                    color: #fff;
+                    padding: 14px 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    box-shadow: 0 2px 8px rgba(0,0,0,.18);
+                }
+                .kiosk-topbar-brand { display: flex; align-items: center; gap: 10px; }
+                .kiosk-topbar-brand i { font-size: 22px; }
+                .kiosk-topbar-brand span { font-size: 18px; font-weight: 600; letter-spacing: .3px; }
+                .kiosk-clock { font-size: 22px; font-weight: 700; letter-spacing: 2px; font-variant-numeric: tabular-nums; }
+                .kiosk-date  { font-size: 13px; opacity: .8; text-align: right; margin-top: 2px; }
+
+                /* ── Main card ────────────────────────────────────────────── */
+                .kiosk-card {
+                    background: #fff;
+                    border-radius: 16px;
+                    box-shadow: 0 4px 24px rgba(113,75,103,.12);
+                    width: 100%;
+                    max-width: 520px;
+                    margin: 36px auto 0;
+                    padding: 36px 40px 32px;
+                    text-align: center;
+                }
+                .kiosk-card-icon {
+                    width: 80px; height: 80px;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, #714B67 0%, #9b6b8f 100%);
+                    display: flex; align-items: center; justify-content: center;
+                    margin: 0 auto 20px;
+                    box-shadow: 0 4px 16px rgba(113,75,103,.25);
+                }
+                .kiosk-card-icon i { color: #fff; font-size: 36px; }
+                .kiosk-card h2 { font-size: 22px; font-weight: 700; color: #1f1f2e; margin: 0 0 6px; }
+                .kiosk-card p  { font-size: 14px; color: #888; margin: 0 0 28px; }
+
+                /* ── Big action button ────────────────────────────────────── */
+                .kiosk-btn {
+                    width: 100%;
+                    padding: 16px;
+                    background: #714B67;
+                    color: #fff;
+                    border: none;
+                    border-radius: 10px;
+                    font-size: 16px;
+                    font-weight: 600;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    transition: background .15s, box-shadow .15s;
+                    box-shadow: 0 4px 12px rgba(113,75,103,.3);
+                }
+                .kiosk-btn:hover:not(:disabled) { background: #5c3d55; box-shadow: 0 6px 18px rgba(113,75,103,.38); }
+                .kiosk-btn:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+
+                /* ── Spinner ──────────────────────────────────────────────── */
+                .kiosk-spinner {
+                    display: none;
+                    width: 20px; height: 20px;
+                    border: 3px solid rgba(255,255,255,.35);
+                    border-top-color: #fff;
+                    border-radius: 50%;
+                    animation: kspin .7s linear infinite;
+                }
+                @keyframes kspin { to { transform: rotate(360deg); } }
+
+                /* ── Result panel ─────────────────────────────────────────── */
+                .kiosk-result {
+                    margin-top: 24px;
+                    border-radius: 12px;
+                    padding: 20px 22px;
+                    text-align: left;
+                    display: none;
+                    animation: fadeIn .3s ease;
+                }
+                @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+                .kiosk-result.checkin  { background: #edfaf1; border: 1.5px solid #b7e4c7; }
+                .kiosk-result.checkout { background: #eef2ff; border: 1.5px solid #c7d2fe; }
+                .kiosk-result.error    { background: #fff1f2; border: 1.5px solid #fecdd3; }
+                .kiosk-result-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+                .kiosk-result-avatar {
+                    width: 52px; height: 52px; border-radius: 50%;
+                    background: #714B67; color: #fff;
+                    display: flex; align-items: center; justify-content: center;
+                    font-size: 20px; font-weight: 700; flex-shrink: 0;
+                }
+                .kiosk-result.error .kiosk-result-avatar { background: #e11d48; }
+                .kiosk-result-name { font-size: 17px; font-weight: 700; color: #1f1f2e; }
+                .kiosk-result-job  { font-size: 13px; color: #888; margin-top: 2px; }
+                .kiosk-result-rows { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 13px; }
+                .kiosk-result-label { color: #888; font-weight: 500; white-space: nowrap; }
+                .kiosk-result-value { color: #1f1f2e; font-weight: 600; }
+                .kiosk-action-badge {
+                    display: inline-flex; align-items: center; gap: 6px;
+                    padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 600;
+                    margin-bottom: 14px;
+                }
+                .badge-checkin  { background: #d1fae5; color: #065f46; }
+                .badge-checkout { background: #e0e7ff; color: #3730a3; }
+                .badge-error    { background: #ffe4e6; color: #9f1239; }
+
+                /* ── Recent log ───────────────────────────────────────────── */
+                .kiosk-log {
+                    width: 100%; max-width: 520px;
+                    margin: 20px auto 40px;
+                    background: #fff;
+                    border-radius: 12px;
+                    box-shadow: 0 2px 10px rgba(113,75,103,.07);
+                    overflow: hidden;
+                }
+                .kiosk-log-header {
+                    background: #f7f4fa; border-bottom: 1px solid #ece6f0;
+                    padding: 12px 20px; font-size: 13px; font-weight: 600; color: #714B67;
+                    display: flex; align-items: center; gap: 8px;
+                }
+                .kiosk-log-body { max-height: 220px; overflow-y: auto; }
+                .kiosk-log-row  {
+                    display: flex; align-items: center; gap: 12px;
+                    padding: 10px 20px; border-bottom: 1px solid #f5f0f8; font-size: 13px;
+                }
+                .kiosk-log-row:last-child { border-bottom: none; }
+                .kiosk-log-dot {
+                    width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0;
+                }
+                .dot-in  { background: #10b981; }
+                .dot-out { background: #6366f1; }
+                .kiosk-log-name  { flex: 1; font-weight: 600; color: #1f1f2e; }
+                .kiosk-log-time  { color: #888; white-space: nowrap; }
+                .kiosk-log-type  { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
+                .kiosk-log-type.in  { background: #d1fae5; color: #065f46; }
+                .kiosk-log-type.out { background: #e0e7ff; color: #3730a3; }
+
+                /* ── Geo note ─────────────────────────────────────────────── */
+                .kiosk-geo { font-size: 11px; color: #bbb; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+                .kiosk-geo i { color: #714B67; }
+
+                /* ── Alert states ─────────────────────────────────────────── */
+                .kiosk-alert { background: #fff3cd; border: 1px solid #ffc107; border-radius: 10px; padding: 14px 18px; font-size: 13px; color: #856404; margin: 24px auto 0; max-width: 520px; display: flex; gap: 10px; align-items: flex-start; }
+                .kiosk-alert i { margin-top: 1px; }
+
+                /* ── Back button ──────────────────────────────────────────── */
+                .kiosk-back-btn {
+                    color: rgba(255,255,255,0.8); background: rgba(0,0,0,0.15);
+                    width: 36px; height: 36px; border-radius: 8px;
+                    display: flex; align-items: center; justify-content: center;
+                    text-decoration: none; transition: all .2s;
+                }
+                .kiosk-back-btn:hover {
+                    color: #fff; background: rgba(0,0,0,0.3); text-decoration: none;
+                }
+            </style>
+
+            <div class="kiosk-wrap">
+
+                <!-- Top bar -->
+                <div class="kiosk-topbar">
+                    <div style="display:flex; align-items:center; gap:16px;">
+                        <a href="/web" class="kiosk-back-btn" title="Back to Odoo">
+                            <i class="fa fa-arrow-left"/>
+                        </a>
+                        <div class="kiosk-topbar-brand">
+                            <i class="fa fa-clock-o"/>
+                            <span>Attendance Kiosk</span>
+                        </div>
+                    </div>
+                    <div style="text-align:right">
+                        <div class="kiosk-clock" id="k_clock">--:--:--</div>
+                        <div class="kiosk-date"  id="k_date">—</div>
+                    </div>
+                </div>
+
+                <!-- Config alerts -->
+                <t t-if="not faceio_enabled">
+                    <div class="kiosk-alert">
+                        <i class="fa fa-exclamation-triangle"/>
+                        FaceIO is disabled. Enable it from HR → Settings → FaceIO before using the kiosk.
+                    </div>
+                </t>
+                <t t-if="faceio_enabled and not faceio_app_public_id">
+                    <div class="kiosk-alert">
+                        <i class="fa fa-exclamation-triangle"/>
+                        FaceIO Public App ID is missing. Configure it in HR → Settings → FaceIO.
+                    </div>
+                </t>
+
+                <!-- Main action card -->
+                <div class="kiosk-card">
+                    <div class="kiosk-card-icon"><i class="fa fa-user-circle"/></div>
+                    <h2>Facial Recognition</h2>
+                    <p>Look at the camera to check in or check out automatically</p>
+
+                    <button id="kiosk_btn" class="kiosk-btn" type="button">
+                        <span id="kiosk_spinner" class="kiosk-spinner"/>
+                        <i id="kiosk_btn_icon" class="fa fa-camera"/>
+                        <span id="kiosk_btn_label">Scan My Face</span>
+                    </button>
+
+                    <div class="kiosk-geo">
+                        <i class="fa fa-map-marker"/> <span id="geo_status">Location: detecting…</span>
+                    </div>
+
+                    <!-- Result panel -->
+                    <div id="kiosk_result" class="kiosk-result">
+                        <div class="kiosk-result-header">
+                            <div class="kiosk-result-avatar" id="res_avatar">?</div>
+                            <div>
+                                <div class="kiosk-result-name" id="res_name">—</div>
+                                <div class="kiosk-result-job"  id="res_job">—</div>
+                            </div>
+                        </div>
+                        <div id="res_badge_wrap" style="margin-bottom:12px;"/>
+                        <div class="kiosk-result-rows" id="res_rows"/>
+                    </div>
+                </div>
+
+                <!-- Recent log -->
+                <div class="kiosk-log" style="margin-top:24px;">
+                    <div class="kiosk-log-header">
+                        <i class="fa fa-list-ul"/> Recent Activity
+                    </div>
+                    <div class="kiosk-log-body" id="kiosk_log_body">
+                        <div class="kiosk-log-row" style="color:#bbb; justify-content:center; font-size:13px; padding:18px;">
+                            No activity yet
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /kiosk-wrap -->
+
+            <div id="faceio-modal"/>
+            <script src="https://cdn.faceio.net/fio.js"/>
+            <script type="text/javascript">
+            (function () {
+                /* ── Config ──────────────────────────────────────────────── */
+                const faceioEnabled = <t t-esc="'true' if faceio_enabled else 'false'"/>;
+                const appId         = "<t t-esc='faceio_app_public_id'/>";
+
+                /* ── Elements ────────────────────────────────────────────── */
+                const kioskBtn   = document.getElementById("kiosk_btn");
+                const btnIcon    = document.getElementById("kiosk_btn_icon");
+                const btnLabel   = document.getElementById("kiosk_btn_label");
+                const btnSpinner = document.getElementById("kiosk_spinner");
+                const result     = document.getElementById("kiosk_result");
+                const logBody    = document.getElementById("kiosk_log_body");
+                const geoStatus  = document.getElementById("geo_status");
+
+                /* ── Clock ───────────────────────────────────────────────── */
+                (function tick() {
+                    const now = new Date();
+                    document.getElementById("k_clock").textContent =
+                        now.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit", second: "2-digit"});
+                    document.getElementById("k_date").textContent =
+                        now.toLocaleDateString([], {weekday:"long", year:"numeric", month:"long", day:"numeric"});
+                    setTimeout(tick, 1000);
+                })();
+
+                /* ── Geolocation ─────────────────────────────────────────── */
+                let geoLat = 0, geoLng = 0;
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(pos) {
+                        geoLat = pos.coords.latitude;
+                        geoLng = pos.coords.longitude;
+                        geoStatus.textContent = "Location: " + geoLat.toFixed(4) + ", " + geoLng.toFixed(4);
+                    }, function() {
+                        geoStatus.textContent = "Location: not available";
+                    });
+                } else {
+                    geoStatus.textContent = "Location: not supported";
+                }
+
+                /* ── Loading state ───────────────────────────────────────── */
+                function setLoading(yes) {
+                    kioskBtn.disabled     = yes;
+                    btnSpinner.style.display = yes ? "inline-block" : "none";
+                    btnIcon.style.display    = yes ? "none" : "inline";
+                    btnLabel.textContent     = yes ? "Reading face…" : "Scan My Face";
+                }
+
+                /* ── Show result ─────────────────────────────────────────── */
+                function showResult(data) {
+                    result.className = "kiosk-result " + (data.action === "check_in" ? "checkin" : data.action === "check_out" ? "checkout" : "error");
+                    result.style.display = "block";
+
+                    const name = data.employee_name || "Unknown";
+                    document.getElementById("res_avatar").textContent = name.charAt(0).toUpperCase();
+                    document.getElementById("res_name").textContent   = name;
+                    document.getElementById("res_job").textContent    = data.employee_job || "";
+
+                    const badgeWrap = document.getElementById("res_badge_wrap");
+                    if (data.action === "check_in") {
+                        badgeWrap.innerHTML = '<span class="kiosk-action-badge badge-checkin"><i class="fa fa-sign-in"></i> Checked In</span>';
+                    } else if (data.action === "check_out") {
+                        badgeWrap.innerHTML = '<span class="kiosk-action-badge badge-checkout"><i class="fa fa-sign-out"></i> Checked Out</span>';
+                    } else {
+                        badgeWrap.innerHTML = '<span class="kiosk-action-badge badge-error"><i class="fa fa-times"></i> Error</span>';
+                    }
+
+                    const rows = document.getElementById("res_rows");
+                    rows.innerHTML = "";
+                    function addRow(label, value) {
+                        rows.innerHTML +=
+                            '<span class="kiosk-result-label">' + label + '</span>' +
+                            '<span class="kiosk-result-value">' + (value || "—") + '</span>';
+                    }
+
+                    if (data.action === "check_in") {
+                        addRow("Check-in",  formatDT(data.check_in));
+                    } else if (data.action === "check_out") {
+                        addRow("Check-in",    formatDT(data.check_in));
+                        addRow("Check-out",   formatDT(data.check_out));
+                        addRow("Hours worked", data.worked_hours || "—");
+                    } else {
+                        addRow("Error", data.message || "Unknown error");
+                    }
+                }
+
+                function showError(msg) {
+                    result.className = "kiosk-result error";
+                    result.style.display = "block";
+                    document.getElementById("res_avatar").textContent = "!";
+                    document.getElementById("res_name").textContent = "Error";
+                    document.getElementById("res_job").textContent = "";
+                    document.getElementById("res_badge_wrap").innerHTML =
+                        '<span class="kiosk-action-badge badge-error"><i class="fa fa-times"></i> Failed</span>';
+                    document.getElementById("res_rows").innerHTML =
+                        '<span class="kiosk-result-label">Reason</span>' +
+                        '<span class="kiosk-result-value">' + msg + '</span>';
+                }
+
+                /* ── Add log row ─────────────────────────────────────────── */
+                function addLog(name, action, time) {
+                    const prev = logBody.querySelector("[data-placeholder]");
+                    if (prev) prev.remove();
+                    const dot  = action === "check_in" ? "dot-in" : "dot-out";
+                    const type = action === "check_in" ? "in"     : "out";
+                    const label= action === "check_in" ? "IN"     : "OUT";
+                    const row  = document.createElement("div");
+                    row.className = "kiosk-log-row";
+                    row.innerHTML =
+                        '<span class="kiosk-log-dot ' + dot + '"></span>' +
+                        '<span class="kiosk-log-name">' + name + '</span>' +
+                        '<span class="kiosk-log-time">' + time + '</span>' +
+                        '<span class="kiosk-log-type ' + type + '">' + label + '</span>';
+                    logBody.insertBefore(row, logBody.firstChild);
+                    // keep max 10 rows
+                    while (logBody.children.length > 10) logBody.removeChild(logBody.lastChild);
+                }
+
+                /* ── Helpers ─────────────────────────────────────────────── */
+                function formatDT(dtStr) {
+                    if (!dtStr) return "—";
+                    const d = new Date(dtStr.replace(" ", "T") + "Z");
+                    return d.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
+                }
+
+                /* ── Kiosk scan ──────────────────────────────────────────── */
+                if (!faceioEnabled || !appId) {
+                    kioskBtn.disabled = true;
+                    btnLabel.textContent = "FaceIO not configured";
+                    return;
+                }
+
+                const faceio = new faceIO(appId);
+
+                let resetTimeout = null;
+
+                kioskBtn.addEventListener("click", async function () {
+                    // Clear any pending reset
+                    if (resetTimeout) clearTimeout(resetTimeout);
+                    
+                    setLoading(true);
+                    result.style.display = "none";
+                    try {
+                        const userData = await faceio.authenticate({ locale: "auto" });
+                        const facialId = userData.facialId;
+
+                        const payload = {
+                            jsonrpc: "2.0", method: "call", id: Date.now(),
+                            params: {
+                                facial_id:   facialId,
+                                lat:         geoLat,
+                                lng:         geoLng,
+                                device_uuid: "faceio-kiosk",
+                            },
+                        };
+                        const response = await fetch("/hr_hub/faceio/kiosk/checkin", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload),
+                        });
+                        const data = await response.json();
+                        if (data.error) {
+                            const msg = (data.error.data &amp;&amp; data.error.data.message)
+                                ? data.error.data.message : data.error.message;
+                            showError(msg);
+                        } else {
+                            const res = data.result;
+                            showResult(res);
+                            addLog(res.employee_name, res.action, formatDT(res.action === "check_in" ? res.check_in : res.check_out));
+                        }
+                    } catch (err) {
+                        showError("Face scan failed: " + String(err));
+                    } finally {
+                        setLoading(false);
+                        try { faceio.restartSession(); } catch (e) {}
+                        
+                        // Auto-reset kiosk UI for next employee after 6 seconds
+                        resetTimeout = setTimeout(function() {
+                            result.style.display = "none";
+                        }, 6000);
+                    }
+                });
+            })();
+            </script>
+        </t>
+    </template>
+
+    <!-- Client action to embed kiosk as iframe inside Odoo -->
+    <template id="faceio_kiosk_action_template" name="FaceIO Kiosk Action Template">
+        <t t-name="pt_hr_hub_server.FaceIOKioskAction">
+            <iframe
+                src="/hr_hub/faceio/kiosk"
+                style="width:100%; height:100%; min-height:85vh; border:none; display:block;"
+            />
+        </t>
+    </template>
+
+    <record id="action_hr_hub_faceio_kiosk" model="ir.actions.act_url">
+        <field name="name">Facial Attendance Kiosk</field>
+        <field name="type">ir.actions.act_url</field>
+        <field name="url">/hr_hub/faceio/kiosk</field>
+        <field name="target">self</field>
+    </record>
+
+    <menuitem id="menu_hr_hub_faceio_kiosk" name="Facial Attendance Kiosk" parent="menu_hub_server_root" action="action_hr_hub_faceio_kiosk" sequence="20" groups="hr.group_hr_user"/>
+</odoo>

@@ -1,0 +1,347 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#       * pt_hr_attendance_sheet
+#
+#. module: pt_hr_attendance_sheet
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-30 11:28+0000\n"
+"PO-Revision-Date: 2026-03-30 11:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+# --- Python translatable strings (pt_hr_attendance_sheet) ---
+
+#. module: pt_hr_attendance_sheet
+#: code:addons/pt_hr_attendance_sheet/models/att_sheet_batch.py:71
+#, python-format
+msgid "Attendance Batch of %s  Department for %s"
+msgstr "دفعة حضور قسم %s للفترة %s"
+
+#. module: pt_hr_attendance_sheet
+#: code:addons/pt_hr_attendance_sheet/models/att_sheet_batch.py:86
+#, python-format
+msgid "Attendance Batch of %s  Company for %s"
+msgstr "دفعة حضور شركة %s للفترة %s"
+
+#. module: pt_hr_attendance_sheet
+#: code:addons/pt_hr_attendance_sheet/models/att_sheet_batch.py:117
+#, python-format
+msgid "There is no  Employees In This Department"
+msgstr "لا يوجد موظفون في هذا القسم"
+
+#. module: pt_hr_attendance_sheet
+#: code:addons/pt_hr_attendance_sheet/models/att_sheet_batch.py:143
+#, python-format
+msgid "There is no  Employees In This Company"
+msgstr "لا يوجد موظفون في هذه الشركة"
+
+#. module: pt_hr_attendance_sheet
+#: code:addons/pt_hr_attendance_sheet/models/hr_attendance_sheet.py:502
+#, python-format
+msgid "working on Public Holiday"
+msgstr "عمل في عطلة رسمية"
+
+#. module: pt_hr_attendance_sheet
+#: code:addons/pt_hr_attendance_sheet/models/hr_attendance_sheet.py:764
+#, python-format
+msgid "overtime out of work intervals"
+msgstr "وقت إضافي خارج فترات العمل"
+
+#. module: pt_hr_attendance_sheet
+#: code:addons/pt_hr_attendance_sheet/models/hr_attendance_sheet.py:805
+#, python-format
+msgid "working in weekend"
+msgstr "عمل في عطلة أسبوعية"
+
+#. module: pt_hr_attendance_sheet
+#: code:addons/pt_hr_attendance_sheet/models/hr_attendance_sheet.py:854
+#, python-format
+msgid "There is no active contract for current employee"
+msgstr "لا يوجد عقد نشط للموظف الحالي"
+
+#. module: pt_hr_attendance_sheet
+#: code:addons/pt_hr_attendance_sheet/models/hr_attendance_sheet.py:856
+#, python-format
+msgid "Payslip Has Been Created Before"
+msgstr "تم إنشاء قسيمة الراتب مسبقًا"
+
+# --- XML view strings (pt_hr_attendance_sheet) ---
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/attendance_sheet_batch_view.xml
+msgid "Attendance Sheet Batch"
+msgstr "دفعة كشف الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/attendance_sheet_batch_view.xml
+msgid "Generate Sheets"
+msgstr "إنشاء الكشوفات"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/attendance_sheet_batch_view.xml
+msgid "Submit Sheets"
+msgstr "تقديم الكشوفات"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/attendance_sheet_batch_view.xml
+msgid "Approve Sheets"
+msgstr "اعتماد الكشوفات"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/attendance_sheet_batch_view.xml
+msgid "Period"
+msgstr "الفترة"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/attendance_sheet_batch_view.xml
+msgid "Attendance Sheets"
+msgstr "كشوفات الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/attendance_sheet_batch_view.xml
+msgid "Attendance Sheet Batches"
+msgstr "دفعات كشف الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Overtime Rule"
+msgstr "قاعدة الوقت الإضافي"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Overtime Rules"
+msgstr "قواعد الوقت الإضافي"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Late Rule"
+msgstr "قاعدة التأخير"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Late In Periods"
+msgstr "فترات التأخير"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Difference Time Rule"
+msgstr "قاعدة فارق الوقت"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Difference Time Periods"
+msgstr "فترات فارق الوقت"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Absence Rule"
+msgstr "قاعدة الغياب"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Absence Times"
+msgstr "أوقات الغياب"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Absence Rules"
+msgstr "قواعد الغياب"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Difference Time Rules"
+msgstr "قواعد فارق الوقت"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Late Rules"
+msgstr "قواعد التأخير"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Attendance Policy"
+msgstr "سياسة الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Late In Rule"
+msgstr "قاعدة التأخير في الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_policy_view.xml
+msgid "Attendance Policies"
+msgstr "سياسات الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Day"
+msgstr "يوم"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Get Attendances"
+msgstr "استيراد الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Submit to Manager"
+msgstr "تقديم إلى المدير"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Approve"
+msgstr "اعتماد"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Set to Draft"
+msgstr "تعيين كمسودة"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Payslip"
+msgstr "قسيمة الراتب"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Attendances"
+msgstr "سجلات الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "PL/IN"
+msgstr "مخطط/دخول"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "PL/OUT"
+msgstr "مخطط/خروج"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "ACT/IN"
+msgstr "فعلي/دخول"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "ACT/OUT"
+msgstr "فعلي/خروج"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Worked/H"
+msgstr "ساعات العمل"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Edit"
+msgstr "تعديل"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Attendance Data"
+msgstr "بيانات الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Over Time"
+msgstr "وقت إضافي"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Late In"
+msgstr "تأخير"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Absence"
+msgstr "غياب"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Difference Time"
+msgstr "فارق الوقت"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Attendance Sheet Line"
+msgstr "سطر كشف الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Attendance"
+msgstr "الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Overtime"
+msgstr "وقت إضافي"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Lateness"
+msgstr "التأخير"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Search Attendance Sheets"
+msgstr "البحث في كشوفات الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "To Approve"
+msgstr "في انتظار الاعتماد"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Approved Sheets"
+msgstr "كشوفات معتمدة"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Employee"
+msgstr "موظف"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_attendance_sheet_view.xml
+msgid "Start Month"
+msgstr "بداية الشهر"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_public_holiday_view.xml
+msgid "Public Holidays"
+msgstr "الأعياد الرسمية"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/views/hr_public_holiday_view.xml
+msgid "Apply On"
+msgstr "تطبيق على"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/wizard/change_att_data_view.xml
+msgid "Change Attendance data"
+msgstr "تغيير بيانات الحضور"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/wizard/change_att_data_view.xml
+msgid "_Apply"
+msgstr "تطبيق"
+
+#. module: pt_hr_attendance_sheet
+#: pt_hr_attendance_sheet/wizard/change_att_data_view.xml
+msgid "Cancel"
+msgstr "إلغاء"
+

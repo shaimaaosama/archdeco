@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_custody_status_tree_view" model="ir.ui.view">
+            <field name="name">hr.custody.status.tree</field>
+            <field name="model">hr.custody.status</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="hr_custody_status_form_view" model="ir.ui.view">
+            <field name="name">hr.custody.status.form</field>
+            <field name="model">hr.custody.status</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="name"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_hr_custody_status" model="ir.actions.act_window">
+            <field name="name">Custody Status</field>
+            <field name="res_model">hr.custody.status</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to Create a New Record.
+                </p>
+            </field>
+        </record>
+
+            <menuitem id="sub_hr_custody_status" name="Custody Status"  parent="pt_hr_insurance.gs_hr_settings_main_menu" action="action_hr_custody_status" sequence="25"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="ir_cron_hub_attendance_sync" model="ir.cron">
+            <field name="name">HR Hub Attendance Sync Queue</field>
+            <field name="model_id" ref="model_hub_attendance_sync_queue"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_process_pending_sync()</field>
+            <field name="active">True</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+        </record>
+        <record id="ir_cron_sync_subscription" model="ir.cron">
+            <field name="name">Sync Mobile App Subscription</field>
+            <field name="model_id" ref="pt_hr_hub_server.model_hub_client_config"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_sync_subscription()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>

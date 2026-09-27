@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="group_vacation_settlement_approve_level_1" model="res.groups">
+            <field name="name">Vacation Settlement Approve Level 1</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+
+        <record id="group_vacation_settlement_approve_level_2" model="res.groups">
+            <field name="name">Vacation Settlement Approve Level 2</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+
+        <record id="group_vacation_settlement_post" model="res.groups">
+            <field name="name">Vacation Settlement Post</field>
+            <field name="category_id" ref="base.module_category_human_resources"/>
+        </record>
+    </data>
+</odoo>

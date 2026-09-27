@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="accounting_customs.AccountBudgetDashboard"
+       owl="1">
+
+        <div class="o_budget_executive_dashboard">
+
+            <div class="executive_header">
+                <div>
+                    <h1>Budget Dashboard</h1>
+
+                    <p>
+                        Budget performance, branch comparison
+                        and actual journal entry tracking.
+                    </p>
+                </div>
+            </div>
+
+            <t t-if="state.loading">
+                <div class="dashboard_loading">
+                    Loading dashboard...
+                </div>
+            </t>
+
+            <t t-else="">
+
+                <t t-if="state.screen === 'years'">
+
+                    <div class="section_title">
+                        <h2>Budget Years</h2>
+
+                        <p>
+                            Click any year row to review
+                            budget details.
+                        </p>
+                    </div>
+
+                    <div class="budget_year_table_panel">
+
+                        <table class="executive_table budget_year_table">
+
+                            <thead>
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Budgets</th>
+                                    <th>Net Planned Profit</th>
+                                    <th>Actual</th>
+                                    <th>UBR</th>
+                                    <th>Sales</th>
+                                    <th>Difference</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <t t-foreach="state.years"
+                                   t-as="year"
+                                   t-key="year.year">
+
+                                    <tr t-att-class="'clickable_row ' + getRowClass(year.planned, year.difference)"
+                                        t-on-click="() => this.openYear(year.year)">
+
+                                        <td>
+                                            <strong class="year_link">
+                                                <t t-esc="year.year"/>
+                                            </strong>
+                                        </td>
+
+                                        <td>
+                                            <strong t-esc="year.budget_count"/>
+                                        </td>
+
+                                        <td t-esc="formatAmount(year.planned)"/>
+
+                                        <td t-esc="formatAmount(year.actual)"/>
+
+                                        <td class="revenue_amount">
+                                            <strong t-esc="formatAmount(year.ubr)"/>
+                                        </td>
+
+                                        <td class="revenue_amount">
+                                            <strong t-esc="formatAmount(year.sales)"/>
+                                        </td>
+
+                                        <td t-att-class="getDifferenceTextClass(year.planned, year.difference)">
+                                            <strong t-esc="formatAmount(year.difference)"/>
+                                        </td>
+
+                                        <td>
+                                            <span t-att-class="'budget_indicator ' + getIndicatorClass(year.planned, year.difference)"
+                                                  t-att-title="getIndicatorTitle(year.planned, year.difference)">
+
+                                                <t t-esc="getIndicatorIcon(year.planned, year.difference)"/>
+
+                                                <t t-esc="getIndicatorLabel(year.planned, year.difference)"/>
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </t>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </t>
+
+                <t t-if="state.screen === 'year'">
+
+                    <button class="back_btn"
+                            t-on-click="() => this.backToYears()">
+
+                        ← Back to Years
+                    </button>
+
+                    <div class="year_page_header">
+
+                        <div>
+                            <h2>
+                                Budget Year
+                                <t t-esc="state.selectedYear"/>
+                            </h2>
+
+                            <p>
+                                Review budgets based on
+                                the selected period.
+                            </p>
+                        </div>
+
+                        <div class="period_filter year_filter_controls">
+
+                            <div class="budget_selector_wrapper">
+
+                                <label>
+                                    Budgets
+                                </label>
+
+                                <details class="budget_multi_select">
+
+                                    <summary>
+                                        <span t-esc="getBudgetSelectionLabel()"/>
+
+                                        <span class="selector_arrow">
+                                            ▾
+                                        </span>
+                                    </summary>
+
+                                    <div class="budget_selector_dropdown">
+
+                                        <div class="budget_selector_header">
+
+                                            <span>
+                                                Select Budgets
+                                            </span>
+
+                                            <small t-esc="getPendingBudgetSelectionLabel()"/>
+
+                                        </div>
+
+                                        <div class="budget_selector_actions">
+
+                                            <button type="button"
+                                                    class="budget_select_action"
+                                                    t-on-click.stop="selectAllBudgets">
+
+                                                Select All
+                                            </button>
+
+                                            <button type="button"
+                                                    class="budget_select_action clear"
+                                                    t-on-click.stop="clearBudgetSelection">
+
+                                                Clear
+                                            </button>
+
+                                        </div>
+
+                                        <div class="budget_selector_options">
+
+                                            <t t-if="!state.yearDetails.available_budgets.length">
+
+                                                <div class="no_budget_option">
+                                                    No allowed budgets found.
+                                                </div>
+
+                                            </t>
+
+                                            <t t-foreach="state.yearDetails.available_budgets"
+                                               t-as="budget"
+                                               t-key="budget.id">
+
+                                                <label class="budget_checkbox_option">
+
+                                                    <input type="checkbox"
+                                                           t-att-checked="isBudgetSelected(budget.id)"
+                                                           t-on-change="(ev) => this.onBudgetSelectionChange(ev, budget.id)"/>
+
+                                                    <span class="budget_option_text">
+
+                                                        <strong t-esc="budget.name"/>
+
+                                                        <small t-esc="budget.branch_name"/>
+
+                                                    </span>
+
+                                                </label>
+
+                                            </t>
+
+                                        </div>
+
+                                        <div class="budget_selector_confirm">
+
+                                            <button type="button"
+                                                    class="budget_cancel_button"
+                                                    t-on-click.stop="cancelBudgetSelection">
+
+                                                Cancel
+                                            </button>
+
+                                            <button type="button"
+                                                    class="budget_confirm_button"
+                                                    t-on-click.stop="confirmBudgetSelection">
+
+                                                Confirm
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+                                </details>
+
+                            </div>
+
+                            <label>
+                                From
+
+                                <input type="date"
+                                       t-att-value="state.pendingDateFrom"
+                                       t-on-change="onPendingDateFromChange"/>
+                            </label>
+
+                            <label>
+                                To
+
+                                <input type="date"
+                                       t-att-value="state.pendingDateTo"
+                                       t-on-change="onPendingDateToChange"/>
+                            </label>
+
+                            <button type="button"
+                                    class="budget_confirm_button date_apply_button"
+                                    t-on-click="applyDateFilter">
+
+                                Apply
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="kpi_grid four_cols">
+
+                        <div class="kpi_card main">
+                            <span>
+                                Net Planned Profit
+                            </span>
+
+                            <strong t-esc="formatAmount(state.yearDetails.summary.planned)"/>
+                        </div>
+
+                        <div class="kpi_card">
+                            <span>
+                                Period Planned
+                            </span>
+
+                            <strong t-esc="formatAmount(state.yearDetails.summary.theoretical)"/>
+                        </div>
+
+                        <div class="kpi_card">
+                            <span>
+                                Actual
+                            </span>
+
+                            <strong t-esc="formatAmount(state.yearDetails.summary.actual)"/>
+                        </div>
+
+                        <div t-att-class="'kpi_card ' + getKpiClass(state.yearDetails.summary.planned, state.yearDetails.summary.difference)">
+
+                            <span>
+                                Difference
+                            </span>
+
+                            <strong t-esc="formatAmount(state.yearDetails.summary.difference)"/>
+                        </div>
+
+                    </div>
+
+                    <div class="kpi_grid five_cols">
+
+                        <div class="kpi_card revenue">
+                            <span>
+                                Total Planned Sales
+                            </span>
+
+                            <strong t-esc="formatAmount(state.yearDetails.summary.total_planned_sales)"/>
+                        </div>
+
+                        <div class="kpi_card revenue">
+                            <span>
+                                Period Planned Sales
+                            </span>
+
+                            <strong t-esc="formatAmount(state.yearDetails.summary.period_planned_sales)"/>
+                        </div>
+
+                        <div class="kpi_card revenue">
+                            <span>
+                                Actual Sales
+                            </span>
+
+                            <strong t-esc="formatAmount(state.yearDetails.summary.actual_sales)"/>
+                        </div>
+
+                        <div t-att-class="'kpi_card ' + getKpiClass(state.yearDetails.summary.period_planned_sales, state.yearDetails.summary.sales_difference)">
+
+                            <span>
+                                Sales Difference
+                            </span>
+
+                            <strong t-esc="formatAmount(state.yearDetails.summary.sales_difference)"/>
+                        </div>
+
+                        <div class="kpi_card revenue">
+                            <span>
+                                UBR
+                            </span>
+
+                            <strong t-esc="formatAmount(state.yearDetails.summary.ubr)"/>
+                        </div>
+
+                    </div>
+
+                    <div class="section_title">
+                        <h2>
+                            Budgets by Branch
+                        </h2>
+
+                        <p>
+                            Click any budget row to view
+                            budget line details.
+                        </p>
+                    </div>
+
+                    <div class="budget_branch_table_panel">
+
+                        <table class="executive_table budget_branch_table">
+
+                            <thead>
+                                <tr>
+                                    <th>Budget Name</th>
+                                    <th>Total Planned</th>
+                                    <th>Period Planned</th>
+                                    <th>Sales</th>
+                                    <th>Actual</th>
+                                    <th>UBR</th>
+                                    <th>Difference</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <t t-foreach="state.yearDetails.budgets"
+                                   t-as="budget"
+                                   t-key="budget.id">
+
+                                    <tr t-att-class="'clickable_row ' + getRowClass(budget.planned, budget.difference)"
+                                        t-on-click="() => this.openBudget(budget.id)">
+
+                                        <td>
+                                            <strong class="budget_row_name">
+                                                <t t-esc="budget.name"/>
+                                            </strong>
+                                        </td>
+
+                                        <td t-esc="formatAmount(budget.planned)"/>
+
+                                        <td t-esc="formatAmount(budget.theoretical)"/>
+
+                                        <td class="revenue_amount">
+                                            <strong t-esc="formatAmount(budget.sales)"/>
+                                        </td>
+
+                                        <td t-esc="formatAmount(budget.actual)"/>
+
+                                        <td class="revenue_amount">
+                                            <strong t-esc="formatAmount(budget.ubr)"/>
+                                        </td>
+
+                                        <td t-att-class="getDifferenceTextClass(budget.planned, budget.difference)">
+                                            <strong t-esc="formatAmount(budget.difference)"/>
+                                        </td>
+
+                                        <td>
+                                            <span t-att-class="'budget_indicator ' + getIndicatorClass(budget.planned, budget.difference)"
+                                                  t-att-title="getIndicatorTitle(budget.planned, budget.difference)">
+
+                                                <t t-esc="getIndicatorIcon(budget.planned, budget.difference)"/>
+
+                                                <t t-esc="getIndicatorLabel(budget.planned, budget.difference)"/>
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </t>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </t>
+
+                <t t-if="state.screen === 'budget'">
+
+                    <button class="back_btn"
+                            t-on-click="() => this.backToYear()">
+
+                        ← Back to Budgets by Branch
+                    </button>
+
+                    <div class="budget_detail_compact_header">
+
+                        <div class="budget_detail_info">
+
+                            <h2 t-esc="state.selectedBudget.name"/>
+
+                            <div class="budget_detail_meta">
+
+                                <span>
+                                    Branch:
+
+                                    <strong t-esc="state.selectedBudget.branch_name"/>
+                                </span>
+
+                                <span>
+                                    Budget Period:
+
+                                    <strong>
+                                        <t t-esc="formatDate(state.selectedBudget.start_date)"/>
+
+                                        -
+
+                                        <t t-esc="formatDate(state.selectedBudget.end_date)"/>
+                                    </strong>
+                                </span>
+
+                                <span>
+                                    Selected Period:
+
+                                    <strong>
+                                        <t t-esc="formatDate(state.selectedBudget.selected_date_from)"/>
+
+                                        -
+
+                                        <t t-esc="formatDate(state.selectedBudget.selected_date_to)"/>
+                                    </strong>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="period_filter compact">
+
+                            <label>
+                                From
+
+                                <input type="date"
+                                       t-att-value="state.pendingDateFrom"
+                                       t-on-change="onPendingDateFromChange"/>
+                            </label>
+
+                            <label>
+                                To
+
+                                <input type="date"
+                                       t-att-value="state.pendingDateTo"
+                                       t-on-change="onPendingDateToChange"/>
+                            </label>
+
+                            <button type="button"
+                                    class="budget_confirm_button date_apply_button"
+                                    t-on-click="applyDateFilter">
+
+                                Apply
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <t t-if="state.selectedBudget.included_branches.length">
+
+                        <div class="included_branches_box">
+
+                            Included Branches:
+
+                            <t t-foreach="state.selectedBudget.included_branches"
+                               t-as="branch"
+                               t-key="branch">
+
+                                <span t-esc="branch"/>
+
+                            </t>
+
+                        </div>
+
+                    </t>
+
+                    <div class="budget_lines_panel">
+
+                        <div class="section_title">
+
+                            <h2>
+                                Budget Lines Details
+                            </h2>
+
+                            <p>
+                                Click actual amount to open
+                                the related journal items.
+                            </p>
+
+                        </div>
+
+                        <div class="kpi_grid four_cols budget_details_kpis">
+
+                            <div class="kpi_card main">
+                                <span>
+                                    Net Planned Profit
+                                </span>
+
+                                <strong t-esc="formatAmount(state.selectedBudget.planned)"/>
+                            </div>
+
+                            <div class="kpi_card">
+                                <span>
+                                    Period Planned
+                                </span>
+
+                                <strong t-esc="formatAmount(state.selectedBudget.theoretical)"/>
+                            </div>
+
+                            <div class="kpi_card">
+                                <span>
+                                    Actual
+                                </span>
+
+                                <strong t-esc="formatAmount(state.selectedBudget.actual)"/>
+                            </div>
+
+                            <div t-att-class="'kpi_card ' + getKpiClass(state.selectedBudget.planned, state.selectedBudget.difference)">
+
+                                <span>
+                                    Difference
+                                </span>
+
+                                <strong t-esc="formatAmount(state.selectedBudget.difference)"/>
+                            </div>
+
+                        </div>
+
+                        <div class="kpi_grid five_cols budget_details_kpis">
+
+                            <div class="kpi_card revenue">
+                                <span>
+                                    Total Planned Sales
+                                </span>
+
+                                <strong t-esc="formatAmount(state.selectedBudget.total_planned_sales)"/>
+                            </div>
+
+                            <div class="kpi_card revenue">
+                                <span>
+                                    Period Planned Sales
+                                </span>
+
+                                <strong t-esc="formatAmount(state.selectedBudget.period_planned_sales)"/>
+                            </div>
+
+                            <div class="kpi_card revenue">
+                                <span>
+                                    Actual Sales
+                                </span>
+
+                                <strong t-esc="formatAmount(state.selectedBudget.actual_sales)"/>
+                            </div>
+
+                            <div t-att-class="'kpi_card ' + getKpiClass(state.selectedBudget.period_planned_sales, state.selectedBudget.sales_difference)">
+
+                                <span>
+                                    Sales Difference
+                                </span>
+
+                                <strong t-esc="formatAmount(state.selectedBudget.sales_difference)"/>
+                            </div>
+
+                            <div class="kpi_card revenue">
+                                <span>
+                                    UBR
+                                </span>
+
+                                <strong t-esc="formatAmount(state.selectedBudget.ubr)"/>
+                            </div>
+
+                        </div>
+
+                        <table class="executive_table budget_lines_table">
+
+                            <thead>
+                                <tr>
+                                    <th>Budget Group</th>
+                                    <th>Total Planned</th>
+                                    <th>Period Planned</th>
+                                    <t t-if="state.selectedBudget.show_cinema_products">
+                                        <th>Cinema Products</th>
+                                    </t>
+                                    <th>Actual</th>
+                                    <th>Difference</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <t t-foreach="state.selectedBudget.lines"
+                                   t-as="line"
+                                   t-key="line.id">
+
+                                    <tr t-att-class="getRowClass(line.planned, line.difference)">
+
+                                        <td>
+                                            <strong t-esc="line.budget_group_name"/>
+                                        </td>
+
+                                        <td t-esc="formatAmount(line.planned)"/>
+
+                                        <td t-esc="formatAmount(line.theoretical)"/>
+
+                                        <t t-if="state.selectedBudget.show_cinema_products">
+                                            <td t-att-class="getCinemaProductsTextClass(line.cinema_products_amount)">
+                                                <t t-if="state.selectedBudget.is_cinema_branch and line.can_open_cinema_products">
+                                                    <button class="actual_link"
+                                                            t-on-click="() => this.openCinemaProductsInfo(line)">
+
+                                                        <t t-esc="formatAmount(line.cinema_products_amount)"/>
+
+                                                    </button>
+                                                </t>
+
+                                                <t t-else="">
+                                                    <strong t-esc="formatAmount(line.cinema_products_amount)"/>
+                                                </t>
+                                            </td>
+                                        </t>
+
+                                        <td>
+                                            <button class="actual_link"
+                                                    t-on-click="() => this.openActualMoveLines(line.id)">
+
+                                                <t t-esc="formatAmount(line.actual)"/>
+
+                                            </button>
+                                        </td>
+
+                                        <td t-att-class="getDifferenceTextClass(line.planned, line.difference)">
+
+                                            <strong t-esc="formatAmount(line.difference)"/>
+
+                                        </td>
+
+                                        <td>
+                                            <span t-att-class="'budget_indicator ' + getIndicatorClass(line.planned, line.difference)"
+                                                  t-att-title="getIndicatorTitle(line.planned, line.difference)">
+
+                                                <t t-esc="getIndicatorIcon(line.planned, line.difference)"/>
+
+                                                <t t-esc="getIndicatorLabel(line.planned, line.difference)"/>
+
+                                            </span>
+                                        </td>
+
+                                    </tr>
+
+                                </t>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </t>
+
+            </t>
+
+            <t t-if="state.cinemaPopup.open">
+                <div class="cinema_popup_backdrop"
+                     t-on-click="closeCinemaProductsInfo">
+
+                    <div class="cinema_popup_box"
+                         t-on-click.stop="">
+
+                        <div class="cinema_popup_header">
+                            <h3>
+                                Cinema Products
+                            </h3>
+
+                            <button type="button"
+                                    class="cinema_popup_close"
+                                    t-on-click="closeCinemaProductsInfo">
+
+                                ×
+                            </button>
+                        </div>
+
+                        <div class="cinema_popup_subtitle">
+                            <strong t-esc="state.cinemaPopup.title"/>
+                        </div>
+
+                        <table class="cinema_popup_table">
+                            <thead>
+                                <tr>
+                                    <th>Branch</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-foreach="state.cinemaPopup.lines"
+                                   t-as="row"
+                                   t-key="row.branch_id">
+
+                                    <tr>
+                                        <td t-esc="row.branch_name"/>
+
+                                        <td t-att-class="getCinemaProductsTextClass(row.amount)">
+                                            <button class="actual_link"
+                                                    t-on-click="() => this.openCinemaProductJournalItems(row)">
+
+                                                <t t-esc="formatAmount(row.amount)"/>
+
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                </t>
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <strong>Total</strong>
+                                    </td>
+
+                                    <td t-att-class="getCinemaProductsTextClass(state.cinemaPopup.total)">
+                                        <strong t-esc="formatAmount(state.cinemaPopup.total)"/>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+
+                </div>
+            </t>
+
+        </div>
+
+    </t>
+
+</templates>

@@ -1,0 +1,22 @@
+{
+    'name': "Premium Tech HR GOSI",
+    'version': '18.0.1.0.0',
+    'summary': "GOSI contribution management for Saudi employees and companies.",
+    'description': "Manage GOSI contributions for Saudi Government from employee and company, with configurable share percentages.",
+    'category': 'Human Resources',
+    "author": "Premium Tech",
+    "website": "https://ptech.sh",
+    'depends': ['base', 'hr', 'hr_payroll', 'pt_hr_insurance'],
+    'data': [
+             'security/ir.model.access.csv',
+             'views/gosi_view.xml',
+             'views/gosi_configuration.xml',
+             'views/sequence.xml',
+             # 'data/rule.xml',
+            ],
+    'demo': [],
+    'images': ['static/description/banner.png'],
+    'license': "LGPL-3",
+    'installable': True,
+    'application': True,
+}

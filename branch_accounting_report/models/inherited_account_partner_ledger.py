@@ -246,6 +246,7 @@ class AccountPartnerLedger(models.AbstractModel):
                     %(column_group_key)s                                             AS column_group_key,
                     'directly_linked_aml'                                            AS key,
                     0                                                                AS partial_id
+                    %(extra_select)s
                 FROM %(table_references)s
                 JOIN account_move ON account_move.id = account_move_line.move_id
                 %(currency_table_join)s
@@ -271,6 +272,7 @@ class AccountPartnerLedger(models.AbstractModel):
                 search_condition=query.where_clause,
                 directly_linked_aml_partner_clause=directly_linked_aml_partner_clause,
                 order_by=order_by,
+                extra_select=SQL(' ').join(self._get_aml_value_extra_select()),
             ))
 
             # For the move lines linked to no partner, but reconciled with this partner. They will appear in grey in the report
@@ -304,6 +306,7 @@ class AccountPartnerLedger(models.AbstractModel):
                     %(column_group_key)s                                             AS column_group_key,
                     'indirectly_linked_aml'                                          AS key,
                     partial.id                                                       AS partial_id
+                    %(extra_select)s
                 FROM %(table_references)s
                     %(currency_table_join)s,
                     account_partial_reconcile partial,
@@ -344,6 +347,7 @@ class AccountPartnerLedger(models.AbstractModel):
                 date_from=group_options['date']['date_from'],
                 date_to=group_options['date']['date_to'],
                 order_by=order_by,
+                extra_select=SQL(' ').join(self._get_aml_value_extra_select()),
             ))
 
         query = SQL(" UNION ALL ").join(SQL("(%s)", query) for query in queries)
@@ -356,6 +360,8 @@ class AccountPartnerLedger(models.AbstractModel):
 
         self._cr.execute(query)
         for aml_result in self._cr.dictfetchall():
+            # Keep compatibility with enterprise extensions expecting this key.
+            aml_result.setdefault('no_followup', False)
             if aml_result['key'] == 'indirectly_linked_aml':
 
                 # Append the line to the partner found through the reconciliation.

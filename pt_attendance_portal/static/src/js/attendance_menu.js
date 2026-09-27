@@ -76,12 +76,8 @@ patch(ActivityMenu.prototype, {
                 this.state.show_geolocation = true;
                 this.state.latitude = false;
                 this.state.longitude = false;
-                try {
-                    await this._getGeolocation();
-                } catch (e) {
-                    // User denied geolocation or error - continue without coordinates
-                }
-            } else {
+                await this._getGeolocation();
+            }else{
                 this.geolocationDeferred.resolve();
             }
 
@@ -91,38 +87,26 @@ patch(ActivityMenu.prototype, {
                 this.state.fence_ids = [];
                 this.state.fence_is_inside = false;
                 this.state.latitude = false;
-                this.state.longitude = false;
-                try {
-                    await this._getGeofenceMap();
-                } catch (e) {
-                    // User denied geolocation or error - continue without map
-                }
-            } else {
+                this.state.longitude = false;                
+                await this._getGeofenceMap();
+            }else{
                 this.geolocationMapDeferred.resolve();
             }
 
             this.geolocationAddressDeferred = new Deferred();
             if (session.hr_attendance_ip) {
                 this.state.show_ipaddress = true;
-                this.state.ipaddress = false;
-                try {
-                    await this._getIpAddress();
-                } catch (e) {
-                    // IP fetch failed - continue
-                }
-            } else {
+                this.state.ipaddress = false;                
+                await this._getIpAddress();
+            }else{
                 this.geolocationAddressDeferred.resolve();
             }
 
             this.recognitionDeferred = new Deferred();
-            if (session.hr_attendance_face_recognition) {
+            if (session.hr_attendance_face_recognition){
                 this.state.show_recognition = true;
-                try {
-                    await this._initRecognition();
-                } catch (e) {
-                    // Face recognition init failed - continue
-                }
-            } else {
+                await this._initRecognition();
+            }else{
                 this.recognitionDeferred.resolve();
             }
 
@@ -148,7 +132,6 @@ patch(ActivityMenu.prototype, {
         var self = this;
         const toggleEl = self.glocationToggleRef.el;
         const viewEl = self.glocationViewRef.el;
-        if (!toggleEl || !viewEl) return;
         if (toggleEl.classList.contains('fa-angle-double-down')) {
             viewEl.classList.remove('d-none');
             toggleEl.classList.remove('fa-angle-double-down');
@@ -164,38 +147,32 @@ patch(ActivityMenu.prototype, {
         var self = this;
         if (window.location.protocol == 'https:') {
             navigator.geolocation.getCurrentPosition(
-                ({coords: {latitude, longitude}}) => {
+                async ({coords: {latitude, longitude}}) => {
                     self.state.latitude = latitude;
                     self.state.longitude = longitude;
                     self.geolocationDeferred.resolve();
                 },
-                (err) => {
-                    self.geolocationDeferred.reject(err);
+                async err => {
+                    self.geolocationDeferred.reject();
                 }
             );
-            return this.geolocationDeferred;
-        } else {
+        }else{
             self.geolocationDeferred.resolve();
-            return this.geolocationDeferred;
         }
     },
     async onTogglegeofence(){
         var self = this;
         const toggleEl = self.geofenceToggleRef.el;
         const viewEl = self.geofenceViewRef.el;
-        if (!toggleEl || !viewEl) return;
         if (toggleEl.classList.contains('fa-angle-double-down')) {
             viewEl.classList.remove('d-none');
             toggleEl.classList.remove('fa-angle-double-down');
             toggleEl.classList.add('fa-angle-double-up');
             if (self.state.olmap){
-                const targetEl = self.geofenceViewRef.el;
-                if (targetEl) {
-                    self.state.olmap.setTarget(targetEl);
-                    setTimeout(function () {
-                        if (self.state.olmap) self.state.olmap.updateSize();
-                    }, 400);
-                }
+                self.state.olmap.setTarget(self.geofenceViewRef.el);
+                setTimeout(function () {
+                    self.state.olmap.updateSize()
+                }, 400);
             }else{
                 await this._getGeofenceMap();
             }
@@ -205,13 +182,10 @@ patch(ActivityMenu.prototype, {
             toggleEl.classList.remove('fa-angle-double-up');
             toggleEl.classList.add('fa-angle-double-down');
             if (self.state.olmap){
-                const targetEl = self.geofenceViewRef.el;
-                if (targetEl) {
-                    self.state.olmap.setTarget(targetEl);
-                    setTimeout(function () {
-                        if (self.state.olmap) self.state.olmap.updateSize();
-                    }, 400);
-                }
+                self.state.olmap.setTarget(self.geofenceViewRef.el);
+                setTimeout(function () {
+                    self.state.olmap.updateSize()
+                }, 400);
             }else{
                 await this._getGeofenceMap();
             }
@@ -228,10 +202,7 @@ patch(ActivityMenu.prototype, {
 
                         if (!self.state.olmap) {
                             var olmap_div = self.geofenceViewRef.el;
-                            if (!olmap_div) {
-                                self.geolocationMapDeferred.resolve();
-                                return;
-                            }
+                            
                             olmap_div.style.width = '350px';
                             olmap_div.style.height = '200px';
         
@@ -252,12 +223,7 @@ patch(ActivityMenu.prototype, {
                                     zoom: 2,
                                 }),
                             });
-                            const targetEl = self.geofenceViewRef.el;
-                            if (!targetEl) {
-                                self.geolocationMapDeferred.resolve();
-                                return;
-                            }
-                            self.state.olmap.setTarget(targetEl);
+                            self.state.olmap.setTarget(self.geofenceViewRef.el);
                             const Coords = [longitude, latitude];
                             const Accuracy = ol.geom.Polygon.circular(Coords, accuracy);
                             vectorSource.clear(true);
@@ -274,21 +240,18 @@ patch(ActivityMenu.prototype, {
                         }
                     }
                 },
-                (err) => {
-                    self.geolocationMapDeferred.reject(err);
+                async err => {
+                    self.geolocationMapDeferred.reject();
                 }
             );
-            return this.geolocationMapDeferred;
-        } else {
+        }else{
             self.geolocationMapDeferred.resolve();
-            return this.geolocationMapDeferred;
-        }
+        }        
     },
     onToggleGeoipaddress(){
         var self = this;
         const toggleEl = self.geoipaddressToggleRef.el;
         const viewEl = self.geoipaddressViewRef.el;
-        if (!toggleEl || !viewEl) return;
         if (toggleEl.classList.contains('fa-angle-double-down')) {
             viewEl.classList.remove('d-none');
             toggleEl.classList.remove('fa-angle-double-down');
@@ -310,21 +273,19 @@ patch(ActivityMenu.prototype, {
                     self.state.ipaddress = data.ip;
                     self.geolocationAddressDeferred.resolve();
                 } else {
-                    self.geolocationAddressDeferred.reject(new Error("No IP in response"));
+                    self.geolocationAddressDeferred.reject();
                 }
             } catch (error) {
-                self.geolocationAddressDeferred.reject(error);
+                self.geolocationAddressDeferred.reject();
             }
         } else {
             self.geolocationAddressDeferred.resolve();
         }
-        return this.geolocationAddressDeferred;
     },
     onToggleReason(){
         var self = this;
         const toggleEl = self.reasonToggleRef.el;
         const viewEl = self.reasonViewRef.el;
-        if (!toggleEl || !viewEl) return;
         if (toggleEl.classList.contains('fa-angle-double-down')) {
             viewEl.classList.remove('d-none');
             toggleEl.classList.remove('fa-angle-double-down');
@@ -357,7 +318,7 @@ patch(ActivityMenu.prototype, {
             if (!this.employee || !this.employee.id) {
                 console.log("Employee not available yet, skipping face recognition initialization");
                 self.recognitionDeferred.resolve();
-                return this.recognitionDeferred;
+                return;
             }
             try {
                 const employeeFaceCheck = await rpc('/pt_attendance_portal/check_employee_face_descriptors', {
@@ -389,10 +350,9 @@ patch(ActivityMenu.prototype, {
                 self.employee_face_count = 0;
                 self.recognitionDeferred.resolve();
             }
-        } else {
+        }else{
             self.recognitionDeferred.resolve();
         }
-        return this.recognitionDeferred;
     },
     _loadFaceapi () {
         var self = this;

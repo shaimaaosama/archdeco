@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle
+ -->
+<odoo>
+    <data noupdate="1">
+        <record id="penalties_awards_deduction" model="hr.salary.rule">
+            <field name="name">Penalties &amp; Awards Deduction</field>
+            <field name="sequence" eval="195"/>
+            <field name="code">PAD</field>
+            <field name="struct_id" ref="pt_hr_contract_allowance.structure_002"/>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = (payslip.deduction_amount*-1 or 0)</field>
+        </record>
+
+        <record id="penalties_awards_awards" model="hr.salary.rule">
+            <field name="name">Penalties &amp; Awards Awards</field>
+            <field name="sequence" eval="196"/>
+            <field name="code">PAA</field>
+            <field name="struct_id" ref="pt_hr_contract_allowance.structure_002"/>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = payslip.awards_amount</field>
+        </record>
+    </data>
+</odoo>

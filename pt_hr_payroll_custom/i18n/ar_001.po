@@ -1,0 +1,80 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#       * gs_hr_payroll_custom
+#
+#. module: pt_hr_payroll_custom
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-30 11:28+0000\n"
+"PO-Revision-Date: 2026-03-30 11:28+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_001\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+# --- Python translatable strings (gs_hr_payroll_custom) ---
+
+#. module: pt_hr_payroll_custom
+#: code:addons/gs_hr_payroll_custom/models/payroll_inherit.py:65
+#, python-format
+msgid "You must select employee(s) to generate payslip(s)."
+msgstr "يجب تحديد موظف (موظفين) لإنشاء قسيمة (قسائم) الراتب."
+
+#. module: pt_hr_payroll_custom
+#: code:addons/gs_hr_payroll_custom/models/payroll_inherit.py:120
+#, python-format
+msgid "Some work entries could not be validated."
+msgstr "تعذر التحقق من بعض إدخالات العمل."
+
+#. module: pt_hr_payroll_custom
+#: code:addons/gs_hr_payroll_custom/models/payroll_inherit.py:131
+#, python-format
+msgid "New Payslip"
+msgstr "قسيمة راتب جديدة"
+
+#. module: pt_hr_payroll_custom
+#: code:addons/gs_hr_payroll_custom/models/payroll_inherit.py:266
+#, python-format
+msgid "Register Payment"
+msgstr "تسجيل الدفع"
+
+#. module: pt_hr_payroll_custom
+#: code:addons/gs_hr_payroll_custom/models/payroll_inherit.py:302
+#, python-format
+msgid "Total Salary Less Than Zero"
+msgstr "إجمالي الراتب أقل من صفر"
+
+#. module: pt_hr_payroll_custom
+#: code:addons/gs_hr_payroll_custom/wizard/register_payment.py:39
+#, python-format
+msgid "Amount bigger than net wage"
+msgstr "المبلغ أكبر من صافي الراتب"
+
+#. module: pt_hr_payroll_custom
+#: code:addons/gs_hr_payroll_custom/wizard/register_payment.py:166
+#, python-format
+msgid "Journal Entries"
+msgstr "القيود المحاسبية"
+
+# --- XML view strings (gs_hr_payroll_custom) ---
+
+#. module: pt_hr_payroll_custom
+#: gs_hr_payroll_custom/wizard/register_payment.xml
+msgid "Change Notification data"
+msgstr "تغيير بيانات الإشعار"
+
+#. module: pt_hr_payroll_custom
+#: gs_hr_payroll_custom/wizard/register_payment.xml
+msgid "Create Payment"
+msgstr "إنشاء دفع"
+
+#. module: pt_hr_payroll_custom
+#: gs_hr_payroll_custom/wizard/register_payment.xml
+msgid "Cancel"
+msgstr "إلغاء"
+

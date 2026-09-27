@@ -1,0 +1,45 @@
+<odoo>
+
+    <record id="gs_tickets_view_tree" model="ir.ui.view">
+        <field name="name">gs.tickets.view.tree</field>
+        <field name="model">gs.tickets</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="country_id"/>
+                <field name="economy_fare"/>
+                <field name="business_class_fare"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="gs_tickets_view_form" model="ir.ui.view">
+        <field name="name">gs.tickets.view.form</field>
+        <field name="model">gs.tickets</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="country_id"/>
+                            <field name="contract_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="economy_fare"/>
+                            <field name="business_class_fare"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gs_tickets_action" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gs.tickets</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="sub_gs_tickets" name="Tickets"  parent="pt_hr_insurance.gs_hr_settings_main_menu" action="gs_tickets_action" sequence="20"/>
+
+</odoo>

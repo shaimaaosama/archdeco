@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_inherit_hub_tokens" model="ir.ui.view">
+        <field name="name">hr.employee.form.hub.tokens</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hr_settings']//field[@name='user_id']" position="attributes">
+                <attribute name="domain">[('company_ids', 'in', company_id)]</attribute>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_faceio_enroll_page"
+                        string="FaceIO Enroll"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-user-circle"
+                        groups="hr.group_hr_manager"/>
+            </xpath>
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Attendance Hub" groups="hr.group_hr_manager">
+                    <group>
+                        <field name="require_face_attendance"/>
+                        <field name="x_device_uuid"/>
+                        <field name="x_faceio_id" password="True"/>
+                        <field name="hub_client_config_id"/>
+                    </group>
+                    <group string="Geo Fence">
+                        <field name="x_geofence_enabled"/>
+                        <field name="x_geofence_latitude" invisible="not x_geofence_enabled"/>
+                        <field name="x_geofence_longitude" invisible="not x_geofence_enabled"/>
+                        <field name="x_geofence_radius_m" invisible="not x_geofence_enabled"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

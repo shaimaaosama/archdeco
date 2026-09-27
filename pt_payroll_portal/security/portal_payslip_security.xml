@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="portal_payslip_rule_portal" model="ir.rule">
+        <field name="name">Portal Payslip: portal users: own payslips only</field>
+        <field name="model_id" ref="hr_payroll.model_hr_payslip"/>
+        <field name="domain_force">[('employee_id', '=', user.employee_id.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+    </record>
+</odoo>

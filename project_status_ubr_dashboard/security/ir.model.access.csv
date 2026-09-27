@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_status_ubr_dashboard_user,project.status.ubr.dashboard.user,model_project_status_ubr_dashboard,base.group_user,1,0,0,0
+access_sale_order_boq_component_all,Sale Order BOQ Component All,model_sale_order_boq_component,,1,1,1,1
+access_sale_order_boq_material_master_all,Sale Order BOQ Material Master All,model_sale_order_boq_material_master,,1,1,1,1
+access_sale_order_boq_material_line_all,Sale Order BOQ Material Line All,model_sale_order_boq_material_line,,1,1,1,1

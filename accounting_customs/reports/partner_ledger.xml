@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="partner_ledger_xlsx_report" model="ir.actions.report">
+            <field name="name">Partner Ledger XLSX</field>
+            <field name="model">partner.ledger.xlsx.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">accounting_customs.partner_ledger_xlsx</field>
+            <field name="report_file">accounting_customs.partner_ledger_xlsx</field>
+            <field name="binding_model_id" ref="model_partner_ledger_xlsx_wizard"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
