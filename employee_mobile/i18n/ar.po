@@ -1,0 +1,246 @@
+# Translation of employee_mobile
+# Arabic translations for the Employee Mobile App API module.
+msgid ""
+msgstr ""
+"Project-Id-Version: employee_mobile\n"
+"Report-Msgid-Bugs-To: \n"
+"Language-Team: none\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+
+#. Model fields: hr.employee
+msgid "Mobile App Access"
+msgstr "الوصول إلى تطبيق الجوال"
+
+msgid "Mobile Attendance Location"
+msgstr "موقع الحضور عبر الجوال"
+
+msgid "Work Location"
+msgstr "موقع العمل"
+
+msgid "Company"
+msgstr "الشركة"
+
+msgid "None"
+msgstr "بدون"
+
+msgid "Mobile Failed Login Attempts"
+msgstr "محاولات تسجيل الدخول الفاشلة عبر الجوال"
+
+msgid "Mobile Login Locked Until"
+msgstr "تسجيل الدخول عبر الجوال مقفل حتى"
+
+msgid "Mobile App Sessions"
+msgstr "جلسات تطبيق الجوال"
+
+msgid "Active Mobile Sessions"
+msgstr "الجلسات النشطة على الجوال"
+
+msgid "Allow this employee to sign in to the mobile app with their work email and PIN."
+msgstr "السماح لهذا الموظف بتسجيل الدخول إلى تطبيق الجوال باستخدام بريده الإلكتروني الوظيفي ورقم التعريف الشخصي (PIN)."
+
+#. Model fields: hr.work.location / res.company
+msgid "Attendance Latitude"
+msgstr "خط العرض للحضور"
+
+msgid "Attendance Longitude"
+msgstr "خط الطول للحضور"
+
+msgid "Attendance Radius (m)"
+msgstr "نطاق الحضور (متر)"
+
+msgid "Map"
+msgstr "الخريطة"
+
+msgid "Late Grace Period (minutes)"
+msgstr "فترة السماح للتأخير (دقائق)"
+
+msgid "Block Mock Locations"
+msgstr "حظر مواقع GPS الوهمية"
+
+#. Model fields: hr.attendance
+msgid "Check-in Latitude"
+msgstr "خط العرض لتسجيل الحضور"
+
+msgid "Check-in Longitude"
+msgstr "خط الطول لتسجيل الحضور"
+
+msgid "Check-out Latitude"
+msgstr "خط العرض لتسجيل الانصراف"
+
+msgid "Check-out Longitude"
+msgstr "خط الطول لتسجيل الانصراف"
+
+msgid "Mobile Check-in Location"
+msgstr "موقع تسجيل الحضور عبر الجوال"
+
+msgid "Mobile Check-out Location"
+msgstr "موقع تسجيل الانصراف عبر الجوال"
+
+msgid "Mobile Check-in Distance (m)"
+msgstr "مسافة تسجيل الحضور عبر الجوال (متر)"
+
+msgid "Mobile Check-out Distance (m)"
+msgstr "مسافة تسجيل الانصراف عبر الجوال (متر)"
+
+msgid "Mobile App"
+msgstr "تطبيق الجوال"
+
+#. Model fields: hr.employee.mobile.token
+msgid "Employee"
+msgstr "الموظف"
+
+msgid "Token Hash"
+msgstr "بصمة الرمز المميز"
+
+msgid "Device ID"
+msgstr "معرّف الجهاز"
+
+msgid "Device Name"
+msgstr "اسم الجهاز"
+
+msgid "Platform"
+msgstr "المنصة"
+
+msgid "App Version"
+msgstr "إصدار التطبيق"
+
+msgid "Last Used"
+msgstr "آخر استخدام"
+
+msgid "Expires At"
+msgstr "تاريخ انتهاء الصلاحية"
+
+msgid "Active"
+msgstr "نشط"
+
+#. Views
+msgid "Access"
+msgstr "الوصول"
+
+msgid "Lock Status"
+msgstr "حالة القفل"
+
+msgid "Login = Work Email + PIN (HR Settings tab)."
+msgstr "تسجيل الدخول = البريد الإلكتروني الوظيفي + رقم التعريف الشخصي (PIN) (من تبويب إعدادات الموارد البشرية)."
+
+msgid "Revoke App Sessions"
+msgstr "إلغاء جلسات التطبيق"
+
+msgid "This will sign the employee out of the mobile app on every device."
+msgstr "سيؤدي هذا إلى تسجيل خروج الموظف من تطبيق الجوال على جميع الأجهزة."
+
+msgid "Unlock"
+msgstr "إلغاء القفل"
+
+msgid "Mobile App Geofence"
+msgstr "السياج الجغرافي لتطبيق الجوال"
+
+msgid "View on Map"
+msgstr "عرض على الخريطة"
+
+msgid "Company Geofence"
+msgstr "السياج الجغرافي للشركة"
+
+msgid "Used for employees whose mobile attendance location is set to Company."
+msgstr "يُستخدم للموظفين الذين يكون موقع حضورهم عبر الجوال مضبوطًا على الشركة."
+
+msgid "Late Grace Period"
+msgstr "فترة السماح للتأخير"
+
+msgid "Minutes of tolerance after the scheduled start time before a mobile check-in is marked late."
+msgstr "عدد الدقائق المسموح بها بعد وقت البدء المحدد قبل اعتبار تسجيل الحضور عبر الجوال متأخرًا."
+
+msgid "Reject mobile app check-in/check-out when the device reports a mocked GPS location."
+msgstr "رفض تسجيل الحضور/الانصراف عبر الجوال عندما يبلّغ الجهاز عن موقع GPS وهمي."
+
+msgid "Geofence"
+msgstr "السياج الجغرافي"
+
+msgid "Mobile App Access Disabled"
+msgstr "الوصول إلى تطبيق الجوال معطّل"
+
+msgid "Mobile App Locked"
+msgstr "تطبيق الجوال مقفل"
+
+msgid "No mobile app sessions yet."
+msgstr "لا توجد جلسات لتطبيق الجوال بعد."
+
+msgid "Employees get a session token here after signing in to the mobile app."
+msgstr "يحصل الموظفون على رمز جلسة هنا بعد تسجيل الدخول إلى تطبيق الجوال."
+
+#. Controller error messages
+msgid "Your work location has no GPS coordinates configured. Contact HR."
+msgstr "لا توجد إحداثيات GPS مضبوطة لموقع عملك. يرجى التواصل مع الموارد البشرية."
+
+msgid "Your company has no GPS coordinates configured. Contact HR."
+msgstr "لا توجد إحداثيات GPS مضبوطة للشركة. يرجى التواصل مع الموارد البشرية."
+
+msgid "Authentication token is missing."
+msgstr "رمز المصادقة مفقود."
+
+msgid "Your session has expired. Please sign in again."
+msgstr "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى."
+
+msgid "Your session is no longer valid. Please sign in again."
+msgstr "لم تعد جلستك صالحة. يرجى تسجيل الدخول مرة أخرى."
+
+msgid "Your mobile app access has been disabled. Contact HR."
+msgstr "تم تعطيل وصولك إلى تطبيق الجوال. يرجى التواصل مع الموارد البشرية."
+
+msgid "Something went wrong. Please try again."
+msgstr "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+
+msgid "The request body is not valid JSON."
+msgstr "محتوى الطلب ليس بصيغة JSON صالحة."
+
+msgid "The request body must be a JSON object."
+msgstr "يجب أن يكون محتوى الطلب كائن JSON."
+
+msgid "Work email and PIN are required."
+msgstr "البريد الإلكتروني الوظيفي ورقم التعريف الشخصي (PIN) مطلوبان."
+
+msgid "Incorrect email or PIN."
+msgstr "البريد الإلكتروني أو رقم التعريف الشخصي (PIN) غير صحيح."
+
+msgid "Too many failed attempts. Please try again later."
+msgstr "عدد كبير جدًا من المحاولات الفاشلة. يرجى المحاولة لاحقًا."
+
+msgid "Current and new PIN are required."
+msgstr "رقم التعريف الشخصي الحالي والجديد مطلوبان."
+
+msgid "Your current PIN is incorrect."
+msgstr "رقم التعريف الشخصي الحالي غير صحيح."
+
+msgid "The new PIN must be 4 to 8 digits and different from the current one."
+msgstr "يجب أن يتكون رقم التعريف الشخصي الجديد من 4 إلى 8 أرقام وأن يكون مختلفًا عن الرقم الحالي."
+
+msgid "Your location is required."
+msgstr "موقعك مطلوب."
+
+msgid "Mock/fake GPS locations are not allowed. Disable mock location and try again."
+msgstr "لا يُسمح بمواقع GPS وهمية. يرجى تعطيل الموقع الوهمي والمحاولة مرة أخرى."
+
+msgid "You are outside the allowed location."
+msgstr "أنت خارج الموقع المسموح به."
+
+msgid "You are already checked in."
+msgstr "لقد سجّلت الحضور بالفعل."
+
+msgid "You are not checked in."
+msgstr "لم تسجّل الحضور بعد."
+
+msgid "The month must be in YYYY-MM format."
+msgstr "يجب أن يكون الشهر بصيغة YYYY-MM."
+
+msgid "Invalid year."
+msgstr "سنة غير صالحة."
+
+msgid "Payslip not found."
+msgstr "لم يتم العثور على قسيمة الراتب."
+
+msgid "Shift"
+msgstr "الدوام"
