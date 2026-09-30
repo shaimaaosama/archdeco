@@ -1,246 +1,610 @@
-# Translation of employee_mobile
-# Arabic translations for the Employee Mobile App API module.
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* employee_mobile
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: employee_mobile\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2026-09-30 06:13+0000\n"
+"PO-Revision-Date: 2026-09-30 06:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
 
-#. Model fields: hr.employee
-msgid "Mobile App Access"
-msgstr "الوصول إلى تطبيق الجوال"
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "<span class=\"me-2\">Radius</span>"
+msgstr "<span class=\"me-2\">نطاق</span>"
 
-msgid "Mobile Attendance Location"
-msgstr "موقع الحضور عبر الجوال"
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "<span class=\"ms-2\">meters</span>"
+msgstr "<span class=\"ms-2\">متر</span>"
 
-msgid "Work Location"
-msgstr "موقع العمل"
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "<span class=\"ms-2\">minutes</span>"
+msgstr "<span class=\"ms-2\">دقيقة</span>"
 
-msgid "Company"
-msgstr "الشركة"
-
-msgid "None"
-msgstr "بدون"
-
-msgid "Mobile Failed Login Attempts"
-msgstr "محاولات تسجيل الدخول الفاشلة عبر الجوال"
-
-msgid "Mobile Login Locked Until"
-msgstr "تسجيل الدخول عبر الجوال مقفل حتى"
-
-msgid "Mobile App Sessions"
-msgstr "جلسات تطبيق الجوال"
-
-msgid "Active Mobile Sessions"
-msgstr "الجلسات النشطة على الجوال"
-
-msgid "Allow this employee to sign in to the mobile app with their work email and PIN."
-msgstr "السماح لهذا الموظف بتسجيل الدخول إلى تطبيق الجوال باستخدام بريده الإلكتروني الوظيفي ورقم التعريف الشخصي (PIN)."
-
-#. Model fields: hr.work.location / res.company
-msgid "Attendance Latitude"
-msgstr "خط العرض للحضور"
-
-msgid "Attendance Longitude"
-msgstr "خط الطول للحضور"
-
-msgid "Attendance Radius (m)"
-msgstr "نطاق الحضور (متر)"
-
-msgid "Map"
-msgstr "الخريطة"
-
-msgid "Late Grace Period (minutes)"
-msgstr "فترة السماح للتأخير (دقائق)"
-
-msgid "Block Mock Locations"
-msgstr "حظر مواقع GPS الوهمية"
-
-#. Model fields: hr.attendance
-msgid "Check-in Latitude"
-msgstr "خط العرض لتسجيل الحضور"
-
-msgid "Check-in Longitude"
-msgstr "خط الطول لتسجيل الحضور"
-
-msgid "Check-out Latitude"
-msgstr "خط العرض لتسجيل الانصراف"
-
-msgid "Check-out Longitude"
-msgstr "خط الطول لتسجيل الانصراف"
-
-msgid "Mobile Check-in Location"
-msgstr "موقع تسجيل الحضور عبر الجوال"
-
-msgid "Mobile Check-out Location"
-msgstr "موقع تسجيل الانصراف عبر الجوال"
-
-msgid "Mobile Check-in Distance (m)"
-msgstr "مسافة تسجيل الحضور عبر الجوال (متر)"
-
-msgid "Mobile Check-out Distance (m)"
-msgstr "مسافة تسجيل الانصراف عبر الجوال (متر)"
-
-msgid "Mobile App"
-msgstr "تطبيق الجوال"
-
-#. Model fields: hr.employee.mobile.token
-msgid "Employee"
-msgstr "الموظف"
-
-msgid "Token Hash"
-msgstr "بصمة الرمز المميز"
-
-msgid "Device ID"
-msgstr "معرّف الجهاز"
-
-msgid "Device Name"
-msgstr "اسم الجهاز"
-
-msgid "Platform"
-msgstr "المنصة"
-
-msgid "App Version"
-msgstr "إصدار التطبيق"
-
-msgid "Last Used"
-msgstr "آخر استخدام"
-
-msgid "Expires At"
-msgstr "تاريخ انتهاء الصلاحية"
-
-msgid "Active"
-msgstr "نشط"
-
-#. Views
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
 msgid "Access"
 msgstr "الوصول"
 
-msgid "Lock Status"
-msgstr "حالة القفل"
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__active model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
+msgid "Active"
+msgstr "نشط"
 
-msgid "Login = Work Email + PIN (HR Settings tab)."
-msgstr "تسجيل الدخول = البريد الإلكتروني الوظيفي + رقم التعريف الشخصي (PIN) (من تبويب إعدادات الموارد البشرية)."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee__mobile_active_token_count
+msgid "Active Mobile Sessions"
+msgstr "الجلسات النشطة على الجوال"
 
-msgid "Revoke App Sessions"
-msgstr "إلغاء جلسات التطبيق"
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_employee__mobile_app_access
+msgid "Allow this employee to sign in to the mobile app with their work email and PIN."
+msgstr "السماح لهذا الموظف بتسجيل الدخول إلى تطبيق الجوال باستخدام بريده الإلكتروني الوظيفي ورقم التعريف الشخصي (PIN)."
 
-msgid "This will sign the employee out of the mobile app on every device."
-msgstr "سيؤدي هذا إلى تسجيل خروج الموظف من تطبيق الجوال على جميع الأجهزة."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__app_version
+msgid "App Version"
+msgstr "إصدار التطبيق"
 
-msgid "Unlock"
-msgstr "إلغاء القفل"
+#. module: employee_mobile
+#: model:ir.model,name:employee_mobile.model_hr_attendance model_terms:ir.ui.view,arch_db:employee_mobile.view_company_form_mobile
+msgid "Attendance"
+msgstr "الحضور"
 
-msgid "Mobile App Geofence"
-msgstr "السياج الجغرافي لتطبيق الجوال"
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_latitude model:ir.model.fields,field_description:employee_mobile.field_res_company__attendance_latitude model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__attendance_latitude
+msgid "Attendance Latitude"
+msgstr "خط العرض للحضور"
 
-msgid "View on Map"
-msgstr "عرض على الخريطة"
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_longitude model:ir.model.fields,field_description:employee_mobile.field_res_company__attendance_longitude model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__attendance_longitude
+msgid "Attendance Longitude"
+msgstr "خط الطول للحضور"
 
-msgid "Company Geofence"
-msgstr "السياج الجغرافي للشركة"
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_radius model:ir.model.fields,field_description:employee_mobile.field_res_company__attendance_radius model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__attendance_radius
+msgid "Attendance Radius (m)"
+msgstr "نطاق الحضور (متر)"
 
-msgid "Used for employees whose mobile attendance location is set to Company."
-msgstr "يُستخدم للموظفين الذين يكون موقع حضورهم عبر الجوال مضبوطًا على الشركة."
-
-msgid "Late Grace Period"
-msgstr "فترة السماح للتأخير"
-
-msgid "Minutes of tolerance after the scheduled start time before a mobile check-in is marked late."
-msgstr "عدد الدقائق المسموح بها بعد وقت البدء المحدد قبل اعتبار تسجيل الحضور عبر الجوال متأخرًا."
-
-msgid "Reject mobile app check-in/check-out when the device reports a mocked GPS location."
-msgstr "رفض تسجيل الحضور/الانصراف عبر الجوال عندما يبلّغ الجهاز عن موقع GPS وهمي."
-
-msgid "Geofence"
-msgstr "السياج الجغرافي"
-
-msgid "Mobile App Access Disabled"
-msgstr "الوصول إلى تطبيق الجوال معطّل"
-
-msgid "Mobile App Locked"
-msgstr "تطبيق الجوال مقفل"
-
-msgid "No mobile app sessions yet."
-msgstr "لا توجد جلسات لتطبيق الجوال بعد."
-
-msgid "Employees get a session token here after signing in to the mobile app."
-msgstr "يحصل الموظفون على رمز جلسة هنا بعد تسجيل الدخول إلى تطبيق الجوال."
-
-#. Controller error messages
-msgid "Your work location has no GPS coordinates configured. Contact HR."
-msgstr "لا توجد إحداثيات GPS مضبوطة لموقع عملك. يرجى التواصل مع الموارد البشرية."
-
-msgid "Your company has no GPS coordinates configured. Contact HR."
-msgstr "لا توجد إحداثيات GPS مضبوطة للشركة. يرجى التواصل مع الموارد البشرية."
-
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/utils.py:0
 msgid "Authentication token is missing."
 msgstr "رمز المصادقة مفقود."
 
-msgid "Your session has expired. Please sign in again."
-msgstr "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_res_company__mobile_block_mock_location model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__mobile_block_mock_location model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "Block Mock Locations"
+msgstr "حظر مواقع GPS الوهمية"
 
-msgid "Your session is no longer valid. Please sign in again."
-msgstr "لم تعد جلستك صالحة. يرجى تسجيل الدخول مرة أخرى."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__check_in_latitude
+msgid "Check-in Latitude"
+msgstr "خط العرض لتسجيل الحضور"
 
-msgid "Your mobile app access has been disabled. Contact HR."
-msgstr "تم تعطيل وصولك إلى تطبيق الجوال. يرجى التواصل مع الموارد البشرية."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__check_in_longitude
+msgid "Check-in Longitude"
+msgstr "خط الطول لتسجيل الحضور"
 
-msgid "Something went wrong. Please try again."
-msgstr "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__check_out_latitude
+msgid "Check-out Latitude"
+msgstr "خط العرض لتسجيل الانصراف"
 
-msgid "The request body is not valid JSON."
-msgstr "محتوى الطلب ليس بصيغة JSON صالحة."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__check_out_longitude
+msgid "Check-out Longitude"
+msgstr "خط الطول لتسجيل الانصراف"
 
-msgid "The request body must be a JSON object."
-msgstr "يجب أن يكون محتوى الطلب كائن JSON."
+#. module: employee_mobile
+#: model:ir.model,name:employee_mobile.model_res_company
+msgid "Companies"
+msgstr "الشركات"
 
-msgid "Work email and PIN are required."
-msgstr "البريد الإلكتروني الوظيفي ورقم التعريف الشخصي (PIN) مطلوبان."
+#. module: employee_mobile
+#: model:ir.model.fields.selection,name:employee_mobile.selection__hr_employee__mobile_attendance_restriction__company
+msgid "Company"
+msgstr "الشركة"
 
-msgid "Incorrect email or PIN."
-msgstr "البريد الإلكتروني أو رقم التعريف الشخصي (PIN) غير صحيح."
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "Company Geofence"
+msgstr "السياج الجغرافي للشركة"
 
-msgid "Too many failed attempts. Please try again later."
-msgstr "عدد كبير جدًا من المحاولات الفاشلة. يرجى المحاولة لاحقًا."
+#. module: employee_mobile
+#: model:ir.model,name:employee_mobile.model_res_config_settings
+msgid "Config Settings"
+msgstr "إعدادات التهيئة"
 
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__create_uid
+msgid "Created by"
+msgstr "أنشئ بواسطة"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__create_date
+msgid "Created on"
+msgstr "أنشئ في"
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
 msgid "Current and new PIN are required."
 msgstr "رقم التعريف الشخصي الحالي والجديد مطلوبان."
 
-msgid "Your current PIN is incorrect."
-msgstr "رقم التعريف الشخصي الحالي غير صحيح."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__device_id
+msgid "Device ID"
+msgstr "معرّف الجهاز"
 
-msgid "The new PIN must be 4 to 8 digits and different from the current one."
-msgstr "يجب أن يتكون رقم التعريف الشخصي الجديد من 4 إلى 8 أرقام وأن يكون مختلفًا عن الرقم الحالي."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__device_name
+msgid "Device Name"
+msgstr "اسم الجهاز"
 
-msgid "Your location is required."
-msgstr "موقعك مطلوب."
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
 
-msgid "Mock/fake GPS locations are not allowed. Disable mock location and try again."
-msgstr "لا يُسمح بمواقع GPS وهمية. يرجى تعطيل الموقع الوهمي والمحاولة مرة أخرى."
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_attendance__mobile_check_in_distance
+msgid "Distance in metres between the employee and the geofence centre at check-in."
+msgstr "المسافة بالأمتار بين الموظف ومركز النطاق الجغرافي عند تسجيل الحضور."
 
-msgid "You are outside the allowed location."
-msgstr "أنت خارج الموقع المسموح به."
+#. module: employee_mobile
+#: model:ir.model,name:employee_mobile.model_hr_employee model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__employee_id model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
+msgid "Employee"
+msgstr "الموظف"
 
-msgid "You are already checked in."
-msgstr "لقد سجّلت الحضور بالفعل."
+#. module: employee_mobile
+#: model:ir.model,name:employee_mobile.model_hr_employee_mobile_token
+msgid "Employee Mobile App Session Token"
+msgstr "رمز جلسة تطبيق الجوال للموظف"
 
-msgid "You are not checked in."
-msgstr "لم تسجّل الحضور بعد."
+#. module: employee_mobile
+#: model_terms:ir.actions.act_window,help:employee_mobile.hr_employee_mobile_token_action
+msgid "Employees get a session token here after signing in to the mobile app."
+msgstr "يحصل الموظفون على رمز جلسة هنا بعد تسجيل الدخول إلى تطبيق الجوال."
 
-msgid "The month must be in YYYY-MM format."
-msgstr "يجب أن يكون الشهر بصيغة YYYY-MM."
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_work_location__attendance_radius
+msgid "Employees must be within this many metres of the site centre to check in/out from the mobile app."
+msgstr "يجب أن يكون الموظفون ضمن هذا العدد من الأمتار من مركز الموقع لتسجيل الحضور/الانصراف من تطبيق الجوال."
 
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__expires_at
+msgid "Expires At"
+msgstr "تاريخ انتهاء الصلاحية"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.view_company_form_mobile
+msgid "Geofence"
+msgstr "السياج الجغرافي"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
+msgid "Group By"
+msgstr "تجميع حسب"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "Incorrect email or PIN."
+msgstr "البريد الإلكتروني أو رقم التعريف الشخصي (PIN) غير صحيح."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
 msgid "Invalid year."
 msgstr "سنة غير صالحة."
 
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__last_used
+msgid "Last Used"
+msgstr "آخر استخدام"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "Late Grace Period"
+msgstr "فترة السماح للتأخير"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_res_company__mobile_late_grace_minutes model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__mobile_late_grace_minutes
+msgid "Late Grace Period (minutes)"
+msgstr "فترة السماح للتأخير (دقائق)"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "Latitude"
+msgstr "خط العرض"
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_work_location__attendance_latitude
+msgid "Latitude of this work location's site centre, used for the mobile app geofence."
+msgstr "خط عرض مركز موقع العمل هذا، ويُستخدم للنطاق الجغرافي في تطبيق الجوال."
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_res_company__attendance_latitude model:ir.model.fields,help:employee_mobile.field_res_config_settings__attendance_latitude
+msgid "Latitude used for the mobile app geofence when an employee's attendance restriction is set to Company."
+msgstr "خط العرض المستخدم للنطاق الجغرافي في تطبيق الجوال عندما يكون قيد حضور الموظف مضبوطاً على الشركة."
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+msgid "Lock Status"
+msgstr "حالة القفل"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+msgid "Login = Work Email + PIN (HR Settings tab)."
+msgstr "تسجيل الدخول = البريد الإلكتروني الوظيفي + رقم التعريف الشخصي (PIN) (من تبويب إعدادات الموارد البشرية)."
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "Longitude"
+msgstr "خط الطول"
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_work_location__attendance_longitude
+msgid "Longitude of this work location's site centre, used for the mobile app geofence."
+msgstr "خط طول مركز موقع العمل هذا، ويُستخدم للنطاق الجغرافي في تطبيق الجوال."
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_res_company__attendance_longitude model:ir.model.fields,help:employee_mobile.field_res_config_settings__attendance_longitude
+msgid "Longitude used for the mobile app geofence when an employee's attendance restriction is set to Company."
+msgstr "خط الطول المستخدم للنطاق الجغرافي في تطبيق الجوال عندما يكون قيد حضور الموظف مضبوطاً على الشركة."
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_map_url
+msgid "Map"
+msgstr "الخريطة"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "Minutes of tolerance after the scheduled start time before a mobile check-in is marked late."
+msgstr "عدد الدقائق المسموح بها بعد وقت البدء المحدد قبل اعتبار تسجيل الحضور عبر الجوال متأخرًا."
+
+#. module: employee_mobile
+#: model:ir.model.fields.selection,name:employee_mobile.selection__hr_attendance__in_mode__mobile model:ir.model.fields.selection,name:employee_mobile.selection__hr_attendance__out_mode__mobile model_terms:ir.ui.view,arch_db:employee_mobile.hr_attendance_view_form_mobile model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile model_terms:ir.ui.view,arch_db:employee_mobile.view_company_form_mobile
+msgid "Mobile App"
+msgstr "تطبيق الجوال"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee__mobile_app_access
+msgid "Mobile App Access"
+msgstr "الوصول إلى تطبيق الجوال"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_search_mobile
+msgid "Mobile App Access Disabled"
+msgstr "الوصول إلى تطبيق الجوال معطّل"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_work_location_form_view_mobile
+msgid "Mobile App Geofence"
+msgstr "السياج الجغرافي لتطبيق الجوال"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_search_mobile
+msgid "Mobile App Locked"
+msgstr "تطبيق الجوال مقفل"
+
+#. module: employee_mobile
+#: model:ir.actions.act_window,name:employee_mobile.hr_employee_mobile_token_action model:ir.model.fields,field_description:employee_mobile.field_hr_employee__mobile_token_ids model:ir.ui.menu,name:employee_mobile.menu_hr_employee_mobile_token model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_list model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+msgid "Mobile App Sessions"
+msgstr "جلسات تطبيق الجوال"
+
+#. module: employee_mobile
+#: model:ir.actions.server,name:employee_mobile.ir_cron_mobile_token_cleanup_ir_actions_server
+msgid "Mobile App: Clean up expired/revoked session tokens"
+msgstr "تطبيق الجوال: حذف رموز الجلسات المنتهية/الملغاة"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee__mobile_attendance_restriction
+msgid "Mobile Attendance Location"
+msgstr "موقع الحضور عبر الجوال"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_check_in_distance
+msgid "Mobile Check-in Distance (m)"
+msgstr "مسافة تسجيل الحضور عبر الجوال (متر)"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_check_in_location
+msgid "Mobile Check-in Location"
+msgstr "موقع تسجيل الحضور عبر الجوال"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_check_out_distance
+msgid "Mobile Check-out Distance (m)"
+msgstr "مسافة تسجيل الانصراف عبر الجوال (متر)"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_check_out_location
+msgid "Mobile Check-out Location"
+msgstr "موقع تسجيل الانصراف عبر الجوال"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.view_attendance_tree_mobile
+msgid "Mobile Distance (In)"
+msgstr "المسافة عبر الجوال (حضور)"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.view_attendance_tree_mobile
+msgid "Mobile Distance (Out)"
+msgstr "المسافة عبر الجوال (انصراف)"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee__mobile_failed_attempts
+msgid "Mobile Failed Login Attempts"
+msgstr "محاولات تسجيل الدخول الفاشلة عبر الجوال"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.view_attendance_tree_mobile
+msgid "Mobile Location (In)"
+msgstr "الموقع عبر الجوال (حضور)"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.view_attendance_tree_mobile
+msgid "Mobile Location (Out)"
+msgstr "الموقع عبر الجوال (انصراف)"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee__mobile_locked_until
+msgid "Mobile Login Locked Until"
+msgstr "تسجيل الدخول عبر الجوال مقفل حتى"
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "Mock/fake GPS locations are not allowed. Disable mock location and try again."
+msgstr "لا يُسمح بمواقع GPS وهمية. يرجى تعطيل الموقع الوهمي والمحاولة مرة أخرى."
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__in_mode
+msgid "Mode"
+msgstr "الطريقة"
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_attendance__mobile_check_in_location
+msgid "Name of the work location/company the mobile app matched this check-in against."
+msgstr "اسم موقع العمل/الشركة الذي طابقه تطبيق الجوال مع تسجيل الحضور هذا."
+
+#. module: employee_mobile
+#: model_terms:ir.actions.act_window,help:employee_mobile.hr_employee_mobile_token_action
+msgid "No mobile app sessions yet."
+msgstr "لا توجد جلسات لتطبيق الجوال بعد."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "No photo on file."
+msgstr "لا توجد صورة مسجلة."
+
+#. module: employee_mobile
+#: model:ir.model.fields.selection,name:employee_mobile.selection__hr_employee__mobile_attendance_restriction__none
+msgid "None"
+msgstr "بدون"
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_res_company__mobile_late_grace_minutes model:ir.model.fields,help:employee_mobile.field_res_config_settings__mobile_late_grace_minutes
+msgid "Number of minutes after the scheduled start time before a check-in from the mobile app is considered late."
+msgstr "عدد الدقائق بعد وقت البدء المجدول قبل اعتبار تسجيل الحضور من تطبيق الجوال متأخراً."
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__out_mode
+msgid "Out Mode"
+msgstr "طريقة الانصراف"
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
 msgid "Payslip not found."
 msgstr "لم يتم العثور على قسيمة الراتب."
 
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__platform
+msgid "Platform"
+msgstr "المنصة"
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_res_company__mobile_block_mock_location model:ir.model.fields,help:employee_mobile.field_res_config_settings__mobile_block_mock_location
+msgid "Reject mobile app check-in/check-out when the device reports a mocked (fake) GPS location."
+msgstr "رفض تسجيل الحضور/الانصراف من تطبيق الجوال عندما يُبلغ الجهاز عن موقع GPS وهمي."
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "Reject mobile app check-in/check-out when the device reports a mocked GPS location."
+msgstr "رفض تسجيل الحضور/الانصراف عبر الجوال عندما يبلّغ الجهاز عن موقع GPS وهمي."
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+msgid "Revoke App Sessions"
+msgstr "إلغاء جلسات التطبيق"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
+msgid "Revoked"
+msgstr "ملغى"
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
 msgid "Shift"
 msgstr "الدوام"
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/utils.py:0
+msgid "Something went wrong. Please try again."
+msgstr "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "The month must be in YYYY-MM format."
+msgstr "يجب أن يكون الشهر بصيغة YYYY-MM."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "The new PIN must be 4 to 8 digits and different from the current one."
+msgstr "يجب أن يتكون رقم التعريف الشخصي الجديد من 4 إلى 8 أرقام وأن يكون مختلفًا عن الرقم الحالي."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/utils.py:0
+msgid "The request body is not valid JSON."
+msgstr "محتوى الطلب ليس بصيغة JSON صالحة."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/utils.py:0
+msgid "The request body must be a JSON object."
+msgstr "يجب أن يكون محتوى الطلب كائن JSON."
+
+#. module: employee_mobile
+#: model:ir.model.constraint,message:employee_mobile.constraint_hr_employee_mobile_token_token_hash_unique
+msgid "This mobile session token already exists."
+msgstr "رمز جلسة الجوال هذا موجود بالفعل."
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+msgid "This will sign the employee out of the mobile app on every device."
+msgstr "سيؤدي هذا إلى تسجيل خروج الموظف من تطبيق الجوال على جميع الأجهزة."
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__token_hash
+msgid "Token Hash"
+msgstr "بصمة الرمز المميز"
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "Too many failed attempts. Please try again later."
+msgstr "عدد كبير جدًا من المحاولات الفاشلة. يرجى المحاولة لاحقًا."
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+msgid "Unlock"
+msgstr "إلغاء القفل"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+msgid "Used for employees whose mobile attendance location is set to Company."
+msgstr "يُستخدم للموظفين الذين يكون موقع حضورهم عبر الجوال مضبوطًا على الشركة."
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_work_location_form_view_mobile
+msgid "View on Map"
+msgstr "عرض على الخريطة"
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_employee__mobile_attendance_restriction
+msgid ""
+"Where the employee is required to be, GPS-wise, to check in/out from the mobile app:\n"
+"- Work Location: within the radius configured on their work location.\n"
+"- Company: within the radius configured on the company.\n"
+"- None: no geofence check (e.g. drivers, field staff)."
+msgstr ""
+"المكان الذي يجب أن يكون فيه الموظف، حسب GPS، لتسجيل الحضور/الانصراف من تطبيق الجوال:\n"
+"- موقع العمل: ضمن النطاق المحدد لموقع عمله.\n"
+"- الشركة: ضمن النطاق المحدد للشركة.\n"
+"- بدون: لا يوجد تحقق من النطاق الجغرافي (مثل السائقين والموظفين الميدانيين)."
+
+#. module: employee_mobile
+#: model:ir.model,name:employee_mobile.model_hr_work_location model:ir.model.fields.selection,name:employee_mobile.selection__hr_employee__mobile_attendance_restriction__work_location
+msgid "Work Location"
+msgstr "موقع العمل"
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "Work email and PIN are required."
+msgstr "البريد الإلكتروني الوظيفي ورقم التعريف الشخصي (PIN) مطلوبان."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "You are already checked in."
+msgstr "لقد سجّلت الحضور بالفعل."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "You are not checked in."
+msgstr "لم تسجّل الحضور بعد."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "You are outside the allowed location."
+msgstr "أنت خارج الموقع المسموح به."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/models/hr_employee.py:0
+msgid "Your company has no GPS coordinates configured. Contact HR."
+msgstr "لا توجد إحداثيات GPS مضبوطة للشركة. يرجى التواصل مع الموارد البشرية."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "Your current PIN is incorrect."
+msgstr "رقم التعريف الشخصي الحالي غير صحيح."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/main.py:0
+msgid "Your location is required."
+msgstr "موقعك مطلوب."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/utils.py:0
+msgid "Your mobile app access has been disabled. Contact HR."
+msgstr "تم تعطيل وصولك إلى تطبيق الجوال. يرجى التواصل مع الموارد البشرية."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/utils.py:0
+msgid "Your session has expired. Please sign in again."
+msgstr "انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/controllers/utils.py:0
+msgid "Your session is no longer valid. Please sign in again."
+msgstr "لم تعد جلستك صالحة. يرجى تسجيل الدخول مرة أخرى."
+
+#. module: employee_mobile
+#. odoo-python
+#: code:addons/employee_mobile/models/hr_employee.py:0
+msgid "Your work location has no GPS coordinates configured. Contact HR."
+msgstr "لا توجد إحداثيات GPS مضبوطة لموقع عملك. يرجى التواصل مع الموارد البشرية."
