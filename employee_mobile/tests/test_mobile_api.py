@@ -555,6 +555,28 @@ class TestMobileApi(HttpCase):
         self.assertEqual(dates, sorted(dates, reverse=True))
         att.unlink()
 
+    def test_attendance_history_late_details(self):
+        token = self._token_for('wl.employee@example.com')
+        # Shift starts 08:00 Riyadh (05:00 UTC); checking in at 09:30 local is 90 min late.
+        self.env['hr.attendance'].sudo().create({
+            'employee_id': self.emp_wl.id,
+            'check_in': '2026-08-10 06:30:00',
+            'check_out': '2026-08-10 14:00:00',
+        })
+        self.env['hr.attendance'].sudo().create({
+            'employee_id': self.emp_wl.id,
+            'check_in': '2026-08-11 05:02:00',
+            'check_out': '2026-08-11 14:00:00',
+        })
+        data = self._call('GET', '/attendance?month=2026-08', token=token).json()['data']
+        by_date = {d['date']: d for d in data['days']}
+        self.assertEqual(by_date['2026-08-10']['status'], 'late')
+        self.assertEqual(by_date['2026-08-10']['late_minutes'], 90)
+        self.assertEqual(by_date['2026-08-10']['shift_start'], '08:00')
+        self.assertEqual(by_date['2026-08-11']['status'], 'on_time')
+        self.assertEqual(by_date['2026-08-11']['late_minutes'], 0)
+        self.assertIsNone(by_date['2026-08-11']['shift_start'])
+
     def test_attendance_history_bad_month(self):
         token = self._token_for('wl.employee@example.com')
         resp = self._call('GET', '/attendance?month=not-a-month', token=token)
@@ -605,13 +627,32 @@ class TestMobileApi(HttpCase):
         self.assertIsNone(data['geofence_error'])
         self.assertEqual(data['latest_payslip']['id'], self.payslip.id)
 
+    def test_today_worked_hours_clips_session_spanning_midnight(self):
+        import pytz
+        from ..controllers.main import _build_attendance_status, _day_bounds_utc, _local_now
+        tz = pytz.timezone(self.emp_wl._get_tz())
+        day_start_utc, _end = _day_bounds_utc(_local_now(self.emp_wl).date(), tz)
+        check_out = fields.Datetime.now().replace(microsecond=0)
+        self.env['hr.attendance'].sudo().create({
+            'employee_id': self.emp_wl.id,
+            'check_in': day_start_utc - timedelta(hours=8),
+            'check_out': check_out,
+        })
+        status, _open = _build_attendance_status(self.emp_wl)
+        expected = (check_out - day_start_utc).total_seconds() / 3600.0
+        self.assertAlmostEqual(status['today_worked_hours'], expected, delta=0.02)
+
     def test_profile(self):
         token = self._token_for('wl.employee@example.com')
         resp = self._call('GET', '/profile', token=token)
         self.assertEqual(resp.status_code, 200, resp.text)
         data = resp.json()['data']
         self.assertEqual(data['work_email'], 'wl.employee@example.com')
-        self.assertEqual(data['code'], self.emp_wl.registration_number or self.emp_wl.barcode or str(self.emp_wl.id))
+        expected = (
+            ('registration_number2' in self.emp_wl._fields and self.emp_wl.registration_number2)
+            or self.emp_wl.registration_number or self.emp_wl.barcode or str(self.emp_wl.id)
+        )
+        self.assertEqual(data['code'], expected)
 
     def test_profile_image(self):
         token = self._token_for('wl.employee@example.com')

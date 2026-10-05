@@ -63,7 +63,10 @@ def _build_profile(employee):
     name = employee.name
     if lang.split('_')[0] == 'ar' and 'arabic_name' in employee._fields and employee.arabic_name:
         name = employee.arabic_name
-    code = employee.registration_number or employee.barcode or str(employee.id)
+    code = (
+        ('registration_number2' in employee._fields and employee.registration_number2)
+        or employee.registration_number or employee.barcode or str(employee.id)
+    )
 
     manager = None
     if employee.parent_id:
@@ -177,8 +180,13 @@ def _build_attendance_status(employee):
     today_worked_hours = 0.0
     now = fields.Datetime.now()
     for att in today_atts:
-        if att.check_out:
+        if att.check_out and att.check_in >= day_start_utc and att.check_out <= day_end_utc:
             worked = att.worked_hours or 0.0
+        elif att.check_out:
+            # Session spans midnight: count only the part that falls today.
+            start = max(att.check_in, day_start_utc)
+            end = min(att.check_out, day_end_utc)
+            worked = max(0.0, (end - start).total_seconds() / 3600.0)
         else:
             start = max(att.check_in, day_start_utc)
             worked = max(0.0, (now - start).total_seconds() / 3600.0)
@@ -264,6 +272,8 @@ def _build_attendance_days(employee, year, month):
                 else:
                     worked_hours += max(0.0, (now - a.check_in).total_seconds() / 3600.0)
 
+            late_minutes = 0
+            shift_start = None
             if open_session:
                 status = 'working'
             else:
@@ -274,6 +284,9 @@ def _build_attendance_days(employee, year, month):
                     deadline = schedule_start + timedelta(minutes=grace_minutes)
                     first_in_local = pytz.utc.localize(first_in.check_in).astimezone(tz)
                     status = 'late' if first_in_local > deadline else 'on_time'
+                    if status == 'late':
+                        late_minutes = int((first_in_local - schedule_start).total_seconds() // 60)
+                        shift_start = schedule_start.strftime('%H:%M')
 
             if status == 'late':
                 late += 1
@@ -286,6 +299,8 @@ def _build_attendance_days(employee, year, month):
                 'check_out': to_employee_iso(last_att.check_out, employee) if not open_session else None,
                 'worked_hours': round(worked_hours, 2),
                 'status': status,
+                'late_minutes': late_minutes,
+                'shift_start': shift_start,
                 'location_name': first_in.mobile_check_in_location or None,
                 'sessions': [{
                     'id': a.id,
@@ -304,6 +319,8 @@ def _build_attendance_days(employee, year, month):
                 'check_out': None,
                 'worked_hours': 0.0,
                 'status': 'leave',
+                'late_minutes': 0,
+                'shift_start': None,
                 'location_name': None,
                 'sessions': [],
             })
