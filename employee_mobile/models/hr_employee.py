@@ -8,29 +8,29 @@ class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
     mobile_app_access = fields.Boolean(
-        string='Mobile App Access', default=True, groups='hr.group_hr_user', copy=False,
+        string='Mobile App Access', default=True, groups='employee_mobile.group_mobile_app_manager', copy=False,
         help="Allow this employee to sign in to the mobile app with their work email and PIN.")
     mobile_attendance_restriction = fields.Selection([
         ('work_location', 'Work Location'),
         ('company', 'Company'),
         ('none', 'None'),
     ], string='Mobile Attendance Location', default='work_location', required=True,
-        groups='hr.group_hr_user', copy=False,
+        groups='employee_mobile.group_mobile_app_manager', copy=False,
         help="Where the employee is required to be, GPS-wise, to check in/out from the "
              "mobile app:\n"
              "- Work Location: within the radius configured on their work location.\n"
              "- Company: within the radius configured on the company.\n"
              "- None: no geofence check (e.g. drivers, field staff).")
     mobile_failed_attempts = fields.Integer(
-        string='Mobile Failed Login Attempts', default=0, groups='hr.group_hr_user', copy=False)
+        string='Mobile Failed Login Attempts', default=0, groups='employee_mobile.group_mobile_app_manager', copy=False)
     mobile_locked_until = fields.Datetime(
-        string='Mobile Login Locked Until', groups='hr.group_hr_user', copy=False)
+        string='Mobile Login Locked Until', groups='employee_mobile.group_mobile_app_manager', copy=False)
     mobile_token_ids = fields.One2many(
         'hr.employee.mobile.token', 'employee_id', string='Mobile App Sessions',
-        groups='hr.group_hr_user', copy=False)
+        groups='employee_mobile.group_mobile_app_manager', copy=False)
     mobile_active_token_count = fields.Integer(
         string='Active Mobile Sessions', compute='_compute_mobile_active_token_count',
-        groups='hr.group_hr_user')
+        groups='employee_mobile.group_mobile_app_manager')
 
     @api.depends('mobile_token_ids.active')
     def _compute_mobile_active_token_count(self):
@@ -103,7 +103,7 @@ class HrEmployee(models.Model):
         res = super().write(vals)
         if should_revoke:
             for employee in self:
-                # sudo(): a user without hr.group_hr_user (mobile_token_ids and
+                # sudo(): a user without the Mobile App Manager group (mobile_token_ids and
                 # the token model are both restricted to that group) can still
                 # legitimately change their own pin/active here, e.g. through
                 # another flow; do not let that raise an AccessError.

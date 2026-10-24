@@ -52,7 +52,7 @@
               name="Mobile App Sessions"
               parent="hr_attendance.menu_hr_attendance_root"
               action="hr_employee_mobile_token_action"
-              groups="hr_attendance.group_hr_attendance_officer"
+              groups="employee_mobile.group_mobile_app_manager"
               sequence="98"/>
 
 </odoo>

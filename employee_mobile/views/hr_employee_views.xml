@@ -7,13 +7,15 @@
         <field name="inherit_id" ref="hr.view_employee_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='hr_settings']" position="after">
-                <page name="mobile_app" string="Mobile App" groups="hr.group_hr_user">
+                <page name="mobile_app" string="Mobile App" groups="employee_mobile.group_mobile_app_manager">
                     <group>
                         <group string="Access">
                             <field name="mobile_app_access"/>
+                            <field name="work_email" string="Login Email" readonly="1"/>
+                            <field name="pin" string="PIN"/>
                             <field name="mobile_attendance_restriction"/>
                             <div class="text-muted" colspan="2">
-                                Login = Work Email + PIN (HR Settings tab).
+                                Login = Work Email + PIN. Changing the PIN signs the employee out of the app.
                             </div>
                         </group>
                         <group string="Lock Status">
@@ -52,8 +54,8 @@
         <field name="inherit_id" ref="hr.view_employee_tree"/>
         <field name="arch" type="xml">
             <field name="work_location_id" position="after">
-                <field name="mobile_attendance_restriction" optional="hide"/>
-                <field name="mobile_app_access" optional="hide" widget="boolean_toggle"/>
+                <field name="mobile_attendance_restriction" optional="hide" groups="employee_mobile.group_mobile_app_manager"/>
+                <field name="mobile_app_access" optional="hide" widget="boolean_toggle" groups="employee_mobile.group_mobile_app_manager"/>
             </field>
         </field>
     </record>
@@ -64,11 +66,11 @@
         <field name="inherit_id" ref="hr.view_employee_filter"/>
         <field name="arch" type="xml">
             <filter name="inactive" position="before">
-                <filter string="Mobile App Access Disabled" name="mobile_app_access_disabled"
+                <filter string="Mobile App Access Disabled" name="mobile_app_access_disabled" groups="employee_mobile.group_mobile_app_manager"
                         domain="[('mobile_app_access', '=', False)]"/>
-                <filter string="Mobile App Locked" name="mobile_app_locked"
+                <filter string="Mobile App Locked" name="mobile_app_locked" groups="employee_mobile.group_mobile_app_manager"
                         domain="[('mobile_locked_until', '!=', False)]"/>
-                <separator/>
+                <separator groups="employee_mobile.group_mobile_app_manager"/>
             </filter>
         </field>
     </record>

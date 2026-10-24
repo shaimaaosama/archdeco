@@ -117,11 +117,21 @@ def _day_bounds_utc(local_date, tz):
     return start_utc, end_utc
 
 
+def _day_calendar(employee, local_date):
+    """The working schedule applied on ``local_date``: the employee's one,
+    or its replacement for that day when a module provides it (e.g. the
+    Ramadan schedule of ``pt_hr_ramadan_schedule``)."""
+    calendar = employee.resource_calendar_id
+    if calendar and hasattr(calendar, '_get_effective_calendar'):
+        calendar = calendar._get_effective_calendar(local_date)
+    return calendar
+
+
 def _day_schedule_start(employee, local_date, tz):
     """Return the local start time (tz-aware datetime) of the first scheduled
     interval for ``local_date``, ``'flexible'`` if the calendar has flexible
     hours, or ``None`` if there is no scheduled work that day."""
-    calendar = employee.resource_calendar_id
+    calendar = _day_calendar(employee, local_date)
     if not calendar:
         return None
     if getattr(calendar, 'flexible_hours', False):
@@ -137,11 +147,11 @@ def _day_schedule_start(employee, local_date, tz):
 
 def _build_shift(employee):
     """Today's shift, or None on a day off / for a flexible calendar."""
-    calendar = employee.resource_calendar_id
+    today = _local_now(employee).date()
+    calendar = _day_calendar(employee, today)
     if not calendar or getattr(calendar, 'flexible_hours', False):
         return None
     tz = pytz.timezone(employee._get_tz() or 'UTC')
-    today = _local_now(employee).date()
     start_local = tz.localize(datetime.combine(today, time.min))
     end_local = start_local + timedelta(days=1)
     resource = employee.resource_id

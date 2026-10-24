@@ -20,11 +20,19 @@ ArchDeco mobile app without needing an Odoo user:
 Designed to work standalone, and to coexist with ``pt_attendance_portal``
 (shares the ``hr.attendance`` geolocation fields, never touches the
 portal's own geofence model or routes).
+
+Credits
+-------
+The ArchDeco employee mobile app (Android, ``com.archdeco.employee``, and
+its web/PWA version) and this API module were designed and developed by
+Shaimaa Osama El-Marsafawy.
 """,
     'author': "Shaimaa Osama El-Marsafawy",
+    'maintainer': "Shaimaa Osama El-Marsafawy",
     'license': 'LGPL-3',
     'depends': ['hr', 'hr_attendance', 'hr_payroll', 'resource'],
     'data': [
+        'security/security.xml',
         'security/ir.model.access.csv',
         'data/ir_cron.xml',
         'views/hr_employee_views.xml',

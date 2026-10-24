@@ -12,9 +12,21 @@ from odoo import http
 from odoo.http import Stream, request
 
 APP_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'static', 'app')
+# Kept outside static/app, which build_pwa.sh replaces on every PWA build.
+PRIVACY_FILE = os.path.join(os.path.dirname(APP_DIR), 'privacy', 'privacy.html')
 
 
 class EmployeeAppPwa(http.Controller):
+
+    @http.route('/employee-app/privacy', type='http', auth='public', methods=['GET'],
+                csrf=False, readonly=True, sitemap=False)
+    def employee_app_privacy(self, **kwargs):
+        """Public privacy policy page, linked from the Google Play listing."""
+        stream = Stream.from_path(PRIVACY_FILE)
+        stream.max_age = 0
+        response = stream.get_response(content_security_policy=None)
+        response.headers['Cache-Control'] = 'no-cache'
+        return response
 
     @http.route(['/employee-app/', '/employee-app/<path:subpath>'], type='http', auth='public',
                 methods=['GET'], csrf=False, readonly=True, sitemap=False)

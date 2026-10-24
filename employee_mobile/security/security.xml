@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="module_category_employee_mobile" model="ir.module.category">
+        <field name="name">Mobile App</field>
+        <field name="parent_id" ref="base.module_category_human_resources"/>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Manages employees' mobile app access: the "Mobile App" tab on the
+         employee form (PIN, access, geofence mode, lockout) and the app
+         sessions. Implies HR Officer, which is needed to open the employee
+         form and to read/write the PIN. -->
+    <record id="group_mobile_app_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_employee_mobile"/>
+        <field name="implied_ids" eval="[Command.link(ref('hr.group_hr_user'))]"/>
+        <field name="users" eval="[Command.link(ref('base.user_root')), Command.link(ref('base.user_admin'))]"/>
+    </record>
+
+</odoo>

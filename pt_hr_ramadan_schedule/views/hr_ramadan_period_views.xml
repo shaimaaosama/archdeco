@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_ramadan_period_view_list" model="ir.ui.view">
+        <field name="name">hr.ramadan.period.list</field>
+        <field name="model">hr.ramadan.period</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_ramadan_period_view_form" model="ir.ui.view">
+        <field name="name">hr.ramadan.period.form</field>
+        <field name="model">hr.ramadan.period</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_recompute_attendance_overtime" type="object"
+                            string="Recompute Attendance Overtime"
+                            help="Use it when the period is created or its dates are corrected after attendances of these days were recorded."/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name" placeholder="e.g. Ramadan 1448"/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        During these days, every working schedule that has a
+                        Ramadan Schedule uses it instead of its normal hours.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="hr_ramadan_period_view_search" model="ir.ui.view">
+        <field name="name">hr.ramadan.period.search</field>
+        <field name="model">hr.ramadan.period</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="hr_ramadan_period_action" model="ir.actions.act_window">
+        <field name="name">Ramadan Periods</field>
+        <field name="res_model">hr.ramadan.period</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add this year's Ramadan period</p>
+            <p>During a Ramadan period, working schedules switch to their Ramadan Schedule.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_hr_ramadan_period"
+              action="hr_ramadan_period_action"
+              parent="hr.menu_config_employee"
+              sequence="7"
+              groups="hr.group_hr_manager"/>
+</odoo>

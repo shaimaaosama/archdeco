@@ -37,7 +37,8 @@ msgid "Access"
 msgstr "الوصول"
 
 #. module: employee_mobile
-#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__active model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__active
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
 msgid "Active"
 msgstr "نشط"
 
@@ -48,8 +49,12 @@ msgstr "الجلسات النشطة على الجوال"
 
 #. module: employee_mobile
 #: model:ir.model.fields,help:employee_mobile.field_hr_employee__mobile_app_access
-msgid "Allow this employee to sign in to the mobile app with their work email and PIN."
-msgstr "السماح لهذا الموظف بتسجيل الدخول إلى تطبيق الجوال باستخدام بريده الإلكتروني الوظيفي ورقم التعريف الشخصي (PIN)."
+msgid ""
+"Allow this employee to sign in to the mobile app with their work email and "
+"PIN."
+msgstr ""
+"السماح لهذا الموظف بتسجيل الدخول إلى تطبيق الجوال باستخدام بريده الإلكتروني "
+"الوظيفي ورقم التعريف الشخصي (PIN)."
 
 #. module: employee_mobile
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__app_version
@@ -57,22 +62,29 @@ msgid "App Version"
 msgstr "إصدار التطبيق"
 
 #. module: employee_mobile
-#: model:ir.model,name:employee_mobile.model_hr_attendance model_terms:ir.ui.view,arch_db:employee_mobile.view_company_form_mobile
+#: model:ir.model,name:employee_mobile.model_hr_attendance
+#: model_terms:ir.ui.view,arch_db:employee_mobile.view_company_form_mobile
 msgid "Attendance"
 msgstr "الحضور"
 
 #. module: employee_mobile
-#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_latitude model:ir.model.fields,field_description:employee_mobile.field_res_company__attendance_latitude model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__attendance_latitude
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_latitude
+#: model:ir.model.fields,field_description:employee_mobile.field_res_company__attendance_latitude
+#: model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__attendance_latitude
 msgid "Attendance Latitude"
 msgstr "خط العرض للحضور"
 
 #. module: employee_mobile
-#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_longitude model:ir.model.fields,field_description:employee_mobile.field_res_company__attendance_longitude model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__attendance_longitude
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_longitude
+#: model:ir.model.fields,field_description:employee_mobile.field_res_company__attendance_longitude
+#: model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__attendance_longitude
 msgid "Attendance Longitude"
 msgstr "خط الطول للحضور"
 
 #. module: employee_mobile
-#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_radius model:ir.model.fields,field_description:employee_mobile.field_res_company__attendance_radius model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__attendance_radius
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_radius
+#: model:ir.model.fields,field_description:employee_mobile.field_res_company__attendance_radius
+#: model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__attendance_radius
 msgid "Attendance Radius (m)"
 msgstr "نطاق الحضور (متر)"
 
@@ -83,7 +95,9 @@ msgid "Authentication token is missing."
 msgstr "رمز المصادقة مفقود."
 
 #. module: employee_mobile
-#: model:ir.model.fields,field_description:employee_mobile.field_res_company__mobile_block_mock_location model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__mobile_block_mock_location model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_res_company__mobile_block_mock_location
+#: model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__mobile_block_mock_location
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
 msgid "Block Mock Locations"
 msgstr "حظر مواقع GPS الوهمية"
 
@@ -160,11 +174,14 @@ msgstr "اسم العرض"
 
 #. module: employee_mobile
 #: model:ir.model.fields,help:employee_mobile.field_hr_attendance__mobile_check_in_distance
-msgid "Distance in metres between the employee and the geofence centre at check-in."
+msgid ""
+"Distance in metres between the employee and the geofence centre at check-in."
 msgstr "المسافة بالأمتار بين الموظف ومركز النطاق الجغرافي عند تسجيل الحضور."
 
 #. module: employee_mobile
-#: model:ir.model,name:employee_mobile.model_hr_employee model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__employee_id model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
+#: model:ir.model,name:employee_mobile.model_hr_employee
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__employee_id
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
 msgid "Employee"
 msgstr "الموظف"
 
@@ -180,8 +197,12 @@ msgstr "يحصل الموظفون على رمز جلسة هنا بعد تسجي�
 
 #. module: employee_mobile
 #: model:ir.model.fields,help:employee_mobile.field_hr_work_location__attendance_radius
-msgid "Employees must be within this many metres of the site centre to check in/out from the mobile app."
-msgstr "يجب أن يكون الموظفون ضمن هذا العدد من الأمتار من مركز الموقع لتسجيل الحضور/الانصراف من تطبيق الجوال."
+msgid ""
+"Employees must be within this many metres of the site centre to check in/out"
+" from the mobile app."
+msgstr ""
+"يجب أن يكون الموظفون ضمن هذا العدد من الأمتار من مركز الموقع لتسجيل "
+"الحضور/الانصراف من تطبيق الجوال."
 
 #. module: employee_mobile
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__expires_at
@@ -236,7 +257,8 @@ msgid "Late Grace Period"
 msgstr "فترة السماح للتأخير"
 
 #. module: employee_mobile
-#: model:ir.model.fields,field_description:employee_mobile.field_res_company__mobile_late_grace_minutes model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__mobile_late_grace_minutes
+#: model:ir.model.fields,field_description:employee_mobile.field_res_company__mobile_late_grace_minutes
+#: model:ir.model.fields,field_description:employee_mobile.field_res_config_settings__mobile_late_grace_minutes
 msgid "Late Grace Period (minutes)"
 msgstr "فترة السماح للتأخير (دقائق)"
 
@@ -247,13 +269,20 @@ msgstr "خط العرض"
 
 #. module: employee_mobile
 #: model:ir.model.fields,help:employee_mobile.field_hr_work_location__attendance_latitude
-msgid "Latitude of this work location's site centre, used for the mobile app geofence."
+msgid ""
+"Latitude of this work location's site centre, used for the mobile app "
+"geofence."
 msgstr "خط عرض مركز موقع العمل هذا، ويُستخدم للنطاق الجغرافي في تطبيق الجوال."
 
 #. module: employee_mobile
-#: model:ir.model.fields,help:employee_mobile.field_res_company__attendance_latitude model:ir.model.fields,help:employee_mobile.field_res_config_settings__attendance_latitude
-msgid "Latitude used for the mobile app geofence when an employee's attendance restriction is set to Company."
-msgstr "خط العرض المستخدم للنطاق الجغرافي في تطبيق الجوال عندما يكون قيد حضور الموظف مضبوطاً على الشركة."
+#: model:ir.model.fields,help:employee_mobile.field_res_company__attendance_latitude
+#: model:ir.model.fields,help:employee_mobile.field_res_config_settings__attendance_latitude
+msgid ""
+"Latitude used for the mobile app geofence when an employee's attendance "
+"restriction is set to Company."
+msgstr ""
+"خط العرض المستخدم للنطاق الجغرافي في تطبيق الجوال عندما يكون قيد حضور الموظف"
+" مضبوطاً على الشركة."
 
 #. module: employee_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
@@ -262,8 +291,16 @@ msgstr "حالة القفل"
 
 #. module: employee_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
-msgid "Login = Work Email + PIN (HR Settings tab)."
-msgstr "تسجيل الدخول = البريد الإلكتروني الوظيفي + رقم التعريف الشخصي (PIN) (من تبويب إعدادات الموارد البشرية)."
+msgid ""
+"Login = Work Email + PIN. Changing the PIN signs the employee out of the "
+"app."
+msgstr ""
+"تسجيل الدخول = بريد العمل + رمز PIN. تغيير رمز PIN يُخرج الموظف من التطبيق."
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+msgid "Login Email"
+msgstr "بريد تسجيل الدخول"
 
 #. module: employee_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
@@ -272,13 +309,25 @@ msgstr "خط الطول"
 
 #. module: employee_mobile
 #: model:ir.model.fields,help:employee_mobile.field_hr_work_location__attendance_longitude
-msgid "Longitude of this work location's site centre, used for the mobile app geofence."
+msgid ""
+"Longitude of this work location's site centre, used for the mobile app "
+"geofence."
 msgstr "خط طول مركز موقع العمل هذا، ويُستخدم للنطاق الجغرافي في تطبيق الجوال."
 
 #. module: employee_mobile
-#: model:ir.model.fields,help:employee_mobile.field_res_company__attendance_longitude model:ir.model.fields,help:employee_mobile.field_res_config_settings__attendance_longitude
-msgid "Longitude used for the mobile app geofence when an employee's attendance restriction is set to Company."
-msgstr "خط الطول المستخدم للنطاق الجغرافي في تطبيق الجوال عندما يكون قيد حضور الموظف مضبوطاً على الشركة."
+#: model:ir.model.fields,help:employee_mobile.field_res_company__attendance_longitude
+#: model:ir.model.fields,help:employee_mobile.field_res_config_settings__attendance_longitude
+msgid ""
+"Longitude used for the mobile app geofence when an employee's attendance "
+"restriction is set to Company."
+msgstr ""
+"خط الطول المستخدم للنطاق الجغرافي في تطبيق الجوال عندما يكون قيد حضور الموظف"
+" مضبوطاً على الشركة."
+
+#. module: employee_mobile
+#: model:res.groups,name:employee_mobile.group_mobile_app_manager
+msgid "Manager"
+msgstr "مدير"
 
 #. module: employee_mobile
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_work_location__attendance_map_url
@@ -287,11 +336,21 @@ msgstr "الخريطة"
 
 #. module: employee_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
-msgid "Minutes of tolerance after the scheduled start time before a mobile check-in is marked late."
-msgstr "عدد الدقائق المسموح بها بعد وقت البدء المحدد قبل اعتبار تسجيل الحضور عبر الجوال متأخرًا."
+msgid ""
+"Minutes of tolerance after the scheduled start time before a mobile check-in"
+" is marked late."
+msgstr ""
+"عدد الدقائق المسموح بها بعد وقت البدء المحدد قبل اعتبار تسجيل الحضور عبر "
+"الجوال متأخرًا."
 
 #. module: employee_mobile
-#: model:ir.model.fields.selection,name:employee_mobile.selection__hr_attendance__in_mode__mobile model:ir.model.fields.selection,name:employee_mobile.selection__hr_attendance__out_mode__mobile model_terms:ir.ui.view,arch_db:employee_mobile.hr_attendance_view_form_mobile model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile model_terms:ir.ui.view,arch_db:employee_mobile.view_company_form_mobile
+#: model:ir.model.fields.selection,name:employee_mobile.selection__hr_attendance__in_mode__mobile
+#: model:ir.model.fields.selection,name:employee_mobile.selection__hr_attendance__out_mode__mobile
+#: model:ir.module.category,name:employee_mobile.module_category_employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_attendance_view_form_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.view_company_form_mobile
 msgid "Mobile App"
 msgstr "تطبيق الجوال"
 
@@ -316,7 +375,12 @@ msgid "Mobile App Locked"
 msgstr "تطبيق الجوال مقفل"
 
 #. module: employee_mobile
-#: model:ir.actions.act_window,name:employee_mobile.hr_employee_mobile_token_action model:ir.model.fields,field_description:employee_mobile.field_hr_employee__mobile_token_ids model:ir.ui.menu,name:employee_mobile.menu_hr_employee_mobile_token model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_list model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+#: model:ir.actions.act_window,name:employee_mobile.hr_employee_mobile_token_action
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee__mobile_token_ids
+#: model:ir.ui.menu,name:employee_mobile.menu_hr_employee_mobile_token
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_list
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
 msgid "Mobile App Sessions"
 msgstr "جلسات تطبيق الجوال"
 
@@ -383,8 +447,11 @@ msgstr "تسجيل الدخول عبر الجوال مقفل حتى"
 #. module: employee_mobile
 #. odoo-python
 #: code:addons/employee_mobile/controllers/main.py:0
-msgid "Mock/fake GPS locations are not allowed. Disable mock location and try again."
-msgstr "لا يُسمح بمواقع GPS وهمية. يرجى تعطيل الموقع الوهمي والمحاولة مرة أخرى."
+msgid ""
+"Mock/fake GPS locations are not allowed. Disable mock location and try "
+"again."
+msgstr ""
+"لا يُسمح بمواقع GPS وهمية. يرجى تعطيل الموقع الوهمي والمحاولة مرة أخرى."
 
 #. module: employee_mobile
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__in_mode
@@ -393,7 +460,9 @@ msgstr "الطريقة"
 
 #. module: employee_mobile
 #: model:ir.model.fields,help:employee_mobile.field_hr_attendance__mobile_check_in_location
-msgid "Name of the work location/company the mobile app matched this check-in against."
+msgid ""
+"Name of the work location/company the mobile app matched this check-in "
+"against."
 msgstr "اسم موقع العمل/الشركة الذي طابقه تطبيق الجوال مع تسجيل الحضور هذا."
 
 #. module: employee_mobile
@@ -413,14 +482,24 @@ msgid "None"
 msgstr "بدون"
 
 #. module: employee_mobile
-#: model:ir.model.fields,help:employee_mobile.field_res_company__mobile_late_grace_minutes model:ir.model.fields,help:employee_mobile.field_res_config_settings__mobile_late_grace_minutes
-msgid "Number of minutes after the scheduled start time before a check-in from the mobile app is considered late."
-msgstr "عدد الدقائق بعد وقت البدء المجدول قبل اعتبار تسجيل الحضور من تطبيق الجوال متأخراً."
+#: model:ir.model.fields,help:employee_mobile.field_res_company__mobile_late_grace_minutes
+#: model:ir.model.fields,help:employee_mobile.field_res_config_settings__mobile_late_grace_minutes
+msgid ""
+"Number of minutes after the scheduled start time before a check-in from the "
+"mobile app is considered late."
+msgstr ""
+"عدد الدقائق بعد وقت البدء المجدول قبل اعتبار تسجيل الحضور من تطبيق الجوال "
+"متأخراً."
 
 #. module: employee_mobile
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__out_mode
 msgid "Out Mode"
 msgstr "طريقة الانصراف"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
+msgid "PIN"
+msgstr "رمز PIN"
 
 #. module: employee_mobile
 #. odoo-python
@@ -434,14 +513,22 @@ msgid "Platform"
 msgstr "المنصة"
 
 #. module: employee_mobile
-#: model:ir.model.fields,help:employee_mobile.field_res_company__mobile_block_mock_location model:ir.model.fields,help:employee_mobile.field_res_config_settings__mobile_block_mock_location
-msgid "Reject mobile app check-in/check-out when the device reports a mocked (fake) GPS location."
-msgstr "رفض تسجيل الحضور/الانصراف من تطبيق الجوال عندما يُبلغ الجهاز عن موقع GPS وهمي."
+#: model:ir.model.fields,help:employee_mobile.field_res_company__mobile_block_mock_location
+#: model:ir.model.fields,help:employee_mobile.field_res_config_settings__mobile_block_mock_location
+msgid ""
+"Reject mobile app check-in/check-out when the device reports a mocked (fake)"
+" GPS location."
+msgstr ""
+"رفض تسجيل الحضور/الانصراف من تطبيق الجوال عندما يُبلغ الجهاز عن موقع GPS "
+"وهمي."
 
 #. module: employee_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
-msgid "Reject mobile app check-in/check-out when the device reports a mocked GPS location."
-msgstr "رفض تسجيل الحضور/الانصراف عبر الجوال عندما يبلّغ الجهاز عن موقع GPS وهمي."
+msgid ""
+"Reject mobile app check-in/check-out when the device reports a mocked GPS "
+"location."
+msgstr ""
+"رفض تسجيل الحضور/الانصراف عبر الجوال عندما يبلّغ الجهاز عن موقع GPS وهمي."
 
 #. module: employee_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile
@@ -475,7 +562,9 @@ msgstr "يجب أن يكون الشهر بصيغة YYYY-MM."
 #. odoo-python
 #: code:addons/employee_mobile/controllers/main.py:0
 msgid "The new PIN must be 4 to 8 digits and different from the current one."
-msgstr "يجب أن يتكون رقم التعريف الشخصي الجديد من 4 إلى 8 أرقام وأن يكون مختلفًا عن الرقم الحالي."
+msgstr ""
+"يجب أن يتكون رقم التعريف الشخصي الجديد من 4 إلى 8 أرقام وأن يكون مختلفًا عن "
+"الرقم الحالي."
 
 #. module: employee_mobile
 #. odoo-python
@@ -518,7 +607,8 @@ msgstr "إلغاء القفل"
 #. module: employee_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.res_config_settings_view_form_mobile
 msgid "Used for employees whose mobile attendance location is set to Company."
-msgstr "يُستخدم للموظفين الذين يكون موقع حضورهم عبر الجوال مضبوطًا على الشركة."
+msgstr ""
+"يُستخدم للموظفين الذين يكون موقع حضورهم عبر الجوال مضبوطًا على الشركة."
 
 #. module: employee_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.hr_work_location_form_view_mobile
@@ -539,7 +629,8 @@ msgstr ""
 "- بدون: لا يوجد تحقق من النطاق الجغرافي (مثل السائقين والموظفين الميدانيين)."
 
 #. module: employee_mobile
-#: model:ir.model,name:employee_mobile.model_hr_work_location model:ir.model.fields.selection,name:employee_mobile.selection__hr_employee__mobile_attendance_restriction__work_location
+#: model:ir.model,name:employee_mobile.model_hr_work_location
+#: model:ir.model.fields.selection,name:employee_mobile.selection__hr_employee__mobile_attendance_restriction__work_location
 msgid "Work Location"
 msgstr "موقع العمل"
 
@@ -607,4 +698,5 @@ msgstr "لم تعد جلستك صالحة. يرجى تسجيل الدخول مر
 #. odoo-python
 #: code:addons/employee_mobile/models/hr_employee.py:0
 msgid "Your work location has no GPS coordinates configured. Contact HR."
-msgstr "لا توجد إحداثيات GPS مضبوطة لموقع عملك. يرجى التواصل مع الموارد البشرية."
+msgstr ""
+"لا توجد إحداثيات GPS مضبوطة لموقع عملك. يرجى التواصل مع الموارد البشرية."
