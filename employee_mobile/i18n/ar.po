@@ -102,6 +102,17 @@ msgid "Block Mock Locations"
 msgstr "حظر مواقع GPS الوهمية"
 
 #. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_check_in_device_name
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_attendance_view_filter_mobile
+msgid "Check-in Device"
+msgstr "جهاز تسجيل الحضور"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_check_in_device_id
+msgid "Check-in Device ID"
+msgstr "معرّف جهاز تسجيل الحضور"
+
+#. module: employee_mobile
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__check_in_latitude
 msgid "Check-in Latitude"
 msgstr "خط العرض لتسجيل الحضور"
@@ -112,6 +123,16 @@ msgid "Check-in Longitude"
 msgstr "خط الطول لتسجيل الحضور"
 
 #. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_check_out_device_name
+msgid "Check-out Device"
+msgstr "جهاز تسجيل الانصراف"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_check_out_device_id
+msgid "Check-out Device ID"
+msgstr "معرّف جهاز تسجيل الانصراف"
+
+#. module: employee_mobile
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__check_out_latitude
 msgid "Check-out Latitude"
 msgstr "خط العرض لتسجيل الانصراف"
@@ -120,6 +141,11 @@ msgstr "خط العرض لتسجيل الانصراف"
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__check_out_longitude
 msgid "Check-out Longitude"
 msgstr "خط الطول لتسجيل الانصراف"
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_attendance__mobile_device_shared
+msgid "Checked in or out from a device another employee also uses."
+msgstr "تم تسجيل الحضور أو الانصراف من جهاز يستخدمه موظف آخر أيضاً."
 
 #. module: employee_mobile
 #: model:ir.model,name:employee_mobile.model_res_company
@@ -158,7 +184,19 @@ msgid "Current and new PIN are required."
 msgstr "رقم التعريف الشخصي الحالي والجديد مطلوبان."
 
 #. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
+msgid "Device"
+msgstr "الجهاز"
+
+#. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_device_shared_employee_ids
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__device_shared_employee_ids
+msgid "Device Also Used By"
+msgstr "الجهاز مستخدم أيضاً من قبل"
+
+#. module: employee_mobile
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__device_id
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_attendance_view_filter_mobile
 msgid "Device ID"
 msgstr "معرّف الجهاز"
 
@@ -215,6 +253,7 @@ msgid "Geofence"
 msgstr "السياج الجغرافي"
 
 #. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_attendance_view_filter_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
 msgid "Group By"
 msgstr "تجميع حسب"
@@ -492,6 +531,21 @@ msgstr ""
 "متأخراً."
 
 #. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_attendance__mobile_device_shared_employee_ids
+msgid ""
+"Other employees who had already used the device of this check-in/check-out "
+"when it was recorded: a possible sign of punching for someone else."
+msgstr ""
+"موظفون آخرون استخدموا جهاز هذا الحضور/الانصراف وقت تسجيله: مؤشر محتمل على "
+"التسجيل نيابة عن موظف آخر."
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_employee_mobile_token__device_shared_employee_ids
+msgid ""
+"Other employees who signed in or punched attendance from this same device."
+msgstr "موظفون آخرون سجّلوا الدخول أو الحضور من نفس هذا الجهاز."
+
+#. module: employee_mobile
 #: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__out_mode
 msgid "Out Mode"
 msgstr "طريقة الانصراف"
@@ -541,6 +595,18 @@ msgid "Revoked"
 msgstr "ملغى"
 
 #. module: employee_mobile
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_attendance__mobile_device_shared
+#: model:ir.model.fields,field_description:employee_mobile.field_hr_employee_mobile_token__device_shared
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_mobile_token_view_search
+msgid "Shared Device"
+msgstr "جهاز مشترك"
+
+#. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_attendance_view_filter_mobile
+msgid "Shared Device (Mobile)"
+msgstr "جهاز مشترك (تطبيق الجوال)"
+
+#. module: employee_mobile
 #. odoo-python
 #: code:addons/employee_mobile/controllers/main.py:0
 msgid "Shift"
@@ -579,6 +645,14 @@ msgid "The request body must be a JSON object."
 msgstr "يجب أن يكون محتوى الطلب كائن JSON."
 
 #. module: employee_mobile
+#: model_terms:ir.ui.view,arch_db:employee_mobile.hr_attendance_view_form_mobile
+msgid ""
+"This device is also used by other employees: check that the\n"
+"                            employee punched for themselves."
+msgstr ""
+"هذا الجهاز يستخدمه موظفون آخرون أيضاً: تحقق من أن الموظف سجّل الحضور بنفسه."
+
+#. module: employee_mobile
 #: model:ir.model.constraint,message:employee_mobile.constraint_hr_employee_mobile_token_token_hash_unique
 msgid "This mobile session token already exists."
 msgstr "رمز جلسة الجوال هذا موجود بالفعل."
@@ -598,6 +672,11 @@ msgstr "بصمة الرمز المميز"
 #: code:addons/employee_mobile/controllers/main.py:0
 msgid "Too many failed attempts. Please try again later."
 msgstr "عدد كبير جدًا من المحاولات الفاشلة. يرجى المحاولة لاحقًا."
+
+#. module: employee_mobile
+#: model:ir.model.fields,help:employee_mobile.field_hr_employee_mobile_token__device_id
+msgid "Unique identifier of the phone/browser the employee signed in from."
+msgstr "المعرّف الفريد للهاتف/المتصفح الذي سجّل الموظف الدخول منه."
 
 #. module: employee_mobile
 #: model_terms:ir.ui.view,arch_db:employee_mobile.hr_employee_view_form_mobile

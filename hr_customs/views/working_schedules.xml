@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="resource_calendar_form_inherit" model="ir.ui.view">
+        <field name="name">resource.calendar.form.inherit</field>
+        <field name="model">resource.calendar</field>
+        <field name="inherit_id" ref="resource.resource_calendar_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//noteboonpm i -g flutter-remotek" position="before">
+                <group name="special_working_schedule" col="2" class="mt-3">
+                    <separator string="Special Working Schedule" colspan="2"/>
+                    <group>
+                        <field name="is_special_schedule"/>
+                        <field name="special_date_from" required="is_special_schedule" invisible="not is_special_schedule"/>
+                        <field name="special_date_to" required="is_special_schedule" invisible="not is_special_schedule"/>
+                    </group>
+                    <group string="Applicable Employees" invisible="not is_special_schedule">
+                        <field name="special_company_ids" widget="many2many_tags" placeholder="All Companies" options="{'no_create': True}"/>
+                        <field name="special_department_ids" widget="many2many_tags" placeholder="All Departments" options="{'no_create': True}"/>
+                        <field name="special_employee_ids" widget="many2many_tags" placeholder="All Employees" options="{'no_create': True}"/>
+                        <field name="special_nationality_ids" widget="many2many_tags" placeholder="All Nationalities" options="{'no_create': True}"/>
+                        <field name="special_religion" placeholder="All Religions"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -120,10 +120,10 @@ def _day_bounds_utc(local_date, tz):
 def _day_calendar(employee, local_date):
     """The working schedule applied on ``local_date``: the employee's one,
     or its replacement for that day when a module provides it (e.g. the
-    Ramadan schedule of ``pt_hr_ramadan_schedule``)."""
+    Special Working Schedule of ``hr_customs``, used for Ramadan)."""
     calendar = employee.resource_calendar_id
-    if calendar and hasattr(calendar, '_get_effective_calendar'):
-        calendar = calendar._get_effective_calendar(local_date)
+    if calendar and hasattr(employee, '_get_special_calendar'):
+        calendar = employee.sudo()._get_special_calendar(local_date, calendar).with_env(employee.env)
     return calendar
 
 
@@ -656,6 +656,18 @@ class MobileApiController(http.Controller):
                 })
         return geofence, round(distance, 1), geofence['name']
 
+    def _device_sharing_vals(self, employee, token, attendance=None):
+        """Flag the punch when its device was also used by another employee
+        (sessions or earlier attendances), so HR can spot buddy punching."""
+        others = request.env['hr.employee.mobile.token']._get_device_employees(
+            token.device_id) - employee
+        if attendance:
+            others |= attendance.mobile_device_shared_employee_ids
+        return {
+            'mobile_device_shared_employee_ids': [(6, 0, others.ids)],
+            'mobile_device_shared': bool(others),
+        }
+
     @http.route('/api/mobile/attendance/check-in', type='http', auth='public',
                 methods=['POST'], csrf=False, readonly=False)
     @mobile_endpoint(auth_required=True)
@@ -689,6 +701,9 @@ class MobileApiController(http.Controller):
             'check_in_longitude': longitude,
             'mobile_check_in_location': location_name,
             'mobile_check_in_distance': distance or 0.0,
+            'mobile_check_in_device_id': token.device_id,
+            'mobile_check_in_device_name': token.device_name,
+            **self._device_sharing_vals(employee, token),
         })
 
         attendance_status, _open = _build_attendance_status(employee)
@@ -731,6 +746,9 @@ class MobileApiController(http.Controller):
             'check_out_longitude': longitude,
             'mobile_check_out_location': location_name,
             'mobile_check_out_distance': distance or 0.0,
+            'mobile_check_out_device_id': token.device_id,
+            'mobile_check_out_device_name': token.device_name,
+            **self._device_sharing_vals(employee, token, open_att),
         })
 
         attendance_status, _open = _build_attendance_status(employee)

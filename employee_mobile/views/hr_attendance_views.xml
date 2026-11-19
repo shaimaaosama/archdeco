@@ -13,10 +13,22 @@
                     <group>
                         <field name="mobile_check_in_location" invisible="in_mode != 'mobile'"/>
                         <field name="mobile_check_in_distance" invisible="in_mode != 'mobile'"/>
+                        <field name="mobile_check_in_device_name" invisible="in_mode != 'mobile'"/>
+                        <field name="mobile_check_in_device_id" invisible="in_mode != 'mobile'"/>
                     </group>
                     <group>
                         <field name="mobile_check_out_location" invisible="out_mode != 'mobile'"/>
                         <field name="mobile_check_out_distance" invisible="out_mode != 'mobile'"/>
+                        <field name="mobile_check_out_device_name" invisible="out_mode != 'mobile'"/>
+                        <field name="mobile_check_out_device_id" invisible="out_mode != 'mobile'"/>
+                    </group>
+                    <group colspan="2" invisible="not mobile_device_shared">
+                        <div class="alert alert-warning" role="alert" colspan="2">
+                            This device is also used by other employees: check that the
+                            employee punched for themselves.
+                        </div>
+                        <field name="mobile_device_shared" invisible="1"/>
+                        <field name="mobile_device_shared_employee_ids" widget="many2many_tags"/>
                     </group>
                 </group>
             </xpath>
@@ -33,7 +45,37 @@
                 <field name="mobile_check_in_distance" string="Mobile Distance (In)" optional="hidden"/>
                 <field name="mobile_check_out_location" string="Mobile Location (Out)" optional="hidden"/>
                 <field name="mobile_check_out_distance" string="Mobile Distance (Out)" optional="hidden"/>
+                <field name="mobile_check_in_device_id" optional="hidden"/>
+                <field name="mobile_check_out_device_id" optional="hidden"/>
+                <field name="mobile_device_shared_employee_ids" widget="many2many_tags" optional="show"/>
+                <field name="mobile_device_shared" column_invisible="True"/>
             </field>
+            <xpath expr="//list" position="attributes">
+                <attribute name="decoration-warning">mobile_device_shared</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_attendance_view_filter_mobile" model="ir.ui.view">
+        <field name="name">hr.attendance.search.mobile.app</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_filter"/>
+        <field name="arch" type="xml">
+            <field name="check_in" position="after">
+                <field name="mobile_check_in_device_id" string="Device ID"
+                       filter_domain="['|', ('mobile_check_in_device_id', 'ilike', self), ('mobile_check_out_device_id', 'ilike', self)]"/>
+            </field>
+            <filter name="nocheckout" position="before">
+                <filter string="Shared Device (Mobile)" name="mobile_shared_device"
+                        domain="[('mobile_device_shared', '=', True)]"/>
+                <separator/>
+            </filter>
+            <xpath expr="//search" position="inside">
+                <group expand="0" string="Group By">
+                    <filter string="Check-in Device" name="group_mobile_check_in_device"
+                            context="{'group_by': 'mobile_check_in_device_id'}"/>
+                </group>
+            </xpath>
         </field>
     </record>
 

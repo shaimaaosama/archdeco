@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+    <t t-name="hr_customs.AttendanceDashboard">
+        <div class="aad-dashboard">
+            <div class="aad-page-header">
+                <div class="aad-heading">
+                    <span class="aad-heading-icon"><i class="fa fa-calendar-check-o"/></span>
+                    <div>
+                        <h2>Attendance Dashboard</h2>
+                        <p>Employee attendance and working-hours analysis</p>
+                    </div>
+                </div>
+                <div class="aad-header-actions">
+                    <button class="aad-btn aad-reset" t-on-click="resetFilters">
+                        <i class="fa fa-refresh"/> Reset
+                    </button>
+                </div>
+            </div>
+            <div class="aad-filter-panel">
+                <div class="aad-filter-header">
+                    <div>
+                        <span><i class="fa fa-filter"/> FILTERS</span>
+                        <span class="aad-filter-subtitle">Date, employee, department, source and attendance status</span>
+                    </div>
+                    <button class="aad-btn aad-reset" t-on-click="clearFilters">
+                        <i class="fa fa-times-circle"/> Clear Filters
+                    </button>
+                </div>
+                <div class="aad-filter-grid">
+                    <div class="aad-field aad-select-field aad-date-selector">
+                        <label>DATE</label>
+                        <button t-att-class="'aad-select-trigger ' + (state.dateOpen ? 'active' : '')" t-on-click="() => this.toggleFilter('date')">
+                            <span><i class="fa fa-calendar"/> <t t-esc="dateLabel"/></span>
+                            <i class="fa fa-chevron-down"/>
+                        </button>
+                        <div class="aad-date-dropdown" t-if="state.dateOpen">
+                            <div class="aad-date-menu-title">Select Period</div>
+                            <div class="aad-date-menu-row">
+                                <button t-att-class="'aad-date-option ' + (state.dateMode === 'month' ? 'selected' : '')" t-on-click="() => this.selectPeriod('month')">
+                                    <i class="fa fa-check aad-date-check" t-if="state.dateMode === 'month'"/>
+                                    <span>Month</span>
+                                </button>
+                                <div class="aad-date-navigation">
+                                    <button title="Previous Month" t-on-click="() => this.shiftPeriod('month', -1)"><i class="fa fa-chevron-left"/></button>
+                                    <button class="aad-date-value" t-on-click="() => this.selectPeriod('month')"><t t-esc="monthName"/> <t t-esc="state.viewYear"/></button>
+                                    <button title="Next Month" t-on-click="() => this.shiftPeriod('month', 1)"><i class="fa fa-chevron-right"/></button>
+                                </div>
+                            </div>
+                            <div class="aad-date-menu-row">
+                                <button t-att-class="'aad-date-option ' + (state.dateMode === 'quarter' ? 'selected' : '')" t-on-click="() => this.selectPeriod('quarter')">
+                                    <i class="fa fa-check aad-date-check" t-if="state.dateMode === 'quarter'"/>
+                                    <span>Quarter</span>
+                                </button>
+                                <div class="aad-date-navigation">
+                                    <button title="Previous Quarter" t-on-click="() => this.shiftPeriod('quarter', -1)"><i class="fa fa-chevron-left"/></button>
+                                    <button class="aad-date-value" t-on-click="() => this.selectPeriod('quarter')"><t t-esc="quarterLabel"/></button>
+                                    <button title="Next Quarter" t-on-click="() => this.shiftPeriod('quarter', 1)"><i class="fa fa-chevron-right"/></button>
+                                </div>
+                            </div>
+                            <div class="aad-date-menu-row">
+                                <button t-att-class="'aad-date-option ' + (state.dateMode === 'year' ? 'selected' : '')" t-on-click="() => this.selectPeriod('year')">
+                                    <i class="fa fa-check aad-date-check" t-if="state.dateMode === 'year'"/>
+                                    <span>Year</span>
+                                </button>
+                                <div class="aad-date-navigation">
+                                    <button title="Previous Year" t-on-click="() => this.shiftPeriod('year', -1)"><i class="fa fa-chevron-left"/></button>
+                                    <button class="aad-date-value" t-on-click="() => this.selectPeriod('year')"><t t-esc="state.viewYear"/></button>
+                                    <button title="Next Year" t-on-click="() => this.shiftPeriod('year', 1)"><i class="fa fa-chevron-right"/></button>
+                                </div>
+                            </div>
+                            <div class="aad-date-menu-divider"/>
+                            <button class="aad-date-menu-link" t-on-click="() => this.selectQuickDate('today')"><i class="fa fa-calendar-check-o"/> Today</button>
+                            <button class="aad-date-menu-link" t-on-click="() => this.selectQuickDate('yesterday')"><i class="fa fa-calendar-o"/> Yesterday</button>
+                            <button class="aad-date-menu-link" t-on-click="() => this.selectQuickDate('this_week')"><i class="fa fa-calendar"/> This Week (Saturday - Friday)</button>
+                            <button class="aad-date-menu-link" t-on-click="() => this.selectQuickDate('last_week')"><i class="fa fa-calendar"/> Last Week (Saturday - Friday)</button>
+                            <div class="aad-date-menu-divider"/>
+                            <button class="aad-date-menu-link" t-on-click="() => this.selectQuickDate('custom')"><i class="fa fa-calendar-o"/> Custom Dates</button>
+                            <div class="aad-custom-date-row" t-if="state.customDateOpen">
+                                <div class="aad-field">
+                                    <label>DATE FROM</label>
+                                    <input type="date" class="aad-input" t-model="state.customDateFrom" t-on-click="openDatePicker"/>
+                                </div>
+                                <div class="aad-field">
+                                    <label>DATE TO</label>
+                                    <input type="date" class="aad-input" t-model="state.customDateTo" t-on-click="openDatePicker"/>
+                                </div>
+                                <button class="aad-btn aad-apply-date" t-on-click="applyCustomDates"><i class="fa fa-check"/> Apply Dates</button>
+                            </div>
+                            <button t-att-class="'aad-date-menu-link ' + (state.dateMode === 'none' ? 'selected' : '')" t-on-click="() => this.selectQuickDate('none')">
+                                <i class="fa fa-check-circle" t-if="state.dateMode === 'none'"/>
+                                <i class="fa fa-calendar" t-else=""/>
+                                <span>All Dates</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="aad-field aad-select-field aad-employee-filter">
+                        <label>EMPLOYEE</label>
+                        <button class="aad-select-trigger" t-on-click="() => this.toggleFilter('employee')">
+                            <span t-esc="selectedEmployeeLabel"/>
+                            <i class="fa fa-chevron-down"/>
+                        </button>
+                        <div class="aad-dropdown" t-if="state.employeeOpen">
+                            <input class="aad-search" type="text" placeholder="Search employee name or code..." t-model="state.employeeSearch"/>
+                            <div class="aad-options">
+                                <t t-foreach="filteredEmployees" t-as="employee" t-key="employee.id">
+                                    <label class="aad-option">
+                                        <input type="checkbox" t-att-checked="state.employeeIds.includes(employee.id)" t-on-change="() => this.toggleEmployee(employee.id)"/>
+                                        <span class="aad-option-info">
+                                            <span t-esc="employee.name"/>
+                                            <small t-if="employee.code" t-esc="employee.code"/>
+                                        </span>
+                                    </label>
+                                </t>
+                                <div class="aad-no-options" t-if="!filteredEmployees.length">No employees found</div>
+                            </div>
+                            <div class="aad-dropdown-footer">
+                                <button class="aad-clear" t-on-click="clearEmployees">Clear</button>
+                                <button class="aad-done" t-on-click="doneEmployees">Done</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aad-field aad-select-field aad-department-filter">
+                        <label>DEPARTMENT</label>
+                        <button class="aad-select-trigger" t-on-click="() => this.toggleFilter('department')">
+                            <span t-esc="selectedDepartmentLabel"/>
+                            <i class="fa fa-chevron-down"/>
+                        </button>
+                        <div class="aad-dropdown" t-if="state.departmentOpen">
+                            <input class="aad-search" type="text" placeholder="Search department..." t-model="state.departmentSearch"/>
+                            <div class="aad-options">
+                                <t t-foreach="filteredDepartments" t-as="department" t-key="department.id">
+                                    <label class="aad-option">
+                                        <input type="checkbox" t-att-checked="state.departmentIds.includes(department.id)" t-on-change="() => this.toggleDepartment(department.id)"/>
+                                        <span t-esc="department.name"/>
+                                    </label>
+                                </t>
+                                <div class="aad-no-options" t-if="!filteredDepartments.length">No departments found</div>
+                            </div>
+                            <div class="aad-dropdown-footer">
+                                <button class="aad-clear" t-on-click="clearDepartments">Clear</button>
+                                <button class="aad-done" t-on-click="doneDepartments">Done</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aad-field aad-select-field aad-source-filter">
+                        <label>WORK ENTRY SOURCE</label>
+                        <button class="aad-select-trigger" t-on-click="() => this.toggleFilter('source')">
+                            <span t-esc="sourceLabel"/>
+                            <i class="fa fa-chevron-down"/>
+                        </button>
+                        <div class="aad-dropdown" t-if="state.sourceOpen">
+                            <div class="aad-options">
+                                <t t-foreach="sourceOptions" t-as="option" t-key="option.value">
+                                    <div class="aad-option" t-on-click="() => this.changeSource(option.value)">
+                                        <i t-att-class="state.source === option.value ? 'fa fa-check' : 'fa fa-circle-o'"/>
+                                        <span t-esc="option.label"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="aad-field aad-select-field aad-status-filter">
+                        <label>ATTENDANCE STATUS</label>
+                        <button class="aad-select-trigger" t-on-click="() => this.toggleFilter('status')">
+                            <span t-esc="statusLabel"/>
+                            <i class="fa fa-chevron-down"/>
+                        </button>
+                        <div class="aad-dropdown" t-if="state.statusOpen">
+                            <div class="aad-options">
+                                <t t-foreach="statusOptions" t-as="option" t-key="option.value">
+                                    <div class="aad-option" t-on-click="() => this.changeStatus(option.value)">
+                                        <i t-att-class="state.status === option.value ? 'fa fa-check' : 'fa fa-circle-o'"/>
+                                        <span t-esc="option.label"/>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="aad-period-info">
+                    <i class="fa fa-calendar"/>
+                    <span t-if="state.dateMode === 'none'">All available attendance dates through today</span>
+                    <span t-else="">
+                        Period: <strong t-esc="formatDisplay(state.dateFrom)"/> to <strong t-esc="formatDisplay(state.dateTo)"/>
+                    </span>
+                    <span class="aad-filter-summary">Work Entry Source: <strong t-esc="sourceLabel"/></span>
+                </div>
+            </div>
+            <div class="aad-report-section">
+                <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px;padding:7px;background:#FFFFFF;border:1px solid #E3EAF0;border-radius:12px;">
+                    <t t-foreach="viewOptions" t-as="view" t-key="view.value">
+                        <button type="button"
+                                t-att-style="'display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:48px;padding:12px 8px;border-radius:8px;border:1px solid ' + (state.viewMode === view.value ? '#327D87' : 'transparent') + ';background:' + (state.viewMode === view.value ? '#327D87' : '#F5F7F9') + ';color:' + (state.viewMode === view.value ? '#FFFFFF' : '#596979') + ';font-size:13px;font-weight:700;cursor:pointer;'"
+                                t-on-click="() => this.selectView(view.value)">
+                            <i t-att-class="'fa ' + view.icon"/>
+                            <span t-esc="view.label"/>
+                        </button>
+                    </t>
+                </div>
+                <div class="aad-table-panel">
+                    <div class="aad-table-header">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <button t-if="state.detailLevel" class="aad-btn aad-reset" style="padding:8px 12px;" t-on-click="backToReport">
+                                <i class="fa fa-arrow-left"/> Back
+                            </button>
+                            <div>
+                                <h3><i class="fa fa-list-alt"/> <t t-esc="pageTitle"/></h3>
+                                <p t-if="state.detailLevel === 'employee_daily' &amp;&amp; !state.detailLoading">
+                                    <t t-esc="state.detail.employee.code"/> - <t t-esc="state.detail.employee.employee"/>
+                                </p>
+                                <p t-elif="state.viewMode === 'department' || state.viewMode === 'employee'">
+                                    Click the eye icon to view details
+                                </p>
+                            </div>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:10px;">
+                            <div class="aad-record-count" t-if="state.detailLevel === 'department_employees'">
+                                <strong t-esc="visibleEmployeeSummary.length"/>
+                                <span style="margin-left:5px;">Employees</span>
+                            </div>
+                            <div class="aad-record-count" t-elif="state.detailLevel === 'employee_daily'">
+                                <strong t-esc="state.detail.rows.length"/>
+                                <span style="margin-left:5px;">Records</span>
+                            </div>
+                            <div class="aad-record-count" t-elif="state.viewMode === 'department'">
+                                <strong t-esc="state.analytics.departments.length"/>
+                                <span style="margin-left:5px;">Departments</span>
+                            </div>
+                            <div class="aad-record-count" t-elif="state.viewMode === 'employee'">
+                                <strong t-esc="visibleEmployeeSummary.length"/>
+                                <span style="margin-left:5px;">Employees</span>
+                            </div>
+                            <div class="aad-record-count" t-else="">
+                                <strong t-esc="state.viewMode === 'overview' ? state.summary.employees || 0 : state.total"/>
+                                <span style="margin-left:5px;" t-esc="state.viewMode === 'overview' ? 'Employees' : 'Records'"/>
+                            </div>
+                            <button t-if="state.viewMode !== 'overview'" type="button" class="aad-btn aad-export"
+                                    style="padding:8px 13px;white-space:nowrap;"
+                                    title="Export all filtered records to Excel"
+                                    t-att-disabled="state.exporting"
+                                    t-on-click="exportExcel">
+                                <i class="fa fa-file-excel-o"/>
+                                <t t-if="state.exporting">Exporting...</t>
+                                <t t-else="">Export Excel</t>
+                            </button>
+                        </div>
+                    </div>
+                    <div t-if="state.detailLevel === 'employee_daily'">
+                        <div class="aad-empty" t-if="state.detailLoading">
+                            <i class="fa fa-spinner fa-spin"/> Loading employee attendance...
+                        </div>
+                        <t t-if="!state.detailLoading">
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;padding:16px;">
+                                <t t-foreach="[
+                                    {label:'Scheduled Hours',value:hours(state.detail.employee.scheduled)},
+                                    {label:'Worked Hours',value:hours(state.detail.employee.worked)},
+                                    {label:'Hours Difference',value:hours(state.detail.employee.difference)},
+                                    {label:'Overtime Hours',value:hours(state.detail.employee.overtime)},
+                                    {label:'Present Days',value:state.detail.employee.present},
+                                    {label:'Absent Days',value:state.detail.employee.absent},
+                                    {label:'Leave Days',value:state.detail.employee.leave},
+                                    {label:'Late In',value:(state.detail.employee.late_minutes >= 60 ? Math.floor(state.detail.employee.late_minutes / 60) + 'h' + (state.detail.employee.late_minutes % 60 ? ' ' + (state.detail.employee.late_minutes % 60) + 'm' : '') : (state.detail.employee.late_minutes || 0) + 'm')},
+                                    {label:'Early Out',value:(state.detail.employee.early_minutes >= 60 ? Math.floor(state.detail.employee.early_minutes / 60) + 'h' + (state.detail.employee.early_minutes % 60 ? ' ' + (state.detail.employee.early_minutes % 60) + 'm' : '') : (state.detail.employee.early_minutes || 0) + 'm')},
+                                    {label:'Missing Check-Out',value:state.detail.employee.missing_out},
+                                    {label:'Attendance Rate',value:state.detail.employee.rate + '%'}
+                                ]" t-as="metric" t-key="metric.label">
+                                    <div style="padding:14px 10px;background:#F4F8F9;border:1px solid #E2EBEE;border-radius:9px;text-align:center;">
+                                        <div style="font-size:10px;font-weight:700;color:#81909C;margin-bottom:9px;" t-esc="metric.label"/>
+                                        <strong style="font-size:20px;color:#354453;" t-esc="metric.value"/>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="aad-table-scroll">
+                                <table class="aad-table">
+                                    <thead>
+                                        <tr>
+                                            <t t-foreach="columns" t-as="col" t-key="col.key">
+                                                <th t-esc="col.label"/>
+                                            </t>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="state.detail.rows" t-as="row" t-key="row_index">
+                                            <t t-foreach="columns" t-as="col" t-key="col.key">
+                                                <td t-if="col.key === 'status'">
+                                                    <span t-att-class="'aad-status ' + statusClass(row.status)" t-esc="row.status"/>
+                                                </td>
+                                                <td t-elif="col.key === 'date'" class="aad-date-cell" t-esc="formatDisplay(row.date)"/>
+                                                <td t-elif="col.key === 'late' || col.key === 'early'"
+                                                    t-esc="(row[col.key] >= 60 ? Math.floor(row[col.key] / 60) + 'h' + (row[col.key] % 60 ? ' ' + (row[col.key] % 60) + 'm' : '') : (row[col.key] || 0) + 'm')"/>
+                                                <td t-elif="col.key === 'worked' || col.key === 'overtime'"
+                                                    class="aad-worked" t-esc="hours(row[col.key])"/>
+                                                <td t-else="" t-esc="row[col.key] || (row[col.key] === 0 ? 0 : '-')"/>
+                                            </t>
+                                        </tr>
+                                        <tr t-if="!state.detail.rows.length">
+                                            <td colspan="15" class="aad-empty">No attendance records found for this employee.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </t>
+                    </div>
+                    <div t-elif="state.detailLevel === 'department_employees' || state.viewMode === 'employee'">
+                        <div class="aad-table-scroll">
+                            <table class="aad-table" style="min-width:1450px;">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th style="text-align:left;">Employee</th>
+                                        <th style="text-align:left;">Department</th>
+                                        <th>Present</th>
+                                        <th>Absent</th>
+                                        <th>Leave</th>
+                                        <th>Late In</th>
+                                        <th>Early Out</th>
+                                        <th>Missing Out</th>
+                                        <th>Scheduled Hours</th>
+                                        <th>Worked Hours</th>
+                                        <th>Difference</th>
+                                        <th>Overtime</th>
+                                        <th>Attendance Rate</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="visibleEmployeeSummary" t-as="employee" t-key="employee.id">
+                                        <td class="aad-code" t-esc="employee.code"/>
+                                        <td class="aad-employee-name" t-esc="employee.employee"/>
+                                        <td style="text-align:left;" t-esc="employee.department"/>
+                                        <td t-esc="employee.present"/>
+                                        <td t-esc="employee.absent"/>
+                                        <td t-esc="employee.leave"/>
+                                        <td t-esc="(employee.late_minutes >= 60 ? Math.floor(employee.late_minutes / 60) + 'h' + (employee.late_minutes % 60 ? ' ' + (employee.late_minutes % 60) + 'm' : '') : (employee.late_minutes || 0) + 'm')"/>
+                                        <td t-esc="(employee.early_minutes >= 60 ? Math.floor(employee.early_minutes / 60) + 'h' + (employee.early_minutes % 60 ? ' ' + (employee.early_minutes % 60) + 'm' : '') : (employee.early_minutes || 0) + 'm')"/>
+                                        <td t-esc="employee.missing_out"/>
+                                        <td t-esc="hours(employee.scheduled)"/>
+                                        <td class="aad-worked" t-esc="hours(employee.worked)"/>
+                                        <td t-att-style="'font-weight:700;color:' + (employee.difference &lt; 0 ? '#C14959' : '#278A54')"
+                                            t-esc="hours(employee.difference)"/>
+                                        <td class="aad-worked" t-esc="hours(employee.overtime)"/>
+                                        <td><strong t-esc="employee.rate + '%'"/></td>
+                                        <td>
+                                            <button type="button" class="aad-btn aad-reset"
+                                                    style="padding:7px 12px;color:#327D87;"
+                                                    title="View Employee Details"
+                                                    t-on-click="() => this.openEmployee(employee.id)">
+                                                <i class="fa fa-eye"/>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="!visibleEmployeeSummary.length">
+                                        <td colspan="15" class="aad-empty">No employee attendance data found.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div t-elif="state.viewMode === 'department'">
+                        <div class="aad-table-scroll">
+                            <table class="aad-table" style="min-width:850px;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left;">Department</th>
+                                        <th>Employees</th>
+                                        <th>Present Days</th>
+                                        <th>Absent Days</th>
+                                        <th>Late In</th>
+                                        <th>Early Out</th>
+                                        <th>Attendance Rate</th>
+                                        <th>View</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="state.analytics.departments" t-as="dept" t-key="dept.id">
+                                        <td style="text-align:left;font-weight:600;" t-esc="dept.name"/>
+                                        <td t-esc="dept.employees"/>
+                                        <td t-esc="dept.present"/>
+                                        <td t-esc="dept.absent"/>
+                                        <td t-esc="dept.late"/>
+                                        <td t-esc="dept.early"/>
+                                        <td>
+                                            <strong t-att-style="'color:' + (dept.rate >= 90 ? '#278A54' : dept.rate >= 75 ? '#B18340' : '#D4485A')"
+                                                    t-esc="dept.rate + '%'"/>
+                                            <div style="height:5px;background:#EDF2F4;border-radius:5px;margin-top:6px;">
+                                                <div t-att-style="'width:' + dept.rate + '%;height:100%;background:#327D87;border-radius:5px;'"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="aad-btn aad-reset"
+                                                    style="padding:7px 12px;color:#327D87;"
+                                                    title="View Department Employees"
+                                                    t-on-click="() => this.openDepartment(dept)">
+                                                <i class="fa fa-eye"/>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="!state.analytics.departments.length">
+                                        <td colspan="8" class="aad-empty">No department attendance data found.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div t-elif="state.viewMode === 'overview'">
+                        <div class="aad-section-title">
+                            <h3>Attendance Overview</h3>
+                            <p>Attendance and working-hours summary for the selected period</p>
+                        </div>
+                        <div class="aad-cards">
+                            <t t-foreach="cards" t-as="card" t-key="card.label">
+                                <div t-att-class="'aad-card aad-card-' + card.color">
+                                    <div class="aad-card-content">
+                                        <span class="aad-card-label" t-esc="card.label"/>
+                                        <strong t-esc="card.value"/>
+                                    </div>
+                                    <span class="aad-card-icon">
+                                        <i t-att-class="'fa ' + card.icon"/>
+                                    </span>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                    <div t-else="">
+                        <div class="aad-table-scroll">
+                            <table class="aad-table">
+                                <thead>
+                                    <tr>
+                                        <t t-foreach="columns" t-as="col" t-key="col.key">
+                                            <th t-esc="col.label"/>
+                                        </t>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-if="state.loading">
+                                        <td colspan="15" class="aad-empty">
+                                            <i class="fa fa-spinner fa-spin"/> Loading attendance records...
+                                        </td>
+                                    </tr>
+                                    <t t-if="!state.loading">
+                                        <tr t-foreach="state.rows" t-as="row" t-key="row_index"
+                                            t-att-class="row.status === 'Weekend' ? 'aad-weekend-row' : row.status === 'Public Holiday' ? 'aad-holiday-row' : ''">
+                                            <t t-foreach="columns" t-as="col" t-key="col.key">
+                                                <td t-if="col.key === 'status'">
+                                                    <span t-att-class="'aad-status ' + statusClass(row.status)" t-esc="row.status"/>
+                                                </td>
+                                                <td t-elif="col.key === 'date'" class="aad-date-cell"
+                                                    t-esc="formatDisplay(row.date)"/>
+                                                <td t-elif="col.key === 'late' || col.key === 'early'"
+                                                    t-esc="(row[col.key] >= 60 ? Math.floor(row[col.key] / 60) + 'h' + (row[col.key] % 60 ? ' ' + (row[col.key] % 60) + 'm' : '') : (row[col.key] || 0) + 'm')"/>
+                                                <td t-elif="col.key === 'worked' || col.key === 'overtime'"
+                                                    class="aad-worked" t-esc="hours(row[col.key])"/>
+                                                <td t-else="" t-esc="row[col.key] || (row[col.key] === 0 ? 0 : '-')"/>
+                                            </t>
+                                        </tr>
+                                        <tr t-if="!state.rows.length">
+                                            <td colspan="15" class="aad-empty">No attendance records match the selected filters.</td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="aad-table-footer">
+                            <span>
+                                Showing <strong t-esc="firstRecord"/> -
+                                <strong t-esc="lastRecord"/> of
+                                <strong t-esc="state.total"/>
+                            </span>
+                            <div class="aad-pagination">
+                                <button t-att-disabled="state.page === 1 || state.loading" t-on-click="previousPage">
+                                    <i class="fa fa-chevron-left"/> Previous
+                                </button>
+                                <span>Page <strong t-esc="state.page"/> of <strong t-esc="pageCount"/></span>
+                                <button t-att-disabled="state.page >= pageCount || state.loading" t-on-click="nextPage">
+                                    Next <i class="fa fa-chevron-right"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

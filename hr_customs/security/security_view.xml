@@ -1,0 +1,7 @@
+<odoo>
+
+    <record id="group_attendance_dashboard" model="res.groups">
+        <field name="name">Attendance Dashboard</field>
+    </record>
+
+</odoo>

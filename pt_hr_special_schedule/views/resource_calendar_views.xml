@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="resource_calendar_form_inherit_special_schedule" model="ir.ui.view">
+        <field name="name">resource.calendar.form.inherit.special.schedule</field>
+        <field name="model">resource.calendar</field>
+        <field name="inherit_id" ref="hr_customs.resource_calendar_form_inherit"/>
+        <field name="arch" type="xml">
+            <field name="special_date_to" position="after">
+                <button name="action_recompute_attendance_overtime" type="object"
+                        string="Recompute Attendance Overtime" class="btn-link ps-0" colspan="2"
+                        invisible="not is_special_schedule"
+                        groups="hr.group_hr_manager"
+                        help="Use it when the special schedule is created or its dates, hours or employees are changed after attendances of these days were recorded."/>
+            </field>
+        </field>
+    </record>
+</odoo>

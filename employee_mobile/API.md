@@ -35,10 +35,17 @@ curl -s http://localhost:8099/api/mobile/ping
 
 Request: `{"email", "pin", "device": {"id", "name", "platform", "app_version"}}`
 
+`device.id` must uniquely identify the phone/browser and be prefixed with its
+kind: `android:<ANDROID_ID>`, `ios:<identifierForVendor>`, `web:<random id kept
+in the browser>` or `install:<random id kept for the install>`. Every check-in /
+check-out stores the session's device id and name on the attendance, and flags
+it (`Shared Device`) when another employee has used the same device. Un-prefixed
+ids (older app builds) are stored but never compared across employees.
+
 ```
 curl -s -X POST http://localhost:8099/api/mobile/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"jane@example.com","pin":"1234","device":{"id":"abc123","name":"Pixel 8","platform":"android","app_version":"1.0.0"}}'
+  -d '{"email":"jane@example.com","pin":"1234","device":{"id":"android:3f2a9c1d00e4b7aa","name":"Pixel 8","platform":"android","app_version":"1.0.0"}}'
 ```
 `data`: `{"token", "expires_at", "employee": Profile}`
 

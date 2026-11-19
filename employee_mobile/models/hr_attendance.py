@@ -24,6 +24,19 @@ class HrAttendance(models.Model):
         help="Distance in metres between the employee and the geofence centre at check-in.")
     mobile_check_out_distance = fields.Float(string='Mobile Check-out Distance (m)')
 
+    mobile_check_in_device_id = fields.Char(string='Check-in Device ID', readonly=True, index=True)
+    mobile_check_in_device_name = fields.Char(string='Check-in Device', readonly=True)
+    mobile_check_out_device_id = fields.Char(string='Check-out Device ID', readonly=True, index=True)
+    mobile_check_out_device_name = fields.Char(string='Check-out Device', readonly=True)
+    mobile_device_shared_employee_ids = fields.Many2many(
+        'hr.employee', 'hr_attendance_mobile_shared_device_rel', 'attendance_id', 'employee_id',
+        string='Device Also Used By', readonly=True,
+        help="Other employees who had already used the device of this check-in/check-out "
+             "when it was recorded: a possible sign of punching for someone else.")
+    mobile_device_shared = fields.Boolean(
+        string='Shared Device', readonly=True, index=True,
+        help="Checked in or out from a device another employee also uses.")
+
     in_mode = fields.Selection(selection_add=[('mobile', 'Mobile App')],
                                 ondelete={'mobile': 'set default'})
     out_mode = fields.Selection(selection_add=[('mobile', 'Mobile App')],

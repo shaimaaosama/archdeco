@@ -454,6 +454,46 @@ class TestMobileApi(HttpCase):
         self.assertAlmostEqual(att.check_out_latitude, WL_LAT, places=5)
         self.assertGreater(att.worked_hours, 0)
 
+    def _check_in_from(self, email, device):
+        resp = self._login(email, '1234', device=device)
+        self.assertEqual(resp.status_code, 200, resp.text)
+        token = resp.json()['data']['token']
+        resp = self._call('POST', '/attendance/check-in', token=token, body={
+            'latitude': COMPANY_LAT, 'longitude': COMPANY_LON, 'accuracy': 5.0, 'is_mocked': False,
+        })
+        self.assertEqual(resp.status_code, 200, resp.text)
+        return self.env['hr.attendance'].sudo().search(
+            [('employee_id.work_email', '=', email)], order='id desc', limit=1)
+
+    def test_checkin_records_device_and_flags_shared_device(self):
+        phone = {'id': 'android:3f2a9c1d00e4b7aa', 'name': 'Samsung SM-A546E',
+                 'platform': 'android', 'app_version': '1.2.0'}
+        own = self._check_in_from('none.employee@example.com', phone)
+        self.assertEqual(own.mobile_check_in_device_id, 'android:3f2a9c1d00e4b7aa')
+        self.assertEqual(own.mobile_check_in_device_name, 'Samsung SM-A546E')
+        self.assertFalse(own.mobile_device_shared)
+
+        # A colleague punches from the same phone: flagged, naming the owner.
+        buddy = self._check_in_from('company.employee@example.com', phone)
+        self.assertTrue(buddy.mobile_device_shared)
+        self.assertEqual(buddy.mobile_device_shared_employee_ids, self.emp_none)
+
+        Token = self.env['hr.employee.mobile.token'].sudo()
+        token = Token.search([('employee_id', '=', self.emp_none.id)], limit=1)
+        self.assertEqual(token.device_shared_employee_ids, self.emp_company)
+        shared = Token.search([('device_shared', '=', True)])
+        self.assertEqual(shared.employee_id, self.emp_none | self.emp_company)
+
+    def test_legacy_device_id_never_flagged(self):
+        # Old app builds sent the Android build id, identical across phones of
+        # the same model: must not be treated as the same device.
+        legacy = {'id': 'TP1A.220624.014', 'name': 'Samsung SM-A546E',
+                  'platform': 'android', 'app_version': '1.0.0'}
+        self._check_in_from('none.employee@example.com', legacy)
+        att = self._check_in_from('company.employee@example.com', legacy)
+        self.assertFalse(att.mobile_device_shared)
+        self.assertFalse(att.mobile_device_shared_employee_ids)
+
     def test_checkin_outside_fence(self):
         token = self._token_for('wl.employee@example.com')
         resp = self._call('POST', '/attendance/check-in', token=token, body={

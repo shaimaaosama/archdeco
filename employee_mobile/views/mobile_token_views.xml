@@ -8,6 +8,8 @@
             <list string="Mobile App Sessions" default_order="create_date desc" duplicate="false" create="false">
                 <field name="employee_id"/>
                 <field name="device_name"/>
+                <field name="device_id"/>
+                <field name="device_shared_employee_ids" widget="many2many_tags"/>
                 <field name="platform"/>
                 <field name="app_version"/>
                 <field name="last_used"/>
@@ -24,10 +26,14 @@
             <search string="Mobile App Sessions">
                 <field name="employee_id"/>
                 <field name="device_name"/>
+                <field name="device_id"/>
                 <filter string="Active" name="active" domain="[('active', '=', True)]"/>
                 <filter string="Revoked" name="inactive" domain="[('active', '=', False)]"/>
+                <separator/>
+                <filter string="Shared Device" name="shared_device" domain="[('device_shared', '=', True)]"/>
                 <group expand="0" string="Group By">
                     <filter string="Employee" name="group_employee" context="{'group_by': 'employee_id'}"/>
+                    <filter string="Device" name="group_device" context="{'group_by': 'device_id'}"/>
                 </group>
             </search>
         </field>

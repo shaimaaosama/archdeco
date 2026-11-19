@@ -36,6 +36,8 @@
                     <field name="mobile_token_ids" readonly="1">
                         <list>
                             <field name="device_name"/>
+                            <field name="device_id"/>
+                            <field name="device_shared_employee_ids" widget="many2many_tags"/>
                             <field name="platform"/>
                             <field name="app_version"/>
                             <field name="last_used"/>
